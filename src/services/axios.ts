@@ -9,9 +9,7 @@ axios.defaults.baseURL = "https://api.amphi.space/";
 axios.interceptors.request.use(
     (config) => {
         config.data = JSON.stringify(config.data);
-        config.headers = {
-            "Content-Type": "application/json",
-        };
+        config.headers.set('Content-Type', 'application/json');
         return config;
     },
     (error) => Promise.reject(error),

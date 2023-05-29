@@ -19,7 +19,7 @@ if (!commitRE.test(msgs)) {
           )
           + `    ${chalk.green('feat: add \'comments\' option')}\n`
           + `    ${chalk.green('fix: handle events on blur (close #28)')}\n\n`
-          + chalk.red(`请查看 git commit 提交规范:\n`),
+          + chalk.red(`请查看 git commit 提交规范: https://github.com/Amphi-lab/Amphi-Dao-Web-Refactor/blob/main/git-commit-style.md \n`),
     )
 
     process.exit(1)

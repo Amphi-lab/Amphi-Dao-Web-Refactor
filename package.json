@@ -39,9 +39,8 @@
         "vite": "^4.3.2"
     },
     "lint-staged": {
-        "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix",
-        "test/**/*.{js,jsx,ts,tsx}": "eslint",
-        "*.css": "stylelint --cache --fix",
+        "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
+        "*.css": "stylelint --fix",
         "*.html": "htmlhint"
     }
 }

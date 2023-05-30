@@ -3,7 +3,7 @@ module.exports = {
         browser: true,
         node: true,
         es2021: true,
-        es6: true
+        es6: true,
     },
     extends: [
         'airbnb',
@@ -105,13 +105,13 @@ module.exports = {
         {
             files: [
                 "vite.config.ts",
-                "index.html"
+                "index.html",
             ],
             parserOptions: {
                 project: [
                     "./tsconfig.node.json"
                 ]
-            }
+            },
         },
         {
             files: ['*.ts', '*.tsx'],

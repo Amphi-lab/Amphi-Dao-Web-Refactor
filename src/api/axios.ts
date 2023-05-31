@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.timeout = 100000;
-axios.defaults.baseURL = "https://api.amphi.space/";
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 /**
  * http request 拦截器

@@ -1,30 +1,44 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { viteMockServe } from 'vite-plugin-mock'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-    plugins: [react()],
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, 'src'),
-            timers: 'rollup-plugin-node-polyfills/polyfills/timers',
-        }
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: '@use "@/common/common.scss" as *;'
+
+export default ({ mode }) => {
+    const env = loadEnv(mode, process.cwd())
+
+    console.log("env",env)
+
+    return defineConfig({
+        plugins: [
+            react(),
+            viteMockServe({
+                ignore: /^_/,
+                mockPath: 'mock',
+                enable: env.VITE_USE_MOCK === 'true'
+            })
+        ],
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, 'src'),
+                timers: 'rollup-plugin-node-polyfills/polyfills/timers',
             }
-        }
-    },
-    // build: {
-    //     rollupOptions: {
-    //         plugins: [polyfillNode()],
-    //     }
-    // },
-    // optimizeDeps: {
-    //     exclude: ["events"],
-    // },
-})
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    additionalData: '@use "@/common/common.scss" as *;'
+                }
+            }
+        },
+        // build: {
+        //     rollupOptions: {
+        //         plugins: [polyfillNode()],
+        //     }
+        // },
+        // optimizeDeps: {
+        //     exclude: ["events"],
+        // },
+    })
+}
 

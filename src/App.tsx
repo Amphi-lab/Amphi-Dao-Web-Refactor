@@ -1,8 +1,11 @@
-function App() {
+import MockDemo from "./examples/MockDemo"
 
+function App() {
     return (
         <>
             App
+
+            <MockDemo />
         </>
     )
 }

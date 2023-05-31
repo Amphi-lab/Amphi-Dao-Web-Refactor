@@ -2,7 +2,6 @@
     "name": "amphi-dao",
     "private": true,
     "version": "1.0.0",
-    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
@@ -17,6 +16,8 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
+        "@babel/core": "^7.22.1",
+        "@babel/eslint-parser": "^7.21.8",
         "@babel/eslint-plugin": "^7.19.1",
         "@types/node": "^20.2.5",
         "@types/react": "^18.0.28",
@@ -24,6 +25,8 @@
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "@vitejs/plugin-react": "^4.0.0",
+        "autoprefixer": "^10.4.14",
+        "cssnano": "^6.0.1",
         "eslint": "^8.38.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.8.0",
@@ -35,6 +38,10 @@
         "eslint-plugin-react-refresh": "^0.3.4",
         "husky": "^8.0.3",
         "lint-staged": "^13.2.2",
+        "postcss": ">8.4.6 <9.0.0",
+        "postcss-preset-env": "^8.4.1",
+        "tailwindcss": "^3.3.2",
+        "ts-node": "^10.9.1",
         "typescript": "^5.0.2",
         "vite": "^4.3.2"
     },
@@ -42,5 +49,12 @@
         "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
         "*.css": "stylelint --fix",
         "*.html": "htmlhint"
-    }
+    },
+    "browserslist": [
+        "Android 4.1",
+        "iOS 7.1",
+        "Chrome > 31",
+        "ff > 31",
+        "ie >= 8"
+    ]
 }

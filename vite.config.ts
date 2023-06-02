@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { viteMockServe } from 'vite-plugin-mock'
+import Pages from 'vite-plugin-pages'
 
 
 export default ({ mode }) => {
@@ -16,7 +17,10 @@ export default ({ mode }) => {
                 ignore: /^_/,
                 mockPath: 'mock',
                 enable: env.VITE_USE_MOCK === 'true'
-            })
+            }),
+            Pages({
+                dirs: 'src/pages',
+            }),
         ],
         resolve: {
             alias: {

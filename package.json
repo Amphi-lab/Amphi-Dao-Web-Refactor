@@ -27,6 +27,8 @@
         "@typescript-eslint/parser": "^5.57.1",
         "@vitejs/plugin-react": "^4.0.0",
         "esbuild": "^0.17.19",
+        "autoprefixer": "^10.4.14",
+        "cssnano": "^6.0.1",
         "eslint": "^8.38.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.8.0",
@@ -38,6 +40,10 @@
         "eslint-plugin-react-refresh": "^0.3.4",
         "husky": "^8.0.3",
         "lint-staged": "^13.2.2",
+        "postcss": ">8.4.6 <9.0.0",
+        "postcss-preset-env": "^8.4.1",
+        "tailwindcss": "^3.3.2",
+        "ts-node": "^10.9.1",
         "typescript": "^5.0.2",
         "vite": "^4.3.2",
         "vite-plugin-mock": "^3.0.0"
@@ -46,5 +52,12 @@
         "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
         "*.css": "stylelint --fix",
         "*.html": "htmlhint"
-    }
+    },
+    "browserslist": [
+        "Android 4.1",
+        "iOS 7.1",
+        "Chrome > 31",
+        "ff > 31",
+        "ie >= 8"
+    ]
 }

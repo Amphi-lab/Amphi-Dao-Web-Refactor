@@ -6,8 +6,8 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
-        "lint": "eslint src --ext .js,.jsx,.ts,.tsx;",
-        "prettier": "prettier -c --write **/* ",
+        "lint": "eslint src --ext .js,.jsx,.ts,.tsx ",
+        "prettier": "prettier -c --write src/* ",
         "prepare": "husky install",
         "pre-commit": "lint-staged",
         "preview": "vite preview"

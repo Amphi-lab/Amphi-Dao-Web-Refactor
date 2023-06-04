@@ -2,7 +2,6 @@
     "name": "amphi-dao",
     "private": true,
     "version": "1.0.0",
-    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
@@ -24,6 +23,8 @@
         "@babel/core": "^7.22.1",
         "@babel/eslint-parser": "^7.21.8",
         "@babel/eslint-plugin": "^7.19.1",
+        "@commitlint/cli": "^17.6.5",
+        "@commitlint/config-conventional": "^17.6.5",
         "@types/node": "^20.2.5",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.11",
@@ -61,8 +62,7 @@
     },
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
-        "*.css": "stylelint --fix",
-        "*.html": "htmlhint"
+        "*.css": "stylelint --fix"
     },
     "browserslist": [
         "Android 4.1",

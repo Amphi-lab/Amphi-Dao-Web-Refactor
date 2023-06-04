@@ -14,11 +14,11 @@ module.exports = {
     ],
     plugins: ['react', '@babel', '@typescript-eslint', 'react-hooks'],
     globals: {
-        NodeJS: true
+        NodeJS: true,
     },
     settings: {
         react: {
-            version: "detect"
+            version: "detect",
         },
         polyfills: ['Promise', 'URL'],
         'import/resolver': {
@@ -31,7 +31,7 @@ module.exports = {
         sourceType: "module",
         extraFileExtensions: [".html"],
         ecmaFeatures: {
-            "jsx": true
+            "jsx": true,
         },
     },
     rules: {
@@ -100,6 +100,12 @@ module.exports = {
         '@typescript-eslint/no-shadow': [2, { ignoreTypeValueShadow: true }],
         // https://github.com/typescript-eslint/typescript-eslint/issues/2528#issuecomment-689369395
         'no-undef': 0,
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                devDependencies: true,
+            },
+        ],
     },
     overrides: [
         {
@@ -109,8 +115,8 @@ module.exports = {
             ],
             parserOptions: {
                 project: [
-                    "./tsconfig.node.json"
-                ]
+                    "./tsconfig.node.json",
+                ],
             },
         },
         {

@@ -103,7 +103,7 @@ module.exports = {
         "import/no-extraneous-dependencies": [
             "error",
             {
-                devDependencies: true,
+                projectDependencies:false
             },
         ],
     },

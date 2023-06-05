@@ -6,10 +6,10 @@ const presetEnv = require("postcss-preset-env");
 const isBuild = process.env.NODE_ENV === 'production';
 
 const plugins = [
-    // tailwindcss,
+    cssnano,
     presetEnv({}),
 ];
 
 module.exports = {
-    plugins: isBuild ? [...plugins, cssnano] : [...plugins, autoprefixer],
+    plugins
 }

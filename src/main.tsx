@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
-import "tailwindcss/tailwind.css"
 import "@/styles/reset.css"
 import App from './App'
 

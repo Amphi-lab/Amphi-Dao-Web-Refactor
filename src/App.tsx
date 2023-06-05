@@ -13,9 +13,9 @@ import ThemeSwitcher from "@/components/ThemeSwitch"
 function App() {
     return (
         <ThemeProvider>
-            <Button>App</Button>
-
             <ThemeSwitcher />
+            
+            <Button>App</Button>
 
             <MockDemo />
 

@@ -18,7 +18,8 @@ module.exports = {
                 'chore', // 构建过程或辅助工具的变动
                 'revert', // 回退
                 'build', // 影响项目构建或依赖项修改
-                'release' //  发布新版本
+                'release',//  发布新版本
+                'merge', // 合并代码
             ]
         ],
         // subject 大小写不做校验

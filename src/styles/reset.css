@@ -45,3 +45,14 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* 主题色配置 */
+:root {
+	color: #000;
+	background-color: #fff;
+}
+
+html[data-theme='dark'] {
+	color: #fff;
+	background-color: #000;
+}

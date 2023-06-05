@@ -36,6 +36,7 @@ const ThemeProvider = (props: any) => {
 
     const switchTheme = (theme: 'dark' | 'light' | 'system') => {
         localStorage.setItem('theme', theme)
+        document.documentElement.dataset.theme = theme === 'system' ? systemTheme : theme
         setTheme(theme)
     }
 

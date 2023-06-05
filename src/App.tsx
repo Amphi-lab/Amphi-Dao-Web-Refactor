@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 import routes from '~react-pages'
 import { Button } from "antd"
-import { ThemeProvider } from "@/context/ThemeProvider"
 import MockDemo from "./examples/MockDemo"
 import ThemeSwitcher from "@/components/ThemeSwitch"
 
@@ -12,9 +11,9 @@ import ThemeSwitcher from "@/components/ThemeSwitch"
 
 function App() {
     return (
-        <ThemeProvider>
+        <>
             <ThemeSwitcher />
-            
+
             <Button>App</Button>
 
             <MockDemo />
@@ -22,7 +21,7 @@ function App() {
             <Suspense fallback={<p>Loading...</p>}>
                 {useRoutes(routes)}
             </Suspense>
-        </ThemeProvider>
+        </>
     )
 }
 

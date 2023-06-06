@@ -4,16 +4,19 @@ import type { FC } from 'react'
 const index: FC = () => {
     return (
         <div>
-            <p>index.vue</p>
+            <p style={{ fontSize: 20, marginBottom: 15 }}>index.vue</p>
             <Link to="/demo">
                 demo
-            </Link> |
+            </Link>
+            <br />
             <Link to="/blog">
                 blog
-            </Link> |
+            </Link>
+            <br />
             <Link to="/components">
                 components
-            </Link> |
+            </Link>
+            <br />
             <Link to="/xxx">
                 not exists
             </Link>

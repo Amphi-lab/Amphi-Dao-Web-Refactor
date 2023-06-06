@@ -20,6 +20,8 @@ function App() {
 
             <MockDemo />
 
+
+            <h2 style={{fontSize: 30, marginTop: 50, marginBottom: 20}}>pages: </h2>
             <Suspense fallback={<p>Loading...</p>}>
                 {useRoutes(routes)}
             </Suspense>

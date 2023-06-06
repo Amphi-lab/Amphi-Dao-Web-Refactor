@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Button, Input, Space } from 'antd';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import {
     decrement,
@@ -19,19 +20,19 @@ export default function Counter() {
     return (
         <div style={{ margin: '30px 0' }}>
             <div style={{ margin: '15px 0' }}>
-                <button aria-label="Decrement value" onClick={() => dispatch(decrement())}> - </button>
+                <Button aria-label="Decrement value" onClick={() => dispatch(decrement())}> - </Button>
                 <span>{count}</span>
-                <button aria-label="Increment value" onClick={() => dispatch(increment())}> + </button>
+                <Button aria-label="Increment value" onClick={() => dispatch(increment())}> + </Button>
             </div>
-            <div style={{ margin: '15px 0' }}>
-                <input
+            <Space direction="horizontal">
+                <Input
                     aria-label="Set increment amount"
                     value={incrementAmount}
                     onChange={(e) => setIncrementAmount(e.target.value)} />
-                <button onClick={() => dispatch(incrementByAmount(incrementValue))}> Add Amount </button>
-                <button onClick={() => dispatch(incrementAsync(incrementValue))}> Add Async </button>
-                <button onClick={() => dispatch(incrementIfOdd(incrementValue))}> Add If Odd </button>
-            </div>
+                <Button onClick={() => dispatch(incrementByAmount(incrementValue))}> Add Amount </Button>
+                <Button onClick={() => dispatch(incrementAsync(incrementValue))}> Add Async </Button>
+                <Button onClick={() => dispatch(incrementIfOdd(incrementValue))}> Add If Odd </Button>
+            </Space>
         </div>
     );
 }

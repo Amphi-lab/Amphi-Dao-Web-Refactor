@@ -82,7 +82,7 @@ module.exports = {
         // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
         'jsx-a11y/label-has-for': 0,
 
-        'comma-dangle': ['error', 'always-multiline'],
+        'comma-dangle': ['error', 'never'],
         'consistent-return': 0, // TODO: remove later
         'no-param-reassign': 0, // TODO: remove later
         'no-underscore-dangle': 0,

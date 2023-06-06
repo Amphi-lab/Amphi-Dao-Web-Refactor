@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Input, Space } from 'antd';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import {
@@ -20,18 +20,34 @@ export default function Counter() {
     return (
         <div style={{ margin: '30px 0' }}>
             <div style={{ margin: '15px 0' }}>
-                <Button aria-label="Decrement value" onClick={() => dispatch(decrement())}> - </Button>
+                <Button aria-label='Decrement value' onClick={() => dispatch(decrement())}>
+                    {' '}
+                    -{' '}
+                </Button>
                 <span>{count}</span>
-                <Button aria-label="Increment value" onClick={() => dispatch(increment())}> + </Button>
+                <Button aria-label='Increment value' onClick={() => dispatch(increment())}>
+                    {' '}
+                    +{' '}
+                </Button>
             </div>
-            <Space direction="horizontal">
+            <Space direction='horizontal'>
                 <Input
-                    aria-label="Set increment amount"
+                    aria-label='Set increment amount'
                     value={incrementAmount}
-                    onChange={(e) => setIncrementAmount(e.target.value)} />
-                <Button onClick={() => dispatch(incrementByAmount(incrementValue))}> Add Amount </Button>
-                <Button onClick={() => dispatch(incrementAsync(incrementValue))}> Add Async </Button>
-                <Button onClick={() => dispatch(incrementIfOdd(incrementValue))}> Add If Odd </Button>
+                    onChange={e => setIncrementAmount(e.target.value)}
+                />
+                <Button onClick={() => dispatch(incrementByAmount(incrementValue))}>
+                    {' '}
+                    Add Amount{' '}
+                </Button>
+                <Button onClick={() => dispatch(incrementAsync(incrementValue))}>
+                    {' '}
+                    Add Async{' '}
+                </Button>
+                <Button onClick={() => dispatch(incrementIfOdd(incrementValue))}>
+                    {' '}
+                    Add If Odd{' '}
+                </Button>
             </Space>
         </div>
     );

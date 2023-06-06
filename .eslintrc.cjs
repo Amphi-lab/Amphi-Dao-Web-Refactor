@@ -7,10 +7,11 @@ module.exports = {
     },
     extends: [
         'airbnb',
-        'prettier',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
         'plugin:import/typescript',
+        'prettier',
+        'plugin:prettier/recommended',
     ],
     plugins: ['react', '@babel', '@typescript-eslint', 'react-hooks'],
     globals: {
@@ -55,6 +56,7 @@ module.exports = {
         'react-hooks/rules-of-hooks': 2, // Checks rules of Hooks
         'react/function-component-definition': 0,
         'react/no-unused-class-component-methods': 0,
+        'import/no-unresolved': [2, { ignore: ['~*'] }],
         'import/extensions': 0,
         'import/no-cycle': 0,
         'import/no-extraneous-dependencies': [
@@ -99,13 +101,7 @@ module.exports = {
         'no-shadow': 0,
         '@typescript-eslint/no-shadow': [2, { ignoreTypeValueShadow: true }],
         // https://github.com/typescript-eslint/typescript-eslint/issues/2528#issuecomment-689369395
-        'no-undef': 0,
-        "import/no-extraneous-dependencies": [
-            "error",
-            {
-                projectDependencies:false
-            },
-        ],
+        'no-undef': 0
     },
     overrides: [
         {

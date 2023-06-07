@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Storage from '@/utils/storage';
-import { i18nLocal } from '@/constants/storage';
+import { i18nLocal } from '@/constants/storageKeys';
 
 import enUSLocale from './locales/en-US';
 import zhCNLocale from './locales/zh-CN';

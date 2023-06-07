@@ -5,7 +5,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import customTheme from '@/styles/theme.json';
 import { useTranslation } from 'react-i18next';
 import Storage from '@/utils/storage';
-import { ThemeStorageKey } from '@/constants/storage';
+import { ThemeStorageKey } from '@/constants/storageKeys';
 
 const ThemeContext = createContext<any>({});
 

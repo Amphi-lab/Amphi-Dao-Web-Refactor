@@ -25,7 +25,7 @@
             "label": "Interpreting"
         }
     ],
-    "Industry": [
+    "industry": [
         {
             "value": "1",
             "label": "Accommodation & Food Services"
@@ -791,7 +791,7 @@
             "label": "People"
         }
     ],
-    "currentlanguages": [
+    "currentLanguages": [
         {
             "value": "19",
             "label": "Chinese (Simplified)"

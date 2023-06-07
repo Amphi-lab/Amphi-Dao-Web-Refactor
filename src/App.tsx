@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import MockDemo from '@/examples/MockDemo';
 import ThemeSwitcher from '@/components/ThemeSwitch';
 import Counter from '@/examples/StoreDemo';
+import I18nDemo from '@/examples/I18nDemo';
 import routes from '~react-pages';
 
 // eslint-disable-next-line no-console
@@ -15,6 +16,9 @@ function App() {
             <ThemeSwitcher />
 
             <Button>App</Button>
+
+            <I18nDemo />
+
             <Counter />
 
             <MockDemo />

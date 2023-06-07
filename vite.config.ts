@@ -8,8 +8,6 @@ import Pages from 'vite-plugin-pages'
 export default ({ mode }) => {
     const env = loadEnv(mode, process.cwd())
 
-    console.log("env",env)
-
     return defineConfig({
         plugins: [
             react(),

@@ -3,7 +3,7 @@ module.exports = {
         browser: true,
         node: true,
         es2021: true,
-        es6: true,
+        es6: true
     },
     extends: [
         'airbnb',
@@ -11,29 +11,29 @@ module.exports = {
         'plugin:react-hooks/recommended',
         'plugin:import/typescript',
         'prettier',
-        'plugin:prettier/recommended',
+        'plugin:prettier/recommended'
     ],
     plugins: ['react', '@babel', '@typescript-eslint', 'react-hooks'],
     globals: {
-        NodeJS: true,
+        NodeJS: true
     },
     settings: {
         react: {
-            version: "detect",
+            version: 'detect'
         },
         polyfills: ['Promise', 'URL'],
         'import/resolver': {
-            typescript: {},
-        },
+            typescript: {}
+        }
     },
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        project: ["tsconfig.json"],
-        sourceType: "module",
-        extraFileExtensions: [".html"],
+        project: ['tsconfig.json'],
+        sourceType: 'module',
+        extraFileExtensions: ['.html'],
         ecmaFeatures: {
-            "jsx": true,
-        },
+            jsx: true
+        }
     },
     rules: {
         'react/jsx-one-expression-per-line': 0,
@@ -69,9 +69,9 @@ module.exports = {
                     '**/*.test.js',
                     '**/__tests__/*',
                     '*.config.js',
-                    '**/*.md',
-                ],
-            },
+                    '**/*.md'
+                ]
+            }
         ],
         'jsx-a11y/no-static-element-interactions': 0,
         'jsx-a11y/anchor-has-content': 0,
@@ -101,19 +101,20 @@ module.exports = {
         'no-shadow': 0,
         '@typescript-eslint/no-shadow': [2, { ignoreTypeValueShadow: true }],
         // https://github.com/typescript-eslint/typescript-eslint/issues/2528#issuecomment-689369395
-        'no-undef': 0
+        'no-undef': 0,
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto'
+            }
+        ]
     },
     overrides: [
         {
-            files: [
-                "vite.config.ts",
-                "index.html",
-            ],
+            files: ['vite.config.ts', 'index.html'],
             parserOptions: {
-                project: [
-                    "./tsconfig.node.json",
-                ],
-            },
+                project: ['./tsconfig.node.json']
+            }
         },
         {
             files: ['*.ts', '*.tsx'],
@@ -121,8 +122,11 @@ module.exports = {
                 '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
                 'no-unused-expressions': 'off',
                 '@typescript-eslint/no-unused-expressions': 2,
-                '@typescript-eslint/consistent-type-imports': [2, { disallowTypeAnnotations: false }],
-            },
-        },
-    ],
-}
+                '@typescript-eslint/consistent-type-imports': [
+                    2,
+                    { disallowTypeAnnotations: false }
+                ]
+            }
+        }
+    ]
+};

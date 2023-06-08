@@ -1,6 +1,5 @@
 module.exports = {
     tabWidth: 4,
-    useTabs: false,
     printWidth: 100,
     semi: true,
     singleQuote: true,
@@ -9,5 +8,6 @@ module.exports = {
     jsxSingleQuote: true,
     ignorePath: '.prettierignore',
     //禁止随时添加逗号,这个很重要。找了好久
-    trailingComma: "none"
+    trailingComma: "none",
+    endOfLine: "auto" 
 };

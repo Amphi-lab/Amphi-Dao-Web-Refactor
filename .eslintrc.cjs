@@ -88,6 +88,7 @@ module.exports = {
         'no-underscore-dangle': 0,
         // for (let i = 0; i < len; i++)
         'no-plusplus': 0,
+        "no-console": 0,
         // https://eslint.org/docs/rules/no-continue
         // labeledLoop is conflicted with `eslint . --fix`
         'no-continue': 0,

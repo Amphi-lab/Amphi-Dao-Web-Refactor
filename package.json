@@ -60,6 +60,7 @@
         "postcss": ">8.4.6 <9.0.0",
         "postcss-preset-env": "^8.4.1",
         "prettier": "^2.8.8",
+        "sass": "^1.63.2",
         "stylelint": "^15.6.3",
         "stylelint-config-prettier": "^9.0.5",
         "stylelint-config-rational-order": "^0.1.2",
@@ -73,7 +74,8 @@
     },
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
-        "*.css": "stylelint --fix"
+        "*.css": "stylelint --fix",
+        "*.scss": "stylelint --fix"
     },
     "browserslist": [
         "Android 4.1",

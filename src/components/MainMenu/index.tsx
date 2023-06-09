@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import styles from './index.module.scss';
 
 const items: MenuProps['items'] = [
     {
@@ -90,7 +91,15 @@ const App: React.FC = () => {
         setCurrent(e.key);
     };
 
-    return <Menu onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />;
+    return (
+        <Menu
+            className={styles['main-menu']}
+            onClick={onClick}
+            selectedKeys={[current]}
+            mode='horizontal'
+            items={items}
+        />
+    );
 };
 
 export default App;

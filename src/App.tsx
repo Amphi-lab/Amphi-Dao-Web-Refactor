@@ -5,6 +5,7 @@ import MockDemo from '@/examples/MockDemo';
 import ThemeSwitcher from '@/components/ThemeSwitch';
 import Counter from '@/examples/StoreDemo';
 import I18nDemo from '@/examples/I18nDemo';
+import Header from '@/components/Header';
 import routes from '~react-pages';
 
 // eslint-disable-next-line no-console
@@ -13,6 +14,8 @@ import routes from '~react-pages';
 function App() {
     return (
         <>
+            <Header />
+
             <ThemeSwitcher />
 
             <Button>App</Button>

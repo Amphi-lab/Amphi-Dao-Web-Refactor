@@ -1,15 +1,18 @@
 import React from 'react';
+import { Layout } from 'antd';
 import Logo from '@/assets/svg/logo';
 import MainMenu from '../MainMenu';
 import styles from './index.module.scss';
 
-const Header = () => {
+const { Header } = Layout;
+
+const AmHeader = () => {
     return (
-        <header className={styles['amphi-header']}>
+        <Header className={styles['amphi-header']}>
             <Logo />
             <MainMenu />
-        </header>
+        </Header>
     );
 };
 
-export default Header;
+export default AmHeader;

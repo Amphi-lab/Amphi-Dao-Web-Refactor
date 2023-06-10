@@ -1,5 +1,10 @@
 .amphi-header {
+    /* 自定义样式 */
     display: flex;
-    align-items: center;
-    padding: 28px 110px 0 125px;
+
+    /* 覆盖ant 默认样式 */
+    height: auto;
+    padding: 28px 110px 0;
+    background-color: inherit;
+    padding-inline: 0;
 }

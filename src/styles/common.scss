@@ -5,3 +5,9 @@
     font-family: $family;
     font-style: $style;
 }
+
+@mixin contentMaxWidth() {
+    max-width: 1586px;
+    margin: 0 auto;
+    padding: 0 20px;
+}

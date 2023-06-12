@@ -29,7 +29,7 @@ export default ({ mode }) => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: '@use "@/common/common.scss" as *;'
+                    additionalData: '@use "@/styles/common.scss" as *;'
                 }
             }
         },

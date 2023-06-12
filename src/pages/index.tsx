@@ -131,14 +131,14 @@ const Bounties: FC = () => {
             key: '1',
             label: 'Top',
             children: (
-                <Table rowKey="id" dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
+                <Table rowKey="id" dataSource={dataSource} columns={columns} pagination={false} scroll={{ x: 'max-content' }} />
             )
         },
         {
             key: '2',
             label: `Latest`,
             children: (
-                <Table rowKey="id" dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
+                <Table rowKey="id" dataSource={dataSource} columns={columns} pagination={false} scroll={{ x: 'max-content' }} />
             )
         }
     ]

@@ -1,9 +1,8 @@
-import type { FC } from 'react'
+import React from 'react';
+import type { FC } from 'react';
 
 const Component: FC = () => {
-  return (
-    <h1>Test Components name</h1>
-  )
-}
+    return <h1>Test Components name</h1>;
+};
 
-export default Component
+export default Component;

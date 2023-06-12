@@ -7,7 +7,7 @@ import {
     incrementByAmount,
     incrementAsync,
     incrementIfOdd,
-    selectCount,
+    selectCount
 } from '@/store/reducers/counterSlice';
 
 export default function Counter() {

@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState, AppThunk } from '../index';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { RootState, AppThunk } from '../index';
 
 // 定义 slice state 的类型
 export interface CounterState {
@@ -10,17 +11,14 @@ export interface CounterState {
 // 使用该类型定义初始 state
 const initialState: CounterState = {
     value: 0,
-    status: 'idle',
+    status: 'idle'
 };
 
-export const incrementAsync = createAsyncThunk(
-    'counter/fetchCount',
-    async (amount: number) => {
-        // const response = await fetchCount(amount);
-        // The value we return becomes the `fulfilled` action payload
-        return 5;
-    }
-);
+export const incrementAsync = createAsyncThunk('counter/fetchCount', async (amount: number) => {
+    // const response = await fetchCount(amount);
+    // The value we return becomes the `fulfilled` action payload
+    return amount;
+});
 
 export const counterSlice = createSlice({
     name: 'counter',
@@ -32,45 +30,44 @@ export const counterSlice = createSlice({
             // doesn't actually mutate the state because it uses the Immer library,
             // which detects changes to a "draft state" and produces a brand new
             // immutable state based off those changes
-            state.value += 1
+            state.value += 1;
         },
         decrement: state => {
-            state.value -= 1
+            state.value -= 1;
         },
         // 使用 PayloadAction 类型声明 `action.payload` 的内容
         incrementByAmount: (state, action: PayloadAction<number>) => {
             state.value += action.payload;
-        },
+        }
     },
-    extraReducers: (builder) => {
+    extraReducers: builder => {
         builder
-            .addCase(incrementAsync.pending, (state) => {
+            .addCase(incrementAsync.pending, state => {
                 state.status = 'loading';
             })
             .addCase(incrementAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.value += action.payload;
             })
-            .addCase(incrementAsync.rejected, (state) => {
+            .addCase(incrementAsync.rejected, state => {
                 state.status = 'failed';
             });
-    },
-})
+    }
+});
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const selectCount = (state: RootState) => state.counter.value;
 
 export const incrementIfOdd =
     (amount: number): AppThunk =>
-        (dispatch, getState) => {
-            const currentValue = selectCount(getState());
-            if (currentValue % 2 === 1) {
-                dispatch(incrementByAmount(amount));
-            }
-        };
+    (dispatch, getState) => {
+        const currentValue = selectCount(getState());
+        if (currentValue % 2 === 1) {
+            dispatch(incrementByAmount(amount));
+        }
+    };
 
-
-export default counterSlice.reducer
+export default counterSlice.reducer;

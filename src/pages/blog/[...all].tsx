@@ -1,9 +1,8 @@
-import type { FC } from 'react'
+import React from 'react';
+import type { FC } from 'react';
 
 const all: FC = () => {
-  return (
-    <p>blog ...all route</p>
-  )
-}
+    return <p>blog ...all route</p>;
+};
 
-export default all
+export default all;

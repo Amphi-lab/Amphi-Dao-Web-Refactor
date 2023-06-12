@@ -1,13 +1,14 @@
-import { Outlet } from 'react-router-dom'
-import type { FC } from 'react'
+import React from 'react';
+import type { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const Component: FC = () => {
-  return (
-    <div>
-      <p>nested demo view:</p>
-      <Outlet />
-    </div>
-  )
-}
+    return (
+        <div>
+            <p>nested demo view:</p>
+            <Outlet />
+        </div>
+    );
+};
 
-export default Component
+export default Component;

@@ -80,13 +80,13 @@ time,
 mark,
 audio,
 video {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-size: 100%;
     font: inherit;
+    font-size: 100%;
     vertical-align: baseline;
     border: 0;
-    box-sizing: border-box;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -133,16 +133,14 @@ q::after {
 }
 
 button {
-    outline: none;
     border: none;
+    outline: none;
 }
 
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-
 
 /* 主题色配置 */
 :root {
@@ -167,36 +165,34 @@ html[data-theme='dark'] {
     background-color: #000;
 }
 
-
 h1 {
+    font-weight: 700;
     font-size: 120px;
-    font-weight: bold;
 }
 
 h2 {
+    font-weight: 700;
     font-size: 55px;
-    font-weight: bold;
 }
 
 h3 {
+    font-weight: 700;
     font-size: 45px;
-    font-weight: bold;
 }
 
 h4 {
+    font-weight: 700;
     font-size: 36px;
-    font-weight: bold;
 }
 
 h5 {
+    font-weight: 700;
     font-size: 30px;
-    font-weight: bold;
 }
 
-
 h6 {
+    font-weight: 700;
     font-size: 24px;
-    font-weight: bold;
 }
 
 .primary {

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FC } from 'react'
+import type { FC } from 'react';
 import { Button } from 'antd';
 import MockDemo from '@/examples/MockDemo';
 import ThemeSwitcher from '@/components/ThemeSwitch';
@@ -20,7 +20,7 @@ const Component: FC = () => {
 
             <MockDemo />
         </div>
-    )
-}
+    );
+};
 
-export default Component
+export default Component;

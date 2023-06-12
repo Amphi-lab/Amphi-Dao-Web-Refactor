@@ -1,9 +1,8 @@
-import type { FC } from 'react'
+import React from 'react';
+import type { FC } from 'react';
 
 const index: FC = () => {
-  return (
-    <p>blog/today/index</p>
-  )
-}
+    return <p>blog/today/index</p>;
+};
 
-export default index
+export default index;

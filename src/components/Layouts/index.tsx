@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
-import { Outlet } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import React from 'react';
+// import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import Banner from '../Banner';
 import AmHeader from '../Header';
@@ -10,8 +11,8 @@ const { Content } = Layout;
 
 type IProps = {
     isShowBanner: boolean;
-    children: ReactNode
-}
+    children: ReactNode;
+};
 const Layouts = ({ isShowBanner = false, children }: IProps) => {
     return (
         <Layout style={{ background: '#FFF' }}>

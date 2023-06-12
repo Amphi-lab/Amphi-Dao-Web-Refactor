@@ -1,17 +1,17 @@
 .home-banner {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 150px 0 50px;
+    justify-content: center;
     min-height: 100vh;
-    line-height: 1.2;
+    padding: 150px 0 50px;
     color: #fff;
-    background: url("@/assets/images/banner.png") no-repeat center center / cover;
+    line-height: 1.2;
+    text-align: center;
+    background: url('@/assets/images/banner.png') no-repeat center center / cover;
 
-    >* {
-        @include contentMaxWidth
+    > * {
+        @include contentMaxWidth;
     }
 
     h3 {
@@ -20,8 +20,8 @@
 
     button.dark-btn {
         margin-top: 50px;
-        padding-left: 60px;
         padding-right: 60px;
+        padding-left: 60px;
         border: none;
     }
 }
@@ -56,13 +56,11 @@
         }
     }
 
-
-
-    .dark-table-wrapper .dark-table-tbody>tr>td {
-        font-weight: bold;
+    .dark-table-wrapper .dark-table-tbody > tr > td {
+        font-weight: 700;
 
         button {
-            font-weight: bold;
+            font-weight: 700;
         }
     }
 }

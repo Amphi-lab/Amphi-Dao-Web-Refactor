@@ -41,6 +41,23 @@
         padding-bottom: 0;
     }
 
+    .ranking-name {
+        display: flex;
+        align-items: center;
+
+        .rank-index {
+            width: 30px;
+        }
+
+        .rank-icon {
+            width: 35px;
+            height: auto;
+            margin-right: 10px;
+        }
+    }
+
+
+
     .dark-table-wrapper .dark-table-tbody>tr>td {
         font-weight: bold;
 

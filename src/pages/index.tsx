@@ -1,18 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import type { FC, ReactNode } from 'react'
-import './index.scss'
-import { Button, Tabs, Table, Row, Col, Card } from 'antd'
+import { useNavigate } from 'react-router';
+import { Button, Tabs, Table, Row, Col, Card, Tooltip } from 'antd'
 import type { TabsProps } from 'antd';
 import { StarFilled } from '@ant-design/icons';
+import './index.scss'
+// api
+import { ranking } from '@/api/api';
 // components
-import ThemeSwitcher from '@/components/ThemeSwitch';
 import RequestTransForm from "@/components/RequestTransForm"
+// utils
+import BigNumber from 'bignumber.js';
+import { amountFromToken } from '@/utils/number';
+import { getSubStr } from '@/utils/string';
+// types
+import ITransaction from "@/types/ITransaction"
+import { currentLanguages, translationTypes, workLoadType } from "@/constants/selcet.json"
 // images
 import ImageTranslator from "@/assets/images/translator.png"
 import ImageAbout1 from "@/assets/images/about1.png"
 import ImageAbout2 from "@/assets/images/about2.png"
 import ImageAbout3 from "@/assets/images/about3.png"
 import ImageAbout4 from "@/assets/images/about4.png"
+import textIcon from '@/assets/svg/text.svg'
+import aduioIcon from '@/assets/svg/audio.svg'
+import folderIcon from '@/assets/svg/folder.svg'
+
+
 
 const { Meta } = Card;
 
@@ -46,49 +60,114 @@ const HomeSection: FC<IHomeSectionProps> = ({ className, title, children }) => {
 
 
 const Bounties: FC = () => {
-    const dataSource = [
-        { key: '1', name: 'Product Manual Translation', type: 'Translation', from: 'English', to: 'French', workload: '5,000 words', bounty: '100 USDT', posted: '2023/04/25', deadline: '2023/05/01' },
-        { key: '2', name: 'Subtitles Validation', type: 'Validation', from: 'English', to: 'French', workload: '5,000 words', bounty: '100 USDT', posted: '2023/04/25', deadline: '2023/05/01' },
-    ];
+    const navigate = useNavigate()
+    const [dataSource, setDataSource] = useState<ITransaction[]>([]);
+
+    const findIcon = (translationType: string) => {
+        if (translationType === '1' || translationType === '2' || translationType === '0') return textIcon
+        else if (translationType === '3' || translationType === '4') return aduioIcon
+        else if (translationType === '5') return folderIcon
+        else return ''
+    }
 
     const columns = [
-        { title: 'REQUEST', dataIndex: 'name', key: 'name', fixed: 'left' },
-        { title: 'REQUEST TYPE', dataIndex: 'type', key: 'type' },
-        { title: 'FROM', dataIndex: 'from', key: 'from' },
-        { title: 'TO', dataIndex: 'to', key: 'to' },
-        { title: 'WORKLOAD', dataIndex: 'workload', key: 'workload' },
-        { title: 'BOUNTY', dataIndex: 'bounty', key: 'bounty' },
-        { title: 'POSTED', dataIndex: 'posted', key: 'posted' },
-        { title: 'DEADLINE', dataIndex: 'deadline', key: 'deadline' },
+        {
+            title: 'REQUEST', dataIndex: 'title', key: 'name', fixed: 'left',
+            render: (value: string, record: ITransaction, index: number) => {
+                const url = findIcon(record.translationType)
+                return (
+                    <div className='ranking-name'>
+                        <span className='rank-index'>{index + 1}. </span>
+                        <img className='rank-icon' src={url} alt="" />
+                        <Tooltip title={value}> {getSubStr(value)} </Tooltip>
+                    </div>
+                )
+            }
+        },
+        {
+            title: 'REQUEST TYPE', dataIndex: 'translationType', key: 'type',
+            render: (value: string) => {
+                return translationTypes.find(item => item.value === value)?.label
+            }
+        },
+        {
+            title: 'FROM', dataIndex: 'sourceLang', key: 'from',
+            render: (value: string) => {
+                return currentLanguages.find(item => item.value === value)?.label
+            }
+        },
+        {
+            title: 'TO', dataIndex: 'targetLang', key: 'to',
+            render: (value: string) => {
+                return currentLanguages.find(item => item.value === value)?.label
+            }
+        },
+        {
+            title: 'WORKLOAD', dataIndex: 'workload', key: 'workload',
+            render: (value: number, record: ITransaction) => {
+                return value + " " + workLoadType.find(item => item.value === record.workloadType)?.label
+            }
+        },
+        {
+            title: 'BOUNTY', dataIndex: 'bounty', key: 'bounty',
+            render: (value: BigNumber.Value) => {
+                return amountFromToken(value, 'format') + " USDT"
+            }
+        },
+        { title: 'POSTED', dataIndex: 'createTime', key: 'posted', render: (value: string) => (new Date(value).toLocaleString()) },
+        { title: 'DEADLINE', dataIndex: 'deadline', key: 'deadline', render: (value: string) => (new Date(value).toLocaleString()) },
         {
             title: '', key: 'action', fixed: 'right',
-            render: (_, record) => (
-                <Button type='primary' size="small">Take</Button>
+            render: () => (
+                <Button type='primary' size="small" onClick={() => { navigate("/") }}>Take</Button>
             ),
         },
     ];
 
-    const operations = <Button type='primary'>More</Button>;
+
 
     const items: TabsProps['items'] = [
         {
             key: '1',
             label: 'Top',
             children: (
-                <Table dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
+                <Table rowKey="id" dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
             )
         },
         {
             key: '2',
             label: `Latest`,
             children: (
-                <Table dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
+                <Table rowKey="id" dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
             )
         }
     ]
+
+    const operations = <Button type='primary' onClick={() => { navigate("/") }}>More</Button>;
+
+    const fetchList = (order) => {
+        ranking({ order }).then(res => {
+            if (res.code === 200) {
+                setDataSource(res.rows)
+            }
+        })
+    }
+
+
+    useEffect(() => {
+        fetchList(1)
+    }, [])
+
     return (
         <HomeSection className="home-bounties" title="Earn Bounties by Translating">
-            <Tabs size='large' tabBarExtraContent={operations} items={items} />
+            <Tabs
+                size='large'
+                items={items}
+                tabBarExtraContent={operations}
+                onChange={(activeKey: any) => {
+                    fetchList(activeKey)
+                }}
+            />
         </HomeSection>
     )
 }
@@ -104,35 +183,6 @@ type ITranslatorsProps = {
 const Translators: FC = () => {
 
     const dataList: ITranslatorsProps[] = new Array(8).fill({ title: "Card title", imageUrl: '', description: "This is the description", orders: 98, star: '8.0' })
-
-    const fetchList = () => {
-        /* 
-             "params[orderByBounty]":传1是top ，传" "是latest
-        */
-        //  let url = `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
-        //  if (order === 1) {
-        //      url = `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
-        //  } else {
-        //      url = `/translation/list?pageNum=1&pageSize=10`
-        //  }
-        //  API.get(url).then((res) => {
-        //      if (res.status === 200) {
-        //          const data: any = [];
-        //          res.data.rows.forEach((item: any) => {
-        //              if (item.tcount !== item.tmax) {
-        //                  data.push({
-        //                      ...item,
-        //                      // bounty: ethers.utils.formatUnits(item.bounty.toString() || "0")
-        //                      bounty: (item.bounty / 1000000000000000000)
-        //                  });
-
-        //              }
-        //          });
-        //          setTableData(data);
-        //          // console.log(data);
-        //      }
-        //  });
-    }
 
     const CircleSvg = () => (
         <svg width="11px" height="11px">
@@ -209,7 +259,6 @@ const AboutAmphi: FC = () => {
 const index: FC = () => {
     return (
         <div>
-            {/* <ThemeSwitcher /> */}
             {/* banner */}
             {/* <Banner /> */}
             {/* Earn Bounties by Translating */}

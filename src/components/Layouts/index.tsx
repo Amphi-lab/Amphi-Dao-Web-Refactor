@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import Banner from '../Banner';
@@ -8,7 +8,11 @@ import styles from './index.module.scss';
 
 const { Content } = Layout;
 
-const Layouts = ({ isShowBanner = false }) => {
+type IProps = {
+    isShowBanner: boolean;
+    children: ReactNode
+}
+const Layouts = ({ isShowBanner = false, children }: IProps) => {
     return (
         <Layout style={{ background: '#FFF' }}>
             {isShowBanner ? (
@@ -19,9 +23,9 @@ const Layouts = ({ isShowBanner = false }) => {
             ) : (
                 <AmHeader />
             )}
-            <Content style={{ height: '200px' }}>
-                content
-                <Outlet />
+            <Content>
+                {/* <Outlet /> */}
+                {children}
             </Content>
             <AmFooter />
         </Layout>

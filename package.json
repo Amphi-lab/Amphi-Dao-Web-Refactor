@@ -75,7 +75,7 @@
         "vite-plugin-pages": "^0.30.1"
     },
     "lint-staged": {
-        "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
+        "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
         "*.css": "stylelint --fix",
         "*.scss": "stylelint --fix"
     },

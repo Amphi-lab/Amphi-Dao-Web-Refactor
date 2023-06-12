@@ -1,5 +1,56 @@
 {
     "token": {
-        "colorPrimary": "#4d90ef"
+        "colorPrimary": "#4d90ef",
+        "borderRadius": 4
+    },
+    "components": {
+        "Button": {
+            "controlHeightLG": 75,
+            "controlHeight": 50,
+            "controlHeightSM": 20,
+            "fontSizeLG": 30,
+            "fontSize": 20
+        },
+        "Tabs": {
+            "titleFontSizeLG": 30,
+            "colorBorderSecondary": "#000000",
+            "colorPrimary": "#000000",
+            "colorPrimaryActive": "#000000",
+            "colorPrimaryHover": "#000000",
+            "colorText": "#333333"
+        },
+        "Table": {
+            "colorText": "#666666",
+            "colorTextHeading": "#666666",
+            "fontSize": 20,
+            "fontWeightStrong": "normal"
+        },
+        "Card": {
+            "padding": 10
+        },
+        "Form": {
+            "fontSize": 30,
+            "colorText": "#000",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        },
+        "Input": {
+            "fontSize": 20,
+            "colorText": "#333",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        },
+        "Select": {
+            "fontSize": 20,
+            "colorText": "#333",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        },
+        "InputNumber": {
+            "fontSize": 20,
+            "colorText": "#333",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        }
     }
 }

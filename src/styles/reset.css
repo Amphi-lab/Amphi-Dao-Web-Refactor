@@ -82,11 +82,11 @@ audio,
 video {
     margin: 0;
     padding: 0;
-
-    /* font-size: 100%; */
+    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
     border: 0;
+    box-sizing: border-box;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -142,9 +142,10 @@ table {
     border-spacing: 0;
 }
 
+
+
 /* 主题色配置 */
 :root {
-    box-sizing: border-box;
     color: #333;
     font-size: 14px;
     font-family: 'Public Sans', 'Helvetica', system-ui, -apple-system, BlinkMacSystemFont,
@@ -164,4 +165,49 @@ table {
 html[data-theme='dark'] {
     color: #fff;
     background-color: #000;
+}
+
+
+h1 {
+    font-size: 120px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 55px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+h6 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.primary {
+    color: var(--main-color);
+}
+
+.primary-bg {
+    background-color: var(--main-color);
+}
+
+.dark-btn.dark-btn-sm {
+    font-size: 14px;
+    line-height: 20px;
 }

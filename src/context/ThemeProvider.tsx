@@ -17,7 +17,7 @@ function getStoredIsCompact(): boolean {
     return Storage.setLocalStorage(ThemeStorageKey.isCompact) === 'true';
 }
 
-function storeIsCompact(isCompact: boolean) {
+function setStoreIsCompact(isCompact: boolean) {
     Storage.setLocalStorage(ThemeStorageKey.isCompact, isCompact.toString());
 }
 
@@ -49,19 +49,22 @@ const ThemeProvider = (props: any) => {
 
     useEffect(() => {
         const setThemeFromLocalStore = () => {
-            const _theme = Storage.getLocalStorage('theme') as 'dark' | 'light' | 'system';
-            if (_theme) {
-                switchTheme(_theme);
+            const _themeMode = Storage.getLocalStorage(ThemeStorageKey.mode) as
+                | 'dark'
+                | 'light'
+                | 'system';
+            if (_themeMode) {
+                switchTheme(_themeMode);
             } else {
                 switchTheme(getSystemTheme());
             }
         };
 
         setThemeFromLocalStore();
-    }, [switchTheme]);
+    }, [systemTheme, switchTheme]);
 
     useEffect(() => {
-        storeIsCompact(isCompact);
+        setStoreIsCompact(isCompact);
     }, [isCompact]);
 
     useEffect(() => {

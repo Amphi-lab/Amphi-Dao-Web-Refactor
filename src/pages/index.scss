@@ -1,0 +1,72 @@
+.home-banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 150px 0 50px;
+    min-height: 100vh;
+    line-height: 1.2;
+    color: #fff;
+    background: url("@/assets/images/banner.png") no-repeat center center / cover;
+
+    >* {
+        @include contentMaxWidth
+    }
+
+    h3 {
+        line-height: 2;
+    }
+
+    button.dark-btn {
+        margin-top: 50px;
+        padding-left: 60px;
+        padding-right: 60px;
+        border: none;
+    }
+}
+
+.home-section {
+    @include contentMaxWidth;
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+    .home-section-title {
+        padding-bottom: 50px;
+    }
+}
+
+.home-bounties {
+    .home-section-title {
+        padding-bottom: 0;
+    }
+
+    .ranking-name {
+        display: flex;
+        align-items: center;
+
+        .rank-index {
+            width: 30px;
+        }
+
+        .rank-icon {
+            width: 35px;
+            height: auto;
+            margin-right: 10px;
+        }
+    }
+
+
+
+    .dark-table-wrapper .dark-table-tbody>tr>td {
+        font-weight: bold;
+
+        button {
+            font-weight: bold;
+        }
+    }
+}
+
+.home-translators {
+    background: url('@/assets/images/bg-translators.png') no-repeat center center / cover;
+}

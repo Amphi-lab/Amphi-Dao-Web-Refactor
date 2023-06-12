@@ -6,6 +6,7 @@ import type { TabsProps } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 // components
 import ThemeSwitcher from '@/components/ThemeSwitch';
+import RequestTransForm from "@/components/RequestTransForm"
 // images
 import ImageTranslator from "@/assets/images/translator.png"
 import ImageAbout1 from "@/assets/images/about1.png"
@@ -51,7 +52,7 @@ const Bounties: FC = () => {
     ];
 
     const columns = [
-        { title: 'REQUEST', dataIndex: 'name', key: 'name' },
+        { title: 'REQUEST', dataIndex: 'name', key: 'name', fixed: 'left' },
         { title: 'REQUEST TYPE', dataIndex: 'type', key: 'type' },
         { title: 'FROM', dataIndex: 'from', key: 'from' },
         { title: 'TO', dataIndex: 'to', key: 'to' },
@@ -60,7 +61,7 @@ const Bounties: FC = () => {
         { title: 'POSTED', dataIndex: 'posted', key: 'posted' },
         { title: 'DEADLINE', dataIndex: 'deadline', key: 'deadline' },
         {
-            title: '', key: 'action',
+            title: '', key: 'action', fixed: 'right',
             render: (_, record) => (
                 <Button type='primary' size="small">Take</Button>
             ),
@@ -74,14 +75,14 @@ const Bounties: FC = () => {
             key: '1',
             label: 'Top',
             children: (
-                <Table dataSource={dataSource} columns={columns} />
+                <Table dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
             )
         },
         {
             key: '2',
             label: `Latest`,
             children: (
-                <Table dataSource={dataSource} columns={columns} />
+                <Table dataSource={dataSource} columns={columns} scroll={{ x: 'max-content' }} />
             )
         }
     ]
@@ -104,34 +105,34 @@ const Translators: FC = () => {
 
     const dataList: ITranslatorsProps[] = new Array(8).fill({ title: "Card title", imageUrl: '', description: "This is the description", orders: 98, star: '8.0' })
 
-     const fetchList = ()=>{
+    const fetchList = () => {
         /* 
              "params[orderByBounty]":传1是top ，传" "是latest
         */
-            //  let url = `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
-            //  if (order === 1) {
-            //      url = `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
-            //  } else {
-            //      url = `/translation/list?pageNum=1&pageSize=10`
-            //  }
-            //  API.get(url).then((res) => {
-            //      if (res.status === 200) {
-            //          const data: any = [];
-            //          res.data.rows.forEach((item: any) => {
-            //              if (item.tcount !== item.tmax) {
-            //                  data.push({
-            //                      ...item,
-            //                      // bounty: ethers.utils.formatUnits(item.bounty.toString() || "0")
-            //                      bounty: (item.bounty / 1000000000000000000)
-            //                  });
-     
-            //              }
-            //          });
-            //          setTableData(data);
-            //          // console.log(data);
-            //      }
-            //  });
-     }
+        //  let url = `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
+        //  if (order === 1) {
+        //      url = `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
+        //  } else {
+        //      url = `/translation/list?pageNum=1&pageSize=10`
+        //  }
+        //  API.get(url).then((res) => {
+        //      if (res.status === 200) {
+        //          const data: any = [];
+        //          res.data.rows.forEach((item: any) => {
+        //              if (item.tcount !== item.tmax) {
+        //                  data.push({
+        //                      ...item,
+        //                      // bounty: ethers.utils.formatUnits(item.bounty.toString() || "0")
+        //                      bounty: (item.bounty / 1000000000000000000)
+        //                  });
+
+        //              }
+        //          });
+        //          setTableData(data);
+        //          // console.log(data);
+        //      }
+        //  });
+    }
 
     const CircleSvg = () => (
         <svg width="11px" height="11px">
@@ -158,8 +159,8 @@ const Translators: FC = () => {
         <HomeSection className="home-translators" title="Our Translators">
             <Row gutter={[50, 60]}>
                 {
-                    dataList.map(({ title, imageUrl, description, orders, star }) => (
-                        <Col xs={10} sm={10} md={8} lg={6} xl={6}>
+                    dataList.map(({ title, imageUrl, description, orders, star }, index) => (
+                        <Col xs={10} sm={10} md={8} lg={6} xl={6} key={index}>
                             <Card cover={<img alt="example" src={imageUrl ? imageUrl : ImageTranslator} />}>
                                 <Meta title={title} description={(
                                     <DescItem description={description} orders={orders} star={star}></DescItem>
@@ -176,7 +177,7 @@ const Translators: FC = () => {
 const ProfTranslation: FC = () => {
     return (
         <HomeSection className="home-prof-translation" title='Get your professional translation'>
-
+            <RequestTransForm />
         </HomeSection>
     )
 }
@@ -193,7 +194,7 @@ const AboutAmphi: FC = () => {
             <Row gutter={[50, 60]}>
                 {
                     dataList.map(({ title, imageUrl, description }) => (
-                        <Col xs={10} sm={10} md={8} lg={6} xl={6}>
+                        <Col xs={10} sm={10} md={8} lg={6} xl={6} key={title}>
                             <Card cover={<img alt="example" src={imageUrl} />}>
                                 <Meta title={title} description={description} />
                             </Card>
@@ -210,7 +211,7 @@ const index: FC = () => {
         <div>
             {/* <ThemeSwitcher /> */}
             {/* banner */}
-            <Banner />
+            {/* <Banner /> */}
             {/* Earn Bounties by Translating */}
             <Bounties />
             {/* Our Translators */}

@@ -4,13 +4,12 @@ module.exports = {
         "stylelint-config-rational-order",
         "stylelint-prettier/recommended",
     ],
+    plugins:['stylelint-scss'],
     rules: {
         // 'prettier/prettier': [true, { singleQuote: false }],
-        // at-rule-no-unknown: 屏蔽一些scss等语法检查
-        "at-rule-no-unknown": [
-            true,
-            { ignoreAtRules: ["mixin", "extend", "content"] },
-        ], // 禁止使用未知的 at 规则
+        // 屏蔽一些scss等语法检查
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true,
         "rule-empty-line-before": [
             // 要求或禁止在规则声明之前有空行
             "always-multi-line",

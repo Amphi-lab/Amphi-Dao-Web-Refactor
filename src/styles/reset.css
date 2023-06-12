@@ -132,6 +132,11 @@ q::after {
     content: none;
 }
 
+button {
+    outline: none;
+    border: none;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;

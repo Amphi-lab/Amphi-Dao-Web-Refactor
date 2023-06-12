@@ -27,6 +27,30 @@
         },
         "Card": {
             "padding": 10
+        },
+        "Form": {
+            "fontSize": 30,
+            "colorText": "#000",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        },
+        "Input": {
+            "fontSize": 20,
+            "colorText": "#333",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        },
+        "Select": {
+            "fontSize": 20,
+            "colorText": "#333",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
+        },
+        "InputNumber": {
+            "fontSize": 20,
+            "colorText": "#333",
+            "colorBorder": "#4d90ef",
+            "controlHeight": 50
         }
     }
 }

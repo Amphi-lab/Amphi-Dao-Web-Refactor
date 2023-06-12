@@ -1,0 +1,8 @@
+.main-menu {
+    @include font();
+    margin-left: 76px;
+
+    /* 覆盖ant 默认样式 */
+    border-bottom: 0;
+    background-color: transparent;
+}

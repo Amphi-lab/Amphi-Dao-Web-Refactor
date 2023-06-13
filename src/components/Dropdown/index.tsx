@@ -7,7 +7,7 @@ interface IProps {
     items: MenuProps['items'][];
 }
 
-const AmDropdown: React.FC<IProps> = ({ headName, items }) => (
+const AmDropdown: React.FC<IProps> = ({ headName, items }: any) => (
     <Dropdown menu={{ items }} placement='bottom'>
         <span>{headName}</span>
     </Dropdown>

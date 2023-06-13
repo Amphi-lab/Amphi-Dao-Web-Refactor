@@ -88,7 +88,7 @@ const ThemeProvider = (props: any) => {
         () => ({ theme, switchTheme, isCompact, setIsCompact }),
         [theme, switchTheme, isCompact]
     );
-    const themeOption = useMemo(() => ({ ...customTheme, algorithm }), [algorithm]);
+    const themeOption: any = useMemo(() => ({ ...customTheme, algorithm }), [algorithm]);
 
     return (
         <ThemeContext.Provider value={themeContextProp}>

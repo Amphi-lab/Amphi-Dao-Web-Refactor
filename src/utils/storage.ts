@@ -62,7 +62,7 @@ storage.getLocalMaxSpace = () => {
         console.log('当前浏览器不支持localStorage!');
     }
     let test = '0123456789';
-    const add = function (num) {
+    const add = function (num: any) {
         num += num;
         if (num.length === 10240) {
             test = num;
@@ -137,7 +137,7 @@ storage.getSessionMaxSpace = () => {
         console.log('当前浏览器不支持sessionStorage!');
     }
     let test = '0123456789';
-    const add = function (num) {
+    const add = function (num: any) {
         num += num;
         if (num.length === 10240) {
             test = num;

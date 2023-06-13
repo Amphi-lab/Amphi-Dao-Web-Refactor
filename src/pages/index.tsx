@@ -3,6 +3,7 @@ import type { FC, ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import { Button, Tabs, Table, Row, Col, Card, Tooltip } from 'antd';
 import type { TabsProps } from 'antd';
+import type { ColumnType } from 'antd/es/table';
 import { StarFilled } from '@ant-design/icons';
 import './index.scss';
 // api
@@ -67,7 +68,7 @@ const Bounties: FC = () => {
         return '';
     };
 
-    const columns = [
+    const columns: ColumnType<ITransaction>[] = [
         {
             title: 'REQUEST',
             dataIndex: 'title',
@@ -196,8 +197,8 @@ const Bounties: FC = () => {
         </Button>
     );
 
-    const fetchList = order => {
-        ranking({ order }).then(res => {
+    const fetchList = (order: '1' | '2') => {
+        ranking({ order }).then((res: any) => {
             if (res.code === 200) {
                 setDataSource(res.rows);
             }
@@ -205,7 +206,7 @@ const Bounties: FC = () => {
     };
 
     useEffect(() => {
-        fetchList(1);
+        fetchList('1');
     }, []);
 
     return (
@@ -251,7 +252,6 @@ const DescItem = ({ description, orders, star }: Omit<ITranslatorsProps, 'title'
 
 const Translators: FC = () => {
     const dataList: ITranslatorsProps[] = new Array(8).fill({
-        id: Math.random(),
         title: 'Card title',
         imageUrl: '',
         description: 'This is the description',

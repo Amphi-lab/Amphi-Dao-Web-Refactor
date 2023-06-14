@@ -94,7 +94,7 @@ const ThemeProvider = (props: any) => {
 
     return (
         <ThemeContext.Provider value={themeContextProp}>
-            <ConfigProvider prefixCls={systemTheme} locale={locale} theme={themeOption}>
+            <ConfigProvider prefixCls={theme} locale={locale} theme={themeOption}>
                 {props.children}
             </ConfigProvider>
         </ThemeContext.Provider>

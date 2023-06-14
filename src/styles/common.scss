@@ -1,13 +1,19 @@
-@mixin font($family: 'Public Sans', $style: normal, $weight: 700, $size: 18px, $color: '#FFFFFF') {
-    color: $color;
-    font-weight: $weight;
-    font-size: $size;
-    font-family: $family;
-    font-style: $style;
+@mixin font($family: "Public Sans", $style: normal, $weight: 700, $size: 18px, $color: "#FFFFFF") {
+  color: $color;
+  font-weight: $weight;
+  font-size: $size;
+  font-family: $family;
+  font-style: $style;
 }
 
 @mixin contentMaxWidth() {
-    max-width: 1586px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1586px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@mixin layout($horizontal: "center", $vertical: "center") {
+  display: flex;
+  align-items: $vertical;
+  justify-content: $horizontal;
 }

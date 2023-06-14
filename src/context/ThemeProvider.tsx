@@ -2,7 +2,7 @@ import { ConfigProvider, theme as antdTheme } from 'antd';
 import React, { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react';
 import enUS from 'antd/es/locale/en_US';
 import zhCN from 'antd/es/locale/zh_CN';
-import customTheme from '@/styles/theme.json';
+import customTheme from '@/styles/theme';
 import { useTranslation } from 'react-i18next';
 import Storage from '@/utils/storage';
 import { ThemeStorageKey } from '@/constants/storageKeys';
@@ -94,7 +94,7 @@ const ThemeProvider = (props: any) => {
 
     return (
         <ThemeContext.Provider value={themeContextProp}>
-            <ConfigProvider prefixCls={systemTheme} locale={locale} theme={themeOption}>
+            <ConfigProvider prefixCls={theme} locale={locale} theme={themeOption}>
                 {props.children}
             </ConfigProvider>
         </ThemeContext.Provider>

@@ -27,7 +27,8 @@ const ThemeProvider = (props: any) => {
     const [algorithm, setAlgorithm] = useState([antdTheme.defaultAlgorithm]);
 
     const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(getSystemTheme());
-    const [theme, setTheme] = useState<'dark' | 'light' | 'system'>(systemTheme);
+    // const [theme, setTheme] = useState<'dark' | 'light' | 'system'>(systemTheme);   // 默认跟随系统
+    const [theme, setTheme] = useState<'dark' | 'light' | 'system'>('light'); // 默认白色
     const [isCompact, setIsCompact] = useState<boolean>(getStoredIsCompact());
 
     useEffect(() => setLocale(i18n.language === 'en-US' ? enUS : zhCN), [i18n.language]);
@@ -56,7 +57,8 @@ const ThemeProvider = (props: any) => {
             if (_themeMode) {
                 switchTheme(_themeMode);
             } else {
-                switchTheme(getSystemTheme());
+                // switchTheme(getSystemTheme());   // 默认跟随系统
+                switchTheme('light'); // 默认白色
             }
         };
 

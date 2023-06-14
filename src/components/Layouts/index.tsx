@@ -15,7 +15,7 @@ type IProps = {
 };
 const Layouts = ({ isShowBanner = false, children }: IProps) => {
     return (
-        <Layout style={{ background: '#FFF' }}>
+        <Layout>
             {isShowBanner ? (
                 <div className={styles['amphi-layout']}>
                     <AmHeader />

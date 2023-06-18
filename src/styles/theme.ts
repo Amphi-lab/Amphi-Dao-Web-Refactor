@@ -7,11 +7,17 @@ export default {
         colorWarning: '#eca20f',
         colorError: '#e34949',
         colorInfo: '#507aec',
-        fontSizeHeading1: 48,
-        fontSizeHeading2: 40,
-        fontSizeHeading3: 36,
-        fontSizeHeading4: 32,
-        fontSizeHeading5: 28,
+        colorText: '#323335',
+        colorTextSecondary: '#64666B',
+        colorTextTertiary: '#969AA0',
+        colorTextQuaternary: '#BFC1C5',
+        colorTextPlaceholder: '#969AA0',
+        colorTextDisabled: '#BFC1C5',
+        fontSizeHeading1: 40,
+        fontSizeHeading2: 36,
+        fontSizeHeading3: 32,
+        fontSizeHeading4: 28,
+        fontSizeHeading5: 24,
         borderRadiusSM: 4,
         borderRadiusLG: 12,
         borderRadiusXS: 2
@@ -29,14 +35,12 @@ export default {
             colorBorderSecondary: '#000000',
             colorPrimary: '#000000',
             colorPrimaryActive: '#000000',
-            colorPrimaryHover: '#000000',
-            colorText: '#333333'
+            colorPrimaryHover: '#000000'
         },
         Table: {
-            colorText: '#666666',
             colorTextHeading: '#666666',
             fontSize: 20,
-            fontWeightStrong: 'normal'
+            fontWeightStrong: 400
         },
         Card: {
             padding: 10

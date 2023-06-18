@@ -4,9 +4,6 @@
     "borderRadiusLG": 8,
     "colorBgContainer": "#F2F2FB",
     "colorBgContainerDisabled": "#F8F8F9",
-    "colorText": "#323335",
-    "colorTextPlaceholder": "#969AA0",
-    "colorTextDisabled": "#BFC1C5",
     "colorIcon": "#969AA0",
     "colorBorder": "#F2F2FB"
 }

@@ -1,1 +1,10 @@
 /* 覆盖 ant design 组件默认样式 文件 */
+
+.dark-btn.dark-btn-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.light-layout {
+  background-color: #fff !important;
+}

@@ -167,14 +167,6 @@ table {
   --warning-color: #eca20f;
   --success-color: #00943e;
   --error-color: #e34949;
-
-  /* --link-color: #1974f4; */
-
-  /* "colorPrimary": "#0049ff",
-        "colorSuccess": "#00943e",
-        "colorWarning": "#eca20f",
-        "colorError": "#e34949",
-        "colorInfo": "#507aec", */
 }
 
 html[data-theme="dark"] {

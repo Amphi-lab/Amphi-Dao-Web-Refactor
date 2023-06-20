@@ -163,12 +163,18 @@ table {
   background-color: #fff;
   border-radius: 5px;
 
-  --main-color: #4d90ef;
+  --main-color: #0049ff;
+  --warning-color: #eca20f;
+  --success-color: #00943e;
+  --error-color: #e34949;
 
-  /* --error-color: #e395bc;
-	--warning-color: #fb9a9a;
-	--success-color: #13d685;
-	--link-color: #1974f4; */
+  /* --link-color: #1974f4; */
+
+  /* "colorPrimary": "#0049ff",
+        "colorSuccess": "#00943e",
+        "colorWarning": "#eca20f",
+        "colorError": "#e34949",
+        "colorInfo": "#507aec", */
 }
 
 html[data-theme="dark"] {
@@ -178,32 +184,42 @@ html[data-theme="dark"] {
 
 h1 {
   font-weight: 700;
-  font-size: 120px;
+  font-size: 48px;
+  line-height: 58px;
 }
 
 h2 {
   font-weight: 700;
-  font-size: 55px;
+  font-size: 40px;
+  line-height: 48px;
 }
 
 h3 {
   font-weight: 700;
-  font-size: 45px;
+  font-size: 36px;
+  line-height: 44px;
 }
 
 h4 {
   font-weight: 700;
-  font-size: 36px;
+  font-size: 32px;
+  line-height: 38px;
 }
 
 h5 {
   font-weight: 700;
-  font-size: 30px;
+  font-size: 28px;
+  line-height: 34px;
 }
 
 h6 {
   font-weight: 700;
   font-size: 24px;
+  line-height: 28px;
+}
+
+.semibold {
+  font-weight: 600;
 }
 
 .primary {
@@ -212,14 +228,4 @@ h6 {
 
 .primary-bg {
   background-color: var(--main-color);
-}
-
-.light-layout {
-  background-color: #fff;
-}
-
-.dark-btn.dark-btn-sm,
-.light-btn.light-btn-sm {
-  font-size: 14px;
-  line-height: 20px;
 }

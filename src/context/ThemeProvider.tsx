@@ -1,8 +1,9 @@
-import { ConfigProvider, theme as antdTheme } from 'antd';
 import React, { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react';
+import { ConfigProvider, theme as antdTheme } from 'antd';
+import type { ThemeConfig } from 'antd';
 import enUS from 'antd/es/locale/en_US';
 import zhCN from 'antd/es/locale/zh_CN';
-import customTheme from '@/styles/theme.json';
+import customTheme from '@/styles/theme';
 import { useTranslation } from 'react-i18next';
 import Storage from '@/utils/storage';
 import { ThemeStorageKey } from '@/constants/storageKeys';
@@ -90,7 +91,7 @@ const ThemeProvider = (props: any) => {
         () => ({ theme, switchTheme, isCompact, setIsCompact }),
         [theme, switchTheme, isCompact]
     );
-    const themeOption: any = useMemo(() => ({ ...customTheme, algorithm }), [algorithm]);
+    const themeOption: ThemeConfig = useMemo(() => ({ ...customTheme, algorithm }), [algorithm]);
 
     return (
         <ThemeContext.Provider value={themeContextProp}>

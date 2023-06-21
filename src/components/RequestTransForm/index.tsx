@@ -3,7 +3,12 @@ import type { FC } from 'react';
 import { Button, Col, Form, Row, Select } from 'antd';
 import { currentLanguages, translationTypes } from '@/constants/selcet.json';
 
-const Component: FC = ({ isRequired }: any = { isRequired: false }) => {
+interface IProps {
+    isRequired: boolean;
+    size: 'large' | 'middle' | 'small';
+}
+
+const Component: FC<IProps> = ({ isRequired, size } = { isRequired: true, size: 'middle' }) => {
     const selectList = [
         {
             label: 'Translate from',
@@ -42,6 +47,7 @@ const Component: FC = ({ isRequired }: any = { isRequired: false }) => {
                     <Col flex='auto' key={name}>
                         <Form.Item label={label} name={name} rules={rules}>
                             <Select
+                                size={size}
                                 showSearch
                                 allowClear
                                 placeholder={placeholder}

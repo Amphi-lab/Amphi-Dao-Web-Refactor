@@ -56,6 +56,18 @@
     }
   }
 
+  .light-tabs {
+    .light-tabs-tab-btn {
+      font-size: 30px;
+    }
+  }
+
+  .dark-tabs {
+    .dark-tabs-tab-btn {
+      font-size: 30px;
+    }
+  }
+
   .dark-table-wrapper .dark-table-tbody > tr > td {
     font-weight: 700;
 
@@ -67,6 +79,12 @@
 
 .home-translators {
   background: url("@/assets/images/bg-translators.png") no-repeat center center / cover;
+}
+
+.home-prof-translation {
+  label {
+    font-size: 30px !important;
+  }
 }
 
 .home-aboutus {

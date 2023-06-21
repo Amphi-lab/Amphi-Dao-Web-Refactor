@@ -346,7 +346,7 @@ const index: FC = () => {
                 className='home-prof-translation'
                 title='Get your professional translation'
             >
-                <RequestTransForm />
+                <RequestTransForm isRequired={false} size='large' />
             </HomeSection>
             {/* What Does Amphi do */}
             <HomeSection className='home-aboutus' title='What Does Amphi do'>

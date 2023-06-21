@@ -7,6 +7,7 @@ export default {
         colorWarning: '#eca20f',
         colorError: '#e34949',
         colorInfo: '#507aec',
+        colorPrimaryHover: '#296DFF',
         colorText: '#323335',
         colorTextSecondary: '#64666B',
         colorTextTertiary: '#969AA0',
@@ -27,16 +28,11 @@ export default {
             controlHeightLG: 75,
             controlHeight: 40,
             controlHeightSM: 20,
-            //     fontSizeLG: 30,
-            fontSize: 16,
-            fontSizeSM: 14
+            fontSize: 16
         },
         Tabs: {
-            titleFontSizeLG: 30,
-            colorBorderSecondary: '#000000',
-            colorPrimary: '#000000',
-            colorPrimaryActive: '#000000',
-            colorPrimaryHover: '#000000'
+            lineWidth: 0,
+            lineWidthBold: 4
         },
         Table: {
             colorTextHeading: '#666666',

@@ -25,9 +25,12 @@
 }
 
 .home-section {
-  @include contentMaxWidth;
   padding-top: 70px;
   padding-bottom: 70px;
+
+  > * {
+    @include contentMaxWidth;
+  }
 
   .home-section-title {
     padding-bottom: 50px;

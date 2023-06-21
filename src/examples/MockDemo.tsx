@@ -32,6 +32,7 @@ function MockDemo() {
         // 将表单数据转换为 JSON 字符串
         const formJson = Object.fromEntries(formData.entries());
         post('/login', formJson).then((res: any) => {
+            console.log('---mock res---', res);
             if (res.code === 200) {
                 setUserInfo(res.result);
             }

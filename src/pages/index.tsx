@@ -7,7 +7,7 @@ import type { ColumnType } from 'antd/es/table';
 import { StarFilled } from '@ant-design/icons';
 import './index.scss';
 // api
-import { ranking } from '@/api/api';
+import { ranking, getTranslatorList } from '@/api/api';
 // components
 import RequestTransForm from '@/components/RequestTransForm';
 // utils
@@ -224,11 +224,20 @@ const Bounties: FC = () => {
 };
 
 type ITranslatorsProps = {
-    title: string;
-    imageUrl: string;
-    description: string;
+    // title: string;
+    // imageUrl: string;
+    // description: string;
+    // orders: number;
+    // star: string;
+    id: number;
+    userId: number;
+    username: string;
+    address: string;
+    profile: any;
+    languages: null;
     orders: number;
-    star: string;
+    score: number;
+    latestAcceptTime: string;
 };
 
 const CircleSvg = () => (
@@ -236,43 +245,58 @@ const CircleSvg = () => (
         <circle cx='6px' cy='5px' r='5px' fill='#D9D9D9' />
     </svg>
 );
-const DescItem = ({ description, orders, star }: Omit<ITranslatorsProps, 'title' | 'imageUrl'>) => (
+const DescItem = ({
+    languages,
+    orders,
+    score
+}: Pick<ITranslatorsProps, 'languages' | 'orders' | 'score'>) => (
     <>
-        <p>{description}</p>
+        <p>{languages}</p>
         <p>
             <CircleSvg />
             &nbsp;&nbsp;{orders} orders
         </p>
         <p>
             <StarFilled style={{ color: '#333', fontSize: 12 }} />
-            &nbsp;&nbsp;{star}
+            &nbsp;&nbsp;{score}
         </p>
     </>
 );
 
 const Translators: FC = () => {
-    const dataList: ITranslatorsProps[] = new Array(8).fill({
-        title: 'Card title',
-        imageUrl: '',
-        description: 'This is the description',
-        orders: 98,
-        star: '8.0'
+    const [dataList, setDataList] = useState<ITranslatorsProps[]>([
+        {
+            id: 1,
+            userId: 1,
+            username: 'aaa',
+            address: '0x867f1469356D37313406b75c461fA057c829c749',
+            profile: null,
+            languages: null,
+            orders: 10,
+            score: 9.0,
+            latestAcceptTime: '2023-06-09T14:31:18.000+00:00'
+        }
+    ]);
+
+    useEffect(() => {
+        getTranslatorList().then((res: any) => {
+            console.log('---res---', res);
+            if (res.code === 200) {
+                setDataList(res.rows);
+            }
+        });
     });
 
     return (
         <HomeSection className='home-translators' title='Our Translators'>
             <Row gutter={[50, 60]}>
-                {dataList.map(({ title, imageUrl, description, orders, star }) => (
-                    <Col xs={10} sm={10} md={8} lg={6} xl={6} key={title}>
-                        <Card cover={<img alt='example' src={imageUrl || ImageTranslator} />}>
+                {dataList.map(({ id, address, username, profile, languages, orders, score }) => (
+                    <Col xs={10} sm={10} md={8} lg={6} xl={6} key={id}>
+                        <Card cover={<img alt='example' src={profile || ImageTranslator} />}>
                             <Meta
-                                title={title}
+                                title={username || address}
                                 description={
-                                    <DescItem
-                                        description={description}
-                                        orders={orders}
-                                        star={star}
-                                    />
+                                    <DescItem languages={languages} orders={orders} score={score} />
                                 }
                             />
                         </Card>
@@ -283,53 +307,30 @@ const Translators: FC = () => {
     );
 };
 
-const ProfTranslation: FC = () => {
-    return (
-        <HomeSection className='home-prof-translation' title='Get your professional translation'>
-            <RequestTransForm />
-        </HomeSection>
-    );
-};
-
-const AboutAmphi: FC = () => {
-    const dataList = [
-        {
-            title: 'Decentralized',
-            imageUrl: ImageAbout1,
-            description:
-                'Increase translation process efficiency, One-station language service platform.'
-        },
-        {
-            title: 'Earn',
-            imageUrl: ImageAbout2,
-            description: 'Increase accuracy of AI model with specific database.'
-        },
-        {
-            title: 'Trustless',
-            imageUrl: ImageAbout3,
-            description:
-                'More convenient settlement, native web3 Dapp supports cryptocurrency payments.'
-        },
-        {
-            title: 'Transparemt',
-            imageUrl: ImageAbout4,
-            description: 'Translator build influence in Amphi and sync propagate to the world.'
-        }
-    ];
-    return (
-        <HomeSection className='home-aboutus' title='What Does Amphi do'>
-            <Row gutter={[50, 60]}>
-                {dataList.map(({ title, imageUrl, description }) => (
-                    <Col xs={10} sm={10} md={8} lg={6} xl={6} key={title}>
-                        <Card cover={<img alt='example' src={imageUrl} />}>
-                            <Meta title={title} description={description} />
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </HomeSection>
-    );
-};
+const dataList = [
+    {
+        title: 'Decentralized',
+        imageUrl: ImageAbout1,
+        description:
+            'Increase translation process efficiency, One-station language service platform.'
+    },
+    {
+        title: 'Earn',
+        imageUrl: ImageAbout2,
+        description: 'Increase accuracy of AI model with specific database.'
+    },
+    {
+        title: 'Trustless',
+        imageUrl: ImageAbout3,
+        description:
+            'More convenient settlement, native web3 Dapp supports cryptocurrency payments.'
+    },
+    {
+        title: 'Transparemt',
+        imageUrl: ImageAbout4,
+        description: 'Translator build influence in Amphi and sync propagate to the world.'
+    }
+];
 
 const index: FC = () => {
     return (
@@ -341,9 +342,24 @@ const index: FC = () => {
             {/* Our Translators */}
             <Translators />
             {/* Get your professional translation */}
-            <ProfTranslation />
+            <HomeSection
+                className='home-prof-translation'
+                title='Get your professional translation'
+            >
+                <RequestTransForm />
+            </HomeSection>
             {/* What Does Amphi do */}
-            <AboutAmphi />
+            <HomeSection className='home-aboutus' title='What Does Amphi do'>
+                <Row gutter={[50, 60]}>
+                    {dataList.map(({ title, imageUrl, description }) => (
+                        <Col xs={10} sm={10} md={8} lg={6} xl={6} key={title}>
+                            <Card cover={<img alt='example' src={imageUrl} />}>
+                                <Meta title={title} description={description} />
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            </HomeSection>
         </div>
     );
 };

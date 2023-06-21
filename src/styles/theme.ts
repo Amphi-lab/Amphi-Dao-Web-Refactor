@@ -1,4 +1,4 @@
-import globalTheme from './global.json';
+import globalTheme from './theme.json';
 
 export default {
     token: {
@@ -25,10 +25,11 @@ export default {
     components: {
         Button: {
             controlHeightLG: 75,
-            controlHeight: 50,
+            controlHeight: 40,
             controlHeightSM: 20,
-            fontSizeLG: 30,
-            fontSize: 20
+            //     fontSizeLG: 30,
+            fontSize: 16,
+            fontSizeSM: 14
         },
         Tabs: {
             titleFontSizeLG: 30,

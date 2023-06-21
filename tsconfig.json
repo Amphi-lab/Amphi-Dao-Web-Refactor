@@ -32,7 +32,11 @@
             "node"
         ]
     },
-    "include": ["src",".eslintrc.cjs"],
+    "include": [
+        "src",
+        "mock",
+        ".eslintrc.cjs"
+    ],
     "references": [
         {
             "path": "./tsconfig.node.json"

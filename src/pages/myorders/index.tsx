@@ -243,7 +243,8 @@ const items: TabsProps['items'] = [
         children: <TabsItems tabName='cancelled' />
     }
 ];
-const Component: FC = () => {
+
+export default () => {
     const onChange = (key: string) => {
         console.log(key);
     };
@@ -256,5 +257,3 @@ const Component: FC = () => {
         </>
     );
 };
-
-export default Component;

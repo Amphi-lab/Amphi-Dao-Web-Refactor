@@ -17,6 +17,8 @@ import { getSubStr } from '@/utils/string';
 // types
 import type ITransaction from '@/types/ITransaction';
 import { currentLanguages, translationTypes, workLoadType } from '@/constants/selcet.json';
+// components
+import CircleSvg from '@/components/CircleSvg';
 // images
 import ImageTranslator from '@/assets/images/translator.png';
 import ImageAbout1 from '@/assets/images/about1.png';
@@ -42,11 +44,11 @@ const { Meta } = Card;
 //     );
 // };
 
-type IHomeSectionProps = {
+interface IHomeSectionProps {
     className?: string;
     title: string;
     children: ReactNode;
-};
+}
 const HomeSection: FC<IHomeSectionProps> = ({ className, title, children }) => {
     return (
         <div className={`home-section ${className}`}>
@@ -223,7 +225,7 @@ const Bounties: FC = () => {
     );
 };
 
-type ITranslatorsProps = {
+interface ITranslatorsProps {
     // title: string;
     // imageUrl: string;
     // description: string;
@@ -238,13 +240,8 @@ type ITranslatorsProps = {
     orders: number;
     score: number;
     latestAcceptTime: string;
-};
+}
 
-const CircleSvg = () => (
-    <svg width='11px' height='11px'>
-        <circle cx='6px' cy='5px' r='5px' fill='#D9D9D9' />
-    </svg>
-);
 const DescItem = ({
     languages,
     orders,

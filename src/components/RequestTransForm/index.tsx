@@ -1,14 +1,13 @@
 import React from 'react';
-import type { FC } from 'react';
 import { Button, Col, Form, Row, Select } from 'antd';
 import { currentLanguages, translationTypes } from '@/constants/selcet.json';
 
 interface IProps {
-    isRequired: boolean;
-    size: 'large' | 'middle' | 'small';
+    isRequired?: boolean;
+    size?: 'large' | 'middle' | 'small';
 }
 
-const Component: FC<IProps> = ({ isRequired, size } = { isRequired: true, size: 'middle' }) => {
+export default ({ isRequired = true, size = 'middle' }: IProps) => {
     const selectList = [
         {
             label: 'Translate from',
@@ -70,5 +69,3 @@ const Component: FC<IProps> = ({ isRequired, size } = { isRequired: true, size: 
         </Form>
     );
 };
-
-export default Component;

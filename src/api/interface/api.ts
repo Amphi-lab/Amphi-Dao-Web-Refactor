@@ -1,4 +1,4 @@
-import { get } from './axios';
+import { get } from '../axios';
 
 /* 
     首页-Earn Bounties by Translating

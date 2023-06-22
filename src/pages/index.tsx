@@ -7,7 +7,8 @@ import type { ColumnType } from 'antd/es/table';
 import { StarFilled } from '@ant-design/icons';
 import './index.scss';
 // api
-import { ranking, getTranslatorList } from '@/api/api';
+import api from '@/api';
+// import { ranking, getTranslatorList } from '@/api/interface/api';
 // components
 import RequestTransForm from '@/components/RequestTransForm';
 // utils
@@ -198,7 +199,7 @@ const Bounties: FC = () => {
     );
 
     const fetchList = (order: '1' | '2') => {
-        ranking({ order }).then((res: any) => {
+        api.ranking({ order }).then((res: any) => {
             if (res.code === 200) {
                 setDataSource(res.rows);
             }
@@ -279,7 +280,7 @@ const Translators: FC = () => {
     ]);
 
     useEffect(() => {
-        getTranslatorList().then((res: any) => {
+        api.getTranslatorList().then((res: any) => {
             console.log('---res---', res);
             if (res.code === 200) {
                 setDataList(res.rows);

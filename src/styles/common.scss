@@ -3,13 +3,15 @@
     $style: normal,
     $weight: 700,
     $size: 18px,
-    $color: "#FFFFFF"
+    $color: "#FFFFFF",
+    $lineH: 18px
 ) {
   color: $color;
   font-weight: $weight;
   font-size: $size;
   font-family: $family;
   font-style: $style;
+  line-height: $lineH;
 }
 
 @mixin contentMaxWidth() {

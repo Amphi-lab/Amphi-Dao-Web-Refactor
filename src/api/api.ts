@@ -6,16 +6,16 @@ import { get } from './axios';
     `/translation/list?params[orderByBounty]=${order}&pageNum=1&pageSize=10`
     "params[orderByBounty]":传1是top ，latest:latest时去掉这个参数
  */
+/**
+ *
+ * @param {object} options    配置对象
+ * @param {string} options.order   1 | undefined ; 1是top ，latest:latest时去掉这个参数
+ * @returns
+ */
 export const ranking = ({ order }: { order: '1' | '2' }) =>
     get(
         `/translation/list?${order === '1' ? 'params[orderByBounty]=1&' : ''}pageNum=1&pageSize=10`
     );
-/**
-    /translator/list 翻译者列表
-    "language": "2", 语言
-    "pageNum": 1,
-    "pageSize": 10,
-  */
 
 /**
  * 翻译者列表

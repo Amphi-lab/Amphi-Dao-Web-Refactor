@@ -26,8 +26,8 @@ export const ranking = ({ order }: { order: '1' | '2' }) =>
  * @param {number} options.pageSize   每页多少条数据
  * @returns
  */
-export const getTranslatorList = ({ language, pageNum = 1, pageSize = 10 }: any) =>
-    get(`/translator/list?language=${language}&pageNum=${pageNum}&pageSize=${pageSize}`);
+export const getTranslatorList = (options: any = { pageNum: 1, pageSize: 10 }) =>
+    get(`/translator/list?${stringify(options)}`);
 
 /**
  * 翻译任务列表
@@ -41,4 +41,5 @@ export const getTranslatorList = ({ language, pageNum = 1, pageSize = 10 }: any)
  * @param {number} options.pageSize   每页多少条数据
  * @returns
  */
-export const getTranslationList = (options: any) => get(`/translation/list?${stringify(options)}`);
+export const getTranslationList = (options: any = { pageNum: 1, pageSize: 10 }) =>
+    get(`/translation/list?${stringify(options)}`);

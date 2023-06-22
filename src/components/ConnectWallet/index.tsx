@@ -2,21 +2,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useRef, useState } from 'react';
 import '@rainbow-me/rainbowkit/styles.css';
-import { ConnectButton, RainbowKitProvider, connectorsForWallets } from '@rainbow-me/rainbowkit';
+import { ConnectButton, connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
-
+import { configureChains, createConfig, useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import type { Chain } from 'wagmi';
-import {
-    configureChains,
-    createConfig,
-    WagmiConfig,
-    useAccount,
-    useDisconnect,
-    useSignMessage
-} from 'wagmi';
-
+// import { polygonMumbai } from 'wagmi/chains';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-
 import api from '@/api';
 import storage from '@/utils/storage';
 import * as storageKeys from '@/constants/storageKeys';
@@ -26,15 +17,20 @@ const testChain: Chain = {
     id: 80001,
     name: 'Mumbai',
     network: 'Mumbai',
-    iconUrl: 'https://example.com/icon.svg',
-    iconBackground: '#fff',
+    // iconUrl: 'https://example.com/icon.svg',
+    // iconBackground: '#fff',
     nativeCurrency: {
         name: 'MATIC',
         symbol: 'MATIC',
         decimals: 18
     },
     rpcUrls: {
-        default: 'https://rpc-mumbai.maticvigil.com'
+        default: {
+            http: ['https://rpc-mumbai.maticvigil.com']
+        },
+        public: {
+            http: ['https://rpc-mumbai.maticvigil.com']
+        }
     },
     blockExplorers: {
         default: { name: 'SnowTrace', url: 'https://mumbai.polygonscan.com/' }
@@ -46,7 +42,7 @@ const { chains, publicClient } = configureChains(
     [testChain],
     [
         jsonRpcProvider({
-            rpc: chain => ({ http: chain.rpcUrls.default })
+            rpc: chain => ({ http: chain.rpcUrls.default.http[0] })
         })
     ]
 );
@@ -57,6 +53,7 @@ const connectors = connectorsForWallets([
         wallets: [
             metaMaskWallet({
                 chains,
+                projectId: '',
                 shimDisconnect: false
             })
         ]
@@ -68,6 +65,8 @@ const wagmiConfig = createConfig({
     connectors,
     publicClient
 });
+
+export { wagmiConfig, chains };
 
 const ConnectWallet = () => {
     const [nonce, setNonce] = useState('');
@@ -132,9 +131,9 @@ const ConnectWallet = () => {
             if (info.data.code === 200) {
                 const res = info.data.data;
 
-                if (userInfo !== res) {
-                    setUserInfo(res);
-                }
+                // if (userInfo !== res) {
+                //     setUserInfo(res);
+                // }
 
                 const accessToken = res.token;
                 storage.setLocalStorage(storageKeys.AMPHI_USERTOKEN, accessToken);
@@ -143,7 +142,7 @@ const ConnectWallet = () => {
                     info?.data?.data?.expireTime.toString()
                 );
                 storage.setLocalStorage(storageKeys.CURRENT_ADDRESS, address as string);
-                refreshAPIToken();
+                // refreshAPIToken();
                 addressInfo.current.address = address;
                 if (!res.username) {
                     // navigate("/register/getstart");
@@ -161,15 +160,9 @@ const ConnectWallet = () => {
     useEffect(() => {
         handleNonce();
         fetchLogin();
-    });
+    }, []);
 
-    return (
-        <WagmiConfig config={wagmiConfig}>
-            <RainbowKitProvider chains={chains}>
-                <ConnectButton />
-            </RainbowKitProvider>
-        </WagmiConfig>
-    );
+    return <ConnectButton />;
 };
 
 export default ConnectWallet;

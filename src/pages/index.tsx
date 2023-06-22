@@ -5,6 +5,7 @@ import { Button, Tabs, Table, Row, Col, Card, Tooltip, Badge } from 'antd';
 import type { TabsProps } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import { StarFilled } from '@ant-design/icons';
+import type ITranslators from '@/types/ITranslator';
 import './index.scss';
 // api
 import api from '@/api';
@@ -223,28 +224,11 @@ const Bounties: FC = () => {
     );
 };
 
-interface ITranslatorsProps {
-    // title: string;
-    // imageUrl: string;
-    // description: string;
-    // orders: number;
-    // star: string;
-    id: number;
-    userId: number;
-    username: string;
-    address: string;
-    profile: any;
-    languages: null;
-    orders: number;
-    score: number;
-    latestAcceptTime: string;
-}
-
 const DescItem = ({
     languages,
     orders,
     score
-}: Pick<ITranslatorsProps, 'languages' | 'orders' | 'score'>) => (
+}: Pick<ITranslators, 'languages' | 'orders' | 'score'>) => (
     <>
         <p>{languages}</p>
         <Badge color='#D9D9D9' text={`${orders || '--'} orders`} />
@@ -256,7 +240,7 @@ const DescItem = ({
 );
 
 const Translators: FC = () => {
-    const [dataList, setDataList] = useState<ITranslatorsProps[]>([
+    const [dataList, setDataList] = useState<ITranslators[]>([
         {
             id: 1,
             userId: 1,

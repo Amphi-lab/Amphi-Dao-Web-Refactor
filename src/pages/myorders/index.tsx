@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, Fragment } from 'react';
 import type { FC } from 'react';
 import Jazzicon from 'react-jazzicon';
 import { Tabs, Form, Select, Table, Space, Button, Tooltip, Badge } from 'antd';
@@ -12,7 +12,7 @@ import './index.scss';
 // components
 import PageTitle from '@/components/PageTitle';
 import { amountFromToken } from '@/utils/number';
-import { getTranslationList } from '@/api/api';
+import api from '@/api';
 
 const { Option } = Select;
 const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
@@ -32,7 +32,7 @@ const columns: ColumnsType<IOrder> = [
     },
     {
         title: 'Translator',
-        key: 'translator',
+        key: 'acceptAddress',
         dataIndex: 'acceptAddress',
         ellipsis: true,
         render: value =>
@@ -49,31 +49,31 @@ const columns: ColumnsType<IOrder> = [
     },
     {
         title: 'Amount',
-        key: 'amount',
+        key: 'bounty',
         dataIndex: 'bounty',
         render: value => `$ ${amountFromToken(value)}`
     },
     {
         title: 'Status',
-        key: 'status',
+        key: 'translationState',
         dataIndex: 'translationState',
         ellipsis: true,
         render: value => <Badge status='success' text={value} />
     },
     {
         title: 'Times',
-        key: 'times',
+        key: 'deadline',
         dataIndex: 'deadline',
         render: value => dayjs(value).format(formatType)
     },
     {
         title: 'Translate Type',
-        key: 'type',
-        dataIndex: 'type',
+        key: 'translateType',
+        dataIndex: 'translateType',
         render: (_, record) =>
-            `${languages.find(item => item.value === record.sourceLang)?.label || '--'} to ${
-                languages.find(item => item.value === record.targetLang)?.label || '--'
-            }`
+            `${languages.find(item => item.value === record.sourceLang)?.label || '--'} 
+            to 
+            ${languages.find(item => item.value === record.targetLang)?.label || '--'}`
     },
     {
         title: 'Action',
@@ -115,6 +115,8 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
     ]);
     const [dataList, setDataList] = useState<IOrder[]>([]);
     const [total, setTotal] = useState<number>(0);
+    const [pageNum, setPageNum] = useState<number>(1);
+    const pageSize = 10;
 
     const getOptions = useCallback(() => {
         const { translationTypeArray, createTime } = form.getFieldsValue();
@@ -127,13 +129,13 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
         if (endCreateTime) options.params = { ...options.params, endCreateTime };
         return {
             ...options,
-            pageNum: 1,
-            pageSize: 10
+            pageNum,
+            pageSize
         };
-    }, [form]);
+    }, [form, pageNum]);
 
-    useEffect(() => {
-        getTranslationList(getOptions()).then((res: any) => {
+    const fetchTranslationList = useCallback(() => {
+        api.getTranslationList(getOptions()).then((res: any) => {
             if (res.code === 200) {
                 setDataList(res.rows);
                 setTotal(res.total);
@@ -141,9 +143,19 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
         });
     }, [getOptions]);
 
+    useEffect(() => {
+        fetchTranslationList();
+    }, [fetchTranslationList]);
+
     const onValuesChange = () => {
-        getTranslationList(getOptions());
+        fetchTranslationList();
     };
+
+    const onPageChange = (value: any) => {
+        setPageNum(value);
+        fetchTranslationList();
+    };
+
     return (
         <>
             <Form
@@ -189,13 +201,16 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
                 columns={columns}
                 dataSource={dataList}
                 pagination={{
-                    pageSize: 10,
+                    pageSize,
+                    current: pageNum,
                     total,
                     showSizeChanger: false,
-                    showTotal: value => `Total ${value} items`
+                    showTotal: value => `Total ${value} items`,
+                    onChange: onPageChange
                 }}
                 scroll={{ x: 'max-content' }}
                 bordered
+                rowKey='id'
             />
         </>
     );

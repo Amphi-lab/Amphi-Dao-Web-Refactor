@@ -13,9 +13,12 @@
 }
 
 @mixin contentMaxWidth() {
-  max-width: 1366px;
-  margin: 0 auto;
-  padding: 0 20px;
+  /*
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    */
+  margin: 0 120px;
 }
 
 @mixin layout($horizontal: center, $vertical: center) {

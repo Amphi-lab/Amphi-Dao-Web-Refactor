@@ -103,6 +103,7 @@ menu,
 nav,
 section {
   display: block;
+  color: #323335;
 }
 
 /* HTML5 hidden-attribute fix for newer browsers */
@@ -167,6 +168,12 @@ table {
   --warning-color: #eca20f;
   --success-color: #00943e;
   --error-color: #e34949;
+  --bg-color: #f2f2fb;
+  --text-main-color: #323335; /* 主标题/正文 */
+  --text-sub-color: #64666b; /* 次级标题 */
+  --text-desc-color: #969aa0; /* 描述 */
+  --text-disable-color: #bfc1c5; /* 禁用 */
+  --text-strong-color: #1a1a1b; /* 强调/特殊标题 */
 }
 
 html[data-theme="dark"] {

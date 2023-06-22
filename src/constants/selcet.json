@@ -1,4 +1,10 @@
 {
+    "serviceTypes": [
+        { "value": "0", "label": "Text translation" },
+        { "value": "1", "label": "Voice translation" },
+        { "value": "2", "label": "Subtitling" },
+        { "value": "3", "label": "Local errand" }
+    ],
     "translationTypes": [
         {
             "value": "0",

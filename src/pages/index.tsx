@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { FC, ReactNode } from 'react';
 import { useNavigate } from 'react-router';
-import { Button, Tabs, Table, Row, Col, Card, Tooltip } from 'antd';
+import { Button, Tabs, Table, Row, Col, Card, Tooltip, Badge } from 'antd';
 import type { TabsProps } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import { StarFilled } from '@ant-design/icons';
@@ -17,8 +17,6 @@ import { getSubStr } from '@/utils/string';
 // types
 import type ITransaction from '@/types/ITransaction';
 import { currentLanguages, translationTypes, workLoadType } from '@/constants/selcet.json';
-// components
-import CircleSvg from '@/components/CircleSvg';
 // images
 import ImageTranslator from '@/assets/images/translator.png';
 import ImageAbout1 from '@/assets/images/about1.png';
@@ -249,12 +247,9 @@ const DescItem = ({
 }: Pick<ITranslatorsProps, 'languages' | 'orders' | 'score'>) => (
     <>
         <p>{languages}</p>
+        <Badge color='#D9D9D9' text={`${orders || '--'} orders`} />
         <p>
-            <CircleSvg />
-            &nbsp;&nbsp;{orders} orders
-        </p>
-        <p>
-            <StarFilled style={{ color: '#333', fontSize: 12 }} />
+            <StarFilled style={{ color: '#333', fontSize: 10 }} />
             &nbsp;&nbsp;{score}
         </p>
     </>
@@ -276,7 +271,7 @@ const Translators: FC = () => {
     ]);
 
     useEffect(() => {
-        getTranslatorList().then((res: any) => {
+        getTranslatorList({}).then((res: any) => {
             console.log('---res---', res);
             if (res.code === 200) {
                 setDataList(res.rows);

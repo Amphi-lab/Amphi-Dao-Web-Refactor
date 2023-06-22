@@ -49,7 +49,9 @@ export default {
             ...globalTheme
         },
         Select: {
-            ...globalTheme
+            ...globalTheme,
+            colorFillSecondary: '#fff',
+            controlItemBgActive: '#fff'
         },
         Mentions: {
             ...globalTheme

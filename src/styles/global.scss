@@ -25,7 +25,7 @@
     display: inline-block;
     width: 16px;
     height: 4px;
-    background-color: #0049ff;
+    background-color: var(--main-color);
     border-radius: 2px;
     content: "";
   }
@@ -53,4 +53,26 @@
 .dark-table-wrapper .dark-table-container {
   border-color: #f4f4f5 !important;
   border-radius: 0;
+}
+
+/* Select */
+.light-select-item.light-select-item-option-selected .light-select-item-option-content,
+.dark-select-item.dark-select-item-option-selected .dark-select-item-option-content {
+  color: var(--main-color);
+  font-weight: 400;
+}
+
+/* Pagination */
+.light-pagination .light-pagination-prev,
+.dark-pagination .dark-pagination-prev,
+.light-pagination .light-pagination-next,
+.dark-pagination .dark-pagination-next,
+.light-pagination .light-pagination-item,
+.dark-pagination .dark-pagination-item {
+  background-color: var(--bg-color);
+}
+
+.light-pagination .light-pagination-item-active,
+.dark-pagination .dark-pagination-item-active {
+  background-color: #fff;
 }

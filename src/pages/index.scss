@@ -81,6 +81,17 @@
 
 .home-translators {
   background: url("@/assets/images/bg-translators.png") no-repeat center center / cover;
+
+  .light-badge .light-badge-status-dot,
+  .dark-badge .dark-badge-status-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .light-card-meta-description,
+  .dark-card-meta-description {
+    color: var(--color-text);
+  }
 }
 
 .home-prof-translation {

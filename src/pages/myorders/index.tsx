@@ -98,7 +98,11 @@ const columns: ColumnsType<IOrder> = [
 
 const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
     const [form] = Form.useForm();
-
+    const [loading, setLoading] = useState(true);
+    const [dataList, setDataList] = useState<IOrder[]>([]);
+    const [total, setTotal] = useState<number>(0);
+    const [pageNum, setPageNum] = useState<number>(1);
+    const pageSize = 10;
     const currentDate = dayjs().format(formatType);
     const year = dayjs().year();
     const yearRange = JSON.stringify([
@@ -113,10 +117,6 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
         dayjs().subtract(30, 'day').startOf('day').format(formatType),
         currentDate
     ]);
-    const [dataList, setDataList] = useState<IOrder[]>([]);
-    const [total, setTotal] = useState<number>(0);
-    const [pageNum, setPageNum] = useState<number>(1);
-    const pageSize = 10;
 
     const getOptions = useCallback(() => {
         const { translationTypeArray, createTime } = form.getFieldsValue();
@@ -135,12 +135,18 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
     }, [form, pageNum]);
 
     const fetchTranslationList = useCallback(() => {
-        api.getTranslationList(getOptions()).then((res: any) => {
-            if (res.code === 200) {
-                setDataList(res.rows);
-                setTotal(res.total);
-            }
-        });
+        setLoading(true);
+        api.getTranslationList(getOptions())
+            .then((res: any) => {
+                setLoading(false);
+                if (res.code === 200) {
+                    setDataList(res.rows);
+                    setTotal(res.total);
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     }, [getOptions]);
 
     useEffect(() => {
@@ -200,6 +206,7 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
             <Table
                 columns={columns}
                 dataSource={dataList}
+                loading={loading}
                 pagination={{
                     pageSize,
                     current: pageNum,

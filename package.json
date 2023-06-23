@@ -6,7 +6,6 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx ",
-        "lint:fix": "eslint src --fix .js,.jsx,.ts,.tsx ",
         "prettier": "prettier -c --write src/* ",
         "prepare": "husky install",
         "pre-commit": "lint-staged",

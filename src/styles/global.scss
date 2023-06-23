@@ -83,3 +83,19 @@
 .dark-form-item .dark-form-item-label > label {
   font-size: 16px;
 }
+
+/* form 表单必填项 提示图标 后置 */
+// :where(.css-dev-only-do-not-override-1dqrxh1).light-form-item
+//.light-form-item-label >label.light-form-item-required:not(.light-form-item-required-mark-optional)::before{
+//     content: '';
+// }
+// :where(.css-dev-only-do-not-override-1dqrxh1).light-form-item
+//.light-form-item-label >label.light-form-item-required:not(.light-form-item-required-mark-optional)::after{
+//     content: '';
+//     display: block;
+//     width: 16px;
+//     height: 16px;
+//     background-image: url('../assets/svg/formRequireIcon.svg');
+//     background-size: 100% 100%;
+//     background-position: center center;
+// }

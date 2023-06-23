@@ -1,0 +1,17 @@
+.request-trans-wrapper {
+  display: flex;
+  margin: 16px 120px 24px;
+
+  .request-trans-left {
+    flex: 1;
+    min-width: 0;
+    border-radius: 12px;
+    margin-right: 16px;
+    padding: 16px 24px 24px;
+    background-color: #fff;
+  }
+
+  .request-trans-right {
+    width: 272px;
+  }
+}

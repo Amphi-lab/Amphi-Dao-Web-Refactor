@@ -64,3 +64,14 @@ export const updateUserInfo = (params: any) => post(`/user/update`, params);
  */
 export const getUserInfo = ({ address }: { address: string }) =>
     get(`/user/info?address=${address}`);
+
+// `/translation/acceptedList?address=${searchAddress}&translationState=7`
+/**
+ * 获取projects列表
+ * url: /translation/acceptedList    请求地址
+ * @param {object} params    配置对象
+ * @param {string} params.address   钱包地址
+ * @returns {Promise}
+ */
+export const getProjectList = ({ address }: { address: string }) =>
+    get(`/translation/acceptedList?address=${address}&translationState=7`);

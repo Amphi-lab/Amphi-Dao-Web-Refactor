@@ -59,7 +59,10 @@ const HomeSection: FC<IHomeSectionProps> = ({ className, title, children }) => {
 
 const Bounties: FC = () => {
     const navigate = useNavigate();
-    const [dataSource, setDataSource] = useState<ITransaction[]>([]);
+    const [loading1, setLoading1] = useState(true);
+    const [loading2, setLoading2] = useState(true);
+    const [dataSource1, setDataSource1] = useState<ITransaction[]>([]);
+    const [dataSource2, setDataSource2] = useState<ITransaction[]>([]);
 
     const findIcon = (translationType: string) => {
         if (translationType === '1' || translationType === '2' || translationType === '0')
@@ -165,7 +168,8 @@ const Bounties: FC = () => {
             children: (
                 <Table
                     rowKey='id'
-                    dataSource={dataSource}
+                    dataSource={dataSource1}
+                    loading={loading1}
                     columns={columns}
                     pagination={false}
                     scroll={{ x: 'max-content' }}
@@ -178,7 +182,8 @@ const Bounties: FC = () => {
             children: (
                 <Table
                     rowKey='id'
-                    dataSource={dataSource}
+                    dataSource={dataSource2}
+                    loading={loading2}
                     columns={columns}
                     pagination={false}
                     scroll={{ x: 'max-content' }}
@@ -199,11 +204,21 @@ const Bounties: FC = () => {
     );
 
     const fetchList = (order: '1' | '2') => {
-        api.ranking({ order }).then((res: any) => {
-            if (res.code === 200) {
-                setDataSource(res.rows);
-            }
-        });
+        if (order === '1') setLoading1(true);
+        else if (order === '2') setLoading2(true);
+        api.ranking({ order })
+            .then((res: any) => {
+                if (order === '1') setLoading1(false);
+                else if (order === '2') setLoading2(false);
+                if (res.code === 200) {
+                    if (order === '1') setDataSource1(res.rows);
+                    else if (order === '2') setDataSource2(res.rows);
+                }
+            })
+            .catch(() => {
+                if (order === '1') setLoading1(false);
+                else if (order === '2') setLoading2(false);
+            });
     };
 
     useEffect(() => {

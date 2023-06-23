@@ -86,8 +86,7 @@
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
-        "*.css": "stylelint --fix --custom-syntax postcss-scss",
-        "*.scss": "stylelint --fix --custom-syntax postcss-scss"
+        "*.{css,scss}": "stylelint --fix --custom-syntax postcss-scss"
     },
     "browserslist": [
         "Android 4.1",

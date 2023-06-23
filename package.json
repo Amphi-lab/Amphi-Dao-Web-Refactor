@@ -14,6 +14,7 @@
     },
     "dependencies": {
         "@ant-design/icons": "^5.1.4",
+        "@rainbow-me/rainbowkit": "^1.0.2",
         "@reduxjs/toolkit": "^1.9.5",
         "@types/qs": "^6.9.7",
         "antd": "^5.5.2",
@@ -34,6 +35,8 @@
         "react-router-dom": "^6.11.2",
         "redux": "^4.2.1",
         "stylelint-config-recommended": "< 10",
+        "viem": "^1.1.4",
+        "wagmi": "^1.2.1",
         "web3": "^1.10.0",
         "web3-eth-contract": "^1.10.0",
         "web3-utils": "^1.10.0"

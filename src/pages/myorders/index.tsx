@@ -13,10 +13,11 @@ import './index.scss';
 import PageTitle from '@/components/PageTitle';
 import { amountFromToken } from '@/utils/number';
 import api from '@/api';
+import { optionsMap } from '@/utils/array';
 
 const { Option } = Select;
 const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
-
+const languagesOptions = optionsMap(languages);
 const columns: ColumnsType<IOrder> = [
     {
         title: '100 orders',
@@ -71,9 +72,9 @@ const columns: ColumnsType<IOrder> = [
         key: 'translateType',
         dataIndex: 'translateType',
         render: (_, record) =>
-            `${languages.find(item => item.value === record.sourceLang)?.label || '--'} 
+            `${languagesOptions.get(record.sourceLang) || '--'} 
             to 
-            ${languages.find(item => item.value === record.targetLang)?.label || '--'}`
+            ${languagesOptions.get(record.targetLang) || '--'}`
     },
     {
         title: 'Action',

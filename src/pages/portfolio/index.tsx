@@ -10,10 +10,13 @@ import { Col, Empty, Row, Space, Tabs, Card, Spin, Carousel } from 'antd';
 import type { TabsProps } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import Jazzicon from 'react-jazzicon';
+import { useAccount } from 'wagmi';
+import dayjs from 'dayjs';
 import api from '@/api';
 import './index.scss';
+import { languages } from '@/constants/selcet.json';
 // utils
-import { chunk } from '@/utils/array';
+import { chunk, optionsMap } from '@/utils/array';
 // images
 import ImgSBTWorn from '@/assets/images/sbt-worn.png';
 import ImgSBTDisabled from '@/assets/images/sbt-disabled.png';
@@ -21,52 +24,70 @@ import ImgPrev from '@/assets/images/swiper-prev.png';
 import ImgNext from '@/assets/images/swiper-next.png';
 import ImgBackground from '@/assets/images/background.png';
 
-const url = 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg';
+const languagesOptions = optionsMap(languages);
 
 interface IProjectProps {
     id: number;
     title: string;
+    sourceLang: string;
+    targetLang: string;
+    translationCharacter: string;
+    updateTime: string;
 }
-const ProjectItem = ({ title }: IProjectProps) => {
+const ProjectItem = ({
+    title,
+    sourceLang,
+    targetLang,
+    translationCharacter,
+    updateTime
+}: IProjectProps) => {
     return (
         <div className='project-item-box'>
             <p className='title'>{title}</p>
             <Space className='lang-box'>
                 <TranslationOutlined />
-                <p className='lang'>English → Japanese</p>
+                <p className='lang'>
+                    {languagesOptions.get(sourceLang)} → {languagesOptions.get(targetLang)}
+                </p>
             </Space>
             <p>
                 <span className='label color-text-desc'>Role:</span>
-                Translator
+                {translationCharacter}
             </p>
             <p>
                 <span className='label color-text-desc'>Completed on:</span>
-                Translator
+                {dayjs(updateTime).format('YYYY/MM/DD')}
             </p>
         </div>
     );
 };
 
-const ProjectList = () => {
+const ProjectList = ({ setCompletedNum }: any) => {
     const [search] = useSearchParams();
+    const searchAddress = search.get('address');
+    const { address } = useAccount();
     const [loading, setLoading] = useState(true);
     const [dataList, setDataList] = useState<IProjectProps[]>([]);
     useEffect(() => {
-        api.getProjectList({ address: search.get('address') })
-            .then((res: any) => {
-                setLoading(false);
-                if (res?.code === 200) {
-                    /**
-                     * TODO:
-                     * 没有数据获取的是假数据
-                     */
-                    setDataList(res.rows);
-                }
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-    }, [search]);
+        const addr = searchAddress || address;
+        if (addr) {
+            api.getProjectList({ address: addr })
+                .then((res: any) => {
+                    setLoading(false);
+                    if (res?.code === 200) {
+                        /**
+                         * TODO:
+                         * 没有数据获取的是假数据
+                         */
+                        setDataList(res.rows);
+                        setCompletedNum(res.total);
+                    }
+                })
+                .catch(() => {
+                    setLoading(false);
+                });
+        }
+    }, [searchAddress, address, setCompletedNum]);
     return (
         <Spin spinning={loading}>
             {(() => {
@@ -95,16 +116,18 @@ const NFTList = () => {
     const [search] = useSearchParams();
     const [loading, setLoading] = useState<boolean>(true);
     const [list, setList] = useState<INFTItemProps[]>([]);
+    const { address } = useAccount();
+    const searchAddress = search.get('address');
 
     /**
      * TODO:
      * 合约调用
      * 以下是之前的方法
      */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const fetchList = async (address: string) => {
         setLoading(!!address);
         setList([]);
-
         // try {
         //     const amphiPass = await getAmphiPass();
         //     const [baseURI, tokenIds] = await Promise.all([
@@ -135,9 +158,9 @@ const NFTList = () => {
     };
 
     useEffect(() => {
-        const address = search.get('address');
-        if (address) fetchList(address);
-    }, [search]);
+        const addr = searchAddress || address;
+        if (addr) fetchList(addr);
+    }, [searchAddress, address]);
 
     return (
         <div className='nft-wrap'>
@@ -233,28 +256,6 @@ const BadgeList = () => {
     );
 };
 
-const onChange = (key: string) => {
-    console.log(key);
-};
-
-const items: TabsProps['items'] = [
-    {
-        key: '1',
-        label: `projects`,
-        children: <ProjectList />
-    },
-    {
-        key: '2',
-        label: `NFTs`,
-        children: <NFTList />
-    },
-    {
-        key: '3',
-        label: `Badge`,
-        children: <BadgeList />
-    }
-];
-
 const SBTTag = ({
     type,
     amount,
@@ -271,26 +272,84 @@ const SBTTag = ({
         <p className='amount'>{amount}</p>
     </Space.Compact>
 );
+
 export default () => {
     const [search] = useSearchParams();
+    const searchAddress = search.get('address');
+    const { address } = useAccount();
+    const [userInfo, setUserInfo] = useState<any>({});
+    const [completedNum, setCompletedNum] = useState<number | undefined>(undefined);
+    // setCompletedNum(res.data.total)
+    // const { username, avatar, backgroundUrl, industry, workLangs, socialMediaList } = userInfo;
+    useEffect(() => {
+        const addr = searchAddress || address;
+        if (addr) {
+            api.getUserInfo({ address: addr }).then((res: any) => {
+                if (res?.code === 200) {
+                    const {
+                        username,
+                        profile,
+                        backgroundUrl,
+                        industry,
+                        languageList,
+                        socialMediaList
+                    } = res.data;
+                    const langs = languageList?.map((item: any) => item.workLang);
+                    const industrys = industry.split(';');
+                    setUserInfo({
+                        username: username || 'Unnamed',
+                        profile,
+                        backgroundUrl: backgroundUrl || ImgBackground,
+                        workLangs: langs,
+                        industry: industrys || [],
+                        socialMediaList: socialMediaList || []
+                    });
+                    setUserInfo(res.data);
+                }
+            });
+        }
+    }, [searchAddress, address]);
+
+    const onChange = (key: string) => {
+        console.log(key);
+    };
+
+    const items: TabsProps['items'] = [
+        {
+            key: '1',
+            label: `projects`,
+            children: <ProjectList setCompletedNum={setCompletedNum} />
+        },
+        {
+            key: '2',
+            label: `NFTs`,
+            children: <NFTList />
+        },
+        {
+            key: '3',
+            label: `Badge`,
+            children: <BadgeList />
+        }
+    ];
+
     return (
         <>
             <div className='background-box'>
-                <img src={ImgBackground} alt='background' />
+                <img src={userInfo?.backgroundUrl || ImgBackground} alt='background' />
             </div>
             {/* 个人信息 */}
             <div className='personal-info-box'>
                 <div className='personal-info-top-box'>
                     <Space className='left'>
                         <div className='avatar-box'>
-                            {url ? (
-                                <img src={url} alt='profile' width={120} />
+                            {userInfo?.profile ? (
+                                <img src={userInfo?.profile} alt='profile' width={120} />
                             ) : (
                                 <Jazzicon diameter={120} seed={search.get('address')} />
                             )}
-                            <p className='nickname'>nickname</p>
+                            <p className='nickname'>{userInfo?.username}</p>
                         </div>
-
+                        {/* TODO: 字段不确定 */}
                         <SBTTag type='PoVW' amount='1M' />
                         <SBTTag type='PoPV' amount='1M' />
                         <SBTTag type='PoSS' amount='1M' />
@@ -303,17 +362,25 @@ export default () => {
                 <Space className='personal-info-bottom-box'>
                     <Space>
                         <TranslationOutlined />
-                        <p>Japanese-A1</p>
-                        <p>Korea</p>
-                        <p>English-A2</p>
+                        {userInfo?.workLangs?.length > 0 ? (
+                            userInfo?.workLangs.map((value: string) => <p key={value}>{value}</p>)
+                        ) : (
+                            <p>--</p>
+                        )}
                     </Space>
                     <Space>
                         <GlobalOutlined />
-                        <p>E-commerce</p>
+                        {userInfo?.industry?.length > 0 ? (
+                            userInfo?.industry.map((value: string) => <p key={value}>{value}</p>)
+                        ) : (
+                            <p>--</p>
+                        )}
                     </Space>
                     <Space>
                         <FileDoneOutlined />
-                        <p>103 orders completed</p>
+                        <p>
+                            <span>{completedNum}</span> orders completed
+                        </p>
                     </Space>
                 </Space>
             </div>

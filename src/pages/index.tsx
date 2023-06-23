@@ -27,8 +27,13 @@ import ImageAbout4 from '@/assets/images/about4.png';
 import textIcon from '@/assets/svg/text.svg';
 import aduioIcon from '@/assets/svg/audio.svg';
 import folderIcon from '@/assets/svg/folder.svg';
+import { optionsMap } from '@/utils/array';
 
 const { Meta } = Card;
+
+const currentLanguagesOptions = optionsMap(currentLanguages);
+const translationTypesOptions = optionsMap(translationTypes);
+const workLoadTypeOptions = optionsMap(workLoadType);
 
 // const Banner: FC = () => {
 //     return (
@@ -94,7 +99,7 @@ const Bounties: FC = () => {
             dataIndex: 'translationType',
             key: 'type',
             render: (value: string) => {
-                return translationTypes.find(item => item.value === value)?.label;
+                return translationTypesOptions.get(value);
             }
         },
         {
@@ -102,7 +107,7 @@ const Bounties: FC = () => {
             dataIndex: 'sourceLang',
             key: 'from',
             render: (value: string) => {
-                return currentLanguages.find(item => item.value === value)?.label;
+                return currentLanguagesOptions.get(value);
             }
         },
         {
@@ -110,7 +115,7 @@ const Bounties: FC = () => {
             dataIndex: 'targetLang',
             key: 'to',
             render: (value: string) => {
-                return currentLanguages.find(item => item.value === value)?.label;
+                return currentLanguagesOptions.get(value);
             }
         },
         {
@@ -118,9 +123,7 @@ const Bounties: FC = () => {
             dataIndex: 'workload',
             key: 'workload',
             render: (value: number, record: ITransaction) => {
-                return `${value} ${
-                    workLoadType.find(item => item.value === record.workloadType)?.label
-                }`;
+                return `${value} ${workLoadTypeOptions.get(record.workloadType)}`;
             }
         },
         {

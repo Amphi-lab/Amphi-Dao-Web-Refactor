@@ -47,7 +47,6 @@ export default () => {
             api.getUserInfo({ address }).then((res: any) => {
                 if (res?.code === 200) {
                     const userInfo = res.data;
-                    console.log('---userInfo---', userInfo);
                     if (userInfo?.id) setUseId(userInfo.id);
                     const params = {
                         ...userInfo,

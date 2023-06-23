@@ -1,3 +1,4 @@
+import storage from '@/utils/storage';
 import axios from 'axios';
 
 axios.defaults.timeout = 100000;
@@ -8,6 +9,7 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
  */
 axios.interceptors.request.use(
     config => {
+        if (config.url === '/nonce') return config;
         config.data = JSON.stringify(config.data);
         config.headers.set('Content-Type', 'application/json');
         return config;
@@ -153,5 +155,13 @@ export const put = (url: string, data: any) =>
             }
         );
     });
+
+export const refreshAPIToken = () => {
+    if (typeof window !== 'undefined') {
+        const accessToken = storage.getLocalStorage('AMPHI_USERTOKEN');
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
+    }
+};
 
 export default axios;

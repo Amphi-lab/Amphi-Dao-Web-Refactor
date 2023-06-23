@@ -26,7 +26,7 @@ const columns: ColumnsType<IOrder> = [
         render: (value, record) => (
             <Tooltip placement='topLeft' title={value}>
                 <p>{value}</p>
-                <p className='instruction'>{record?.instruction}</p>
+                <p className='color-text-desc'>{record?.instruction}</p>
             </Tooltip>
         )
     },
@@ -44,7 +44,7 @@ const columns: ColumnsType<IOrder> = [
                     <span className='address'>{value}</span>
                 </p>
             ) : (
-                <p className='notranslator'>No one applied yet</p>
+                <p className='color-text-desc'>No one applied yet</p>
             )
     },
     {

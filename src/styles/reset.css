@@ -228,3 +228,47 @@ h6 {
 .primary-bg {
   background-color: var(--main-color);
 }
+
+.warning {
+  color: var(--warning-color);
+}
+
+.warning-bg {
+  background-color: var(--warning-color);
+}
+
+.success {
+  color: var(--success-color);
+}
+
+.success-bg {
+  background-color: var(--success-color);
+}
+
+.error {
+  color: var(--error-color);
+}
+
+.error-bg {
+  background-color: var(--error-color);
+}
+
+.color-text-main {
+  color: var(--text-main-color); /* 主标题/正文 */
+}
+
+.color-text-sub {
+  color: var(--text-sub-color); /* 次级标题 */
+}
+
+.color-text-desc {
+  color: var(--text-desc-color); /* 描述 */
+}
+
+.color-text-disable {
+  color: var(--text-disable-color); /* 禁用 */
+}
+
+.color-text-strong {
+  color: var(--text-strong-color); /* 强调/特殊标题 */
+}

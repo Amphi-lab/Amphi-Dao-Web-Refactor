@@ -77,3 +77,9 @@
 .dark-pagination .dark-pagination-item-active {
   background-color: #fff;
 }
+
+/* Label */
+.light-form-item .light-form-item-label > label,
+.dark-form-item .dark-form-item-label > label {
+  font-size: 16px;
+}

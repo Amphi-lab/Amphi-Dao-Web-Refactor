@@ -1,5 +1,5 @@
 import { stringify } from 'qs';
-import { get } from '../axios';
+import { get, post } from '../axios';
 
 /* 
     首页-Earn Bounties by Translating
@@ -8,9 +8,9 @@ import { get } from '../axios';
  */
 /**
  *
- * @param {object} options    配置对象
- * @param {string} options.order   1 | undefined ; 1是top ，latest:latest时去掉这个参数
- * @returns
+ * @param {object} params    配置对象
+ * @param {string} params.order   1 | undefined ; 1是top ，latest:latest时去掉这个参数
+ * @returns {Promise}
  */
 export const ranking = ({ order }: { order: '1' | '2' }) =>
     get(
@@ -20,26 +20,47 @@ export const ranking = ({ order }: { order: '1' | '2' }) =>
 /**
  * 翻译者列表
  * url: /translator/list    请求地址
- * @param {object} options    配置对象
- * @param {string} options.language   语言
- * @param {number} options.pageNum    页码
- * @param {number} options.pageSize   每页多少条数据
- * @returns
+ * @param {object} params    配置对象
+ * @param {string} params.language   语言
+ * @param {number} params.pageNum    页码
+ * @param {number} params.pageSize   每页多少条数据
+ * @returns {Promise}
  */
-export const getTranslatorList = (options: any = { pageNum: 1, pageSize: 10 }) =>
-    get(`/translator/list?${stringify(options)}`);
+export const getTranslatorList = (params: any = { pageNum: 1, pageSize: 10 }) =>
+    get(`/translator/list?${stringify(params)}`);
 
 /**
  * 翻译任务列表
  * url: /translation/list    请求地址
- * @param {object} options    配置对象
- * @param {array}  options.translationTypeArray 类型
- * @param {object} options.params 时间范围
- * @param {string} options.params.beginCreateTime 开始时间
- * @param {string} options.params.endCreateTime 结束时间
- * @param {number} options.pageNum    页码
- * @param {number} options.pageSize   每页多少条数据
- * @returns
+ * @param {object} params    配置对象
+ * @param {array}  params.translationTypeArray 类型
+ * @param {object} params.params 时间范围
+ * @param {string} params.params.beginCreateTime 开始时间
+ * @param {string} params.params.endCreateTime 结束时间
+ * @param {number} params.pageNum    页码
+ * @param {number} params.pageSize   每页多少条数据
+ * @returns {Promise}
  */
-export const getTranslationList = (options: any = { pageNum: 1, pageSize: 10 }) =>
-    get(`/translation/list?${stringify(options)}`);
+export const getTranslationList = (params: any = { pageNum: 1, pageSize: 10 }) =>
+    get(`/translation/list?${stringify(params)}`);
+
+// 5. /user/update 修改用户信息
+/**
+ * 修改用户信息
+ * url: /user/update    请求地址
+ * @param {object} params    配置对象
+ * @returns {Promise}
+ */
+export const updateUserInfo = (params: any) => post(`/user/update`, params);
+
+// 4. /user/info 获取用户信息
+// const res = await API.get(`/user/info?address=${address}`);
+/**
+ * 获取用户信息
+ * url: /user/info    请求地址
+ * @param {object} params    配置对象
+ * @param {string} params.address    钱包地址
+ * @returns {Promise}
+ */
+export const getUserInfo = ({ address }: { address: string }) =>
+    get(`/user/info?address=${address}`);

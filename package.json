@@ -6,6 +6,7 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx ",
+        "lint:fix": "eslint src --fix .js,.jsx,.ts,.tsx ",
         "prettier": "prettier -c --write src/* ",
         "prepare": "husky install",
         "pre-commit": "lint-staged",
@@ -66,6 +67,7 @@
         "lint-staged": "^13.2.2",
         "postcss": ">8.4.6 <9.0.0",
         "postcss-preset-env": "^8.4.1",
+        "postcss-scss": "^4.0.6",
         "prettier": "^2.8.8",
         "sass": "^1.63.2",
         "stylelint": "^14.16.1",
@@ -82,8 +84,8 @@
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
-        "*.css": "stylelint --fix",
-        "*.scss": "stylelint --fix"
+        "*.css": "stylelint --fix --custom-syntax postcss-scss",
+        "*.scss": "stylelint --fix --custom-syntax postcss-scss"
     },
     "browserslist": [
         "Android 4.1",

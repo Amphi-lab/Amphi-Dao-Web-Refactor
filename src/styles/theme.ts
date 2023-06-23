@@ -28,7 +28,7 @@ export default {
             controlHeightLG: 75,
             controlHeight: 40,
             controlHeightSM: 20,
-            fontSize: 16,
+            fontSize: 14,
             fontSizeSM: 12
         },
         Tabs: {

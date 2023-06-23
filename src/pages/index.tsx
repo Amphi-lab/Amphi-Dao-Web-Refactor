@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import type { FC, ReactNode } from 'react';
 import { useNavigate } from 'react-router';
-import { Button, Tabs, Table, Row, Col, Card, Tooltip } from 'antd';
+import { Button, Tabs, Table, Row, Col, Card, Tooltip, Badge } from 'antd';
 import type { TabsProps } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import { StarFilled } from '@ant-design/icons';
+import type ITranslators from '@/types/ITranslator';
 import './index.scss';
 // api
 import api from '@/api';
-// import { ranking, getTranslatorList } from '@/api/interface/api';
 // components
 import RequestTransForm from '@/components/RequestTransForm';
 // utils
@@ -43,11 +43,11 @@ const { Meta } = Card;
 //     );
 // };
 
-type IHomeSectionProps = {
+interface IHomeSectionProps {
     className?: string;
     title: string;
     children: ReactNode;
-};
+}
 const HomeSection: FC<IHomeSectionProps> = ({ className, title, children }) => {
     return (
         <div className={`home-section ${className}`}>
@@ -224,48 +224,23 @@ const Bounties: FC = () => {
     );
 };
 
-type ITranslatorsProps = {
-    // title: string;
-    // imageUrl: string;
-    // description: string;
-    // orders: number;
-    // star: string;
-    id: number;
-    userId: number;
-    username: string;
-    address: string;
-    profile: any;
-    languages: null;
-    orders: number;
-    score: number;
-    latestAcceptTime: string;
-};
-
-const CircleSvg = () => (
-    <svg width='11px' height='11px'>
-        <circle cx='6px' cy='5px' r='5px' fill='#D9D9D9' />
-    </svg>
-);
 const DescItem = ({
     languages,
     orders,
     score
-}: Pick<ITranslatorsProps, 'languages' | 'orders' | 'score'>) => (
+}: Pick<ITranslators, 'languages' | 'orders' | 'score'>) => (
     <>
         <p>{languages}</p>
+        <Badge color='#D9D9D9' text={`${orders || '--'} orders`} />
         <p>
-            <CircleSvg />
-            &nbsp;&nbsp;{orders} orders
-        </p>
-        <p>
-            <StarFilled style={{ color: '#333', fontSize: 12 }} />
+            <StarFilled style={{ color: '#333', fontSize: 10 }} />
             &nbsp;&nbsp;{score}
         </p>
     </>
 );
 
 const Translators: FC = () => {
-    const [dataList, setDataList] = useState<ITranslatorsProps[]>([
+    const [dataList, setDataList] = useState<ITranslators[]>([
         {
             id: 1,
             userId: 1,

@@ -1,13 +1,14 @@
 /* 覆盖 ant design 组件默认样式 文件 */
 
 .light-layout {
-  background-color: #fff !important;
+  margin: 0 auto;
+  background: linear-gradient(0deg, #f8f9fc, #f8f9fc), #fff;
 }
 
-/*  button */
+/*  Button */
 .dark-btn.dark-btn-sm,
 .light-btn.light-btn-sm {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
 }
 
@@ -25,8 +26,60 @@
     display: inline-block;
     width: 16px;
     height: 4px;
-    background-color: #0049ff;
+    background-color: var(--main-color);
     border-radius: 2px;
     content: "";
   }
+}
+
+/* Table */
+
+.light-table-wrapper .light-table-thead > tr > th,
+.dark-table-wrapper .dark-table-thead > tr > th {
+  font-weight: 600;
+  background-color: #fbfcfc;
+}
+
+.light-table-wrapper .light-table-thead > tr > th,
+.dark-table-wrapper .dark-table-thead > tr > th,
+.light-table-wrapper .light-table-tbody > tr > td,
+.dark-table-wrapper .dark-table-tbody > tr > td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 12px;
+  border-color: #f4f4f5 !important;
+}
+
+.light-table-wrapper .light-table-container,
+.dark-table-wrapper .dark-table-container {
+  border-color: #f4f4f5 !important;
+  border-radius: 0;
+}
+
+/* Select */
+.light-select-item.light-select-item-option-selected .light-select-item-option-content,
+.dark-select-item.dark-select-item-option-selected .dark-select-item-option-content {
+  color: var(--main-color);
+  font-weight: 400;
+}
+
+/* Pagination */
+.light-pagination .light-pagination-prev,
+.dark-pagination .dark-pagination-prev,
+.light-pagination .light-pagination-next,
+.dark-pagination .dark-pagination-next,
+.light-pagination .light-pagination-item,
+.dark-pagination .dark-pagination-item {
+  background-color: var(--bg-color);
+}
+
+.light-pagination .light-pagination-item-active,
+.dark-pagination .dark-pagination-item-active {
+  background-color: #fff;
+}
+
+/* Label */
+.light-form-item .light-form-item-label > label,
+.dark-form-item .dark-form-item-label > label {
+  font-size: 16px;
 }

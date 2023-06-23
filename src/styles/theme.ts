@@ -28,16 +28,13 @@ export default {
             controlHeightLG: 75,
             controlHeight: 40,
             controlHeightSM: 20,
-            fontSize: 16
+            fontSize: 14,
+            fontSizeSM: 12
         },
         Tabs: {
             lineWidth: 0,
-            lineWidthBold: 4
-        },
-        Table: {
-            colorTextHeading: '#666666',
-            fontSize: 20,
-            fontWeightStrong: 400
+            lineWidthBold: 4,
+            margin: 24
         },
         Card: {
             padding: 10
@@ -52,7 +49,9 @@ export default {
             ...globalTheme
         },
         Select: {
-            ...globalTheme
+            ...globalTheme,
+            colorFillSecondary: '#fff',
+            controlItemBgActive: '#fff'
         },
         Mentions: {
             ...globalTheme

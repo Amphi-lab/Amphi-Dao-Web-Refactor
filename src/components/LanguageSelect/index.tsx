@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Space, Select, Button } from 'antd';
 import type { FormInstance } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import './index.scss';
 import { languages as languagesOptions, certificationOptions } from '@/constants/selcet.json';
 
@@ -10,8 +10,8 @@ interface ILanguageProps {
     certification: string | undefined;
 }
 
-export default ({ form }: { form: FormInstance }) => {
-    const userId = 1;
+export default ({ form, userId }: { form: FormInstance; userId: number }) => {
+    const initLanguageList = form.getFieldValue('languageList');
     // const [isEdit, setIsEdit] = useState(true);
     const [isEdit] = useState(true);
     const [languageList, setLanguageList] = useState<ILanguageProps[]>([
@@ -19,14 +19,15 @@ export default ({ form }: { form: FormInstance }) => {
     ]);
 
     useEffect(() => {
-        const initLanguageList = form.getFieldValue('languageList');
-        setLanguageList(
-            initLanguageList.map((item: any) => ({
-                language: item.workLangValue,
-                certification: item.certification
-            }))
-        );
-    }, [form]);
+        if (Array.isArray(initLanguageList) && initLanguageList.length > 0) {
+            setLanguageList(
+                initLanguageList.map((item: any) => ({
+                    language: item.workLangValue,
+                    certification: item.certification
+                }))
+            );
+        }
+    }, [initLanguageList]);
 
     // const handleEdit = () => {
     //     setIsEdit(true);
@@ -38,6 +39,10 @@ export default ({ form }: { form: FormInstance }) => {
 
     const handleAdd = () => {
         setLanguageList([...languageList, { language: undefined, certification: undefined }]);
+    };
+    const onRemove = (index: number) => {
+        languageList.splice(index, 1);
+        setLanguageList([...languageList]);
     };
     const onChange = (value: string, index: number, type: 'language' | 'level' = 'language') => {
         if (type === 'language') languageList[index].language = value;
@@ -117,6 +122,16 @@ export default ({ form }: { form: FormInstance }) => {
                                 disabled={!isEdit}
                             />
                         </Space.Compact>
+                        <Button
+                            type='text'
+                            size='small'
+                            shape='circle'
+                            danger
+                            icon={<DeleteOutlined />}
+                            onClick={() => {
+                                onRemove(index);
+                            }}
+                        />
                     </Space>
                 ))}
             </Space>

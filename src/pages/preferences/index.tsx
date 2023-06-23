@@ -1,5 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Select, message } from 'antd';
-import React, { useEffect } from 'react';
+import { useAccount } from 'wagmi';
 import './index.scss';
 import {
     industry as IndustryOptions,
@@ -35,22 +36,30 @@ const initialValue: IUserInfoProps = {
 
 export default () => {
     const [form] = Form.useForm();
+    const { address } = useAccount();
+    const [userId, setUseId] = useState<number | undefined>(undefined);
 
     useEffect(() => {
-        /** TODO: 获取address
+        /** TODO:
          * fetch useinfo 待测试
          */
-        api.getUserInfo({ address: '' }).then((res: any) => {
-            if (res?.code === 200) {
-                const userInfo = res.data;
-                form.setFieldsValue({
-                    ...userInfo,
-                    industry: optionsToArray(userInfo.industry, IndustryOptions),
-                    jobFunction: optionsToArray(userInfo.jobFunction, JobFunctionsOptions)
-                });
-            }
-        });
-    }, [form]);
+        if (address) {
+            api.getUserInfo({ address }).then((res: any) => {
+                if (res?.code === 200) {
+                    const userInfo = res.data;
+                    console.log('---userInfo---', userInfo);
+                    if (userInfo?.id) setUseId(userInfo.id);
+                    const params = {
+                        ...userInfo,
+                        industry: optionsToArray(userInfo.industry, IndustryOptions),
+                        jobFunction: optionsToArray(userInfo.jobFunction, JobFunctionsOptions)
+                    };
+                    console.log('---params---', params);
+                    form.setFieldsValue(params);
+                }
+            });
+        }
+    }, [address, form]);
 
     const onFinish = (values: any) => {
         console.log(values);
@@ -96,7 +105,7 @@ export default () => {
                         <Input placeholder='Enter username' />
                     </Form.Item>
                     <Form.Item name='languageList' label='Languages'>
-                        <LanguageSelect form={form} />
+                        <LanguageSelect form={form} userId={userId} />
                     </Form.Item>
                     <Form.Item
                         name='email'
@@ -126,7 +135,7 @@ export default () => {
                             options={IndustryOptions}
                         />
                     </Form.Item>
-                    <Form.Item name='jobfunction'>
+                    <Form.Item name='jobFunction'>
                         <Select
                             mode='multiple'
                             allowClear

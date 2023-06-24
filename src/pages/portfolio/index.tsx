@@ -36,6 +36,7 @@ import IconShare from '@/assets/svg/icon-share.svg';
 import IconTranslation from '@/assets/svg/icon-translation.svg';
 import IconDiscord from '@/assets/svg/icon-discord.svg';
 import IconEmail from '@/assets/svg/icon-email.svg';
+import ImgEmpty from '@/assets/svg/img-empty.svg';
 import { CopyFilled } from '@ant-design/icons';
 import { getAmphiPass } from '@/contracts/contract';
 
@@ -118,7 +119,13 @@ const ProjectList = ({ setCompletedNum }: any) => {
                         </Row>
                     );
                 }
-                return <Empty />;
+                return (
+                    <Empty
+                        image={ImgEmpty}
+                        imageStyle={{ height: 200 }}
+                        description='No projects found'
+                    />
+                );
             })()}
         </Spin>
     );
@@ -194,7 +201,13 @@ const NFTList = () => {
                                 ))}
                             </Row>
                         );
-                    return <Empty />;
+                    return (
+                        <Empty
+                            image={ImgEmpty}
+                            imageStyle={{ height: 200 }}
+                            description='Data Not Found'
+                        />
+                    );
                 })()}
             </Spin>
         </div>
@@ -262,7 +275,13 @@ const BadgeList = () => {
                         </>
                     );
                 }
-                return <Empty />;
+                return (
+                    <Empty
+                        image={ImgEmpty}
+                        imageStyle={{ height: 200 }}
+                        description='Data Not Found'
+                    />
+                );
             })()}
         </Spin>
     );

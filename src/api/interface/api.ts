@@ -44,7 +44,6 @@ export const getTranslatorList = (params: any = { pageNum: 1, pageSize: 10 }) =>
 export const getTranslationList = (params: any = { pageNum: 1, pageSize: 10 }) =>
     get(`/translation/list?${stringify(params)}`);
 
-// 5. /user/update 修改用户信息
 /**
  * 修改用户信息
  * url: /user/update    请求地址
@@ -53,8 +52,6 @@ export const getTranslationList = (params: any = { pageNum: 1, pageSize: 10 }) =
  */
 export const updateUserInfo = (params: any) => post(`/user/update`, params);
 
-// 4. /user/info 获取用户信息
-// const res = await API.get(`/user/info?address=${address}`);
 /**
  * 获取用户信息
  * url: /user/info    请求地址
@@ -65,7 +62,6 @@ export const updateUserInfo = (params: any) => post(`/user/update`, params);
 export const getUserInfo = ({ address }: { address: string }) =>
     get(`/user/info?address=${address}`);
 
-// `/translation/acceptedList?address=${searchAddress}&translationState=7`
 /**
  * 获取projects列表
  * url: /translation/acceptedList    请求地址
@@ -75,3 +71,6 @@ export const getUserInfo = ({ address }: { address: string }) =>
  */
 export const getProjectList = ({ address }: { address: string }) =>
     get(`/translation/acceptedList?address=${address}&translationState=7`);
+
+// `/ipfs/getJson?${uris.join('&')}`
+export const getIpfsJson = ({ uris }: { uris: string[] }) => get(`/ipfs/getJson?${uris.join('&')}`);

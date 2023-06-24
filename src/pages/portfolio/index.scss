@@ -60,7 +60,7 @@
   .personal-info-top-box {
     @include layout(space-between, flex-end);
     position: relative;
-    top: -16px;
+    top: -20px;
 
     .left {
       @include layout(space-between, flex-end);
@@ -137,7 +137,7 @@
 .light-carousel .sbt-swiper-wrap .slick-prev,
 .dark-carousel .sbt-swiper-wrap .slick-prev {
   inset-inline-start: 0;
-  top: 10px;
+  top: 24%;
   z-index: 1;
   width: auto;
   height: 100%;
@@ -146,7 +146,7 @@
 .light-carousel .sbt-swiper-wrap .slick-next,
 .dark-carousel .sbt-swiper-wrap .slick-next {
   inset-inline-end: 0;
-  top: 10px;
+  top: 24%;
   width: auto;
   height: 100%;
 }

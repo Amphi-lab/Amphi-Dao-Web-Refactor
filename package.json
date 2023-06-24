@@ -8,7 +8,7 @@
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx ",
         "prettier": "prettier -c --write src/* ",
         "prepare": "husky install",
-        "pre-commit": "lint-staged",
+        "pre-commit": "lint-staged --allow-empty",
         "preview": "vite preview"
     },
     "dependencies": {
@@ -34,6 +34,7 @@
         "react-router-dom": "^6.11.2",
         "redux": "^4.2.1",
         "stylelint-config-recommended": "< 10",
+        "use-clipboard-copy": "^0.2.0",
         "viem": "^1.1.4",
         "wagmi": "^1.2.1",
         "web3": "^1.10.0",

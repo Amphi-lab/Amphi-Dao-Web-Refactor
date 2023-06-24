@@ -1,19 +1,7 @@
 import React from 'react';
-import type { FC } from 'react';
+import { Empty } from 'antd';
+import ImgEmpty from '@/assets/svg/img-empty.svg';
 
-const all: FC = () => {
-    return (
-        <h2
-            style={{
-                height: 'calc(100vh - 536px)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >
-            ...all route: 404
-        </h2>
-    );
+export default () => {
+    return <Empty image={ImgEmpty} imageStyle={{ height: 200 }} description='404' />;
 };
-
-export default all;

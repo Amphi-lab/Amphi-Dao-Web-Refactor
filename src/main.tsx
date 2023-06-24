@@ -9,14 +9,14 @@ import '@/styles/reset.css';
 import '@/styles/global.scss';
 import store from '@/store';
 import { ThemeProvider } from '@/context/ThemeProvider';
-import { wagmiConfig, chains } from '@/components/ConnectWallet';
+import { wagmiConfig as config, chains } from '@/components/ConnectWallet';
 import App from './App';
 import '@/i18n';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <Provider store={store}>
-            <WagmiConfig config={wagmiConfig}>
+            <WagmiConfig config={config}>
                 <RainbowKitProvider chains={chains}>
                     <ThemeProvider>
                         <Router>

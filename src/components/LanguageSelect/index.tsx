@@ -3,10 +3,10 @@ import { Space, Select, Button } from 'antd';
 import type { FormInstance } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import './index.scss';
-import { languages, certificationOptions } from '@/constants/selcet.json';
+import { languages as languagesOptions, certificationOptions } from '@/constants/selcet.json';
 import { optionsMap } from '@/utils/array';
 
-const languagesOptions = optionsMap(languages);
+const languagesMap = optionsMap(languagesOptions);
 interface ILanguageProps {
     language: string | undefined;
     certification: string | undefined;
@@ -55,7 +55,7 @@ export default ({ form, userId }: { form: FormInstance; userId: number }) => {
                 languageList.map(({ language, certification }) => ({
                     userId,
                     // nativeLang: '',
-                    workLang: languagesOptions.get(language as string),
+                    workLang: languagesMap.get(language as string),
                     workLangValue: language,
                     certification
                 }))

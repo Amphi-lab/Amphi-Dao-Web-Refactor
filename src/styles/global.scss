@@ -83,3 +83,77 @@
 .dark-form-item .dark-form-item-label > label {
   font-size: 16px;
 }
+
+/* Modal */
+.light-modal-wrap .light-modal-content,
+.dark-modal-wrap .dark-modal-content {
+  padding: 24px;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-title,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-content,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-content {
+  margin: 0 auto;
+  margin-block-start: 24px !important;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-content .text-title,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-title {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: var(--success-color);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-content .text-sub,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-sub {
+  color: var(--text-sub-color);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-content .text-strong,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-strong {
+  color: var(--text-main-color);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-content .text-desc,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-desc {
+  color: var(--text-desc-color);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.light-modal-content .light-modal-body .light-modal-confirm-btns,
+.dark-modal-content .dark-modal-body .dark-modal-confirm-btns {
+  margin-top: 24px;
+}
+
+/* 轮播图 */
+.slick-arrow.slick-prev {
+  left: -36px;
+}
+
+.slick-arrow.slick-next {
+  right: -36px;
+}
+
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  margin-top: -20px;
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+}

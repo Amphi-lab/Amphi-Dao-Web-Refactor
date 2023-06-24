@@ -28,6 +28,7 @@ import ImgSBTDisabled from '@/assets/images/sbt-disabled.png';
 import ImgPrev from '@/assets/images/swiper-prev.png';
 import ImgNext from '@/assets/images/swiper-next.png';
 import ImgBackground from '@/assets/images/background.png';
+import IconCopy from '@/assets/svg/icon-copy.svg';
 import IconGloble from '@/assets/svg/icon-globle.svg';
 import IconLang from '@/assets/svg/icon-lang.svg';
 import IconOrders from '@/assets/svg/icon-orders.svg';
@@ -37,7 +38,6 @@ import IconTranslation from '@/assets/svg/icon-translation.svg';
 import IconDiscord from '@/assets/svg/icon-discord.svg';
 import IconEmail from '@/assets/svg/icon-email.svg';
 import ImgEmpty from '@/assets/svg/img-empty.svg';
-import { CopyFilled } from '@ant-design/icons';
 import { getAmphiPass } from '@/contracts/contract';
 
 const languagesMap = optionsMap(languages);
@@ -215,8 +215,10 @@ const NFTList = () => {
 };
 
 const BadgeItem = ({ title, list = [] }: { title: string; list: any[] }) => {
+    const [currentNum, setCurrentNum] = useState(1);
     const onChange = (currentSlide: number) => {
         console.log(currentSlide);
+        setCurrentNum(currentSlide + 1);
     };
     return (
         <div className='sbt-group-item'>
@@ -224,9 +226,10 @@ const BadgeItem = ({ title, list = [] }: { title: string; list: any[] }) => {
             <Carousel
                 className='sbt-swiper-wrap'
                 afterChange={onChange}
+                dots={false}
                 arrows
-                prevArrow={<img src={ImgPrev} alt='<-' />}
-                nextArrow={<img src={ImgNext} alt='->' />}
+                prevArrow={currentNum !== 1 ? <img src={ImgPrev} alt='<-' /> : undefined}
+                nextArrow={currentNum !== list.length ? <img src={ImgNext} alt='<-' /> : undefined}
             >
                 {chunk(list, 4).map((itemArray: any, index: number) => (
                     // eslint-disable-next-line react/no-array-index-key
@@ -311,7 +314,7 @@ const CopyComponent = ({ clipboard, link }: any) => (
             message.success('Copyed that!');
         }}
     >
-        <CopyFilled />
+        <Avatar src={IconCopy} size={16} />
         copy link
     </Space>
 );

@@ -25,11 +25,7 @@ export default {
     },
     components: {
         Button: {
-            controlHeightLG: 75,
-            controlHeight: 40,
-            controlHeightSM: 20,
-            fontSize: 14,
-            fontSizeSM: 12
+            controlHeightSM: 20
         },
         Tabs: {
             lineWidth: 0,

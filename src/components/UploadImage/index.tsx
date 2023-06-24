@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import type { FormInstance, UploadProps } from 'antd';
 import { Button, message, Upload, Space, Avatar } from 'antd';
-import Jazzicon from 'react-jazzicon';
+// import Jazzicon from 'react-jazzicon';
+import ImgAvatar from '@/assets/images/default-avatar.png';
+import ImgBackground from '@/assets/images/default-background.png';
+import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 
-const url = 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg';
 const action = `${import.meta.env.VITE_BASE_URL}file/pic/upload`;
-const token = localStorage.getItem('AMPHI_USERTOKEN');
+const token = localStorage.getItem(AMPHI_USERTOKEN);
 const headers = { authorization: 'authorization-text', token: token as string };
 
 const props: UploadProps = {
@@ -32,16 +34,18 @@ interface IProps {
 }
 export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1 }: IProps) => {
     const [fileList, setFileList] = useState<any[]>([]);
+    const imgUrl = form.getFieldValue(formField);
     useEffect(() => {
-        const imgUrl = form.getFieldValue(formField);
-        if (maxCount === 1) setFileList([{ url: imgUrl }]);
-        else {
-            /** TODO:
-             * 多图片情况； 若imgUrl是image url数组
-             * setFileList(imgUrl.map((value: string) => ({ url: value })));
-             */
+        if (imgUrl) {
+            if (maxCount === 1) setFileList([{ url: imgUrl }]);
+            else {
+                /** TODO:
+                 * 多图片情况； 若imgUrl是image url数组
+                 * setFileList(imgUrl.map((value: string) => ({ url: value })));
+                 */
+            }
         }
-    }, [form, formField, maxCount]);
+    }, [imgUrl, maxCount]);
     const onChange: UploadProps['onChange'] = (info: any) => {
         if (info.file.status !== 'uploading') {
             console.log(info.file, info.fileList);
@@ -97,9 +101,10 @@ export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1 }: 
                     {shape === 'circle' ? (
                         // TODO: 获取 address
                         // ?: 是用Jazzicon 还是 <Avatar src={url} size={size} />
-                        <Jazzicon diameter={size} seed='address' />
+                        // <Jazzicon diameter={size} seed='address' />
+                        <Avatar src={ImgAvatar} size={size} />
                     ) : (
-                        <img src={url} alt='background' height={size} />
+                        <img src={ImgBackground} alt='background' height={size} />
                     )}
                 </Space>
             )}

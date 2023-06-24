@@ -1,3 +1,4 @@
+import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 import storage from '@/utils/storage';
 import axios from 'axios';
 
@@ -158,7 +159,7 @@ export const put = (url: string, data: any) =>
 
 export const refreshAPIToken = () => {
     if (typeof window !== 'undefined') {
-        const accessToken = storage.getLocalStorage('AMPHI_USERTOKEN');
+        const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
     }

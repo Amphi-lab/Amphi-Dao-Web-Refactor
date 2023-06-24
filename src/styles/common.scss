@@ -23,8 +23,9 @@
   margin: 0 120px;
 }
 
-@mixin layout($horizontal: center, $vertical: center) {
+@mixin layout($horizontal: center, $vertical: center, $direction: row) {
   display: flex;
+  flex-direction: $direction;
   align-items: $vertical;
   justify-content: $horizontal;
 }

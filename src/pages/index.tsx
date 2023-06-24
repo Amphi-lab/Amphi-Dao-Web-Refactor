@@ -27,8 +27,13 @@ import ImageAbout4 from '@/assets/images/about4.png';
 import textIcon from '@/assets/svg/text.svg';
 import aduioIcon from '@/assets/svg/audio.svg';
 import folderIcon from '@/assets/svg/folder.svg';
+import { optionsMap } from '@/utils/array';
 
 const { Meta } = Card;
+
+const currentLanguagesOptions = optionsMap(currentLanguages);
+const translationTypesOptions = optionsMap(translationTypes);
+const workLoadTypeOptions = optionsMap(workLoadType);
 
 // const Banner: FC = () => {
 //     return (
@@ -59,7 +64,10 @@ const HomeSection: FC<IHomeSectionProps> = ({ className, title, children }) => {
 
 const Bounties: FC = () => {
     const navigate = useNavigate();
-    const [dataSource, setDataSource] = useState<ITransaction[]>([]);
+    const [loading1, setLoading1] = useState(true);
+    const [loading2, setLoading2] = useState(true);
+    const [dataSource1, setDataSource1] = useState<ITransaction[]>([]);
+    const [dataSource2, setDataSource2] = useState<ITransaction[]>([]);
 
     const findIcon = (translationType: string) => {
         if (translationType === '1' || translationType === '2' || translationType === '0')
@@ -91,7 +99,7 @@ const Bounties: FC = () => {
             dataIndex: 'translationType',
             key: 'type',
             render: (value: string) => {
-                return translationTypes.find(item => item.value === value)?.label;
+                return translationTypesOptions.get(value);
             }
         },
         {
@@ -99,7 +107,7 @@ const Bounties: FC = () => {
             dataIndex: 'sourceLang',
             key: 'from',
             render: (value: string) => {
-                return currentLanguages.find(item => item.value === value)?.label;
+                return currentLanguagesOptions.get(value);
             }
         },
         {
@@ -107,7 +115,7 @@ const Bounties: FC = () => {
             dataIndex: 'targetLang',
             key: 'to',
             render: (value: string) => {
-                return currentLanguages.find(item => item.value === value)?.label;
+                return currentLanguagesOptions.get(value);
             }
         },
         {
@@ -115,9 +123,7 @@ const Bounties: FC = () => {
             dataIndex: 'workload',
             key: 'workload',
             render: (value: number, record: ITransaction) => {
-                return `${value} ${
-                    workLoadType.find(item => item.value === record.workloadType)?.label
-                }`;
+                return `${value} ${workLoadTypeOptions.get(record.workloadType)}`;
             }
         },
         {
@@ -165,7 +171,8 @@ const Bounties: FC = () => {
             children: (
                 <Table
                     rowKey='id'
-                    dataSource={dataSource}
+                    dataSource={dataSource1}
+                    loading={loading1}
                     columns={columns}
                     pagination={false}
                     scroll={{ x: 'max-content' }}
@@ -178,7 +185,8 @@ const Bounties: FC = () => {
             children: (
                 <Table
                     rowKey='id'
-                    dataSource={dataSource}
+                    dataSource={dataSource2}
+                    loading={loading2}
                     columns={columns}
                     pagination={false}
                     scroll={{ x: 'max-content' }}
@@ -199,11 +207,21 @@ const Bounties: FC = () => {
     );
 
     const fetchList = (order: '1' | '2') => {
-        api.ranking({ order }).then((res: any) => {
-            if (res.code === 200) {
-                setDataSource(res.rows);
-            }
-        });
+        if (order === '1') setLoading1(true);
+        else if (order === '2') setLoading2(true);
+        api.ranking({ order })
+            .then((res: any) => {
+                if (order === '1') setLoading1(false);
+                else if (order === '2') setLoading2(false);
+                if (res.code === 200) {
+                    if (order === '1') setDataSource1(res.rows);
+                    else if (order === '2') setDataSource2(res.rows);
+                }
+            })
+            .catch(() => {
+                if (order === '1') setLoading1(false);
+                else if (order === '2') setLoading2(false);
+            });
     };
 
     useEffect(() => {

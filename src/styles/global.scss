@@ -92,8 +92,8 @@
 
 .light-modal-content .light-modal-body .light-modal-confirm-title,
 .dark-modal-content .dark-modal-body .dark-modal-confirm-title {
-  font-size: 16px;
   font-weight: 600;
+  font-size: 16px;
 }
 
 .light-modal-content .light-modal-body .light-modal-confirm-content,
@@ -107,32 +107,32 @@
   margin-top: 16px;
   margin-bottom: 8px;
   color: var(--success-color);
-  font-size: 20px;
   font-weight: 600;
+  font-size: 20px;
   line-height: 24px;
 }
 
 .light-modal-content .light-modal-body .light-modal-confirm-content .text-sub,
 .dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-sub {
   color: var(--text-sub-color);
-  font-size: 14px;
   font-weight: 400;
+  font-size: 14px;
   line-height: 22px;
 }
 
 .light-modal-content .light-modal-body .light-modal-confirm-content .text-strong,
 .dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-strong {
   color: var(--text-main-color);
-  font-size: 14px;
   font-weight: 400;
+  font-size: 14px;
   line-height: 22px;
 }
 
 .light-modal-content .light-modal-body .light-modal-confirm-content .text-desc,
 .dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-desc {
   color: var(--text-desc-color);
-  font-size: 12px;
   font-weight: 400;
+  font-size: 12px;
   line-height: 24px;
 }
 
@@ -152,8 +152,8 @@
 
 .slick-arrow.slick-prev,
 .slick-arrow.slick-next {
-  margin-top: -20px;
+  z-index: 1;
   width: 40px;
   height: 40px;
-  z-index: 1;
+  margin-top: -20px;
 }

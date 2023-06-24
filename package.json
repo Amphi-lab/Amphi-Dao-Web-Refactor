@@ -8,7 +8,7 @@
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx ",
         "prettier": "prettier -c --write src/* ",
         "prepare": "husky install",
-        "pre-commit": "lint-staged",
+        "pre-commit": "lint-staged --allow-empty",
         "preview": "vite preview"
     },
     "dependencies": {

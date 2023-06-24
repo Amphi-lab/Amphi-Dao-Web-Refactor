@@ -56,6 +56,12 @@
   border-radius: 0;
 }
 
+/* upload file */
+.light-upload-wrapper .light-upload-drag,
+.dark-upload-wrapper .dark-upload-drag {
+  background-color: #f2f2fb;
+}
+
 /* Select */
 .light-select-item.light-select-item-option-selected .light-select-item-option-content,
 .dark-select-item.dark-select-item-option-selected .dark-select-item-option-content {

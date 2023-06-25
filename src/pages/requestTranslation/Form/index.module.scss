@@ -1,3 +1,12 @@
 .request-trans-form {
   width: 100%;
+
+  .label-title {
+    @include font($size: 16px, $color: #323335, $weight: 500, $lineH: 24px);
+  }
+
+  .label-tip-message {
+    @include font($color: #64666b, $lineH: 24px);
+    margin-left: 10px;
+  }
 }

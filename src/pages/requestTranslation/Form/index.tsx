@@ -36,60 +36,90 @@ const RequestForm: React.FC = () => {
             <Row gutter={8}>
                 <Col span={12}>
                     <Form.Item
-                        label='Translate From'
-                        name='from'
+                        label={<span className={styles['label-title']}>Translation From</span>}
+                        name='sourceLang'
                         rules={[
                             {
                                 required: true,
-                                message: 'Please Input our Translation Translate From!'
+                                message: 'Please Select Translation From Language!'
                             }
                         ]}
                     >
-                        <AmSelect options={currentLanguages} />
+                        <AmSelect
+                            options={currentLanguages}
+                            placeholder='please Select Translation From Language!'
+                        />
                     </Form.Item>
                 </Col>
                 <Col span={12}>
                     <Form.Item
-                        label='Translate To'
-                        name='to'
-                        rules={[{ required: true, message: 'Please Input Your Translate To!' }]}
+                        label={<span className={styles['label-title']}>Translation To</span>}
+                        name='targetLang'
+                        rules={[
+                            { required: true, message: 'Please Select Translate To Language!' }
+                        ]}
                     >
-                        <AmSelect options={currentLanguages} />
+                        <AmSelect
+                            options={currentLanguages}
+                            placeholder='please Select Translation To Language'
+                        />
                     </Form.Item>
                 </Col>
             </Row>
             <Row>
                 <Col span={12}>
                     <Form.Item
-                        label='Service Type'
-                        name='to'
-                        rules={[{ required: true, message: 'Please Input Your Service Type!' }]}
+                        label={<span className={styles['label-title']}>Service Type</span>}
+                        name='translationType'
+                        rules={[{ required: true, message: 'Please Select Service Type!' }]}
                     >
-                        <AmSelect options={translationTypes} />
+                        <AmSelect
+                            options={translationTypes}
+                            placeholder='please select Service Type'
+                        />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Form.Item
-                label='Write a brief sentense about your project'
-                name='to'
-                rules={[{ required: true, message: 'Please Input Your Service Type!' }]}
+                label={
+                    <span className={styles['label-title']}>
+                        Write a brief sentense about your project
+                    </span>
+                }
+                name='title'
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please write a brief sentense about your project!'
+                    }
+                ]}
             >
-                <Input showCount maxLength={20} />
+                <Input
+                    showCount
+                    maxLength={20}
+                    placeholder='please write a brief sentense about your project'
+                />
             </Form.Item>
             <Form.Item
-                label='Upload the file you need to translate'
-                name='to'
+                label={
+                    <span className={styles['label-title']}>
+                        Upload the file you need to translate
+                    </span>
+                }
+                name='translationFiles'
                 rules={[
-                    { required: true, message: 'Please Upload the file you need to translate!' }
+                    { required: true, message: 'Please Upload the files you need to translate!' }
                 ]}
             >
                 <UploadFile />
             </Form.Item>
             <Form.Item
-                label='Instructions for Translator'
-                name='to'
-                rules={[{ required: true, message: 'Please Input Your Service Type!' }]}
+                label={<span className={styles['label-title']}>Instructions for Translator</span>}
+                name='instruction'
+                rules={[
+                    { required: true, message: 'Please Input Your Instructions for Translator!' }
+                ]}
             >
                 <TextArea
                     placeholder='Please provide a detailed description of your expectations, specific requirements, or any other relevant information for the translation project.'
@@ -99,49 +129,75 @@ const RequestForm: React.FC = () => {
                 />
             </Form.Item>
             <Form.Item
-                label='What kind of work experience do you expect translators to have?'
-                name='to'
+                label={
+                    <span className={styles['label-title']}>
+                        What kind of work experience do you expect translators to have?
+                    </span>
+                }
+                name='jobFunctiong'
             >
                 <Row gutter={8}>
                     <Col span={12}>
-                        <AmSelect options={industry} />
+                        <AmSelect options={industry} placeholder='please select industry' />
                     </Col>
                     <Col span={12}>
-                        <AmSelect options={jobFunctions} />
+                        <AmSelect options={jobFunctions} placeholder='please select jobFunctions' />
                     </Col>
                 </Row>
             </Form.Item>
             <Form.Item
-                label='When would you like to receive the documents?'
-                name='to'
-                rules={[{ required: true, message: 'Please Input Your Service Type!' }]}
+                label={
+                    <span className={styles['label-title']}>
+                        When would you like to receive the documents?
+                    </span>
+                }
+                name='deadline'
+                rules={[{ required: true, message: 'Please select deadline!' }]}
             >
-                <AmDateTimePiker />
+                <Row gutter={8}>
+                    <Col span={12}>
+                        <AmDateTimePiker placeholder='please select deadline' />
+                    </Col>
+                    <Col span={12}>
+                        <Input readOnly value='1111' />
+                        {/* <AmDateTimePiker placeholder='please select deadline' /> */}
+                    </Col>
+                </Row>
             </Form.Item>
-            <Form.Item label='Bounty' name='to'>
+            <Form.Item
+                label={
+                    <>
+                        <span className={styles['label-title']}>Bounty</span>
+                        <small className={styles['label-tip-message']}>
+                            We will provide you with a reference price, and you can also modify the
+                            price on your own, 1 USDT≈1 Dollar
+                        </small>
+                    </>
+                }
+                name='bounty'
+            >
                 <Col span={12}>
-                    <Input suffix='USDT' />
+                    <Input suffix='USDT' placeholder='please enter bounty' />
                 </Col>
             </Form.Item>
             <Form.Item
-                label='Your Email'
-                name='to'
-                rules={[{ required: true, message: 'Please Input Your Service Type!' }]}
+                className={styles['email-tip-message']}
+                label={
+                    <>
+                        <span className={styles['label-title']}>Your Email</span>
+                        <small className={styles['label-tip-message']}>
+                            Your linked email will be automatically filled in here, and you can also
+                            modify the email address.
+                        </small>
+                    </>
+                }
+                name='email'
+                rules={[{ required: true, message: 'Please Input Your Email!' }]}
             >
                 <Col span={12}>
-                    <Input />
+                    <Input placeholder='please enter email' />
                 </Col>
             </Form.Item>
-
-            {/* <Form.Item name='remember' valuePropName='checked' wrapperCol={{ offset: 8, span: 16 }}>
-            <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type='primary' htmlType='submit'>
-                Submit
-            </Button>
-        </Form.Item> */}
         </Form>
     );
 };

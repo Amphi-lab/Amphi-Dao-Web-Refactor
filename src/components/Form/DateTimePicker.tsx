@@ -1,31 +1,39 @@
 import React from 'react';
+import type { DatePickerProps } from 'antd';
 import { DatePicker } from 'antd';
-import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
+import type { RangePickerProps } from 'antd/es/date-picker';
+import DateIcon from '../Icon/DateIcon';
 
-const AmDateTimePiker = () => {
-    const disabledDate: RangePickerProps['disabledDate'] = current => {
-        // Can not select days before today and today
-        return current && current < dayjs().endOf('day');
+interface IProps {
+    placeholder: string;
+}
+const AmDateTimePiker = ({ placeholder }: IProps) => {
+    const onChange = (
+        value: DatePickerProps['value'] | RangePickerProps['value'],
+        dateString: [string, string] | string
+    ) => {
+        console.log('Selected Time: ', value);
+        console.log('Formatted Selected Time: ', dateString);
     };
-    const range = (start: number, end: number) => {
-        const result = [];
-        for (let i = start; i < end; i++) {
-            result.push(i);
-        }
-        return result;
+
+    const onOk = (value: DatePickerProps['value'] | RangePickerProps['value']) => {
+        console.log('onOk: ', value);
     };
-    const disabledDateTime = () => ({
-        disabledHours: () => range(0, 24).splice(4, 20),
-        disabledMinutes: () => range(30, 60),
-        disabledSeconds: () => [55, 56]
-    });
     return (
         <DatePicker
+            allowClear
+            autoFocus
+            placeholder={placeholder}
             format='YYYY-MM-DD HH:mm:ss'
-            disabledDate={disabledDate}
-            disabledTime={disabledDateTime}
             showTime={{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }}
+            onChange={onChange}
+            onOk={onOk}
+            suffixIcon={<DateIcon />}
+            style={{
+                backgroundColor: '#F2F2FB',
+                width: '100%'
+            }}
         />
     );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import PageTitle from '@/components/PageTitle';
 import RequestForm from './Form';
+import SummaryCard from './Summary';
 import styles from './index.module.scss';
 
 const RequestTranslation = () => {
@@ -11,7 +12,9 @@ const RequestTranslation = () => {
                 <div className={styles['request-trans-left']}>
                     <RequestForm />
                 </div>
-                <div className={styles['request-trans-right']}>dfjlsfjslfjsld</div>
+                <div className={styles['request-trans-right']}>
+                    <SummaryCard />
+                </div>
             </main>
         </>
     );

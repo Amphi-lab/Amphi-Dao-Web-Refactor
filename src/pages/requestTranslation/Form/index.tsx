@@ -1,9 +1,7 @@
 import React from 'react';
 import { Form, Input, Row, Col, Button } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+
 import {
     currentLanguages,
     translationTypes,
@@ -26,12 +24,6 @@ const onFinishFailed = (errorInfo: any) => {
 
 const RequestForm: React.FC = () => {
     const [form] = Form.useForm();
-    const getZone = () => {
-        dayjs.extend(utc);
-        dayjs.extend(timezone);
-        console.log(dayjs.tz());
-        return getTimeZoneName(dayjs.tz.guess());
-    };
     return (
         <Form
             form={form}
@@ -109,6 +101,7 @@ const RequestForm: React.FC = () => {
                     showCount
                     maxLength={20}
                     placeholder='please write a brief sentense about your project'
+                    allowClear
                 />
             </Form.Item>
             <Form.Item
@@ -169,7 +162,7 @@ const RequestForm: React.FC = () => {
                         <AmDateTimePiker placeholder='please select deadline' />
                     </Col>
                     <Col span={12}>
-                        <Input readOnly value={getZone()} />
+                        <Input readOnly value={getTimeZoneName()} disabled />
                         {/* <AmDateTimePiker placeholder='please select deadline' /> */}
                     </Col>
                 </Row>
@@ -187,7 +180,13 @@ const RequestForm: React.FC = () => {
                 name='bounty'
             >
                 <Col span={12}>
-                    <Input suffix='USDT' placeholder='please enter bounty' />
+                    <Input
+                        allowClear
+                        type='number'
+                        addonAfter='USDT'
+                        min={0}
+                        placeholder='please enter bounty'
+                    />
                 </Col>
             </Form.Item>
             <Form.Item
@@ -205,7 +204,7 @@ const RequestForm: React.FC = () => {
                 rules={[{ required: true, message: 'Please Input Your Email!' }]}
             >
                 <Col span={12}>
-                    <Input placeholder='please enter email' />
+                    <Input placeholder='please enter email' allowClear />
                 </Col>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

@@ -3,7 +3,10 @@ import { Button } from 'antd';
 import Card from '../Card';
 import styles from './index.module.scss';
 
-const ConfirmOrders = () => {
+interface Iprops {
+    save: () => void;
+}
+const ConfirmOrders = ({ save }: Iprops) => {
     return (
         <Card>
             <div className={styles['confirme-order-box']}>
@@ -15,7 +18,14 @@ const ConfirmOrders = () => {
                         refunded.
                     </li>
                 </ul>
-                <Button className={styles['confirm-btn']}>Confirm Order</Button>
+                <Button
+                    type='primary'
+                    htmlType='submit'
+                    className={styles['confirm-btn']}
+                    onClick={save}
+                >
+                    Confirm Order
+                </Button>
             </div>
         </Card>
     );

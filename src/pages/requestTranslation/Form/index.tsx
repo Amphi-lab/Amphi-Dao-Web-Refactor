@@ -1,6 +1,9 @@
 import React from 'react';
-import { Form, Input, Row, Col } from 'antd';
+import { Form, Input, Row, Col, Button } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import {
     currentLanguages,
     translationTypes,
@@ -10,6 +13,7 @@ import {
 import UploadFile from '@/components/UploadFile';
 import AmSelect from '@/components/Form/Select';
 import AmDateTimePiker from '@/components/Form/DateTimePicker';
+import { getTimeZoneName } from '@/utils/util';
 import styles from './index.module.scss';
 
 const onFinish = (values: any) => {
@@ -22,6 +26,12 @@ const onFinishFailed = (errorInfo: any) => {
 
 const RequestForm: React.FC = () => {
     const [form] = Form.useForm();
+    const getZone = () => {
+        dayjs.extend(utc);
+        dayjs.extend(timezone);
+        console.log(dayjs.tz());
+        return getTimeZoneName(dayjs.tz.guess());
+    };
     return (
         <Form
             form={form}
@@ -159,7 +169,7 @@ const RequestForm: React.FC = () => {
                         <AmDateTimePiker placeholder='please select deadline' />
                     </Col>
                     <Col span={12}>
-                        <Input readOnly value='1111' />
+                        <Input readOnly value={getZone()} />
                         {/* <AmDateTimePiker placeholder='please select deadline' /> */}
                     </Col>
                 </Row>
@@ -197,6 +207,11 @@ const RequestForm: React.FC = () => {
                 <Col span={12}>
                     <Input placeholder='please enter email' />
                 </Col>
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button type='primary' htmlType='submit'>
+                    Submit
+                </Button>
             </Form.Item>
         </Form>
     );

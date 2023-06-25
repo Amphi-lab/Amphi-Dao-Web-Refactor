@@ -3,6 +3,7 @@ import PageTitle from '@/components/PageTitle';
 import RequestForm from './Form';
 import SummaryCard from './Summary';
 import TotalCostCard from './TotalCost';
+import ConfirmOrderCard from './ConfirmOrder';
 import styles from './index.module.scss';
 
 const RequestTranslation = () => {
@@ -16,6 +17,7 @@ const RequestTranslation = () => {
                 <div className={styles['request-trans-right']}>
                     <SummaryCard />
                     <TotalCostCard />
+                    <ConfirmOrderCard />
                 </div>
             </main>
         </>

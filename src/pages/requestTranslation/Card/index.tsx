@@ -3,14 +3,14 @@ import React from 'react';
 import styles from './index.module.scss';
 
 interface Iprops {
-    title: string;
+    title?: string;
     children: ReactNode;
 }
 
-const Card = ({ title, children }: Iprops) => {
+const Card = ({ title = '', children }: Iprops) => {
     return (
         <div className={styles['request-trans-card']}>
-            <h6>{title}</h6>
+            {title ? <h6>{title}</h6> : ''}
             {children}
         </div>
     );

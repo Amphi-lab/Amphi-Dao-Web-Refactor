@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 const SummaryCard = () => {
     return (
-        <Card>
+        <Card title='Summary'>
             <ul className={styles['summary-list']}>
                 <li>
                     <span>Translation Language</span>

@@ -1,8 +1,19 @@
+import type { ReactNode } from 'react';
 import React from 'react';
 import styles from './index.module.scss';
 
-const Card = ({ children }) => {
-    return <div className={styles['request-trans-card']}>{children}</div>;
+interface Iprops {
+    title: string;
+    children: ReactNode;
+}
+
+const Card = ({ title, children }: Iprops) => {
+    return (
+        <div className={styles['request-trans-card']}>
+            <h6>{title}</h6>
+            {children}
+        </div>
+    );
 };
 
 export default Card;

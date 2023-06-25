@@ -4,4 +4,11 @@
   border-radius: 12px;
   background: rgb(255 255 255 / 50%);
   backdrop-filter: blur(28px);
+  margin-bottom: 16px;
+
+  h6 {
+    margin-bottom: 16px;
+
+    @include font($size: 16px, $color: #323335, $weight: 500, $lineH: 24px);
+  }
 }

@@ -16,4 +16,21 @@ export const getTimeZoneName = () => {
     return ans;
 };
 
-export const other = [];
+export const formatFileList = (fileList: [any]) => {
+    return fileList?.map(file => {
+        return {
+            fileName: file?.name,
+            filePath: file?.response?.data?.path,
+            fileType: 0, // 0: 文本， 1：视频， 2：音频
+            fileSize: file?.size
+        };
+    });
+};
+
+export const getTotalWorkload = (fileList: [any]) => {
+    let total = 0;
+    fileList.forEach(file => {
+        total += Number(file?.response?.data?.wordCount || 0);
+    });
+    return total;
+};

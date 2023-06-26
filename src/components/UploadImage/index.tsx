@@ -6,7 +6,7 @@ import ImgAvatar from '@/assets/images/default-avatar.png';
 import ImgBackground from '@/assets/images/default-background.png';
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 
-const action = `${import.meta.env.VITE_BASE_URL}file/pic/upload`;
+const action = `${import.meta.env.VITE_BASE_URL}/file/pic/upload`;
 const token = localStorage.getItem(AMPHI_USERTOKEN);
 const headers = { authorization: 'authorization-text', token: token as string };
 

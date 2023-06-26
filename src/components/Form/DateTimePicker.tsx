@@ -7,15 +7,19 @@ import DateIcon from '../Icon/DateIcon';
 
 interface IProps {
     placeholder: string;
-}
-const AmDateTimePiker = ({ placeholder }: IProps) => {
-    const onChange = (
+    onChange: (
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
-    ) => {
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
-    };
+    ) => void;
+}
+const AmDateTimePiker = ({ placeholder, onChange }: IProps) => {
+    // const onChange = (
+    //     value: DatePickerProps['value'] | RangePickerProps['value'],
+    //     dateString: [string, string] | string
+    // ) => {
+    //     console.log('Selected Time: ', value);
+    //     console.log('Formatted Selected Time: ', dateString);
+    // };
 
     const onOk = (value: DatePickerProps['value'] | RangePickerProps['value']) => {
         console.log('onOk: ', value);

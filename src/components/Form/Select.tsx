@@ -5,9 +5,9 @@ interface IProps {
     size?: 'large' | 'middle' | 'small';
     placeholder?: string;
     options: { value: string; label: string }[];
-    onSelectChange?: () => void;
+    onChange?: (value: any, opiton: any) => void;
 }
-const AmSelect = ({ size, placeholder, options, onSelectChange }: IProps) => {
+const AmSelect = ({ size, placeholder, options, onChange }: IProps) => {
     return (
         <Select
             size={size}
@@ -16,7 +16,7 @@ const AmSelect = ({ size, placeholder, options, onSelectChange }: IProps) => {
             placeholder={placeholder}
             optionFilterProp='label'
             options={options}
-            onChange={onSelectChange}
+            onChange={onChange}
         />
     );
 };

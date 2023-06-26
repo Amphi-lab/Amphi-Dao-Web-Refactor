@@ -1,6 +1,8 @@
 import React from 'react';
+import type { DatePickerProps } from 'antd';
 import { Form, Input, Row, Col, Button } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import type { RangePickerProps } from 'antd/es/date-picker';
 
 import {
     currentLanguages,
@@ -11,19 +13,70 @@ import {
 import UploadFile from '@/components/UploadFile';
 import AmSelect from '@/components/Form/Select';
 import AmDateTimePiker from '@/components/Form/DateTimePicker';
-import { getTimeZoneName } from '@/utils/util';
+import { getTimeZoneName, formatFileList, getTotalWorkload } from '@/utils/util';
+import api from '@/api';
 import styles from './index.module.scss';
-
-const onFinish = (values: any) => {
-    console.log('Success:', values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-};
 
 const RequestForm: React.FC = () => {
     const [form] = Form.useForm();
+
+    const saveOrder = async (parmas: any) => {
+        api.saveOrder(parmas).then((res: any) => {
+            console.log(res);
+        });
+    };
+
+    const onFinish = (values: any) => {
+        const finalParams = {
+            ...values,
+            aiBounty: 1000,
+            humanBounty: 1000,
+            bounty: Number(values.bounty)
+            // translationFiles: formatFileList(values.translationFiles.fileList)
+        };
+        console.log('Success:', values);
+        console.log(finalParams);
+
+        saveOrder(finalParams);
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const handleSelectChange = (value: string, opiton: any) => {
+        form.setFieldValue(opiton, value);
+        console.log(value, opiton);
+    };
+
+    const hanldeDateChange = (
+        value: DatePickerProps['value'] | RangePickerProps['value'],
+        dateString: [string, string] | string
+    ) => {
+        console.log('Selected Time: ', value);
+        console.log('Formatted Selected Time: ', dateString);
+        form.setFieldValue('deadline', dateString);
+    };
+
+    const handleFileChange = (info: { file: { name?: any; status?: any }; fileList: any }) => {
+        const { status } = info.file;
+        if (status !== 'uploading') {
+            // console.log(info.file, info.fileList);
+            // console.log(info);
+        }
+        if (status === 'done') {
+            console.log(getTotalWorkload(info.fileList));
+            form.setFieldValue('translationFiles', formatFileList(info.fileList));
+
+            // console.log(form.getFieldValue('translationFiles'));
+        }
+        // if (status === 'done') {
+        //     message.success(`${info.file.name} file uploaded successfully.`);
+        // } else if (status === 'error') {
+        //     message.error(`${info.file.name} file upload failed.`);
+        // }
+    };
+
     return (
         <Form
             form={form}
@@ -50,6 +103,7 @@ const RequestForm: React.FC = () => {
                         <AmSelect
                             options={currentLanguages}
                             placeholder='please Select Translation From Language!'
+                            onChange={handleSelectChange}
                         />
                     </Form.Item>
                 </Col>
@@ -64,6 +118,7 @@ const RequestForm: React.FC = () => {
                         <AmSelect
                             options={currentLanguages}
                             placeholder='please Select Translation To Language'
+                            onChange={handleSelectChange}
                         />
                     </Form.Item>
                 </Col>
@@ -78,6 +133,7 @@ const RequestForm: React.FC = () => {
                         <AmSelect
                             options={translationTypes}
                             placeholder='please select Service Type'
+                            onChange={handleSelectChange}
                         />
                     </Form.Item>
                 </Col>
@@ -115,7 +171,7 @@ const RequestForm: React.FC = () => {
                     { required: true, message: 'Please Upload the files you need to translate!' }
                 ]}
             >
-                <UploadFile />
+                <UploadFile onChange={handleFileChange} />
             </Form.Item>
             <Form.Item
                 label={<span className={styles['label-title']}>Instructions for Translator</span>}
@@ -137,14 +193,25 @@ const RequestForm: React.FC = () => {
                         What kind of work experience do you expect translators to have?
                     </span>
                 }
-                name='jobFunctiong'
             >
                 <Row gutter={8}>
                     <Col span={12}>
-                        <AmSelect options={industry} placeholder='please select industry' />
+                        <Form.Item name='industry'>
+                            <AmSelect
+                                options={industry}
+                                placeholder='please select industry'
+                                onChange={handleSelectChange}
+                            />
+                        </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <AmSelect options={jobFunctions} placeholder='please select jobFunctions' />
+                        <Form.Item name='jobFunction'>
+                            <AmSelect
+                                options={jobFunctions}
+                                placeholder='please select jobFunction'
+                                onChange={handleSelectChange}
+                            />
+                        </Form.Item>
                     </Col>
                 </Row>
             </Form.Item>
@@ -159,7 +226,10 @@ const RequestForm: React.FC = () => {
             >
                 <Row gutter={8}>
                     <Col span={12}>
-                        <AmDateTimePiker placeholder='please select deadline' />
+                        <AmDateTimePiker
+                            placeholder='please select deadline'
+                            onChange={hanldeDateChange}
+                        />
                     </Col>
                     <Col span={12}>
                         <Input readOnly value={getTimeZoneName()} disabled />
@@ -177,11 +247,11 @@ const RequestForm: React.FC = () => {
                         </small>
                     </>
                 }
+                // rules={[{ message: 'Please Input Number!', type: 'number' }]}
                 name='bounty'
             >
                 <Col span={12}>
                     <Input
-                        allowClear
                         type='number'
                         addonAfter='USDT'
                         min={0}
@@ -201,10 +271,12 @@ const RequestForm: React.FC = () => {
                     </>
                 }
                 name='email'
-                rules={[{ required: true, message: 'Please Input Your Email!' }]}
+                rules={[
+                    { required: true, message: 'The email format is incorrect', type: 'email' }
+                ]}
             >
                 <Col span={12}>
-                    <Input placeholder='please enter email' allowClear />
+                    <Input type='email' placeholder='please enter email' allowClear />
                 </Col>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

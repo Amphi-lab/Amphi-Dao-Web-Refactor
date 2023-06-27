@@ -7,8 +7,8 @@
     margin-bottom: 16px;
 
     li {
-      list-style: disc;
       margin-left: 20px;
+      list-style: disc;
 
       @include font($size: 14px, $color: #64666b, $weight: normal, $lineH: 18px);
     }
@@ -17,8 +17,8 @@
   .confirm-btn {
     width: 100%;
     padding: 20px 32px;
-    border-radius: 8px;
     background-color: #0049ff;
+    border-radius: 8px;
 
     @include layout();
 

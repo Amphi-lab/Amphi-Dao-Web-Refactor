@@ -23,7 +23,6 @@ import { languages, socialMedia } from '@/constants/selcet.json';
 // utils
 import { chunk, optionsMap } from '@/utils/array';
 // images
-import ImgSBTWorn from '@/assets/images/sbt-worn.png';
 import ImgSBTDisabled from '@/assets/images/sbt-disabled.png';
 import ImgPrev from '@/assets/images/swiper-prev.png';
 import ImgNext from '@/assets/images/swiper-next.png';
@@ -38,7 +37,9 @@ import IconTranslation from '@/assets/svg/icon-translation.svg';
 import IconDiscord from '@/assets/svg/icon-discord.svg';
 import IconEmail from '@/assets/svg/icon-email.svg';
 import ImgEmpty from '@/assets/svg/img-empty.svg';
+import ImgTranslator from '@/assets/images/translator.png';
 import { getAmphiPass } from '@/contracts/contract';
+import ImgSBTWorn from '@/assets/images/sbt-worn.png';
 
 const languagesMap = optionsMap(languages);
 const socialMediaMap = optionsMap(socialMedia);
@@ -194,7 +195,18 @@ const NFTList = () => {
                             <Row gutter={[24, 24]}>
                                 {list.map(({ name, image }) => (
                                     <Col md={8} lg={6} xxl={4} key={name}>
-                                        <Card hoverable cover={<img src={image} alt={name} />}>
+                                        <Card
+                                            hoverable
+                                            cover={
+                                                <img
+                                                    src={image}
+                                                    alt={name}
+                                                    onError={e => {
+                                                        e.target.src = ImgTranslator;
+                                                    }}
+                                                />
+                                            }
+                                        >
                                             <Card.Meta title={name} description='' />
                                         </Card>
                                     </Col>
@@ -251,6 +263,7 @@ const BadgeItem = ({ title, list = [] }: { title: string; list: any[] }) => {
 };
 
 const BadgeList = () => {
+    const { address } = useAccount();
     const [list] = useState([
         { id: 1, sbt: 'worn' },
         { id: 2, sbt: 'worn' },
@@ -260,10 +273,17 @@ const BadgeList = () => {
     ]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
-    }, []);
+        setLoading(true);
+        api.getBadgeList({ address })
+            .then((res: any) => {
+                console.log('===getBadgeList===', res);
+                setLoading(false);
+            })
+            .catch((error: Error) => {
+                console.error('===getBadgeList===', error);
+                setLoading(false);
+            });
+    }, [address]);
 
     return (
         <Spin spinning={loading}>
@@ -359,6 +379,14 @@ export default () => {
                     });
                 }
             });
+
+            api.getBadgeSlot({ address })
+                .then((res: any) => {
+                    console.log('===res===', res);
+                })
+                .catch((err: Error) => {
+                    console.log('======', err);
+                });
         }
     }, [searchAddress, address]);
 
@@ -372,7 +400,13 @@ export default () => {
     return (
         <>
             <div className='background-box'>
-                <img src={userInfo?.backgroundUrl || ImgBackground} alt='background' />
+                <img
+                    src={userInfo?.backgroundUrl}
+                    alt='background'
+                    onError={e => {
+                        e.target.src = ImgBackground;
+                    }}
+                />
             </div>
             {/* 个人信息 */}
             <div className='personal-info-box'>
@@ -384,6 +418,7 @@ export default () => {
                                     src={userInfo?.profile}
                                     alt='profile'
                                     width={120}
+                                    height={120}
                                     style={{ borderRadius: 60 }}
                                 />
                             ) : (

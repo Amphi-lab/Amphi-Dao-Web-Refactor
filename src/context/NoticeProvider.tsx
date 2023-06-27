@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { Avatar, Modal, Carousel, Space, Row } from 'antd';
+import api from '@/api';
 import IconFireworks from '@/assets/svg/icon-fireworks.svg';
 import ImgSBT from '@/assets/images/sbt-disabled.png';
 import IconPrev from '@/assets/svg/icon-prev.svg';
@@ -9,11 +10,24 @@ import IconLinkedin from '@/assets/svg/icon-linkedin.svg';
 import IconFacebook from '@/assets/svg/icon-facebook.svg';
 import IconTwitter from '@/assets/svg/icon-twitter.svg';
 import IconT from '@/assets/svg/icon-t.svg';
+import { useAccount } from 'wagmi';
+import SBTImage from '@/constants/sbt';
 
 const NoticeContext = createContext<any>({});
 
-const SBTNoticeContent = ({ address, num, sbtlist, title }: any) => {
+const SBTNoticeContent = (props: any) => {
+    const { address } = useAccount();
     const [currentNum, setCurrentNum] = useState(1);
+    const [sbtList, setSbtList] = useState<any[]>(props.data);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    const [title, setTitle] = useState('Proof of Valid Workload');
+    const [total, setTotal] = useState<string | number>('--');
+
+    useEffect(() => {
+        setSbtList(props.data);
+        setTotal(props.data.length);
+    }, [props.data]);
+
     const onChange = (currentSlide: number) => {
         console.log(currentSlide);
         setCurrentNum(currentSlide + 1);
@@ -27,8 +41,8 @@ const SBTNoticeContent = ({ address, num, sbtlist, title }: any) => {
                 nextArrow={<img src={IconNext} alt='->' className='swiper-next' />}
                 afterChange={onChange}
             >
-                {sbtlist.map(({ id, sbt }: any) => (
-                    <img src={sbt} alt='sbt' height={150} key={id} />
+                {sbtList?.map(({ id, tokenId }: { id: number; tokenId: string }) => (
+                    <img src={SBTImage[tokenId]} alt={tokenId} height={150} key={id} />
                 ))}
             </Carousel>
             <Row justify='space-between'>
@@ -36,15 +50,15 @@ const SBTNoticeContent = ({ address, num, sbtlist, title }: any) => {
                     SBT Address: {address}
                     <Avatar src={IconCopy} size={16} />
                 </Space>
-                {sbtlist.length > 1 && (
+                {sbtList.length > 1 && (
                     <p className='text-desc'>
-                        {currentNum} / {sbtlist.length}
+                        {currentNum} / {total}
                     </p>
                 )}
             </Row>
             <p className='text-title'>{title}</p>
             <p className='text-sub'>
-                You are the <span className='text-strong'>No. {num}</span> user to receive this
+                You are the <span className='text-strong'>No. {total}</span> user to receive this
                 badge
             </p>
         </div>
@@ -70,59 +84,57 @@ const SBTShareContent = ({ img }: any) => {
 };
 
 const NoticeProvider = (props: any) => {
+    const { address } = useAccount();
     const [modal, contextHolder] = Modal.useModal();
+    const [isOpen, setIsOpen] = useState(false);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const openSBT = useCallback(() => {
-        modal.confirm({
-            width: '416px',
-            title: (
-                <Space>
-                    <Avatar src={IconFireworks} size={20} />
-                    Congratulations on your achievement
-                </Space>
-            ),
-            icon: null,
-            closable: true,
-            okText: 'Wear',
-            cancelText: 'Cancel',
-            onOk: () => {
-                // TODO: 此处需要调用穿戴接口只完成了弹窗UI
-                /**
-                 * TODO: 穿戴成功
-                 */
-                modal.confirm({
-                    title: 'Badge Wearing Tips',
-                    content:
-                        'You are already wearing the same type of [徽章类型-徽章级别]. Would you like to replace it?',
-                    okText: 'Confirm',
-                    cancelText: 'Cancel'
-                });
-                /**
-                 * TODO: 穿戴失败
-                 */
-                modal.error({
-                    title: 'Failed to wear',
-                    content:
-                        'You have reached the maximum limit of badges. If you still want to wear this badge, please remove at least one badge from your portfolio page.',
-                    okText: 'Go to Portfolio'
-                });
-            },
-            content: (
-                // TODO: sbtlist数据动态，此处写死了，待完善
-                <SBTNoticeContent
-                    address=''
-                    num={3}
-                    sbtlist={[
-                        { id: 1, url: ImgSBT },
-                        { id: 2, url: ImgSBT },
-                        { id: 3, url: ImgSBT }
-                    ]}
-                    title='Proof of Valid Workload'
-                />
-            )
-        });
-    }, [modal]);
+    const openSBT = useCallback(
+        (data: any) => {
+            console.log('+++++++++++', data);
+            if (isOpen) return;
+            setIsOpen(true);
+            modal.confirm({
+                width: '416px',
+                title: (
+                    <Space>
+                        <Avatar src={IconFireworks} size={20} />
+                        Congratulations on your achievement
+                    </Space>
+                ),
+                icon: null,
+                closable: true,
+                okText: 'Wear',
+                cancelText: 'Cancel',
+                onOk: () => {
+                    // TODO: 此处需要调用穿戴接口只完成了弹窗UI
+                    /**
+                     * TODO: 穿戴成功
+                     */
+                    modal.confirm({
+                        title: 'Badge Wearing Tips',
+                        content:
+                            'You are already wearing the same type of [徽章类型-徽章级别]. Would you like to replace it?',
+                        okText: 'Confirm',
+                        cancelText: 'Cancel'
+                    });
+                    /**
+                     * TODO: 穿戴失败
+                     */
+                    modal.error({
+                        title: 'Failed to wear',
+                        content:
+                            'You have reached the maximum limit of badges. If you still want to wear this badge, please remove at least one badge from your portfolio page.',
+                        okText: 'Go to Portfolio'
+                    });
+                },
+                onCancel: () => {
+                    setIsOpen(false);
+                },
+                content: <SBTNoticeContent data={data} />
+            });
+        },
+        [isOpen, modal]
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     const openSBTShare = useCallback(() => {
@@ -147,8 +159,20 @@ const NoticeProvider = (props: any) => {
     }, [modal]);
 
     useEffect(() => {
-        // TODO: 有了新通知调用对应的弹窗方法
-    }, []);
+        api.getBadgeList({ address, isRemind: true })
+            .then((res: any) => {
+                console.log('===getBadgeList isRemind===', res);
+                if (res?.code === 200) {
+                    if (Array.isArray(res?.data) && res?.data.length > 0) {
+                        // 弹窗
+                        openSBT(res?.data);
+                    }
+                }
+            })
+            .catch((error: Error) => {
+                console.error('===getBadgeList isRemind===', error);
+            });
+    }, [address, openSBT]);
 
     return (
         <NoticeContext.Provider value={props.value}>

@@ -1,4 +1,5 @@
 export interface ILanguage {
+    [key: string]: any;
     id?: number;
     userId: number;
     // createTime: null | string;
@@ -14,6 +15,7 @@ export interface ILanguage {
 }
 
 export default interface IUserInfo {
+    [key: string]: any;
     id: number;
     address?: string;
     username?: string;

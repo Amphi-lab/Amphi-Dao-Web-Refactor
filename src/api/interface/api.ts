@@ -74,3 +74,21 @@ export const getProjectList = ({ address }: { address: string }) =>
 
 // `/ipfs/getJson?${uris.join('&')}`
 export const getIpfsJson = ({ uris }: { uris: string[] }) => get(`/ipfs/getJson?${uris.join('&')}`);
+
+// /badge/slot 徽章插槽
+export const getBadgeSlot = ({ address }: { address: string }) =>
+    get(`/badge/slot?address=${address}`);
+
+// /badge/wear 佩戴和脱下徽章
+// "address": "0x0b0746f6776536cf1fa1dd6c920ac982dafefd0e", --用户地址
+// "wordsSbt": "0x31437867827384", --words工作量徽章sbt的tokenId,脱下时传""空串
+export const wearBadge = (params: any) => post(`/badge/wear`, params);
+
+// 21. /badge/isRemind 提醒完用户有新徽章后调用
+export const isRemindBadge = (params: any) => post(`/badge/isRemind`, params);
+
+// 20. /badge/list 获取拥有的徽章列表
+// "address":"0x0b0746f6776536cf1fa1dd6c920ac982dafefd0e" --用户地址
+// "isRemind": 0 --是否已提醒用户 查询是否需要弹窗时使用，当有为0的记录时弹窗
+export const getBadgeList = ({ address, isRemind }: { address: string }) =>
+    get(`/badge/list?address=${address}${isRemind ? '&isRemind=0' : ''}`);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Col, Form, Row, Select } from 'antd';
 import { currentLanguages, translationTypes } from '@/constants/selcet.json';
+import { useNavigate } from 'react-router';
 
 interface IProps {
     isRequired?: boolean;
@@ -8,39 +9,37 @@ interface IProps {
 }
 
 export default ({ isRequired = true, size = 'middle' }: IProps) => {
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
     const selectList = [
         {
             label: 'Translate from',
-            name: 'from',
+            name: 'sourceLang',
             rules: isRequired ? [{ required: true, message: 'Please select Translate from' }] : [],
             placeholder: 'Select a language',
             options: currentLanguages
         },
         {
             label: 'Translate to',
-            name: 'to',
+            name: 'targetLang',
             rules: isRequired ? [{ required: true, message: 'Please select Translate to' }] : [],
             placeholder: 'Select a language',
             options: currentLanguages
         },
         {
             label: 'Service Type',
-            name: 'type',
+            name: 'translationType',
             rules: isRequired ? [{ required: true, message: 'Please select Service Type' }] : [],
             placeholder: 'Select a Service Type',
             options: translationTypes
         }
     ];
-    const onFinish = () => {};
-    const onFinishFailed = () => {};
+    const handleStart = () => {
+        const values = form.getFieldsValue();
+        navigate('/requestTranslation', { state: values });
+    };
     return (
-        <Form
-            layout='vertical'
-            initialValues={{}}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete='off'
-        >
+        <Form form={form} layout='vertical' initialValues={{}} autoComplete='off'>
             <Row align='bottom' gutter={20}>
                 {selectList.map(({ label, name, rules, placeholder, options }) => (
                     <Col flex='auto' key={name}>
@@ -59,7 +58,7 @@ export default ({ isRequired = true, size = 'middle' }: IProps) => {
                 {isRequired ? null : (
                     <Col flex='auto'>
                         <Form.Item>
-                            <Button type='primary' ghost block>
+                            <Button type='primary' size='large' ghost block onClick={handleStart}>
                                 Start
                             </Button>
                         </Form.Item>

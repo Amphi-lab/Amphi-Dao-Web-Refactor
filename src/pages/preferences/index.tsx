@@ -63,6 +63,8 @@ export default () => {
     const onFinish = (values: any) => {
         console.log(values);
         api.updateUserInfo({
+            id: userId,
+            address,
             ...values,
             industry: optionsToString(values.industry, IndustryOptions),
             jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions)

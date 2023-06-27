@@ -17,7 +17,12 @@ import { amountFromToken } from '@/utils/number';
 import { getSubStr } from '@/utils/string';
 // types
 import type ITransaction from '@/types/ITransaction';
-import { currentLanguages, translationTypes, workLoadType } from '@/constants/selcet.json';
+import {
+    currentLanguages,
+    translationTypes,
+    workLoadType,
+    languages as languagesOptions
+} from '@/constants/selcet.json';
 // images
 import ImageTranslator from '@/assets/images/translator.png';
 import ImageAbout1 from '@/assets/images/about1.png';
@@ -34,6 +39,7 @@ const { Meta } = Card;
 const currentLanguagesOptions = optionsMap(currentLanguages);
 const translationTypesOptions = optionsMap(translationTypes);
 const workLoadTypeOptions = optionsMap(workLoadType);
+const languagesMap = optionsMap(languagesOptions);
 
 // const Banner: FC = () => {
 //     return (
@@ -248,7 +254,14 @@ const DescItem = ({
     score
 }: Pick<ITranslators, 'languages' | 'orders' | 'score'>) => (
     <>
-        <p>{languages}</p>
+        {languages ? (
+            <p>
+                I speak{' '}
+                {languages
+                    .map(({ workLangValue }: any) => languagesMap.get(workLangValue.toString()))
+                    .join('、')}
+            </p>
+        ) : null}
         <Badge color='#D9D9D9' text={`${orders || '--'} orders`} />
         <p>
             <StarFilled style={{ color: '#333', fontSize: 10 }} />
@@ -258,19 +271,7 @@ const DescItem = ({
 );
 
 const Translators: FC = () => {
-    const [dataList, setDataList] = useState<ITranslators[]>([
-        {
-            id: 1,
-            userId: 1,
-            username: 'aaa',
-            address: '0x867f1469356D37313406b75c461fA057c829c749',
-            profile: null,
-            languages: null,
-            orders: 10,
-            score: 9.0,
-            latestAcceptTime: '2023-06-09T14:31:18.000+00:00'
-        }
-    ]);
+    const [dataList, setDataList] = useState<ITranslators[]>([]);
 
     useEffect(() => {
         api.getTranslatorList().then((res: any) => {
@@ -279,14 +280,24 @@ const Translators: FC = () => {
                 setDataList(res.rows);
             }
         });
-    });
+    }, []);
 
     return (
         <HomeSection className='home-translators' title='Our Translators'>
             <Row gutter={[50, 60]}>
                 {dataList.map(({ id, address, username, profile, languages, orders, score }) => (
                     <Col xs={10} sm={10} md={8} lg={6} xl={6} key={id}>
-                        <Card cover={<img alt='example' src={profile || ImageTranslator} />}>
+                        <Card
+                            cover={
+                                <img
+                                    alt='example'
+                                    src={
+                                        `https://gateway.lighthouse.storage/ipfs/${profile}` ||
+                                        ImageTranslator
+                                    }
+                                />
+                            }
+                        >
                             <Meta
                                 title={username || address}
                                 description={

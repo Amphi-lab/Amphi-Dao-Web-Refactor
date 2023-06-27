@@ -1,15 +1,11 @@
 export default interface ITranslator {
-    // title: string;
-    // imageUrl: string;
-    // description: string;
-    // orders: number;
-    // star: string;
+    [key: string]: any;
     id: number;
     userId: number;
     username: string;
     address: string;
     profile: any;
-    languages: null;
+    languages: null | any[];
     orders: number;
     score: number;
     latestAcceptTime: string;

@@ -54,7 +54,6 @@ export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1 }: 
         if (info.file.status === 'done') {
             if (info.file.response?.code && info.file.response?.code === 200) {
                 message.success(`${info.file.name} file uploaded successfully`);
-
                 let newFileList = [...info.fileList];
 
                 // 1. Limit the number of uploaded files
@@ -75,6 +74,8 @@ export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1 }: 
                         return file;
                     });
 
+                if (maxCount === 1) form.setFieldValue(formField, newFileList[0].url);
+                //    else form.setFieldValue(formField, newFileList)   // TODO: 多图上传设置form value
                 setFileList(newFileList);
             } else {
                 message.error(`${info.file.name} file upload failed.`);

@@ -123,7 +123,9 @@ const TabsItems: FC<{ tabName: string }> = ({ tabName }) => {
         const { translationTypeArray, createTime } = form.getFieldsValue();
         const options: any = {};
         if (translationTypeArray.length > 0) {
-            options.translationTypeArray = JSON.stringify(translationTypeArray);
+            options.translationTypeArray = JSON.stringify(
+                translationTypeArray.map((value: string) => Number(value))
+            );
         }
         const [beginCreateTime, endCreateTime] = createTime ? JSON.parse(createTime) : [];
         if (beginCreateTime) options.params = { ...options.params, beginCreateTime };

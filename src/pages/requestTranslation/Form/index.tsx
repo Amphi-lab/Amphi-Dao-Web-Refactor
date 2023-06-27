@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { DatePickerProps } from 'antd';
-import { Form, Input, Row, Col, Button } from 'antd';
+import { Form, Input, Row, Col, Button, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import type { RangePickerProps } from 'antd/es/date-picker';
 
@@ -19,6 +19,8 @@ import styles from './index.module.scss';
 
 const RequestForm: React.FC = () => {
     const [form] = Form.useForm();
+    const [totalWorkLoad] = useState(0);
+    const [fileList, setFileList] = useState([]);
 
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
@@ -26,17 +28,19 @@ const RequestForm: React.FC = () => {
         });
     };
 
+    // save form handler funciton
     const onFinish = (values: any) => {
         const finalParams = {
             ...values,
             aiBounty: 1000,
             humanBounty: 1000,
-            bounty: Number(values.bounty)
-            // translationFiles: formatFileList(values.translationFiles.fileList)
+            bounty: Number(values.bounty),
+            translationFiles: formatFileList(values.translationFiles.fileList)
         };
         console.log('Success:', values);
-        console.log(finalParams);
-
+        console.log(totalWorkLoad, 'totalWorkLoad');
+        console.log('finalParams', finalParams);
+        console.log('workload', getTotalWorkload(fileList as any));
         saveOrder(finalParams);
     };
 
@@ -44,37 +48,40 @@ const RequestForm: React.FC = () => {
         console.log('Failed:', errorInfo);
     };
 
+    // select change hanlder funciton
     const handleSelectChange = (value: string, opiton: any) => {
         form.setFieldValue(opiton, value);
-        console.log(value, opiton);
+        // console.log(value, opiton);
     };
 
+    // date-time change hanlder funciton
     const hanldeDateChange = (
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
     ) => {
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
+        // console.log('Selected Time: ', value);
+        // console.log('Formatted Selected Time: ', dateString);
         form.setFieldValue('deadline', dateString);
     };
 
-    const handleFileChange = (info: { file: { name?: any; status?: any }; fileList: any }) => {
-        const { status } = info.file;
-        if (status !== 'uploading') {
-            // console.log(info.file, info.fileList);
-            // console.log(info);
+    // file-upload change hanlder funciton
+    const handleFileChange = (info: { file: any; fileList: [] }) => {
+        const { status, response } = info.file;
+        if (info.fileList.length > 10) {
+            message.error('A maximum of 10 files can be uploaded !');
+            return false;
         }
         if (status === 'done') {
-            console.log(getTotalWorkload(info.fileList));
-            form.setFieldValue('translationFiles', formatFileList(info.fileList));
-
-            // console.log(form.getFieldValue('translationFiles'));
+            if (response?.code === 200) {
+                message.success(`${info.file.name} file uploaded successfully.`);
+                setFileList(info.fileList);
+            } else if (response?.status === 403) {
+                info.file.status = 'error';
+                message.warning(`Please Log in and try again`);
+            }
+        } else if (status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
         }
-        // if (status === 'done') {
-        //     message.success(`${info.file.name} file uploaded successfully.`);
-        // } else if (status === 'error') {
-        //     message.error(`${info.file.name} file upload failed.`);
-        // }
     };
 
     return (
@@ -170,6 +177,7 @@ const RequestForm: React.FC = () => {
                 rules={[
                     { required: true, message: 'Please Upload the files you need to translate!' }
                 ]}
+                tooltip='A maximum of 10 files can be uploaded'
             >
                 <UploadFile onChange={handleFileChange} />
             </Form.Item>

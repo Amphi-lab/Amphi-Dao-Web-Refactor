@@ -34,3 +34,12 @@ export const getTotalWorkload = (fileList: [any]) => {
     });
     return total;
 };
+
+/* export const isLimitUploadFileNum = (fileList: [any], limit = 10) => {
+    const isLt = fileList.length <= limit;
+    if (!isLt) {
+        message.error('A maximum of 10 files can be uploaded !');
+    }
+    return isLt;
+};
+ */

@@ -8,7 +8,7 @@ import {
     summaryServiceType,
     summaryDeadline
 } from '@/store/reducers/requestTransSlice';
-import Card from '../Card';
+import Card from '../../../components/AmphiCard';
 import styles from './index.module.scss';
 
 const SummaryCard = () => {

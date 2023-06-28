@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Card from '../Card';
+import Card from '../../../components/AmphiCard';
 import styles from './index.module.scss';
 
 const ConfirmOrders = () => {

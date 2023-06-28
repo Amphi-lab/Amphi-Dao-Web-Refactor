@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { selectMap, dateDiff } from '@/utils/util';
 import { currentLanguages, translationTypes } from '@/constants/selcet.json';
-
+import api from '@/api';
 import type { RootState } from '../index';
 
 // 定义 slice state 的类型
@@ -30,14 +30,11 @@ const initialState: requestTranState = {
     totalCost: 0
 };
 
-export const incrementAsync = createAsyncThunk(
-    'requestTrans/fetchCount',
-    async (amount: number) => {
-        // const response = await fetchCount(amount);
-        // The value we return becomes the `fulfilled` action payload
-        return amount;
-    }
-);
+export const saveAsync = createAsyncThunk('requestTrans/saveTrans', async (data: {}) => {
+    api.saveOrder(data).then((res: any) => {
+        console.log(res);
+    });
+});
 
 // 创建slice
 export const counterSlice = createSlice({
@@ -46,8 +43,8 @@ export const counterSlice = createSlice({
     initialState,
     // 定义action，这里的属性会自动的导出为actions，在组件中可以直接通过dispatch进行触发
     reducers: {
-        // totalCost: state => {
-        //     // state.totalCost = state.amphiServiceCost + state.translatorFee + state.bounty;
+        // getTotalCost: state => {
+        //     state.totalCost = state.amphiServiceCost + state.translatorFee + state.bounty;
         // },
         getWorkload: (state, action: PayloadAction<[]>) => {
             state.workload = 0;
@@ -95,8 +92,7 @@ export const summaryServiceType = (state: RootState) => state.requestTrans.servi
 export const summaryDeadline = (state: RootState) => state.requestTrans.deadline;
 
 // 内置了thunk插件，可以直接处理异步请求
-// export const incrementIfOdd =
-//     (amount: number): AppThunk =>
+// export const incrementIfOdd =(amount: number): AppThunk =>
 //     (dispatch, getState) => {
 //         const currentValue = selectCount(getState());
 //         if (currentValue % 2 === 1) {

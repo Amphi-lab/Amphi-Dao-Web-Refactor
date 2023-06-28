@@ -9,4 +9,25 @@
     @include font($color: #64666b, $lineH: 24px);
     margin-left: 10px;
   }
+
+  .confirm-btn {
+    // width: 100%;
+    @include layout();
+    padding: 20px 32px;
+    border-radius: 8px;
+    background-color: #0049ff;
+    position: fixed;
+    bottom: 200px;
+    right: 190px;
+    z-index: 10000;
+
+    span {
+      @include font($size: 16px, $color: #ffffff, $weight: 500, $lineH: 24px);
+      letter-spacing: 2px;
+    }
+
+    &:hover {
+      background-color: #296dff;
+    }
+  }
 }

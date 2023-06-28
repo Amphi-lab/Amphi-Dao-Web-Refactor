@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { DatePickerProps } from 'antd';
-import { Form, Input, Row, Col, Button, message } from 'antd';
+import { Form, Input, Row, Col, message, Button } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import UploadFile from '@/components/UploadFile';
+import AmSelect from '@/components/Form/Select';
+import AmDateTimePiker from '@/components/Form/DateTimePicker';
 
 import {
     currentLanguages,
@@ -10,10 +13,8 @@ import {
     industry,
     jobFunctions
 } from '@/constants/selcet.json';
-import UploadFile from '@/components/UploadFile';
-import AmSelect from '@/components/Form/Select';
-import AmDateTimePiker from '@/components/Form/DateTimePicker';
-import { getTimeZoneName, formatFileList, getTotalWorkload } from '@/utils/util';
+import { formatFileList, getTimeZoneName } from '@/utils/util';
+
 import api from '@/api';
 import { useAppDispatch } from '@/store/hooks';
 import {
@@ -22,12 +23,11 @@ import {
     getServiceType,
     getDeadline
 } from '@/store/reducers/requestTransSlice';
+
 import styles from './index.module.scss';
 
 const RequestForm: React.FC = () => {
     const [form] = Form.useForm();
-    const [totalWorkLoad] = useState(0);
-    const [fileList, setFileList] = useState([]);
     const dispatch = useAppDispatch();
 
     const saveOrder = async (parmas: any) => {
@@ -38,6 +38,7 @@ const RequestForm: React.FC = () => {
 
     // save form handler funciton
     const onFinish = (values: any) => {
+        // console.log(values);
         const finalParams = {
             ...values,
             aiBounty: 1000,
@@ -45,10 +46,6 @@ const RequestForm: React.FC = () => {
             bounty: Number(values.bounty),
             translationFiles: formatFileList(values.translationFiles.fileList)
         };
-        console.log('Success:', values);
-        console.log(totalWorkLoad, 'totalWorkLoad');
-        console.log('finalParams', finalParams);
-        console.log('workload', getTotalWorkload(fileList as any));
         saveOrder(finalParams);
     };
 
@@ -88,7 +85,6 @@ const RequestForm: React.FC = () => {
         if (status === 'done') {
             if (response?.code === 200) {
                 message.success(`${info.file.name} file uploaded successfully.`);
-                setFileList(info.fileList);
                 dispatch(getWorkload(info.fileList));
             } else if (response?.status === 403) {
                 info.file.status = 'error';
@@ -193,7 +189,10 @@ const RequestForm: React.FC = () => {
                 }
                 name='translationFiles'
                 rules={[
-                    { required: true, message: 'Please Upload the files you need to translate!' }
+                    {
+                        required: true,
+                        message: 'Please Upload the files you need to translate!'
+                    }
                 ]}
                 tooltip='A maximum of 10 files can be uploaded'
             >
@@ -203,7 +202,10 @@ const RequestForm: React.FC = () => {
                 label={<span className={styles['label-title']}>Instructions for Translator</span>}
                 name='instruction'
                 rules={[
-                    { required: true, message: 'Please Input Your Instructions for Translator!' }
+                    {
+                        required: true,
+                        message: 'Please Input Your Instructions for Translator!'
+                    }
                 ]}
             >
                 <TextArea
@@ -305,9 +307,9 @@ const RequestForm: React.FC = () => {
                     <Input type='email' placeholder='please enter email' allowClear />
                 </Col>
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type='primary' htmlType='submit'>
-                    Submit
+            <Form.Item>
+                <Button type='primary' htmlType='submit' className={styles['confirm-btn']}>
+                    Confirm Order
                 </Button>
             </Form.Item>
         </Form>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button } from 'antd';
+
 import Card from '../Card';
 import styles from './index.module.scss';
 
-interface Iprops {
-    save: () => void;
-}
-const ConfirmOrders = ({ save }: Iprops) => {
+const ConfirmOrders = () => {
+    // const hanldeSaveOrder = () => {
+    //     console.log('hanldeSaveOrder');
+    // };
     return (
         <Card>
             <div className={styles['confirme-order-box']}>
@@ -18,14 +18,14 @@ const ConfirmOrders = ({ save }: Iprops) => {
                         refunded.
                     </li>
                 </ul>
-                <Button
+                {/* <Button
                     type='primary'
                     htmlType='submit'
                     className={styles['confirm-btn']}
-                    onClick={save}
+                    onClick={hanldeSaveOrder}
                 >
                     Confirm Order
-                </Button>
+                </Button> */}
             </div>
         </Card>
     );

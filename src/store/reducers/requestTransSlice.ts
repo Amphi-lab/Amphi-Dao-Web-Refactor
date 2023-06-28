@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { selectMap } from '@/utils/util';
+import { selectMap, dateDiff } from '@/utils/util';
 import { currentLanguages, translationTypes } from '@/constants/selcet.json';
 
 import type { RootState } from '../index';
@@ -10,7 +10,7 @@ export interface requestTranState {
     transLang: String;
     serviceType: String;
     workload: number;
-    deadline: String;
+    deadline: string;
 
     amphiServiceCost: Number;
     translatorFee: Number;
@@ -65,6 +65,9 @@ export const counterSlice = createSlice({
         },
         getServiceType: (state, action: PayloadAction<string>) => {
             state.serviceType = selectMap(action.payload, translationTypes);
+        },
+        getDeadline: (state, action: PayloadAction<string>) => {
+            state.deadline = dateDiff(action.payload);
         }
     }
     // extraReducers: builder => {
@@ -83,12 +86,13 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getWorkload, getTransLang, getServiceType } = counterSlice.actions;
+export const { getWorkload, getTransLang, getServiceType, getDeadline } = counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const summaryWorkload = (state: RootState) => state.requestTrans.workload;
 export const summaryTransLang = (state: RootState) => state.requestTrans.transLang;
 export const summaryServiceType = (state: RootState) => state.requestTrans.serviceType;
+export const summaryDeadline = (state: RootState) => state.requestTrans.deadline;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =

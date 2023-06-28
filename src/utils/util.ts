@@ -53,3 +53,21 @@ export const selectMap = (value: string, maps: { value: string; label: string }[
     });
     return ans;
 };
+
+export const dateDiff = (
+    endTime: string,
+    startTime: string = dayjs().format('YYYY-MM-DD HH:mm:ss')
+) => {
+    const diff = dayjs(endTime).diff(dayjs(startTime), 'hour');
+    let res = '';
+    if (diff <= 1) {
+        res = `1 hour`;
+    }
+    if (diff > 1 && diff < 24) {
+        res = `${diff} hours`;
+    }
+    if (diff >= 24) {
+        res = `${(diff / 24).toFixed(0)} day ${diff % 24} hours`;
+    }
+    return res;
+};

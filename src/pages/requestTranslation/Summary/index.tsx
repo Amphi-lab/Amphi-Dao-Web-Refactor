@@ -5,7 +5,8 @@ import { useAppSelector } from '@/store/hooks';
 import {
     summaryWorkload,
     summaryTransLang,
-    summaryServiceType
+    summaryServiceType,
+    summaryDeadline
 } from '@/store/reducers/requestTransSlice';
 import Card from '../Card';
 import styles from './index.module.scss';
@@ -14,6 +15,7 @@ const SummaryCard = () => {
     const workload = useAppSelector(summaryWorkload);
     const transLang = useAppSelector(summaryTransLang);
     const serviceType = useAppSelector(summaryServiceType);
+    const deadline = useAppSelector(summaryDeadline);
     return (
         <Card title='Summary'>
             <ul className={styles['summary-list']}>
@@ -34,9 +36,9 @@ const SummaryCard = () => {
                 <p>{workload ? `${workload} words` : '-'}</p>
                 <li>
                     <span>Deadline</span>
-                    <img src={unSelectedIcon} alt='' />
+                    <img src={deadline ? selectedIcon : unSelectedIcon} alt='' />
                 </li>
-                <p>-</p>
+                <p>{deadline || '-'}</p>
             </ul>
         </Card>
     );

@@ -16,7 +16,12 @@ import AmDateTimePiker from '@/components/Form/DateTimePicker';
 import { getTimeZoneName, formatFileList, getTotalWorkload } from '@/utils/util';
 import api from '@/api';
 import { useAppDispatch } from '@/store/hooks';
-import { getWorkload, getTransLang, getServiceType } from '@/store/reducers/requestTransSlice';
+import {
+    getWorkload,
+    getTransLang,
+    getServiceType,
+    getDeadline
+} from '@/store/reducers/requestTransSlice';
 import styles from './index.module.scss';
 
 const RequestForm: React.FC = () => {
@@ -69,9 +74,8 @@ const RequestForm: React.FC = () => {
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
     ) => {
-        // console.log('Selected Time: ', value);
-        // console.log('Formatted Selected Time: ', dateString);
         form.setFieldValue('deadline', dateString);
+        dispatch(getDeadline(form.getFieldValue('deadline')));
     };
 
     // file-upload change hanlder funciton

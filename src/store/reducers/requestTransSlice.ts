@@ -1,5 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { selectMap } from '@/utils/util';
+import { currentLanguages, translationTypes } from '@/constants/selcet.json';
 
 import type { RootState } from '../index';
 
@@ -18,7 +20,7 @@ export interface requestTranState {
 
 // 使用该类型定义初始 state
 const initialState: requestTranState = {
-    transLang: '',
+    transLang: '-',
     serviceType: '',
     workload: 0,
     deadline: '',
@@ -52,6 +54,17 @@ export const counterSlice = createSlice({
             action.payload.forEach((file: { response: { data: { wordCount: any } } }) => {
                 state.workload += Number(file?.response?.data?.wordCount || 0);
             });
+        },
+        getTransLang: (state, action: PayloadAction<{ from: string; to: string }>) => {
+            state.transLang = action.payload.from
+                ? `${selectMap(action.payload.from, currentLanguages)} to ${selectMap(
+                      action.payload.to,
+                      currentLanguages
+                  )}`
+                : '-';
+        },
+        getServiceType: (state, action: PayloadAction<string>) => {
+            state.serviceType = selectMap(action.payload, translationTypes);
         }
     }
     // extraReducers: builder => {
@@ -70,10 +83,12 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getWorkload } = counterSlice.actions;
+export const { getWorkload, getTransLang, getServiceType } = counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const summaryWorkload = (state: RootState) => state.requestTrans.workload;
+export const summaryTransLang = (state: RootState) => state.requestTrans.transLang;
+export const summaryServiceType = (state: RootState) => state.requestTrans.serviceType;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =

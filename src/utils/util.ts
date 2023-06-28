@@ -43,3 +43,13 @@ export const getTotalWorkload = (fileList: [any]) => {
     return isLt;
 };
  */
+
+export const selectMap = (value: string, maps: { value: string; label: string }[]) => {
+    let ans = '';
+    maps.forEach(item => {
+        if (item.value === value) {
+            ans = item.label;
+        }
+    });
+    return ans;
+};

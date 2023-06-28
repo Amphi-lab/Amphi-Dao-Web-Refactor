@@ -16,7 +16,7 @@ import AmDateTimePiker from '@/components/Form/DateTimePicker';
 import { getTimeZoneName, formatFileList, getTotalWorkload } from '@/utils/util';
 import api from '@/api';
 import { useAppDispatch } from '@/store/hooks';
-import { getWorkload } from '@/store/reducers/requestTransSlice';
+import { getWorkload, getTransLang, getServiceType } from '@/store/reducers/requestTransSlice';
 import styles from './index.module.scss';
 
 const RequestForm: React.FC = () => {
@@ -52,9 +52,16 @@ const RequestForm: React.FC = () => {
     };
 
     // select change hanlder funciton
+    // eslint-disable-next-line no-unused-vars
     const handleSelectChange = (value: string, opiton: any) => {
-        form.setFieldValue(opiton, value);
-        // console.log(value, opiton);
+        // get summary Translation Language
+        dispatch(
+            getTransLang({
+                from: form.getFieldValue('sourceLang'),
+                to: form.getFieldValue('targetLang')
+            })
+        );
+        dispatch(getServiceType(form.getFieldValue('translationType')));
     };
 
     // date-time change hanlder funciton

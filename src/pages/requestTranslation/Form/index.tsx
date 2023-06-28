@@ -15,12 +15,15 @@ import AmSelect from '@/components/Form/Select';
 import AmDateTimePiker from '@/components/Form/DateTimePicker';
 import { getTimeZoneName, formatFileList, getTotalWorkload } from '@/utils/util';
 import api from '@/api';
+import { useAppDispatch } from '@/store/hooks';
+import { getWorkload } from '@/store/reducers/requestTransSlice';
 import styles from './index.module.scss';
 
 const RequestForm: React.FC = () => {
     const [form] = Form.useForm();
     const [totalWorkLoad] = useState(0);
     const [fileList, setFileList] = useState([]);
+    const dispatch = useAppDispatch();
 
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
@@ -75,12 +78,16 @@ const RequestForm: React.FC = () => {
             if (response?.code === 200) {
                 message.success(`${info.file.name} file uploaded successfully.`);
                 setFileList(info.fileList);
+                dispatch(getWorkload(info.fileList));
             } else if (response?.status === 403) {
                 info.file.status = 'error';
                 message.warning(`Please Log in and try again`);
             }
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
+        }
+        if (status === 'removed') {
+            dispatch(getWorkload(info.fileList));
         }
     };
 

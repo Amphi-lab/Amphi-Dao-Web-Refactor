@@ -20,10 +20,12 @@ export const incrementAsync = createAsyncThunk('counter/fetchCount', async (amou
     return amount;
 });
 
+// 创建slice
 export const counterSlice = createSlice({
     name: 'counter',
     // `createSlice` 将从 `initialState` 参数推断 state 类型
     initialState,
+    // 定义action，这里的属性会自动的导出为actions，在组件中可以直接通过dispatch进行触发
     reducers: {
         increment: state => {
             // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -61,6 +63,7 @@ export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const selectCount = (state: RootState) => state.counter.value;
 
+// 内置了thunk插件，可以直接处理异步请求
 export const incrementIfOdd =
     (amount: number): AppThunk =>
     (dispatch, getState) => {

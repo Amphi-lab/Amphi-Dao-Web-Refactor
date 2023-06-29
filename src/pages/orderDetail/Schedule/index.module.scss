@@ -1,0 +1,20 @@
+.order-detail-top-nav {
+  @include layout();
+  justify-content: start;
+  padding: 16px;
+  border-bottom: 1px solid #f2f2fb;
+  margin-bottom: 16px;
+  cursor: pointer;
+
+  .nav-ver-bar {
+    margin: 0 12px;
+  }
+
+  span {
+    @include font($size: 14px, $weight: 400, $lineH: 22px);
+  }
+}
+
+.order-detail-top-steps {
+  padding: 0 60px;
+}

@@ -3,7 +3,7 @@ import type { DatePickerProps } from 'antd';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import type { RangePickerProps } from 'antd/es/date-picker';
-import DateIcon from '../Icon/DateIcon';
+import DateIcon from '../Icon/Date';
 
 interface IProps {
     placeholder: string;

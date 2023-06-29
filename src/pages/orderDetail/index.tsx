@@ -2,6 +2,8 @@ import React from 'react';
 import Schedule from './Schedule';
 import Detail from './Detail';
 import TranCandidate from './TranCandidate';
+import TranContent from './TranContent';
+import Notification from './Notification';
 import styles from './index.module.scss';
 
 const OrderDetail = () => {
@@ -10,6 +12,8 @@ const OrderDetail = () => {
             <Schedule />
             <Detail />
             <TranCandidate />
+            <TranContent />
+            <Notification />
         </div>
     );
 };

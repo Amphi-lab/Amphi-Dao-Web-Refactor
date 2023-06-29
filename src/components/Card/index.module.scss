@@ -6,9 +6,14 @@
   backdrop-filter: blur(28px);
   margin-bottom: 16px;
 
-  h6 {
-    margin-bottom: 16px;
+  .request-trans-card-title {
+    @include layout();
+    justify-content: space-between;
 
-    @include font($size: 16px, $color: #323335, $weight: 500, $lineH: 24px);
+    h6 {
+      margin-bottom: 16px;
+
+      @include font($size: 16px, $color: #323335, $weight: 500, $lineH: 24px);
+    }
   }
 }

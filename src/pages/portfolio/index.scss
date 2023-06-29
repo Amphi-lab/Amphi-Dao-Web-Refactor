@@ -67,11 +67,16 @@
     }
 
     .avatar-box {
-      @include layout(space-between, center, column);
+      @include layout(space-between, flex-start, column);
+
+      .nickname-box {
+        margin-top: 24px;
+      }
 
       .nickname {
-        margin-top: 24px;
+        margin-right: 24px;
         font-size: 20px;
+        line-height: 30px;
       }
     }
   }

@@ -1,17 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-    Col,
-    Empty,
-    Row,
-    Space,
-    Tabs,
-    Card,
-    Spin,
-    Carousel,
-    Avatar,
-    Dropdown,
-    message
-} from 'antd';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import { Col, Empty, Row, Space, Tabs, Card, Spin, Avatar, Dropdown, message } from 'antd';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Jazzicon from 'react-jazzicon';
 import { useAccount } from 'wagmi';
@@ -21,11 +9,9 @@ import api from '@/api';
 import './index.scss';
 import { languages, socialMedia } from '@/constants/selcet.json';
 // utils
-import { chunk, optionsMap } from '@/utils/array';
+import { optionsMap } from '@/utils/array';
 // images
-import ImgSBTDisabled from '@/assets/images/sbt-disabled.png';
-import ImgPrev from '@/assets/images/swiper-prev.png';
-import ImgNext from '@/assets/images/swiper-next.png';
+import SBTImage from '@/constants/sbt';
 import ImgBackground from '@/assets/images/background.png';
 import IconCopy from '@/assets/svg/icon-copy.svg';
 import IconGloble from '@/assets/svg/icon-globle.svg';
@@ -39,7 +25,7 @@ import IconEmail from '@/assets/svg/icon-email.svg';
 import ImgEmpty from '@/assets/svg/img-empty.svg';
 import ImgTranslator from '@/assets/images/translator.png';
 import { getAmphiPass } from '@/contracts/contract';
-import ImgSBTWorn from '@/assets/images/sbt-worn.png';
+import SBTTag from '@/components/SBTTag';
 
 const languagesMap = optionsMap(languages);
 const socialMediaMap = optionsMap(socialMedia);
@@ -93,10 +79,6 @@ const ProjectList = ({ setCompletedNum }: any) => {
                 .then((res: any) => {
                     setLoading(false);
                     if (res?.code === 200) {
-                        /**
-                         * TODO:
-                         * 没有数据获取的是假数据
-                         */
                         setDataList(res.rows);
                         setCompletedNum(res.total);
                     }
@@ -112,11 +94,12 @@ const ProjectList = ({ setCompletedNum }: any) => {
                 if (Array.isArray(dataList) && dataList.length > 0) {
                     return (
                         <Row gutter={[16, 16]}>
-                            {dataList.map((item: IProjectProps) => (
-                                <Col md={12} lg={8} xl={6} key={item.id}>
-                                    <ProjectItem {...item} />
-                                </Col>
-                            ))}
+                            {dataList?.length &&
+                                dataList.map((item: IProjectProps) => (
+                                    <Col md={12} lg={8} xl={6} key={item.id}>
+                                        <ProjectItem {...item} />
+                                    </Col>
+                                ))}
                         </Row>
                     );
                 }
@@ -193,24 +176,25 @@ const NFTList = () => {
                     if (list && list.length > 0)
                         return (
                             <Row gutter={[24, 24]}>
-                                {list.map(({ name, image }) => (
-                                    <Col md={8} lg={6} xxl={4} key={name}>
-                                        <Card
-                                            hoverable
-                                            cover={
-                                                <img
-                                                    src={image}
-                                                    alt={name}
-                                                    onError={e => {
-                                                        e.target.src = ImgTranslator;
-                                                    }}
-                                                />
-                                            }
-                                        >
-                                            <Card.Meta title={name} description='' />
-                                        </Card>
-                                    </Col>
-                                ))}
+                                {list.length &&
+                                    list.map(({ name, image }) => (
+                                        <Col md={8} lg={6} xxl={4} key={name}>
+                                            <Card
+                                                hoverable
+                                                cover={
+                                                    <img
+                                                        src={image}
+                                                        alt={name}
+                                                        onError={e => {
+                                                            e.target.src = ImgTranslator;
+                                                        }}
+                                                    />
+                                                }
+                                            >
+                                                <Card.Meta title={name} description='' />
+                                            </Card>
+                                        </Col>
+                                    ))}
                             </Row>
                         );
                     return (
@@ -226,51 +210,9 @@ const NFTList = () => {
     );
 };
 
-const BadgeItem = ({ title, list = [] }: { title: string; list: any[] }) => {
-    const [currentNum, setCurrentNum] = useState(1);
-    const onChange = (currentSlide: number) => {
-        console.log(currentSlide);
-        setCurrentNum(currentSlide + 1);
-    };
-    return (
-        <div className='sbt-group-item'>
-            <p className='sbt-title'>{title}</p>
-            <Carousel
-                className='sbt-swiper-wrap'
-                afterChange={onChange}
-                dots={false}
-                arrows
-                prevArrow={currentNum !== 1 ? <img src={ImgPrev} alt='<-' /> : undefined}
-                nextArrow={currentNum !== list.length ? <img src={ImgNext} alt='<-' /> : undefined}
-            >
-                {chunk(list, 4).map((itemArray: any, index: number) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <div className='sbt-row' key={index}>
-                        {itemArray.map(({ id, sbt }: any) => (
-                            <div className='sbt-col' key={id}>
-                                <img
-                                    src={sbt === 'worn' ? ImgSBTWorn : ImgSBTDisabled}
-                                    alt='sbt'
-                                    style={{ width: '100%' }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </Carousel>
-        </div>
-    );
-};
-
-const BadgeList = () => {
+const BadgeList = ({ slotList }: any) => {
     const { address } = useAccount();
-    const [list] = useState([
-        { id: 1, sbt: 'worn' },
-        { id: 2, sbt: 'worn' },
-        { id: 3, sbt: 'worn' },
-        { id: 4, sbt: 'disabled' },
-        { id: 5, sbt: 'disabled' }
-    ]);
+    const [sbtList, setSbtList] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(true);
@@ -278,6 +220,9 @@ const BadgeList = () => {
             .then((res: any) => {
                 console.log('===getBadgeList===', res);
                 setLoading(false);
+                if (res?.code === 200) {
+                    setSbtList(res.data);
+                }
             })
             .catch((error: Error) => {
                 console.error('===getBadgeList===', error);
@@ -285,16 +230,54 @@ const BadgeList = () => {
             });
     }, [address]);
 
+    const hasThisSbt = (tokenId: string) => {
+        return sbtList.some((item: any) => item.tokenId === tokenId);
+    };
+
     return (
         <Spin spinning={loading}>
             {(() => {
-                if (Array.isArray(list) && list.length > 0) {
+                if (Array.isArray(sbtList) && sbtList.length > 0) {
                     return (
                         <>
-                            <BadgeItem title='My Badges' list={list} />
-                            <BadgeItem title='Proof of Valid Workload' list={list} />
+                            <div className='sbt-group-item'>
+                                <p className='sbt-title'>My Badges</p>
+                                <Row>
+                                    {slotList?.length &&
+                                        slotList.map(({ id, wordsSbt }: any) => (
+                                            <Col md={6} lg={4} xl={3} className='sbt-col' key={id}>
+                                                <img
+                                                    src={SBTImage[wordsSbt]}
+                                                    alt={wordsSbt}
+                                                    width='100%'
+                                                />
+                                            </Col>
+                                        ))}
+                                </Row>
+                            </div>
+                            <div className='sbt-group-item'>
+                                <p className='sbt-title'>Proof of Valid Workload</p>
+                                <Row>
+                                    {Object.keys(SBTImage).map(key => (
+                                        <Col md={6} lg={4} xl={3} className='sbt-col' key={key}>
+                                            <img
+                                                src={SBTImage[key]}
+                                                alt={key}
+                                                width='100%'
+                                                style={
+                                                    hasThisSbt(key)
+                                                        ? {}
+                                                        : { filter: 'grayscale(100%)' }
+                                                }
+                                            />
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </div>
+                            {/* <BadgeItem title='My Badges' list={sbtList} />
+                            <BadgeItem title='Proof of Valid Workload' list={sbtList} />
                             <BadgeItem title='Proof of Project Volume' list={list} />
-                            <BadgeItem title='Proof of Service Satisfaction' list={list} />
+                            <BadgeItem title='Proof of Service Satisfaction' list={list} /> */}
                         </>
                     );
                 }
@@ -309,23 +292,6 @@ const BadgeList = () => {
         </Spin>
     );
 };
-
-const SBTTag = ({
-    type,
-    amount,
-    color = '#0049ff'
-}: {
-    type: string;
-    amount: string | number;
-    color?: string;
-}) => (
-    <Space.Compact className='sbt-tag-box'>
-        <p className='type' style={{ backgroundColor: color }}>
-            {type}
-        </p>
-        <p className='amount'>{amount}</p>
-    </Space.Compact>
-);
 
 const CopyComponent = ({ clipboard, link }: any) => (
     <Space
@@ -350,6 +316,7 @@ export default () => {
     const [userInfo, setUserInfo] = useState<any>({});
     const [completedNum, setCompletedNum] = useState<number | undefined>(undefined);
     const [copyLink, setCopyLink] = useState(location.href);
+    const [slotList, setSlotList] = useState([]);
     // setCompletedNum(res.data.total)
     // const { username, avatar, backgroundUrl, industry, workLangs, socialMediaList } = userInfo;
     useEffect(() => {
@@ -382,10 +349,13 @@ export default () => {
 
             api.getBadgeSlot({ address })
                 .then((res: any) => {
-                    console.log('===res===', res);
+                    console.log('===getBadgeSlot res===', res);
+                    if (res?.code === 200) {
+                        setSlotList(res.data);
+                    }
                 })
-                .catch((err: Error) => {
-                    console.log('======', err);
+                .catch((error: Error) => {
+                    console.error('===getBadgeSlot error===', error);
                 });
         }
     }, [searchAddress, address]);
@@ -424,12 +394,15 @@ export default () => {
                             ) : (
                                 <Jazzicon diameter={120} seed={search.get('address')} />
                             )}
-                            <p className='nickname'>{userInfo?.username}</p>
+                            <Space className='nickname-box'>
+                                <p className='nickname'>{userInfo?.username}</p>
+                                {slotList?.length &&
+                                    slotList.map(({ id, wordsSbt }: any) => (
+                                        <SBTTag image={SBTImage[wordsSbt]} key={id} />
+                                    ))}
+                            </Space>
                         </div>
                         {/* TODO: 字段不确定 */}
-                        <SBTTag type='PoVW' amount='1M' />
-                        <SBTTag type='PoPV' amount='1M' color='#FFB600' />
-                        <SBTTag type='PoSS' amount='1M' color='#8056FA' />
                     </Space>
                     <Space size='middle'>
                         <Dropdown

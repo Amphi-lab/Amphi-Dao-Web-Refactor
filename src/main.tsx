@@ -15,19 +15,19 @@ import App from './App';
 import '@/i18n';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <WagmiConfig config={config}>
-                <RainbowKitProvider chains={chains}>
-                    <ThemeProvider>
+    // <React.StrictMode>
+    <Provider store={store}>
+        <WagmiConfig config={config}>
+            <RainbowKitProvider chains={chains}>
+                <ThemeProvider>
+                    <Router>
                         <NoticeProvider>
-                            <Router>
-                                <App />
-                            </Router>
+                            <App />
                         </NoticeProvider>
-                    </ThemeProvider>
-                </RainbowKitProvider>
-            </WagmiConfig>
-        </Provider>
-    </React.StrictMode>
+                    </Router>
+                </ThemeProvider>
+            </RainbowKitProvider>
+        </WagmiConfig>
+    </Provider>
+    // </React.StrictMode>
 );

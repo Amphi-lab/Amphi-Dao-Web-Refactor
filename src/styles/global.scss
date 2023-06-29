@@ -112,20 +112,20 @@
   padding: 24px;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-title,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-title {
+.light-modal-content .light-modal-title .sbt-pop-title,
+.dark-modal-content .dark-modal-title .sbt-pop-title {
   font-weight: 600;
   font-size: 16px;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-content,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-content {
+.light-modal-content,
+.dark-modal-content {
   margin: 0 auto;
   margin-block-start: 24px !important;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-content .text-title,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-title {
+.light-modal-content .light-modal-body .text-title,
+.dark-modal-content .dark-modal-body .text-title {
   margin-top: 16px;
   margin-bottom: 8px;
   color: var(--success-color);
@@ -134,33 +134,33 @@
   line-height: 24px;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-content .text-sub,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-sub {
+.light-modal-content .light-modal-body .text-sub,
+.dark-modal-content .dark-modal-body .text-sub {
   color: var(--text-sub-color);
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-content .text-strong,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-strong {
+.light-modal-content .light-modal-body .text-strong,
+.dark-modal-content .dark-modal-body .text-strong {
   color: var(--text-main-color);
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-content .text-desc,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-content .text-desc {
+.light-modal-content .light-modal-body .text-desc,
+.dark-modal-content .dark-modal-body .text-desc {
   color: var(--text-desc-color);
   font-weight: 400;
   font-size: 12px;
   line-height: 24px;
 }
 
-.light-modal-content .light-modal-body .light-modal-confirm-btns,
-.dark-modal-content .dark-modal-body .dark-modal-confirm-btns {
-  margin-top: 24px;
+.light-modal-content .light-modal-footer .light-modal-btns,
+.dark-modal-content .dark-modal-footer .dark-modal-btns {
+  margin-top: 30px;
 }
 
 /* 轮播图 */

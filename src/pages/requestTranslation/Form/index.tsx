@@ -1,6 +1,6 @@
 import React from 'react';
 import type { DatePickerProps } from 'antd';
-import { Form, Input, Row, Col, message, Button } from 'antd';
+import { Form, Input, Row, Col, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import UploadFile from '@/components/UploadFile';
@@ -307,11 +307,11 @@ const RequestForm: React.FC = () => {
                     <Input type='email' placeholder='please enter email' allowClear />
                 </Col>
             </Form.Item>
-            <Form.Item>
+            {/* <Form.Item>
                 <Button type='primary' htmlType='submit' className={styles['confirm-btn']}>
                     Confirm Order
                 </Button>
-            </Form.Item>
+            </Form.Item> */}
         </Form>
     );
 };

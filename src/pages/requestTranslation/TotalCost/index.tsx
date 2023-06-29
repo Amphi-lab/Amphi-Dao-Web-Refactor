@@ -1,10 +1,10 @@
 import React from 'react';
-import Card from '../Card';
+import AmCard from '@/components/Card';
 import styles from './index.module.scss';
 
 const TotalCost = () => {
     return (
-        <Card title='Total cost'>
+        <AmCard title='Total cost'>
             <ul className={styles['total-cost-list']}>
                 <li>
                     <span>Amphi service cost</span>
@@ -23,7 +23,7 @@ const TotalCost = () => {
                     <strong>200 USDT</strong>
                 </li>
             </ul>
-        </Card>
+        </AmCard>
     );
 };
 

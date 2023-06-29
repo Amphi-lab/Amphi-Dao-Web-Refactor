@@ -1,16 +1,16 @@
 import React from 'react';
+
+import AmCard from '@/components/Card';
 import { Button } from 'antd';
-import Card from '../Card';
 import styles from './index.module.scss';
 
-interface Iprops {
-    save: () => void;
-}
-const ConfirmOrders = ({ save }: Iprops) => {
+const ConfirmOrders = () => {
+    const hanldeSaveOrder = () => {
+        console.log('hanldeSaveOrder');
+    };
     return (
-        <Card>
+        <AmCard title='Money Back Guarantee'>
             <div className={styles['confirme-order-box']}>
-                <h6>Money Back Guarantee</h6>
                 <ul>
                     <li>After payment, you can cancel the order for free within 30 minutes.</li>
                     <li>
@@ -22,12 +22,12 @@ const ConfirmOrders = ({ save }: Iprops) => {
                     type='primary'
                     htmlType='submit'
                     className={styles['confirm-btn']}
-                    onClick={save}
+                    onClick={hanldeSaveOrder}
                 >
                     Confirm Order
                 </Button>
             </div>
-        </Card>
+        </AmCard>
     );
 };
 

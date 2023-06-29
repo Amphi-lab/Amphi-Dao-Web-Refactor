@@ -1,9 +1,9 @@
 .order-detail-top-nav {
   @include layout();
   justify-content: start;
+  margin-bottom: 16px;
   padding: 16px;
   border-bottom: 1px solid #f2f2fb;
-  margin-bottom: 16px;
   cursor: pointer;
 
   .nav-ver-bar {

@@ -7,7 +7,7 @@ interface Iprops {
     children: ReactNode;
 }
 
-const Card = ({ title = '', children }: Iprops) => {
+const AmCard = ({ title = '', children }: Iprops) => {
     return (
         <div className={styles['request-trans-card']}>
             {title ? <h6>{title}</h6> : ''}
@@ -16,4 +16,4 @@ const Card = ({ title = '', children }: Iprops) => {
     );
 };
 
-export default Card;
+export default AmCard;

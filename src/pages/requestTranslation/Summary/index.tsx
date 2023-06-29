@@ -8,7 +8,7 @@ import {
     summaryServiceType,
     summaryDeadline
 } from '@/store/reducers/requestTransSlice';
-import Card from '../../../components/AmphiCard';
+import AmCard from '@/components/Card';
 import styles from './index.module.scss';
 
 const SummaryCard = () => {
@@ -17,7 +17,7 @@ const SummaryCard = () => {
     const serviceType = useAppSelector(summaryServiceType);
     const deadline = useAppSelector(summaryDeadline);
     return (
-        <Card title='Summary'>
+        <AmCard title='Summary'>
             <ul className={styles['summary-list']}>
                 <li>
                     <span>Translation Language</span>
@@ -40,7 +40,7 @@ const SummaryCard = () => {
                 </li>
                 <p>{deadline || '-'}</p>
             </ul>
-        </Card>
+        </AmCard>
     );
 };
 

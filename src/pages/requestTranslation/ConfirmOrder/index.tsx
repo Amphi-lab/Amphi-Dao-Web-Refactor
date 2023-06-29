@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Card from '../../../components/AmphiCard';
+import AmCard from '@/components/Card';
 import styles from './index.module.scss';
 
 const ConfirmOrders = () => {
@@ -8,7 +8,7 @@ const ConfirmOrders = () => {
     //     console.log('hanldeSaveOrder');
     // };
     return (
-        <Card>
+        <AmCard>
             <div className={styles['confirme-order-box']}>
                 <h6>Money Back Guarantee</h6>
                 <ul>
@@ -27,7 +27,7 @@ const ConfirmOrders = () => {
                     Confirm Order
                 </Button> */}
             </div>
-        </Card>
+        </AmCard>
     );
 };
 

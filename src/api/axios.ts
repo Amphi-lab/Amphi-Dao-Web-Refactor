@@ -1,22 +1,25 @@
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 import storage from '@/utils/storage';
+import { message } from 'antd';
 import axios from 'axios';
 
 axios.defaults.timeout = 100000;
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
-if (typeof window !== 'undefined') {
-    const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
-}
+// if (typeof window !== 'undefined') {
+//     const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
+//     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+//     accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
+// }
 /**
  * http request 拦截器
  */
 axios.interceptors.request.use(
     config => {
+        const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
         if (config.url === '/nonce') return config;
         config.data = JSON.stringify(config.data);
         config.headers.set('Content-Type', 'application/json');
+        config.headers.set('token', `${accessToken}`);
         return config;
     },
     error => Promise.reject(error)
@@ -69,7 +72,8 @@ function errorMsg(err: any) {
 
             case 500:
                 // eslint-disable-next-line no-alert
-                alert('服务器内部错误');
+                // alert('服务器内部错误');
+                message.error('服务器内部错误');
                 break;
 
             case 501:

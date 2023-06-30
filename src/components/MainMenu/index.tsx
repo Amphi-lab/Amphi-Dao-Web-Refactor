@@ -101,7 +101,6 @@ const App: React.FC = () => {
             selectedKeys={[current]}
             mode='horizontal'
             items={items}
-            inlineCollapsed={false}
         />
     );
 };

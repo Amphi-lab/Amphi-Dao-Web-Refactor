@@ -1,15 +1,15 @@
 .amphi-header {
-  /* 覆盖ant 默认样式 */
-  height: auto;
-  padding-inline: 0;
+    /* 覆盖ant 默认样式 */
+    height: auto;
+    padding-inline: 0;
 
-  /* 自定义样式 */
-  @include layout($horizontal: "start");
-  padding: 0 24px;
-  background-color: inherit;
+    /* 自定义样式 */
+    @include layout($horizontal: 'start');
+    padding: 0 24px;
+    background-color: inherit;
 
-  .logo {
-    line-height: 16px;
-    margin-right: 24px;
-  }
+    .logo {
+        line-height: 16px;
+        margin-right: 24px;
+    }
 }

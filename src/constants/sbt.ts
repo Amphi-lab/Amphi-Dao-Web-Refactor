@@ -1,11 +1,18 @@
-import SBT0x2387127478b13c312a4 from '@/assets/images/sbt/0x2387127478b13c312a4.png';
-import SBT0x89078c9078a80878097b80998d087 from '@/assets/images/sbt/0x89078c9078a80878097b80998d087.png';
-import SBT003 from '@/assets/images/sbt/003.png';
-import SBT004 from '@/assets/images/sbt/004.png';
-import SBT005 from '@/assets/images/sbt/005.png';
-import SBT006 from '@/assets/images/sbt/006.png';
-import SBT007 from '@/assets/images/sbt/007.png';
-import SBT008 from '@/assets/images/sbt/008.png';
+import SBT0x2387127478b13c312a4 from '@/assets/images/sbt/1.png';
+import SBT0x89078c9078a80878097b80998d087 from '@/assets/images/sbt/2.png';
+import SBT3 from '@/assets/images/sbt/3.png';
+import SBT4 from '@/assets/images/sbt/4.png';
+import SBT5 from '@/assets/images/sbt/5.png';
+import SBT6 from '@/assets/images/sbt/6.png';
+import SBT7 from '@/assets/images/sbt/7.png';
+import SBT8 from '@/assets/images/sbt/8.png';
+import SBT9 from '@/assets/images/sbt/9.png';
+import SBT10 from '@/assets/images/sbt/10.png';
+import SBT11 from '@/assets/images/sbt/11.png';
+import SBT12 from '@/assets/images/sbt/12.png';
+import SBT13 from '@/assets/images/sbt/13.png';
+import SBT14 from '@/assets/images/sbt/14.png';
+import SBT15 from '@/assets/images/sbt/15.png';
 
 interface IProps {
     [key: string]: any;
@@ -13,12 +20,19 @@ interface IProps {
 const SBTImage: IProps = {
     '0x2387127478b13c312a4': SBT0x2387127478b13c312a4,
     '0x89078c9078a80878097b80998d087': SBT0x89078c9078a80878097b80998d087,
-    '003': SBT003,
-    '004': SBT004,
-    '005': SBT005,
-    '006': SBT006,
-    '007': SBT007,
-    '008': SBT008
+    '3': SBT3,
+    '4': SBT4,
+    '5': SBT5,
+    '6': SBT6,
+    '7': SBT7,
+    '8': SBT8,
+    '9': SBT9,
+    '10': SBT10,
+    '11': SBT11,
+    '12': SBT12,
+    '13': SBT13,
+    '14': SBT14,
+    '15': SBT15
 };
 
 export default SBTImage;

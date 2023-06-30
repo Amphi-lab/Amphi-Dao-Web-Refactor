@@ -1,37 +1,38 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Avatar, Modal, Carousel, Space, Row, message } from 'antd';
-import api from '@/api';
+import { useClipboard } from 'use-clipboard-copy';
 import IconFireworks from '@/assets/svg/icon-fireworks.svg';
 import IconPrev from '@/assets/svg/icon-prev.svg';
 import IconNext from '@/assets/svg/icon-next.svg';
 import IconCopy from '@/assets/svg/icon-copy.svg';
-// import IconLinkedin from '@/assets/svg/icon-linkedin.svg';
 import IconFacebook from '@/assets/svg/icon-facebook.svg';
 import IconTwitter from '@/assets/svg/icon-twitter.svg';
-// import IconT from '@/assets/svg/icon-t.svg';
 import { useAccount } from 'wagmi';
 import SBTImage from '@/constants/sbt';
 import { getSubStr } from '@/utils/string';
+import useSBT from '@/hooks/useSBT';
+import type { IBadgeItem } from '@/types/ISBT';
 
 const NoticeContext = createContext<any>({});
 
 const SBTNoticeContent = (props: any) => {
-    const { address } = useAccount();
+    const clipboard = useClipboard();
+    const { remindList } = useSBT();
     const [currentNum, setCurrentNum] = useState(1);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     const [title, setTitle] = useState('Proof of Valid Workload');
     const [total, setTotal] = useState<string | number>('--');
-    const { sbtList, currentSBT, setCurrentSBT } = props;
+    const { currentSBT, setCurrentSBT } = props;
 
     useEffect(() => {
-        setTotal(props.sbtList.length);
-        props.setCurrentSBT(props.sbtList[0]);
-    }, [props, props.sbtList]);
+        setTotal(remindList.length);
+        setCurrentSBT(remindList[0]);
+    }, [remindList, setCurrentSBT]);
 
     const onChange = (currentSlide: number) => {
         setCurrentNum(currentSlide + 1);
-        setCurrentSBT(sbtList[currentSlide]);
+        setCurrentSBT(remindList[currentSlide]);
     };
     return (
         <div style={{ textAlign: 'center', margin: '0 auto', padding: '0 24px' }}>
@@ -42,12 +43,12 @@ const SBTNoticeContent = (props: any) => {
                 nextArrow={<img src={IconNext} alt='->' className='swiper-next' />}
                 afterChange={onChange}
             >
-                {sbtList?.length &&
-                    sbtList?.map(({ id, tokenId }: { id: number; tokenId: string }) => (
-                        <p key={id}>
+                {!!remindList?.length &&
+                    remindList?.map(({ tokenId }: IBadgeItem) => (
+                        <p key={tokenId}>
                             <img
                                 src={SBTImage[tokenId]}
-                                alt={tokenId}
+                                alt={tokenId.toString()}
                                 height={150}
                                 style={{ margin: '0 auto' }}
                             />
@@ -55,11 +56,19 @@ const SBTNoticeContent = (props: any) => {
                     ))}
             </Carousel>
             <Row justify='space-around'>
-                <Space className='text-desc'>
-                    SBT Address: {getSubStr(address as string)}
+                <Space
+                    className='text-desc'
+                    onClick={() => {
+                        clipboard.copy(import.meta.env.VITE_PUBLIC_SBT_CONTRACT_ADDRESS);
+                        message.success('Copyed that!');
+                    }}
+                    style={{ cursor: 'pointer' }}
+                >
+                    SBT Address:{' '}
+                    {getSubStr(import.meta.env.VITE_PUBLIC_SBT_CONTRACT_ADDRESS as string)}
                     <Avatar src={IconCopy} size={16} />
                 </Space>
-                {sbtList.length > 1 && (
+                {remindList?.length > 1 && (
                     <p className='text-desc'>
                         {currentNum} / {total}
                     </p>
@@ -67,8 +76,8 @@ const SBTNoticeContent = (props: any) => {
             </Row>
             <p className='text-title'>{title}</p>
             <p className='text-sub'>
-                You are the <span className='text-strong'>No. {currentSBT.sbtRanking}</span> user to
-                receive this badge
+                You are the <span className='text-strong'>No. {currentSBT?.sbtRanking}</span> user
+                to receive this badge
             </p>
         </div>
     );
@@ -90,15 +99,9 @@ const SBTWearSuccessContent = ({ img }: any) => {
                 >
                     <img src={IconFacebook} alt='facebook' height={24} />
                 </a>
-                {/* <a target='_blank' href={share.link} rel='noreferrer'>
-                    <img src={IconLinkedin} alt='linkedin' width={24} />
-                </a> */}
                 <a target='_blank' href='https://twitter.com/globalkoon' rel='noreferrer'>
                     <img src={IconTwitter} alt='twitter' height={24} />
                 </a>
-                {/* <a target='_blank' href={share.link} rel='noreferrer'>
-                    <img src={IconT} alt='t' width={24} />
-                </a> */}
             </Space>
         </Space>
     );
@@ -107,23 +110,31 @@ const SBTWearSuccessContent = ({ img }: any) => {
 const NoticeProvider = (props: any) => {
     const { address } = useAccount();
     const navigate = useNavigate();
-    const [SBTList, setSBTList] = useState<any[]>([]);
+    const { slotList, isNeedRemind, handleWear } = useSBT();
     const [currentSBT, setCurrentSBT] = useState<any>({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(isNeedRemind);
     const [isWearSuccessModalOpen, setIsWearSuccessModalOpen] = useState(false);
 
+    useEffect(() => {
+        setIsModalOpen(isNeedRemind);
+    }, [isNeedRemind]);
+
     const handleOk = () => {
-        // TODO: 有相同的了
-        // if (有相同的了) {
-        //     Modal.confirm({
-        //         title: 'Badge Wearing Tips',
-        //         content:
-        //             'You are already wearing the same type of [徽章类型-徽章级别]. Would you like to replace it?',
-        //         okText: 'Confirm',
-        //         cancelText: 'Cancel'
-        //     });
-        //     return
-        // }
+        if (slotList.length > 0) {
+            // 有相同的了
+            Modal.confirm({
+                title: 'Badge Wearing Tips',
+                content: 'You are already wearing the same type. Would you like to replace it?',
+                // 'You are already wearing the same type of [徽章类型-徽章级别]. Would you like to replace it?',
+                okText: 'Confirm',
+                cancelText: 'Cancel',
+                onOk: async () => {
+                    await handleWear(currentSBT?.tokenId);
+                    setIsWearSuccessModalOpen(true);
+                    setIsModalOpen(false);
+                }
+            });
+        }
         // TODO: 已达到徽章的最大限额
         // if(已达到徽章的最大限额){
         //      Modal.error({
@@ -134,19 +145,6 @@ const NoticeProvider = (props: any) => {
         //      });
         //      return
         // }
-        api.wearBadge({ address, wordsSbt: currentSBT?.tokenId })
-            .then((res: any) => {
-                console.log('---穿戴成功 res---', res);
-                if (res?.code === 200) {
-                    setIsWearSuccessModalOpen(true);
-                    setIsModalOpen(false);
-                } else {
-                    message.error(res.msg);
-                }
-            })
-            .catch((error: Error) => {
-                message.error(error.message);
-            });
     };
 
     const handleWearSuccessOk = () => {
@@ -155,30 +153,8 @@ const NoticeProvider = (props: any) => {
     };
 
     useEffect(() => {
-        if (address)
-            api.getBadgeList({ address, isRemind: true })
-                .then((res: any) => {
-                    console.log('===getBadgeList isRemind===', res);
-                    if (res?.code === 200) {
-                        if (Array.isArray(res?.data) && res?.data.length > 0) {
-                            // 弹窗
-                            setSBTList(() => {
-                                setIsModalOpen(true);
-                                api.isRemindBadge({ address, tokenId: currentSBT.tokenId }).then(
-                                    (response: any) => {
-                                        console.log('---isRemindBadge response---', response);
-                                    }
-                                );
-                                return res?.data || [];
-                            });
-                        }
-                    }
-                })
-                .catch((error: Error) => {
-                    console.error('===getBadgeList isRemind===', error);
-                });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [address]);
+        if (address && isNeedRemind) setIsModalOpen(true); // 弹窗
+    }, [address, isNeedRemind]);
 
     return (
         <NoticeContext.Provider value={props.value}>
@@ -199,11 +175,7 @@ const NoticeProvider = (props: any) => {
                 cancelText='Cancel'
                 width='416px'
             >
-                <SBTNoticeContent
-                    sbtList={SBTList}
-                    currentSBT={currentSBT}
-                    setCurrentSBT={setCurrentSBT}
-                />
+                <SBTNoticeContent currentSBT={currentSBT} setCurrentSBT={setCurrentSBT} />
             </Modal>
             {/* share */}
             <Modal
@@ -222,7 +194,7 @@ const NoticeProvider = (props: any) => {
                 cancelText='Close'
                 width='416px'
             >
-                <SBTWearSuccessContent img={SBTImage[currentSBT.tokenId]} />
+                <SBTWearSuccessContent img={SBTImage[currentSBT?.tokenId]} />
             </Modal>
         </NoticeContext.Provider>
     );

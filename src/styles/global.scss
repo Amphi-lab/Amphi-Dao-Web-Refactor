@@ -1,72 +1,72 @@
 /* 覆盖 ant design 组件默认样式 文件 */
 
 .light-layout {
-  margin: 0 auto;
-  background: linear-gradient(0deg, #f8f9fc, #f8f9fc), #fff;
+    margin: 0 auto;
+    background: linear-gradient(0deg, #f8f9fc, #f8f9fc), #fff;
 }
 
 /*  Button */
 .dark-btn.dark-btn-sm,
 .light-btn.light-btn-sm {
-  font-size: 12px;
-  line-height: 20px;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 /*  Tabs */
 
 .light-tabs-ink-bar,
 .dark-tabs-ink-bar {
-  position: relative;
-  background-color: transparent !important;
+    position: relative;
+    background-color: transparent !important;
 
-  &::after {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 8px);
-    display: inline-block;
-    width: 16px;
-    height: 4px;
-    background-color: var(--main-color);
-    border-radius: 2px;
-    content: "";
-  }
+    &::after {
+        position: absolute;
+        top: 0;
+        left: calc(50% - 8px);
+        display: inline-block;
+        width: 16px;
+        height: 4px;
+        background-color: var(--main-color);
+        border-radius: 2px;
+        content: '';
+    }
 }
 
 /* Table */
 
 .light-table-wrapper .light-table-thead > tr > th,
 .dark-table-wrapper .dark-table-thead > tr > th {
-  font-weight: 600;
-  background-color: #fbfcfc;
+    font-weight: 600;
+    background-color: #fbfcfc;
 }
 
 .light-table-wrapper .light-table-thead > tr > th,
 .dark-table-wrapper .dark-table-thead > tr > th,
 .light-table-wrapper .light-table-tbody > tr > td,
 .dark-table-wrapper .dark-table-tbody > tr > td {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 12px;
-  border-color: #f4f4f5 !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 12px;
+    border-color: #f4f4f5 !important;
 }
 
 .light-table-wrapper .light-table-container,
 .dark-table-wrapper .dark-table-container {
-  border-color: #f4f4f5 !important;
-  border-radius: 0;
+    border-color: #f4f4f5 !important;
+    border-radius: 0;
 }
 
 /* upload file */
 .light-upload-wrapper .light-upload-drag,
 .dark-upload-wrapper .dark-upload-drag {
-  background-color: #f2f2fb;
+    background-color: #f2f2fb;
 }
 
 /* Select */
 .light-select-item.light-select-item-option-selected .light-select-item-option-content,
 .dark-select-item.dark-select-item-option-selected .dark-select-item-option-content {
-  color: var(--main-color);
-  font-weight: 400;
+    color: var(--main-color);
+    font-weight: 400;
 }
 
 /* Pagination */
@@ -76,18 +76,18 @@
 .dark-pagination .dark-pagination-next,
 .light-pagination .light-pagination-item,
 .dark-pagination .dark-pagination-item {
-  background-color: var(--bg-color);
+    background-color: var(--bg-color);
 }
 
 .light-pagination .light-pagination-item-active,
 .dark-pagination .dark-pagination-item-active {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 /* Label */
 .light-form-item .light-form-item-label > label,
 .dark-form-item .dark-form-item-label > label {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 /* form 表单必填项 提示图标 后置 */
@@ -109,73 +109,73 @@
 /* Modal */
 .light-modal-wrap .light-modal-content,
 .dark-modal-wrap .dark-modal-content {
-  padding: 24px;
+    padding: 24px;
 }
 
 .light-modal-content .light-modal-title .sbt-pop-title,
 .dark-modal-content .dark-modal-title .sbt-pop-title {
-  font-weight: 600;
-  font-size: 16px;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .light-modal-content,
 .dark-modal-content {
-  margin: 0 auto;
-  margin-block-start: 24px !important;
+    margin: 0 auto;
+    margin-block-start: 24px !important;
 }
 
 .light-modal-content .light-modal-body .text-title,
 .dark-modal-content .dark-modal-body .text-title {
-  margin-top: 16px;
-  margin-bottom: 8px;
-  color: var(--success-color);
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: var(--success-color);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 .light-modal-content .light-modal-body .text-sub,
 .dark-modal-content .dark-modal-body .text-sub {
-  color: var(--text-sub-color);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
+    color: var(--text-sub-color);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
 }
 
 .light-modal-content .light-modal-body .text-strong,
 .dark-modal-content .dark-modal-body .text-strong {
-  color: var(--text-main-color);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
+    color: var(--text-main-color);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
 }
 
 .light-modal-content .light-modal-body .text-desc,
 .dark-modal-content .dark-modal-body .text-desc {
-  color: var(--text-desc-color);
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 24px;
+    color: var(--text-desc-color);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 24px;
 }
 
 .light-modal-content .light-modal-footer .light-modal-btns,
 .dark-modal-content .dark-modal-footer .dark-modal-btns {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 /* 轮播图 */
 .slick-arrow.slick-prev {
-  left: -36px;
+    left: -36px;
 }
 
 .slick-arrow.slick-next {
-  right: -36px;
+    right: -36px;
 }
 
 .slick-arrow.slick-prev,
 .slick-arrow.slick-next {
-  z-index: 1;
-  width: 40px;
-  height: 40px;
-  margin-top: -20px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
 }

@@ -31,34 +31,34 @@
             "label": "Interpreting"
         }
     ],
-    "translationState":[
+    "translationState": [
         {
             "value": "0",
-            "label":"Pending agreement"
+            "label": "Pending agreement"
         },
         {
-            "value":"1",
-            "label":"In service"
+            "value": "1",
+            "label": "In service"
         },
         {
-            "value":"2",
-            "label":"In service"
+            "value": "2",
+            "label": "In service"
         },
         {
-            "value":"3",
-            "label":"In service"
+            "value": "3",
+            "label": "In service"
         },
         {
-            "value":"5",
-            "label":"Order completed"
+            "value": "5",
+            "label": "Order completed"
         },
         {
-            "value":"4",
-            "label":"cancel"
+            "value": "4",
+            "label": "cancel"
         },
         {
-            "value":"5",
-            "label":"cancel"
+            "value": "5",
+            "label": "cancel"
         }
     ],
     "industry": [

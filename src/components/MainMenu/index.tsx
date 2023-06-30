@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import styles from './index.module.scss';
 
 const items: MenuProps['items'] = [
@@ -84,11 +85,13 @@ const items: MenuProps['items'] = [
 ];
 
 const App: React.FC = () => {
+    const navigate = useNavigate();
     const [current, setCurrent] = useState('');
 
     const onClick: MenuProps['onClick'] = e => {
         // console.log('click ', e);
         setCurrent(e.key);
+        navigate(`/${e.key}`);
     };
 
     return (
@@ -98,6 +101,7 @@ const App: React.FC = () => {
             selectedKeys={[current]}
             mode='horizontal'
             items={items}
+            inlineCollapsed={false}
         />
     );
 };

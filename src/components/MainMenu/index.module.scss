@@ -1,8 +1,8 @@
 .main-menu {
-    @include font();
-    margin-left: 76px;
+  @include font($size: 14px, $weight: 400, $lineH: 22px);
+  margin-right: auto;
 
-    /* 覆盖ant 默认样式 */
-    border-bottom: 0;
-    background-color: transparent;
+  /* 覆盖ant 默认样式 */
+  border-bottom: 0;
+  background-color: transparent;
 }

@@ -17,12 +17,14 @@ import {
 import { formatFileList, getTimeZoneName } from '@/utils/util';
 
 import api from '@/api';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
     getWorkload,
     getTransLang,
     getServiceType,
-    getDeadline
+    getDeadline,
+    getBounty,
+    amphiServiceCost
 } from '@/store/reducers/requestTransSlice';
 
 import styles from './index.module.scss';
@@ -31,6 +33,7 @@ const RequestForm: React.FC = () => {
     const { state } = useLocation();
     const [form] = Form.useForm();
     const dispatch = useAppDispatch();
+    const amServiceCost = useAppSelector(amphiServiceCost);
 
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
@@ -43,8 +46,8 @@ const RequestForm: React.FC = () => {
         // console.log(values);
         const finalParams = {
             ...values,
-            aiBounty: 1000,
-            humanBounty: 1000,
+            aiBounty: 0,
+            humanBounty: amServiceCost,
             bounty: Number(values.bounty),
             translationFiles: formatFileList(values.translationFiles.fileList)
         };
@@ -98,6 +101,11 @@ const RequestForm: React.FC = () => {
         if (status === 'removed') {
             dispatch(getWorkload(info.fileList));
         }
+    };
+
+    const hanldeInputChange = (e: any) => {
+        // console.log(e.target.value);
+        dispatch(getBounty(+e.target.value));
     };
 
     return (
@@ -289,6 +297,7 @@ const RequestForm: React.FC = () => {
                         addonAfter='USDT'
                         min={0}
                         placeholder='please enter bounty'
+                        onChange={hanldeInputChange}
                     />
                 </Col>
             </Form.Item>

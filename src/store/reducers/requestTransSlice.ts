@@ -24,8 +24,8 @@ const initialState: requestTranState = {
     serviceType: '',
     workload: 0,
     deadline: '',
-    amphiServiceCost: 1000,
-    translatorFee: 1000,
+    amphiServiceCost: 0,
+    translatorFee: 0,
     bounty: 0,
     totalCost: 0
 };
@@ -43,14 +43,13 @@ export const counterSlice = createSlice({
     initialState,
     // 定义action，这里的属性会自动的导出为actions，在组件中可以直接通过dispatch进行触发
     reducers: {
-        // getTotalCost: state => {
-        //     state.totalCost = state.amphiServiceCost + state.translatorFee + state.bounty;
-        // },
         getWorkload: (state, action: PayloadAction<[]>) => {
             state.workload = 0;
             action.payload.forEach((file: { response: { data: { wordCount: any } } }) => {
                 state.workload += Number(file?.response?.data?.wordCount || 0);
             });
+            state.amphiServiceCost = state.workload * 0.055;
+            state.totalCost = Number(state.amphiServiceCost) + Number(state.bounty);
         },
         getTransLang: (state, action: PayloadAction<{ from: string; to: string }>) => {
             state.transLang = action.payload.from
@@ -65,6 +64,10 @@ export const counterSlice = createSlice({
         },
         getDeadline: (state, action: PayloadAction<string>) => {
             state.deadline = dateDiff(action.payload);
+        },
+        getBounty: (state, action: PayloadAction<number>) => {
+            state.bounty = action.payload;
+            state.totalCost = Number(state.amphiServiceCost) + Number(state.bounty);
         }
     }
     // extraReducers: builder => {
@@ -83,13 +86,17 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getWorkload, getTransLang, getServiceType, getDeadline } = counterSlice.actions;
+export const { getWorkload, getTransLang, getServiceType, getDeadline, getBounty } =
+    counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const summaryWorkload = (state: RootState) => state.requestTrans.workload;
 export const summaryTransLang = (state: RootState) => state.requestTrans.transLang;
 export const summaryServiceType = (state: RootState) => state.requestTrans.serviceType;
 export const summaryDeadline = (state: RootState) => state.requestTrans.deadline;
+export const totalCost = (state: RootState) => state.requestTrans.totalCost;
+export const amphiServiceCost = (state: RootState) => state.requestTrans.amphiServiceCost;
+export const bounty = (state: RootState) => state.requestTrans.bounty;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =(amount: number): AppThunk =>

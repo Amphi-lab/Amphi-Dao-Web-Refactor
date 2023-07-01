@@ -6,8 +6,7 @@ import { web3 } from './config';
 import amphi from './ABI/MAIN.json'; // 主合约ABI
 import erc20 from './ABI/ERC20.json'; // erc20合约ABI
 import amphiPass from './ABI/NFT.json'; // NFT合约ABI
-// import sbtABI  from './ABI/SBT.json'; // SBT合约ABI
-import sbtABI from './ABI/NFT.json'; // SBT合约ABI
+import sbtABI from './ABI/SBT.json'; // SBT合约ABI
 
 // 主合约
 let contract: Contract;

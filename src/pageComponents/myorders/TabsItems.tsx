@@ -13,10 +13,40 @@ import { optionsMap } from '@/utils/array';
 import SBTTag from '@/components/SBTTag';
 import SBTImage from '@/constants/sbt';
 import { getSubStr } from '@/utils/string';
+import { ORDER_STATUS_CODE } from '@/constants/enums';
+import { useAccount } from 'wagmi';
+import { useNavigate } from 'react-router';
 
 const { Option } = Select;
 const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
 const languagesOptions = optionsMap(languages);
+
+const ActionCom = ({ status }: any) => {
+    const navigate = useNavigate();
+    return (
+        <Space
+            size='small'
+            wrap
+            onClick={() => {
+                navigate('/orderDetail');
+            }}
+        >
+            <Button type='link' size='small' icon={<EyeOutlined />}>
+                View details
+            </Button>
+            {ORDER_STATUS_CODE.COMPLETED.includes(status) && (
+                <Button type='link' size='small' icon={<SwitcherOutlined />}>
+                    Rate the service
+                </Button>
+            )}
+            {ORDER_STATUS_CODE.CANCELLED.includes(status) && (
+                <Button type='link' size='small' icon={<SwitcherOutlined />}>
+                    Order again
+                </Button>
+            )}
+        </Space>
+    );
+};
 
 const columns: ColumnsType<IOrder> = [
     {
@@ -36,44 +66,62 @@ const columns: ColumnsType<IOrder> = [
         key: 'acceptAddress',
         dataIndex: 'acceptAddress',
         ellipsis: true,
-        render: value => {
-            // return <p className='color-text-desc'>No one applied yet</p>;
-            // return (
-            //     <div className='translator-cell'>
-            //         <p className='address-head-tips'>
-            //             <Jazzicon diameter={22} seed={value} />
-            //             <span className='address'>
-            //                 {getSubStr('0xd969b56c02eF46017ec44b9Ab1a34ebE3113174d')}
-            //             </span>
-            //         </p>
-            //         <SBTTag image={SBTImage[3]} />
-            //     </div>
-            // );
-            return <p className='color-text-main'>There are 2 people applying</p>;
+        render: (value, record) => {
+            const status = record.translationState?.toString();
+            const count = record?.params?.count;
+
+            if (ORDER_STATUS_CODE.PENDING.includes(status))
+                return count === 0 ? (
+                    <p className='color-text-desc'>No one applied yet</p>
+                ) : (
+                    <p className='color-text-main'>There are {count} people applying</p>
+                );
+            if (
+                ORDER_STATUS_CODE.IN_SERVICE.includes(status) ||
+                ORDER_STATUS_CODE.COMPLETED.includes(status)
+            )
+                return (
+                    <div className='translator-cell'>
+                        <div className='address-head-tips'>
+                            <Jazzicon diameter={22} seed={value} />
+                            <span className='address'>
+                                {getSubStr('0xd969b56c02eF46017ec44b9Ab1a34ebE3113174d')}
+                            </span>
+                        </div>
+                        <SBTTag image={SBTImage[3]} />
+                    </div>
+                );
+            if (ORDER_STATUS_CODE.CANCELLED.includes(status))
+                return <p className='color-text-main'>--</p>;
+            // return ;
         }
-        // translator ? (<p>There are 2 people applying</p>) : (<p>No one applied yet</p>)
-        /* <Avatar src={''} /> */
-        // value ? (
-        //     <p className='address-head-tips'>
-        //         <Jazzicon diameter={22} seed={value} />
-        //         <span className='address'>{value}</span>
-        //     </p>
-        // ) : (
-        //     <p className='color-text-desc'>No one applied yet</p>
-        // )
     },
     {
         title: 'Amount',
         key: 'bounty',
         dataIndex: 'bounty',
-        render: value => `$ ${amountFromToken(value)}`
+        render: value => `${amountFromToken(value)} USDT`
     },
     {
         title: 'Status',
         key: 'translationState',
         dataIndex: 'translationState',
         ellipsis: true,
-        render: value => <Badge status='success' text={value} />
+        render: value => {
+            if (ORDER_STATUS_CODE.PENDING.includes(value))
+                return (
+                    <Badge
+                        status='default'
+                        text={<span className='color-text-desc'>Pending payment</span>}
+                    />
+                );
+            if (ORDER_STATUS_CODE.IN_SERVICE.includes(value))
+                return <Badge status='warning' text='In service' />;
+            if (ORDER_STATUS_CODE.COMPLETED.includes(value))
+                return <Badge status='success' text='Completed' />;
+            if (ORDER_STATUS_CODE.CANCELLED.includes(value))
+                return <Badge status='error' text='Cancelled' />;
+        }
     },
     {
         title: 'Times',
@@ -95,24 +143,16 @@ const columns: ColumnsType<IOrder> = [
         key: 'action',
         fixed: 'right',
         width: 120,
-        render: () => (
-            <Space size='small' wrap>
-                <Button type='link' size='small' icon={<EyeOutlined />}>
-                    View details
-                </Button>
-                <Button type='link' size='small' icon={<SwitcherOutlined />}>
-                    Rate the service
-                </Button>
-                <Button type='link' size='small' icon={<SwitcherOutlined />}>
-                    Order again
-                </Button>
-            </Space>
-        )
+        render: (_, record) => {
+            const status = record.translationState?.toString();
+            return <ActionCom status={status} />;
+        }
     }
 ];
 
-export default ({ tabName }: { tabName: string }) => {
+export default ({ tabName, status }: { tabName: string; status?: string }) => {
     const [form] = Form.useForm();
+    const { address } = useAccount();
     const [loading, setLoading] = useState(true);
     const [dataList, setDataList] = useState<IOrder[]>([]);
     const [total, setTotal] = useState<number>(0);
@@ -135,7 +175,7 @@ export default ({ tabName }: { tabName: string }) => {
 
     const getOptions = useCallback(() => {
         const { translationTypeArray, createTime } = form.getFieldsValue();
-        const options: any = {};
+        const options: any = { translationState: status, buyerAddress: address };
         if (translationTypeArray.length > 0) {
             options.translationTypeArray = translationTypeArray.join();
         }

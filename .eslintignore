@@ -5,5 +5,4 @@ node_modules
 package.json
 package-lock.json
 *.html
-.eslintrc.cjs
-src/assets
+*.cjs

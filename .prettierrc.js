@@ -7,7 +7,6 @@ module.exports = {
     bracketSpacing: true, // 对象中打印空格
     jsxSingleQuote: true,
     //禁止随时添加逗号,这个很重要。找了好久
-    trailingComma: "none",
-    endOfLine: "auto" 
+    trailingComma: 'none',
+    endOfLine: 'auto'
 };
-

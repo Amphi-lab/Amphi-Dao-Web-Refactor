@@ -4,15 +4,9 @@
         "useDefineForClassFields": true,
         "baseUrl": "./",
         "rootDir": "./",
-        "lib": [
-            "DOM",
-            "DOM.Iterable",
-            "ESNext"
-        ],
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "paths": {
-            "@/*": [
-                "./src/*"
-            ]
+            "@/*": ["./src/*"]
         },
         "allowJs": false,
         "experimentalDecorators": true,
@@ -27,17 +21,9 @@
         "isolatedModules": false,
         "noEmit": true,
         "jsx": "react-jsx",
-        "types": [
-            "vite/client",
-            "node"
-        ]
+        "types": ["vite/client", "node"]
     },
-    "include": [
-        "src",
-        "mock",
-        ".eslintrc.cjs",
-        "commitlint.config.cjs"
-    ],
+    "include": ["src", "mock", ".eslintrc.cjs", "commitlint.config.cjs"],
     "references": [
         {
             "path": "./tsconfig.node.json"

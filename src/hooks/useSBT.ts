@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAccount } from 'wagmi';
 import type { IBadgeItem, ISlotItem, ITokenURI, TTokenId } from '@/types/ISBT';
 import {
@@ -10,12 +10,15 @@ import {
     getNeedRemindBadgeList
 } from '@/utils/sbt';
 import { getSBTContract } from '@/contracts/contract';
+import storage from '@/utils/storage';
+import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 
 const SBTContract = await getSBTContract();
 
 const useSBT = () => {
     const { address } = useAccount();
     const [loading, setLoading] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
     // 是否需要提醒
     const [isNeedRemind, setIsNeedRemind] = useState(false);
     // 拥有的所有徽章列表
@@ -24,6 +27,19 @@ const useSBT = () => {
     const [remindList, setRemindList] = useState<IBadgeItem[]>([]);
     // 插槽列表
     const [slotList, setSlotList] = useState<ISlotItem[]>([]);
+
+    useEffect(() => {
+        let token;
+        let timer;
+        if (address) {
+            timer = setInterval(() => {
+                token = storage.getLocalStorage(AMPHI_USERTOKEN);
+                if (token) setIsLogin(true);
+                else setIsLogin(false);
+            }, 3000);
+        }
+        return clearInterval(timer);
+    }, [address]);
 
     const fetchData = useCallback(async () => {
         if (address) {
@@ -59,9 +75,9 @@ const useSBT = () => {
     }, [address]);
 
     useEffect(() => {
-        fetchData();
+        if (address && isLogin) fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [address]);
+    }, [address, isLogin]);
 
     const handleWear = useCallback(
         (tokenId: TTokenId) => {

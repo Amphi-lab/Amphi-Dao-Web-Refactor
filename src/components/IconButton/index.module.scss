@@ -1,8 +1,8 @@
 .amphi-icon-button {
-  background: none;
-  border: none;
+    background: none;
+    border: none;
 
-  span {
-    @include font($size: 12px, $color: #0049ff, $weight: 400, $lineH: 18px);
-  }
+    span {
+        @include font($size: 12px, $color: #0049ff, $weight: 400, $lineH: 18px);
+    }
 }

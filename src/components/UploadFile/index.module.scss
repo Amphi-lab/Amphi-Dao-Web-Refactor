@@ -1,10 +1,10 @@
 .nt-upload-text {
-  @include font($size: 14px, $color: #323335);
+    @include font($size: 14px, $color: #323335);
 }
 
 .ant-upload-hint {
-  width: 500px;
-  margin: 0 auto;
+    width: 500px;
+    margin: 0 auto;
 
-  @include font($size: 12px, $weight: 0, $color: #969aa0, $lineH: 20px);
+    @include font($size: 12px, $weight: 0, $color: #969aa0, $lineH: 20px);
 }

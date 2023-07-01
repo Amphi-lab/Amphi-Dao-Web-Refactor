@@ -4,10 +4,7 @@ import AmCard from '@/components/Card';
 import { Button } from 'antd';
 import styles from './index.module.scss';
 
-const ConfirmOrders = () => {
-    const hanldeSaveOrder = () => {
-        console.log('hanldeSaveOrder');
-    };
+const ConfirmOrders = ({ onSave }: { onSave: () => void }) => {
     return (
         <AmCard title='Money Back Guarantee'>
             <div className={styles['confirme-order-box']}>
@@ -18,11 +15,16 @@ const ConfirmOrders = () => {
                         refunded.
                     </li>
                 </ul>
+                {/* 
+                
+                    // 1. 触发form验证
+                    // 2.提交数据
+                */}
                 <Button
                     type='primary'
                     htmlType='submit'
                     className={styles['confirm-btn']}
-                    onClick={hanldeSaveOrder}
+                    onClick={onSave}
                 >
                     Confirm Order
                 </Button>

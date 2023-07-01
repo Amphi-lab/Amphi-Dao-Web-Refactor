@@ -7,7 +7,6 @@ import type { RangePickerProps } from 'antd/es/date-picker';
 import UploadFile from '@/components/UploadFile';
 import AmSelect from '@/components/Form/Select';
 import AmDateTimePiker from '@/components/Form/DateTimePicker';
-
 import {
     currentLanguages,
     translationTypes,
@@ -26,10 +25,11 @@ import {
     getBounty,
     amphiServiceCost
 } from '@/store/reducers/requestTransSlice';
+import ConfirmOrder from '../ConfirmOrder';
 
 import styles from './index.module.scss';
 
-const RequestForm: React.FC = () => {
+const RequestForm = () => {
     const { state } = useLocation();
     const [form] = Form.useForm();
     const dispatch = useAppDispatch();
@@ -104,7 +104,6 @@ const RequestForm: React.FC = () => {
     };
 
     const hanldeInputChange = (e: any) => {
-        // console.log(e.target.value);
         dispatch(getBounty(+e.target.value));
     };
 
@@ -326,6 +325,9 @@ const RequestForm: React.FC = () => {
                     Confirm Order
                 </Button>
             </Form.Item> */}
+            <div className={styles['submit-div']}>
+                <ConfirmOrder onSave={onFinish} />
+            </div>
         </Form>
     );
 };

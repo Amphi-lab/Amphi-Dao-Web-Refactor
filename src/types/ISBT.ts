@@ -1,4 +1,4 @@
-export type TTokenId = string | number;
+export type TTokenId = number;
 
 export interface IBadgeItem {
     createTime: string; // 徽章创建时间

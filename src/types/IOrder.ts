@@ -1,7 +1,20 @@
+import type { TTokenId } from './ISBT';
+
 export default interface IOrder {
     acceptAddress: string;
     bounty: number;
     buyerAddress: string;
+    // 翻译者信息， 当translationState != 0 时会有这个返回值
+    translator?: {
+        username: string;
+        address: string;
+        profile: string; // 头像
+        badgeSlot: {
+            id: number;
+            address: string;
+            wordsSbt: TTokenId; // sbt tokenId
+        };
+    };
     createTime: string;
     deadline: string;
     id: number;

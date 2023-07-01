@@ -116,7 +116,7 @@ export default () => {
                     type='primary'
                     size='small'
                     onClick={() => {
-                        navigate('/');
+                        navigate('/myorders');
                     }}
                 >
                     Take
@@ -160,7 +160,7 @@ export default () => {
         <Button
             type='primary'
             onClick={() => {
-                navigate('/');
+                navigate('/myorders');
             }}
         >
             More

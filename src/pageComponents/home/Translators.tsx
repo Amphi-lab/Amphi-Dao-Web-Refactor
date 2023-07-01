@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import type { FC } from 'react';
 import { Row, Col, Card, Badge } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import type ITranslators from '@/types/ITranslator';
@@ -43,7 +42,6 @@ export default () => {
 
     useEffect(() => {
         api.getTranslatorList().then((res: any) => {
-            console.log('---res---', res);
             if (res.code === 200) {
                 setDataList(res.rows);
             }
@@ -59,10 +57,7 @@ export default () => {
                             cover={
                                 <img
                                     alt='example'
-                                    src={
-                                        `https://gateway.lighthouse.storage/ipfs/${profile}` ||
-                                        ImageTranslator
-                                    }
+                                    src={profile}
                                     onError={e => {
                                         e.target.src = ImageTranslator;
                                     }}

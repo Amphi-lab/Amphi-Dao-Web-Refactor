@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAccount } from 'wagmi';
 import type { IBadgeItem, ISlotItem, ITokenURI, TTokenId } from '@/types/ISBT';
 import {
@@ -10,12 +10,13 @@ import {
     getNeedRemindBadgeList
 } from '@/utils/sbt';
 import { getSBTContract } from '@/contracts/contract';
-
-const SBTContract = await getSBTContract();
+import storage from '@/utils/storage';
+import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 
 const useSBT = () => {
     const { address } = useAccount();
     const [loading, setLoading] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
     // 是否需要提醒
     const [isNeedRemind, setIsNeedRemind] = useState(false);
     // 拥有的所有徽章列表
@@ -24,6 +25,27 @@ const useSBT = () => {
     const [remindList, setRemindList] = useState<IBadgeItem[]>([]);
     // 插槽列表
     const [slotList, setSlotList] = useState<ISlotItem[]>([]);
+
+    const getLoginStatus = useCallback(() => {
+        const token = storage.getLocalStorage(AMPHI_USERTOKEN);
+        if (token) setIsLogin(true);
+        else setIsLogin(false);
+    }, []);
+
+    useEffect(() => {
+        let timer: any;
+        if (address) {
+            getLoginStatus();
+            timer = setInterval(() => {
+                getLoginStatus();
+            }, 3000);
+        }
+        if (isLogin && address) clearInterval(timer);
+        return () => {
+            clearInterval(timer);
+            timer = null;
+        };
+    }, [isLogin, address, getLoginStatus]);
 
     const fetchData = useCallback(async () => {
         if (address) {
@@ -59,25 +81,31 @@ const useSBT = () => {
     }, [address]);
 
     useEffect(() => {
-        fetchData();
+        if (address && isLogin) fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [address]);
+    }, [address, isLogin]);
 
     const handleWear = useCallback(
-        (tokenId: TTokenId) => {
+        async (tokenId: TTokenId) => {
             if (address) {
-                wearBadge({ address, wordsSbt: tokenId });
+                await wearBadge({ address, wordsSbt: tokenId });
+                fetchData();
             }
         },
-        [address]
+        [address, fetchData]
     );
-    const handleTakeOffBadge = useCallback(() => {
-        if (address) takeOffBadge(address);
-    }, [address]);
+    const handleTakeOffBadge = useCallback(async () => {
+        if (address) {
+            await takeOffBadge(address);
+            fetchData();
+        }
+    }, [address, fetchData]);
 
-    const getSBTInfo = useCallback(async (tokenId: TTokenId) => {
-        const res: ITokenURI = await SBTContract.methods.getTokenURI(tokenId).call();
-        return res;
+    const getSBTInfo = useCallback(async (tokenId: TTokenId): Promise<ITokenURI | {}> => {
+        const SBTContract = await getSBTContract();
+        const res: string = await SBTContract.methods.getTokenURI(tokenId).call();
+        if (!res) return {};
+        return JSON.parse(res);
     }, []);
 
     return {

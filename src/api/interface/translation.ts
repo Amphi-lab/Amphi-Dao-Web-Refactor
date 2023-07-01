@@ -1,5 +1,4 @@
-import { post } from '../axios';
+import { post, get } from '../axios';
 
 export const saveOrder = (data: any) => post('/translation/save', data);
-
-export const other = [];
+export const getOrderDetail = (id: number) => get(`/translation/${id}`);

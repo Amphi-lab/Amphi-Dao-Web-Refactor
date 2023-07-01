@@ -5,6 +5,7 @@ import TranCandidate from './TranCandidate';
 import TranContent from './TranContent';
 import Notification from './Notification';
 import styles from './index.module.scss';
+// import routes from '~react-pages';
 
 const OrderDetail = () => {
     return (

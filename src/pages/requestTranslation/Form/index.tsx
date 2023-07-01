@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 import type { DatePickerProps } from 'antd';
 import { Form, Input, Row, Col, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
@@ -30,32 +30,41 @@ import ConfirmOrder from '../ConfirmOrder';
 import styles from './index.module.scss';
 
 const RequestForm = () => {
-    const { state } = useLocation();
     const [form] = Form.useForm();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const amServiceCost = useAppSelector(amphiServiceCost);
 
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
-            console.log(res);
+            if (res?.code === 200) {
+                message.success(res.message);
+                navigate(`/orderDetail/${res?.data}`, { state: res?.data });
+            }
         });
     };
 
     // save form handler funciton
-    const onFinish = (values: any) => {
-        // console.log(values);
+    const onFinish = async (values: any) => {
+        // navigate('/orderDetail');
+        console.log('onfinish', values);
         const finalParams = {
             ...values,
             aiBounty: 0,
             humanBounty: amServiceCost,
             bounty: Number(values.bounty),
-            translationFiles: formatFileList(values.translationFiles.fileList)
+            translationFiles: formatFileList(values?.translationFiles?.fileList)
         };
-        saveOrder(finalParams);
+        // console.log('finalParams', finalParams);
+        const validRes = await form.validateFields();
+        // console.log('validRes', validRes);
+        if (!validRes?.outOfDate) {
+            saveOrder(finalParams);
+        }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+    const onFinishFailed = () => {
+        // console.log('Failed:', errorInfo);
     };
 
     // select change hanlder funciton

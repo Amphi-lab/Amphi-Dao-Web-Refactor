@@ -2,7 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import { metaMaskWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets';
@@ -104,7 +104,7 @@ const ConnectWallet = () => {
     const { address, isConnected, isDisconnected } = useAccount();
     const addressInfo = useRef({ address });
     const { disconnect } = useDisconnect();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // 获取Nonce
     const getNonce = async () => {
@@ -151,8 +151,9 @@ const ConnectWallet = () => {
                 // refreshAPIToken();
                 addressInfo.current.address = address;
                 message.success('Login successful');
+                window.location.reload();
                 if (!res.username) {
-                    navigate('/');
+                    // navigate('/');
                 } else {
                     // navigate('/');
                 }
@@ -211,8 +212,8 @@ const ConnectWallet = () => {
                 storage.removeLocalStorage(storageKeys.CURRENT_ADDRESS);
                 storage.removeLocalStorage(storageKeys.EXPIRE_TIME);
                 // refreshAPIToken();
-                navigate('/');
-                // window.location.reload();
+                // navigate('/');
+                window.location.reload();
             }
         })();
     }, [isDisconnected]);
@@ -231,8 +232,8 @@ const ConnectWallet = () => {
                 // refreshAPIToken();
                 disconnect();
                 addressInfo.current.address = undefined;
-                navigate('/');
-                // window.location.reload();
+                // navigate('/');
+                window.location.reload();
             }
         })();
     }, [address]);

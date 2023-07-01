@@ -3,7 +3,6 @@ import PageTitle from '@/components/PageTitle';
 import RequestForm from './Form';
 import SummaryCard from './Summary';
 import TotalCostCard from './TotalCost';
-
 import styles from './index.module.scss';
 
 const RequestTranslation = () => {

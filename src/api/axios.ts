@@ -117,7 +117,7 @@ export const get = (url: string, params = {}) =>
         axios
             .get(url, { params })
             .then(res => {
-                resolve(res.data);
+                resolve(res?.data);
             })
             .catch(err => {
                 errorMsg(err);
@@ -137,7 +137,7 @@ export const post = (url: string, data: any) =>
             .post(url, data)
             .then(res => {
                 // 关闭进度条
-                resolve(res.data);
+                resolve(res?.data);
             })
             .catch(err => {
                 errorMsg(err);
@@ -156,7 +156,7 @@ export const put = (url: string, data: any) =>
     new Promise((resolve, reject) => {
         axios.put(url, data).then(
             response => {
-                resolve(response.data);
+                resolve(response?.data);
             },
             err => {
                 errorMsg(err);

@@ -51,5 +51,5 @@ export async function getSBTContract() {
             import.meta.env.VITE_PUBLIC_SBT_CONTRACT_ADDRESS
         );
     }
-    return contractAmphiPass;
+    return contractSBT;
 }

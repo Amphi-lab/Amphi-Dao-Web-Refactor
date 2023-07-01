@@ -13,8 +13,6 @@ import { getSBTContract } from '@/contracts/contract';
 import storage from '@/utils/storage';
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 
-const SBTContract = await getSBTContract();
-
 const useSBT = () => {
     const { address } = useAccount();
     const [loading, setLoading] = useState(false);
@@ -96,13 +94,16 @@ const useSBT = () => {
         },
         [address]
     );
-    const handleTakeOffBadge = useCallback(() => {
-        if (address) takeOffBadge(address);
+    const handleTakeOffBadge = useCallback(async () => {
+        if (address) {
+            await takeOffBadge(address);
+        }
     }, [address]);
 
-    const getSBTInfo = useCallback(async (tokenId: TTokenId) => {
-        const res: ITokenURI = await SBTContract.methods.getTokenURI(tokenId).call();
-        return res;
+    const getSBTInfo = useCallback(async (tokenId: TTokenId): Promise<ITokenURI> => {
+        const SBTContract = await getSBTContract();
+        const res: string = await SBTContract.methods.getTokenURI(tokenId).call();
+        return JSON.parse(res);
     }, []);
 
     return {

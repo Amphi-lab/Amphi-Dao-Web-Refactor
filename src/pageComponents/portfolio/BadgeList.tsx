@@ -17,7 +17,7 @@ const SBTItemImage = ({ tokenId, isWear }: { tokenId: TTokenId; isWear: boolean 
     <span className='sbt-img-box'>
         <img
             src={SBTImage[tokenId]}
-            alt={tokenId.toString()}
+            alt={tokenId?.toString()}
             width='100%'
             style={{ cursor: 'pointer' }}
         />
@@ -65,9 +65,11 @@ const ModalSBT = forwardRef(
                             return handleTakeOffBadge()
                                 .then(() => {
                                     setLoading(false);
+                                    setIsModalOpen(false);
                                 })
                                 .catch(() => {
                                     setLoading(false);
+                                    setIsModalOpen(false);
                                 });
                         },
                         onCancel() {
@@ -77,6 +79,7 @@ const ModalSBT = forwardRef(
                 } else {
                     await handleWear(tokenId);
                     setLoading(false);
+                    setIsModalOpen(false);
                 }
             } catch (error) {
                 setLoading(false);
@@ -99,9 +102,6 @@ const ModalSBT = forwardRef(
                 cancelText='Close'
                 width='416px'
             >
-                {isHave.toString()}
-                {isWear.toString()}
-                {tokenId.toString()}
                 <p
                     style={
                         isHave
@@ -168,15 +168,17 @@ const ModalSBT = forwardRef(
 
 const SBTGroup = () => {
     const { slotList, ownedList, getSBTInfo } = useSBT();
-    const [clickTokenId, setClickTokenId] = useState<TTokenId>('');
+    const [clickTokenId, setClickTokenId] = useState<TTokenId>();
     const [workload, setWorkload] = useState<string>('');
     const modalRef = createRef<any>();
+
     const isHave = (tokenId: TTokenId) => {
         // eslint-disable-next-line eqeqeq
         return ownedList.some((item: any) => item.tokenId == tokenId);
     };
     const isWear = useCallback(
         (tokenId: TTokenId) => {
+            if (!tokenId) return false;
             // eslint-disable-next-line eqeqeq
             return slotList.some((item: any) => {
                 // eslint-disable-next-line eqeqeq
@@ -208,20 +210,27 @@ const SBTGroup = () => {
                 <p className='sbt-title'>My Badges</p>
                 <Row>
                     {!!slotList?.length &&
-                        slotList.map(({ wordsSbt }: ISlotItem) => (
-                            <Col
-                                md={6}
-                                lg={4}
-                                xl={3}
-                                className='sbt-col'
-                                key={wordsSbt}
-                                onClick={() => {
-                                    handleClick(wordsSbt);
-                                }}
-                            >
-                                <SBTItemImage tokenId={wordsSbt} isWear={isWear(wordsSbt)} />
-                            </Col>
-                        ))}
+                        slotList.map(({ wordsSbt }: ISlotItem) => {
+                            if (wordsSbt)
+                                return (
+                                    <Col
+                                        md={6}
+                                        lg={4}
+                                        xl={3}
+                                        className='sbt-col'
+                                        key={wordsSbt}
+                                        onClick={() => {
+                                            handleClick(wordsSbt);
+                                        }}
+                                    >
+                                        <SBTItemImage
+                                            tokenId={wordsSbt}
+                                            isWear={isWear(wordsSbt)}
+                                        />
+                                    </Col>
+                                );
+                            return null;
+                        })}
                 </Row>
             </div>
             <div className='sbt-group-item'>

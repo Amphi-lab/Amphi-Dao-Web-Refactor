@@ -86,7 +86,7 @@ export default () => {
         const link = location.href;
         setCopyLink(searchAddress ? link : `${link}?address=${address}`);
         fetchData(addr);
-    }, [searchAddress, address]);
+    }, [searchAddress, address, fetchData]);
 
     const onClickSetting = useCallback(() => {
         navigate('/preferences');
@@ -122,9 +122,11 @@ export default () => {
                             <Space className='nickname-box'>
                                 <p className='nickname'>{userInfo?.username}</p>
                                 {!!slotList?.length &&
-                                    slotList.map(({ id, wordsSbt }: any) => (
-                                        <SBTTag image={SBTImage[wordsSbt]} key={id} />
-                                    ))}
+                                    slotList.map(({ id, wordsSbt }: any) =>
+                                        wordsSbt ? (
+                                            <SBTTag image={SBTImage[wordsSbt]} key={id} />
+                                        ) : null
+                                    )}
                             </Space>
                         </div>
                         {/* TODO: 字段不确定 */}

@@ -28,7 +28,6 @@ const useSBT = () => {
 
     const getLoginStatus = useCallback(() => {
         const token = storage.getLocalStorage(AMPHI_USERTOKEN);
-        console.log('---------token---------', token);
         if (token) setIsLogin(true);
         else setIsLogin(false);
     }, []);
@@ -87,22 +86,25 @@ const useSBT = () => {
     }, [address, isLogin]);
 
     const handleWear = useCallback(
-        (tokenId: TTokenId) => {
+        async (tokenId: TTokenId) => {
             if (address) {
-                wearBadge({ address, wordsSbt: tokenId });
+                await wearBadge({ address, wordsSbt: tokenId });
+                fetchData();
             }
         },
-        [address]
+        [address, fetchData]
     );
     const handleTakeOffBadge = useCallback(async () => {
         if (address) {
             await takeOffBadge(address);
+            fetchData();
         }
-    }, [address]);
+    }, [address, fetchData]);
 
-    const getSBTInfo = useCallback(async (tokenId: TTokenId): Promise<ITokenURI> => {
+    const getSBTInfo = useCallback(async (tokenId: TTokenId): Promise<ITokenURI | {}> => {
         const SBTContract = await getSBTContract();
         const res: string = await SBTContract.methods.getTokenURI(tokenId).call();
+        if (!res) return {};
         return JSON.parse(res);
     }, []);
 

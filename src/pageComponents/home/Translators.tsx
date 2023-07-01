@@ -42,7 +42,6 @@ export default () => {
 
     useEffect(() => {
         api.getTranslatorList().then((res: any) => {
-            console.log('---res---', res);
             if (res.code === 200) {
                 setDataList(res.rows);
             }

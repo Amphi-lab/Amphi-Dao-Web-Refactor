@@ -53,7 +53,6 @@ export default () => {
                         industry: optionsToArray(userInfo.industry, IndustryOptions),
                         jobFunction: optionsToArray(userInfo.jobFunction, JobFunctionsOptions)
                     };
-                    console.log('---params---', params);
                     form.setFieldsValue(params);
                 }
             });

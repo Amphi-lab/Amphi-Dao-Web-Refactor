@@ -2,6 +2,8 @@ import React, { useState, useCallback, createRef, forwardRef, useImperativeHandl
 import { Spin, Row, Col, Space, Modal, Descriptions, Avatar, message } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useClipboard } from 'use-clipboard-copy';
+import type { TTokenId, ISlotItem, ITokenURI } from '@/types/ISBT';
+import useSBT from '@/hooks/useSBT';
 // utils
 import { getSubStr } from '@/utils/string';
 // images
@@ -9,16 +11,18 @@ import SBTImage from '@/constants/sbt';
 import IconCopy from '@/assets/svg/icon-copy.svg';
 import IconFacebook from '@/assets/svg/icon-facebook.svg';
 import IconTwitter from '@/assets/svg/icon-twitter.svg';
-import useSBT from '@/hooks/useSBT';
-import type { TTokenId, ISlotItem, ITokenURI } from '@/types/ISBT';
+import IconWorn from '@/assets/svg/icon-worn.svg';
 
-const SBTItemImage = ({ tokenId }: { tokenId: TTokenId }) => (
-    <img
-        src={SBTImage[tokenId]}
-        alt={tokenId.toString()}
-        width='100%'
-        style={{ cursor: 'pointer' }}
-    />
+const SBTItemImage = ({ tokenId, isWear }: { tokenId: TTokenId; isWear: boolean }) => (
+    <span className='sbt-img-box'>
+        <img
+            src={SBTImage[tokenId]}
+            alt={tokenId.toString()}
+            width='100%'
+            style={{ cursor: 'pointer' }}
+        />
+        {isWear ? <img className='icon-worn' src={IconWorn} alt='worn' /> : null}
+    </span>
 );
 
 const ModalSBT = forwardRef(
@@ -215,7 +219,7 @@ const SBTGroup = () => {
                                     handleClick(wordsSbt);
                                 }}
                             >
-                                <SBTItemImage tokenId={wordsSbt} />
+                                <SBTItemImage tokenId={wordsSbt} isWear={isWear(wordsSbt)} />
                             </Col>
                         ))}
                 </Row>
@@ -235,7 +239,7 @@ const SBTGroup = () => {
                             }}
                             style={isHave(tokenId) ? {} : { filter: 'grayscale(100%)' }}
                         >
-                            <SBTItemImage tokenId={tokenId} />
+                            <SBTItemImage tokenId={tokenId} isWear={isWear(tokenId)} />
                         </Col>
                     ))}
                 </Row>

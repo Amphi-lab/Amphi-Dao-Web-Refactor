@@ -21,7 +21,7 @@ import ArrowDown from '@/assets/svg/arrow-down-solid.svg';
 import { message } from 'antd';
 import styles from './index.module.scss';
 
-const testChain: Chain = {
+/* const mumbaiChain: Chain = {
     id: 80001,
     name: 'Mumbai',
     network: 'Mumbai',
@@ -44,10 +44,34 @@ const testChain: Chain = {
         default: { name: 'SnowTrace', url: 'https://mumbai.polygonscan.com/' }
     },
     testnet: true
+}; */
+const moonbeamChain: Chain = {
+    id: 1287,
+    name: 'Moonbase Alpha',
+    network: 'Moonbase Alpha',
+    // iconUrl: 'https://example.com/icon.svg',
+    // iconBackground: '#fff',
+    nativeCurrency: {
+        name: 'GLMR',
+        symbol: 'GLMR',
+        decimals: 18
+    },
+    rpcUrls: {
+        default: {
+            http: ['https://rpc.api.moonbase.moonbeam.network']
+        },
+        public: {
+            http: ['https://rpc.api.moonbase.moonbeam.network']
+        }
+    },
+    blockExplorers: {
+        default: { name: 'SnowTrace', url: 'https://moonbase.moonscan.io/' }
+    },
+    testnet: true
 };
 
 const { chains, publicClient } = configureChains(
-    [testChain],
+    [moonbeamChain],
     [
         jsonRpcProvider({
             rpc: chain => ({ http: chain.rpcUrls.default.http[0] })

@@ -5,7 +5,7 @@ export default interface IOrder {
     bounty: number;
     buyerAddress: string;
     // 翻译者信息， 当translationState != 0 时会有这个返回值
-    translator: {
+    translator?: {
         username: string;
         address: string;
         profile: string; // 头像

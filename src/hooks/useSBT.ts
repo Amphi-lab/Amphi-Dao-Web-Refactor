@@ -28,18 +28,27 @@ const useSBT = () => {
     // 插槽列表
     const [slotList, setSlotList] = useState<ISlotItem[]>([]);
 
+    const getLoginStatus = useCallback(() => {
+        const token = storage.getLocalStorage(AMPHI_USERTOKEN);
+        console.log('---------token---------', token);
+        if (token) setIsLogin(true);
+        else setIsLogin(false);
+    }, []);
+
     useEffect(() => {
-        let token;
-        let timer;
+        let timer: any;
         if (address) {
+            getLoginStatus();
             timer = setInterval(() => {
-                token = storage.getLocalStorage(AMPHI_USERTOKEN);
-                if (token) setIsLogin(true);
-                else setIsLogin(false);
+                getLoginStatus();
             }, 3000);
         }
-        return clearInterval(timer);
-    }, [address]);
+        if (isLogin && address) clearInterval(timer);
+        return () => {
+            clearInterval(timer);
+            timer = null;
+        };
+    }, [isLogin, address, getLoginStatus]);
 
     const fetchData = useCallback(async () => {
         if (address) {

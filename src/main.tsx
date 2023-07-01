@@ -9,25 +9,22 @@ import '@/styles/reset.css';
 import '@/styles/global.scss';
 import store from '@/store';
 import { ThemeProvider } from '@/context/ThemeProvider';
-import { NoticeProvider } from '@/context/NoticeProvider';
 import { wagmiConfig as config, chains } from '@/components/ConnectWallet';
 import App from './App';
 import '@/i18n';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    // <React.StrictMode>
-    <Provider store={store}>
-        <WagmiConfig config={config}>
-            <RainbowKitProvider chains={chains}>
-                <ThemeProvider>
-                    <Router>
-                        <NoticeProvider>
+    <React.StrictMode>
+        <Provider store={store}>
+            <WagmiConfig config={config}>
+                <RainbowKitProvider chains={chains}>
+                    <ThemeProvider>
+                        <Router>
                             <App />
-                        </NoticeProvider>
-                    </Router>
-                </ThemeProvider>
-            </RainbowKitProvider>
-        </WagmiConfig>
-    </Provider>
-    // </React.StrictMode>
+                        </Router>
+                    </ThemeProvider>
+                </RainbowKitProvider>
+            </WagmiConfig>
+        </Provider>
+    </React.StrictMode>
 );

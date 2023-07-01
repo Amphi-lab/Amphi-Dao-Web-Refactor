@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Jazzicon from 'react-jazzicon';
-import { Form, Select, Table, Space, Button, Tooltip, Badge } from 'antd';
+import { Form, Select, Table, Space, Button, Tooltip, Badge, Avatar } from 'antd';
 import { SwitcherOutlined, EyeOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import * as dayjs from 'dayjs';
@@ -21,14 +21,14 @@ const { Option } = Select;
 const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
 const languagesOptions = optionsMap(languages);
 
-const ActionCom = ({ status }: any) => {
+const ActionCom = ({ status, id }: any) => {
     const navigate = useNavigate();
     return (
         <Space
             size='small'
             wrap
             onClick={() => {
-                navigate('/orderDetail');
+                navigate(`/orderDetail/${id}`);
             }}
         >
             <Button type='link' size='small' icon={<EyeOutlined />}>
@@ -69,6 +69,10 @@ const columns: ColumnsType<IOrder> = [
         render: (value, record) => {
             const status = record.translationState?.toString();
             const count = record?.params?.count;
+            const username = record?.translator?.username;
+            const address = record?.translator?.address;
+            const profile = record?.translator?.profile;
+            const wordsSbt = record?.translator?.badgeSlot?.wordsSbt;
 
             if (ORDER_STATUS_CODE.PENDING.includes(status))
                 return count === 0 ? (
@@ -83,12 +87,16 @@ const columns: ColumnsType<IOrder> = [
                 return (
                     <div className='translator-cell'>
                         <div className='address-head-tips'>
-                            <Jazzicon diameter={22} seed={value} />
+                            {profile ? (
+                                <Avatar src={profile} size={22} />
+                            ) : (
+                                <Jazzicon diameter={22} seed={value} />
+                            )}
                             <span className='address'>
-                                {getSubStr('0xd969b56c02eF46017ec44b9Ab1a34ebE3113174d')}
+                                {username || (address ? getSubStr(address) : '')}
                             </span>
                         </div>
-                        <SBTTag image={SBTImage[3]} />
+                        {wordsSbt && <SBTTag image={SBTImage[wordsSbt]} />}
                     </div>
                 );
             if (ORDER_STATUS_CODE.CANCELLED.includes(status))
@@ -145,7 +153,8 @@ const columns: ColumnsType<IOrder> = [
         width: 120,
         render: (_, record) => {
             const status = record.translationState?.toString();
-            return <ActionCom status={status} />;
+            const { id } = record;
+            return <ActionCom status={status} id={id} />;
         }
     }
 ];
@@ -175,7 +184,7 @@ export default ({ tabName, status }: { tabName: string; status?: string }) => {
 
     const getOptions = useCallback(() => {
         const { translationTypeArray, createTime } = form.getFieldsValue();
-        const options: any = { translationState: status, buyerAddress: address };
+        const options: any = { translationStateArray: status?.split(','), buyerAddress: address };
         if (translationTypeArray.length > 0) {
             options.translationTypeArray = translationTypeArray.join();
         }

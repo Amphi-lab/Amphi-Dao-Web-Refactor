@@ -95,7 +95,12 @@ export default () => {
                     </Form.Item>
                     {/* Background Image */}
                     <Form.Item name='backgroundUrl' label='Background Image'>
-                        <UploadImage form={form} formField='backgroundUrl' shape='shape' />
+                        <UploadImage
+                            form={form}
+                            formField='backgroundUrl'
+                            shape='shape'
+                            desc='Recommended 1440px x 300px Max Size: 50MB'
+                        />
                     </Form.Item>
                     <Form.Item
                         name='username'
@@ -112,7 +117,7 @@ export default () => {
                         label='Email Address'
                         rules={[
                             { required: true, message: 'Please input email' },
-                            { type: 'email' }
+                            { type: 'email', message: 'Email Address is not valid email.' }
                         ]}
                     >
                         <Input placeholder='Enter email' />

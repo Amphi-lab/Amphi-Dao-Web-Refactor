@@ -68,7 +68,8 @@ export default ({ form, userId }: { form: FormInstance; userId: number }) => {
         <>
             <Space wrap>
                 {languageList.map(({ language, certification }, index) => (
-                    <Space key={language}>
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Space key={`${language}-${index}`}>
                         <Space.Compact block className='language-select-box'>
                             <p className='label language-label'>Languages：</p>
                             <Select

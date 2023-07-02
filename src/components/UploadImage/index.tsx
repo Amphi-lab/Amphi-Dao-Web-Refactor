@@ -31,8 +31,9 @@ interface IProps {
     shape?: 'circle' | 'shape';
     size?: number;
     maxCount?: number;
+    desc?: string;
 }
-export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1 }: IProps) => {
+export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1, desc }: IProps) => {
     const [fileList, setFileList] = useState<any[]>([]);
     const imgUrl = form.getFieldValue(formField);
     useEffect(() => {
@@ -116,7 +117,7 @@ export default ({ form, formField, shape = 'circle', size = 80, maxCount = 1 }: 
                 </Upload>
                 {/* <p>Image files only, within 50M</p> */}
                 <p className='color-text-desc'>
-                    Image files only, Recommended 350px x 350px, Max Size: 50MB
+                    {desc || 'Image files only, Recommended 350px x 350px, Max Size: 50MB'}
                 </p>
             </Space>
         </Space>

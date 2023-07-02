@@ -12,6 +12,8 @@ import IconCopy from '@/assets/svg/icon-copy.svg';
 import IconFacebook from '@/assets/svg/icon-facebook.svg';
 import IconTwitter from '@/assets/svg/icon-twitter.svg';
 import IconWorn from '@/assets/svg/icon-worn.svg';
+import { useSearchParams } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 
 const SBTItemImage = ({ tokenId, isWear }: { tokenId: TTokenId; isWear: boolean }) => (
     <span className='sbt-img-box'>
@@ -31,17 +33,26 @@ const ModalSBT = forwardRef(
             tokenId,
             workload,
             isHave,
-            isWear
-        }: Pick<ITokenURI, 'tokenId' | 'workload'> & { isHave: boolean; isWear: boolean },
+            isWear,
+            isCurrentAddress,
+            handleWear,
+            handleTakeOffBadge
+        }: Pick<ITokenURI, 'tokenId' | 'workload'> & {
+            isHave: boolean;
+            isWear: boolean;
+            isCurrentAddress: boolean;
+            handleWear: any;
+            handleTakeOffBadge: any;
+        },
         ref
     ) => {
         const clipboard = useClipboard();
         const [loading, setLoading] = useState(false);
-        const { handleWear, handleTakeOffBadge } = useSBT();
         const [isModalOpen, setIsModalOpen] = useState(false);
         const handleCancel = useCallback(() => {
             setIsModalOpen(false);
         }, []);
+
         const handleOk = async () => {
             try {
                 setLoading(true);
@@ -96,7 +107,9 @@ const ModalSBT = forwardRef(
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                okButtonProps={{ style: isHave ? {} : { display: 'none' } }}
+                okButtonProps={{
+                    style: isCurrentAddress && isHave ? {} : { display: 'none' }
+                }}
                 okText={isWear ? 'Unwear' : 'Wear'}
                 confirmLoading={loading}
                 cancelText='Close'
@@ -166,8 +179,18 @@ const ModalSBT = forwardRef(
     }
 );
 
-const SBTGroup = () => {
-    const { slotList, ownedList, getSBTInfo } = useSBT();
+export default () => {
+    const [search] = useSearchParams();
+    const { address } = useAccount();
+    const {
+        loading,
+        slotList,
+        ownedList,
+        isCurrentAddress,
+        getSBTInfo,
+        handleWear,
+        handleTakeOffBadge
+    } = useSBT((search.get('address') || address) as string);
     const [clickTokenId, setClickTokenId] = useState<TTokenId>();
     const [workload, setWorkload] = useState<string>('');
     const modalRef = createRef<any>();
@@ -192,19 +215,22 @@ const SBTGroup = () => {
         // if (!isHave(tokenId)) return;
         setClickTokenId(tokenId);
         getSBTInfo(tokenId).then((res: ITokenURI) => {
-            setWorkload(res.workload);
+            setWorkload(res?.workload);
         });
         modalRef.current.setIsModalOpen(true);
     };
 
     return (
-        <>
+        <Spin spinning={loading}>
             <ModalSBT
                 ref={modalRef}
-                tokenId={clickTokenId}
+                tokenId={clickTokenId as number}
                 workload={workload}
-                isHave={isHave(clickTokenId)}
-                isWear={isWear(clickTokenId)}
+                isHave={isHave(clickTokenId as number)}
+                isWear={isWear(clickTokenId as number)}
+                isCurrentAddress={isCurrentAddress}
+                handleWear={handleWear}
+                handleTakeOffBadge={handleTakeOffBadge}
             />
             <div className='sbt-group-item'>
                 <p className='sbt-title'>My Badges</p>
@@ -253,16 +279,6 @@ const SBTGroup = () => {
                     ))}
                 </Row>
             </div>
-        </>
-    );
-};
-
-export default () => {
-    const { loading } = useSBT();
-
-    return (
-        <Spin spinning={loading}>
-            <SBTGroup />
         </Spin>
     );
 };

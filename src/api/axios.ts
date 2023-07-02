@@ -1,6 +1,6 @@
+import { message } from 'antd';
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 import storage from '@/utils/storage';
-import { message } from 'antd';
 import axios from 'axios';
 
 axios.defaults.timeout = 100000;
@@ -16,7 +16,7 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.interceptors.request.use(
     config => {
         const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
-        if (config.url === '/nonce') return config;
+        if (config.url === '/nonce' || config.url === '/file/createGetUrl') return config;
         config.data = JSON.stringify(config.data);
         config.headers.set('Content-Type', 'application/json');
         config.headers.set('token', `${accessToken}`);
@@ -137,7 +137,7 @@ export const post = (url: string, data: any) =>
         axios
             .post(url, data)
             .then(res => {
-                console.log('put axios', res);
+                // console.log('put axios', res);
                 // 关闭进度条
                 resolve(res?.data);
             })

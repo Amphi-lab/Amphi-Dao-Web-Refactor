@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, message } from 'antd';
 import copyIcon from '@/assets/svg/icon-copy.svg';
 import { useLocation } from 'react-router-dom';
 import api from '@/api';
+import { currentLanguages } from '@/constants/selcet.json';
+import { optionsMap } from '@/utils/array';
+import { useClipboard } from 'use-clipboard-copy';
 
 /* {
     "createTime": "2023-07-01 19:01:11",
@@ -55,6 +58,7 @@ import api from '@/api';
   } */
 
 const OrderDes = () => {
+    const clipboard = useClipboard();
     const location = useLocation();
     const id = location.state || +location.pathname.split('/')[2];
     const [details, setDetails] = useState({});
@@ -72,9 +76,43 @@ const OrderDes = () => {
         });
     }, [id]);
 
+    // 文件下载
+    const handleDownlodaFile = (e: any, path: string) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('path', path);
+        api.getFileDownloadPath(formData).then((res: any) => {
+            if (res.code === 200) {
+                window.open(res.data.url, '_blank');
+            }
+        });
+    };
+
+    // 文件列表
+    const fileEls = details.translationFiles?.map((file: any) => {
+        return (
+            <a
+                key={file.id}
+                href='#'
+                style={{ cursor: 'pointer' }}
+                onClick={e => handleDownlodaFile(e, file.filePath)}
+            >
+                {file.fileName}
+            </a>
+        );
+    });
+
+    // copy NO.
+    const hanldeCopyNumber = (number: any) => {
+        clipboard.copy(number.toString());
+        message.success('Copyed that!');
+    };
+
     return (
         <Descriptions layout='vertical'>
-            <Descriptions.Item label='Language'>{`From ${details?.sourceLang} to ${details?.targetLang}`}</Descriptions.Item>
+            <Descriptions.Item label='Language'>{`From ${optionsMap(currentLanguages).get(
+                details?.sourceLang
+            )} to ${optionsMap(currentLanguages).get(details?.targetLang)}`}</Descriptions.Item>
             <Descriptions.Item label='Workload'>{details?.workload} words</Descriptions.Item>
             <Descriptions.Item label='Your upcoming payment'>
                 {details?.humanBounty}USTD
@@ -83,15 +121,14 @@ const OrderDes = () => {
             <Descriptions.Item label='Deadline'>{details?.deadline}</Descriptions.Item>
             <Descriptions.Item label='Order number'>
                 <span>No.{details?.translationIndex}</span>
-                <img src={copyIcon} alt='' />
+                <img
+                    src={copyIcon}
+                    style={{ cursor: 'pointer', verticalAlign: 'middle', marginLeft: '5px' }}
+                    alt=''
+                    onClick={() => hanldeCopyNumber(details?.translationIndex)}
+                />
             </Descriptions.Item>
-            <Descriptions.Item label='Content to translate'>
-                {details?.translationFiles?.map(file => (
-                    <a href={file.filePath} key={file.id}>
-                        {file.fileName}
-                    </a>
-                ))}
-            </Descriptions.Item>
+            <Descriptions.Item label='Content to translate'>{fileEls}</Descriptions.Item>
             <Descriptions.Item label='Instructions for Translator' span={2}>
                 {details?.instruction}
             </Descriptions.Item>

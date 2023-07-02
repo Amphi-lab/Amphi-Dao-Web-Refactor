@@ -20,11 +20,11 @@ import IconShare from '@/assets/svg/icon-share.svg';
 import IconDiscord from '@/assets/svg/icon-discord.svg';
 import IconEmail from '@/assets/svg/icon-email.svg';
 import SBTTag from '@/components/SBTTag';
-import './index.scss';
 import ProjectList from '@/pageComponents/portfolio/ProjectList';
 import NFTList from '@/pageComponents/portfolio/NFTList';
 import BadgeList from '@/pageComponents/portfolio/BadgeList';
 import useSBT from '@/hooks/useSBT';
+import './index.scss';
 
 const socialMediaMap = optionsMap(socialMedia);
 
@@ -52,7 +52,15 @@ export default () => {
     const [userInfo, setUserInfo] = useState<any>({});
     const [completedNum, setCompletedNum] = useState<number | undefined>(undefined);
     const [copyLink, setCopyLink] = useState(location.href);
-    const { slotList } = useSBT();
+    const {
+        loading: sbtLoading,
+        slotList,
+        ownedList,
+        isCurrentAddress,
+        getSBTInfo,
+        handleWear,
+        handleTakeOffBadge
+    } = useSBT((searchAddress || address) as string);
     // setCompletedNum(res.data.total)
     // const { username, avatar, backgroundUrl, industry, workLangs, socialMediaList } = userInfo;
 
@@ -221,7 +229,17 @@ export default () => {
                         {
                             key: '3',
                             label: `Badge`,
-                            children: <BadgeList />
+                            children: (
+                                <BadgeList
+                                    loading={sbtLoading}
+                                    slotList={slotList}
+                                    ownedList={ownedList}
+                                    isCurrentAddress={isCurrentAddress}
+                                    getSBTInfo={getSBTInfo}
+                                    handleWear={handleWear}
+                                    handleTakeOffBadge={handleTakeOffBadge}
+                                />
+                            )
                         }
                     ]}
                 />

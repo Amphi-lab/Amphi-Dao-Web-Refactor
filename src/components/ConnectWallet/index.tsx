@@ -2,7 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useRef, useState } from 'react';
-// import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import { metaMaskWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets';
@@ -18,8 +18,24 @@ import storage from '@/utils/storage';
 import * as storageKeys from '@/constants/storageKeys';
 import DefaultAvatar from '@/assets/svg/default-avatar.svg';
 import ArrowDown from '@/assets/svg/arrow-down-solid.svg';
-import { message } from 'antd';
+import type { MenuProps } from 'antd';
+import { message, Dropdown } from 'antd';
 import styles from './index.module.scss';
+
+const items: any = [
+    {
+        key: '/preferences',
+        // label: <a href='/preferences'>Preference</a>
+        label: 'Preference',
+        path: '/preferences'
+    },
+    {
+        key: '/portfolio',
+        // label: <a href='/portfolio'>Portfolio</a>
+        label: 'Portfolio',
+        path: '/portfolio'
+    }
+];
 
 /* const mumbaiChain: Chain = {
     id: 80001,
@@ -104,7 +120,18 @@ const ConnectWallet = () => {
     const { address, isConnected, isDisconnected } = useAccount();
     const addressInfo = useRef({ address });
     const { disconnect } = useDisconnect();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+
+    const handleMenuClick: MenuProps['onClick'] = e => {
+        // message.info('Click on menu item.');
+        // console.log('click', e);
+        navigate(e.key);
+    };
+
+    const menuProps = {
+        items,
+        onClick: handleMenuClick
+    };
 
     // 获取Nonce
     const getNonce = async () => {
@@ -295,20 +322,28 @@ const ConnectWallet = () => {
                             }
 
                             return (
-                                <div style={{ display: 'flex' }}>
-                                    <img src={account.ensAvatar || DefaultAvatar} alt='avatar' />
-                                    <button
-                                        onClick={openAccountModal}
-                                        type='button'
-                                        className={styles['connected-btn']}
-                                    >
-                                        {account.displayName}
-                                        {account.displayBalance
-                                            ? ` (${account.displayBalance})`
-                                            : ''}
-                                    </button>
-                                    <img src={ArrowDown} alt='' />
-                                </div>
+                                <Dropdown
+                                    menu={menuProps}
+                                    overlayClassName={styles['home-person-menu']}
+                                >
+                                    <div style={{ display: 'flex' }}>
+                                        <img
+                                            src={account.ensAvatar || DefaultAvatar}
+                                            alt='avatar'
+                                        />
+                                        <button
+                                            onClick={openAccountModal}
+                                            type='button'
+                                            className={styles['connected-btn']}
+                                        >
+                                            {account.displayName}
+                                            {account.displayBalance
+                                                ? ` (${account.displayBalance})`
+                                                : ''}
+                                        </button>
+                                        <img src={ArrowDown} alt='' />
+                                    </div>
+                                </Dropdown>
                             );
                         })()}
                     </div>

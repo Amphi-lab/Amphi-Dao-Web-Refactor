@@ -3,7 +3,7 @@ import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 
 interface IProps {
-    headName: string;
+    headName?: string;
     items: MenuProps['items'][];
 }
 

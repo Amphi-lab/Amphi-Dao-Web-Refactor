@@ -57,25 +57,10 @@ import api from '@/api';
 const OrderDes = () => {
     const location = useLocation();
     const id = location.state || +location.pathname.split('/')[2];
-    const [details, setDetails] = useState(null);
-
-    // const getOrderDetail = async () => {
-    //     api.getOrderDetail(id).then((res: any) => {
-    //         // console.log(res);
-    //         if (res?.code === 200 && res?.data) {
-    //             setDetails(prev => {
-    //                 return {
-    //                     prev,
-    //                     ...res?.data
-    //                 };
-    //             });
-    //         }
-    //     });
-    // };
+    const [details, setDetails] = useState({});
 
     useEffect(() => {
         api.getOrderDetail(id).then((res: any) => {
-            // console.log(res);
             if (res?.code === 200 && res?.data) {
                 setDetails(prev => {
                     return {
@@ -86,8 +71,6 @@ const OrderDes = () => {
             }
         });
     }, [id]);
-
-    // getOrderDetail();
 
     return (
         <Descriptions layout='vertical'>

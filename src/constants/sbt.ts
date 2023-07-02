@@ -1,5 +1,5 @@
-import SBT0x2387127478b13c312a4 from '@/assets/images/sbt/1.png';
-import SBT0x89078c9078a80878097b80998d087 from '@/assets/images/sbt/2.png';
+import SBT1 from '@/assets/images/sbt/1.png';
+import SBT2 from '@/assets/images/sbt/2.png';
 import SBT3 from '@/assets/images/sbt/3.png';
 import SBT4 from '@/assets/images/sbt/4.png';
 import SBT5 from '@/assets/images/sbt/5.png';
@@ -18,8 +18,8 @@ interface IProps {
     [key: string]: any;
 }
 const SBTImage: IProps = {
-    '1': SBT0x2387127478b13c312a4,
-    '2': SBT0x89078c9078a80878097b80998d087,
+    '1': SBT1,
+    '2': SBT2,
     '3': SBT3,
     '4': SBT4,
     '5': SBT5,

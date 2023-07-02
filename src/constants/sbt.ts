@@ -18,8 +18,8 @@ interface IProps {
     [key: string]: any;
 }
 const SBTImage: IProps = {
-    '0x2387127478b13c312a4': SBT0x2387127478b13c312a4,
-    '0x89078c9078a80878097b80998d087': SBT0x89078c9078a80878097b80998d087,
+    '1': SBT0x2387127478b13c312a4,
+    '2': SBT0x89078c9078a80878097b80998d087,
     '3': SBT3,
     '4': SBT4,
     '5': SBT5,

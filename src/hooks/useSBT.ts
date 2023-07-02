@@ -13,7 +13,7 @@ import { getSBTContract } from '@/contracts/contract';
 import storage from '@/utils/storage';
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 
-const useSBT = (paramAddress: string) => {
+const useSBT = (paramAddress?: string) => {
     const { address: userAddress } = useAccount();
     const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(false);

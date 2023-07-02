@@ -3,7 +3,6 @@ import { Spin, Row, Col, Space, Modal, Descriptions, Avatar, message } from 'ant
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useClipboard } from 'use-clipboard-copy';
 import type { TTokenId, ISlotItem, ITokenURI } from '@/types/ISBT';
-import useSBT from '@/hooks/useSBT';
 // utils
 import { getSubStr } from '@/utils/string';
 // images
@@ -12,8 +11,6 @@ import IconCopy from '@/assets/svg/icon-copy.svg';
 import IconFacebook from '@/assets/svg/icon-facebook.svg';
 import IconTwitter from '@/assets/svg/icon-twitter.svg';
 import IconWorn from '@/assets/svg/icon-worn.svg';
-import { useSearchParams } from 'react-router-dom';
-import { useAccount } from 'wagmi';
 
 const SBTItemImage = ({ tokenId, isWear }: { tokenId: TTokenId; isWear: boolean }) => (
     <span className='sbt-img-box'>
@@ -179,18 +176,15 @@ const ModalSBT = forwardRef(
     }
 );
 
-export default () => {
-    const [search] = useSearchParams();
-    const { address } = useAccount();
-    const {
-        loading,
-        slotList,
-        ownedList,
-        isCurrentAddress,
-        getSBTInfo,
-        handleWear,
-        handleTakeOffBadge
-    } = useSBT((search.get('address') || address) as string);
+export default ({
+    loading,
+    slotList,
+    ownedList,
+    isCurrentAddress,
+    getSBTInfo,
+    handleWear,
+    handleTakeOffBadge
+}: any) => {
     const [clickTokenId, setClickTokenId] = useState<TTokenId>();
     const [workload, setWorkload] = useState<string>('');
     const modalRef = createRef<any>();

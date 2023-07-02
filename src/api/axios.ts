@@ -30,9 +30,8 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
     response => {
-        if (response.status === 403) {
-            // eslint-disable-next-line no-console
-            console.log('Login Information Expired, Please Log In Again');
+        if (response.data?.status === 500 && response.data?.message?.includes('JWT')) {
+            message.warning('Please Login');
         }
         return response;
     },
@@ -45,6 +44,7 @@ axios.interceptors.response.use(
 // 失败提示
 function errorMsg(err: any) {
     if (err && err.response) {
+        console.log(err.response);
         switch (err.response.status) {
             case 400:
                 // eslint-disable-next-line no-alert
@@ -73,7 +73,8 @@ function errorMsg(err: any) {
             case 500:
                 // eslint-disable-next-line no-alert
                 // alert('服务器内部错误');
-                message.error('服务器内部错误');
+                // message.error('服务器内部错误');
+
                 break;
 
             case 501:
@@ -136,6 +137,7 @@ export const post = (url: string, data: any) =>
         axios
             .post(url, data)
             .then(res => {
+                console.log('put axios', res);
                 // 关闭进度条
                 resolve(res?.data);
             })

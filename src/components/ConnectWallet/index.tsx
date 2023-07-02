@@ -100,7 +100,7 @@ const connectors = connectorsForWallets([
         groupName: 'Recommended',
         wallets: [
             injectedWallet({ chains }),
-            metaMaskWallet({ chains, projectId: '', shimDisconnect: true })
+            metaMaskWallet({ chains, projectId: '2072a5454eeabccffc2fffda4c3c0b26', shimDisconnect: true })
         ]
     }
 ]);

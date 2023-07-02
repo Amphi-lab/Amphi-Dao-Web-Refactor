@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { Card, Col, Row, Spin } from 'antd';
@@ -12,7 +12,7 @@ interface INFTItemProps {
     image: any;
 }
 
-const NFTCard = ({ image, name }) => (
+const NFTCard = ({ image, name }: any) => (
     <Card
         hoverable
         cover={
@@ -31,9 +31,10 @@ const NFTCard = ({ image, name }) => (
 );
 export default () => {
     const [search] = useSearchParams();
-    const [loading, setLoading] = useState<boolean>(true);
-    const [list, setList] = useState<INFTItemProps[]>([]);
     const { address } = useAccount();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [pageError, setPageError] = useState<boolean>(false);
+    const [list, setList] = useState<INFTItemProps[]>([]);
     const searchAddress = search.get('address');
 
     /**
@@ -46,28 +47,35 @@ export default () => {
         setLoading(true);
         try {
             const amphiPass = await getAmphiPass();
-            const [baseURI, tokenIds] = await Promise.all([
+            await Promise.all([
                 amphiPass.methods.baseURI().call(),
                 amphiPass.methods.walletOfOwner(address).call()
-            ]);
-            // https://ipfs.io/ipfs/bafybeigdmc4m2zt6dllmzn6ovgvdtawlytmcopb5n5z72mmlozqqb74otm/
-            if (tokenIds.length === 0) {
-                setLoading(false);
-                setList([]);
-                return;
-            }
-            const ipfsHash = baseURI.replace('ipfs://', '').replace('/', '');
-            const uris = tokenIds.map((id: string) => `ipfsUris=${ipfsHash}/${id}.json`);
-            const res = await api.getIpfsJson({ uris });
-            setLoading(false);
-            if (res?.code === 200) {
-                const ipfsList = (res?.data || []).map((item: any) => ({
-                    ...item,
-                    image: item.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
-                }));
-                console.log('----ipfsList----', ipfsList);
-                setList(ipfsList);
-            }
+            ])
+                .then(async ([baseURI, tokenIds]) => {
+                    // https://ipfs.io/ipfs/bafybeigdmc4m2zt6dllmzn6ovgvdtawlytmcopb5n5z72mmlozqqb74otm/
+                    if (tokenIds.length === 0) {
+                        setLoading(false);
+                        setList([]);
+                        return;
+                    }
+                    const ipfsHash = baseURI.replace('ipfs://', '').replace('/', '');
+                    const uris = tokenIds.map((id: string) => `ipfsUris=${ipfsHash}/${id}.json`);
+                    const res = await api.getIpfsJson({ uris });
+                    setLoading(false);
+                    if (res?.code === 200) {
+                        const ipfsList = (res?.data || []).map((item: any) => ({
+                            ...item,
+                            image: item.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+                        }));
+                        console.log('----ipfsList----', ipfsList);
+                        setList(ipfsList);
+                    }
+                })
+                .catch(error => {
+                    setPageError(true);
+                    setLoading(false);
+                    console.log('nft error=====>', error);
+                });
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -92,7 +100,8 @@ export default () => {
                             ))}
                     </Row>
                 ) : (
-                    <EmptyCom />
+                    // eslint-disable-next-line react/jsx-no-useless-fragment
+                    <>{pageError ? <EmptyCom text='Load Fail' /> : <EmptyCom />}</>
                 )}
             </Spin>
         </div>

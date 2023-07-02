@@ -140,7 +140,6 @@ const RequestForm = () => {
                         ]}
                     >
                         <AmSelect
-                            defaultValue={state?.sourceLang}
                             options={currentLanguages}
                             placeholder='please Select Translation From Language!'
                             onChange={handleSelectChange}
@@ -156,7 +155,6 @@ const RequestForm = () => {
                         ]}
                     >
                         <AmSelect
-                            defaultValue={state?.targetLang}
                             options={currentLanguages}
                             placeholder='please Select Translation To Language'
                             onChange={handleSelectChange}
@@ -172,7 +170,6 @@ const RequestForm = () => {
                         rules={[{ required: true, message: 'Please Select Service Type!' }]}
                     >
                         <AmSelect
-                            defaultValue={state?.translationType}
                             options={translationTypes}
                             placeholder='please select Service Type'
                             onChange={handleSelectChange}

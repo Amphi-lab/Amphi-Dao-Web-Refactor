@@ -44,7 +44,7 @@ export const getTotalWorkload = (fileList: [any]) => {
 };
  */
 
-export const selectMap = (value: string, maps: { value: string; label: string }[]) => {
+export const selectMap = (value: string | number, maps: { value: string; label: string }[]) => {
     let ans = '';
     maps.forEach(item => {
         if (item.value === value) {

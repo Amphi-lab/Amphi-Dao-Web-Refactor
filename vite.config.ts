@@ -32,22 +32,15 @@ export default ({ mode }) => {
                 }
             }
         },
-        // build: {
-        //     rollupOptions: {
-        //         plugins: [polyfillNode()],
-        //     }
-        // },
-        // optimizeDeps: {
-        //     exclude: ["events"],
-        // },
         build: {
-            chunkSizeWarningLimit: 3000,
+            chunkSizeWarningLimit: 2000,
             rollupOptions: {
                 output: {
-                    manualChunks: id => {
-                        if (/\/node_modules\/dayjs\/.*/.test(id)) {
-                            return 'dayjs';
-                        }
+                    manualChunks: {
+                        ant: ['antd'],
+                        antico: ['@ant-design/icons'],
+                        utils: ['dayjs'],
+                        rrr: ['react', 'react-dom', 'react-router-dom']
                     }
                 }
             }

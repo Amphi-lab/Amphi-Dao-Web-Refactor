@@ -3,7 +3,7 @@ import Jazzicon from 'react-jazzicon';
 import { Form, Select, Table, Space, Button, Tooltip, Badge, Avatar } from 'antd';
 import { SwitcherOutlined, EyeOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import type IOrder from '@/types/IOrder';
 import { serviceTypes, languages } from '@/constants/selcet.json';
 // components

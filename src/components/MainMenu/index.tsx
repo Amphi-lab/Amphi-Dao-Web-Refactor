@@ -12,35 +12,35 @@ const items: MenuProps['items'] = [
             {
                 label: 'Request Translation',
                 key: 'requestTranslation'
-            },
-            {
-                label: 'Translation',
-                key: 'translation'
-            },
-            {
-                label: 'Validation',
-                key: 'validation'
             }
+            // {
+            //     label: 'Translation',
+            //     key: 'translation'
+            // },
+            // {
+            //     label: 'Validation',
+            //     key: 'validation'
+            // }
         ]
     },
-    {
-        label: 'WORKSPACE',
-        key: 'workspace',
-        children: [
-            {
-                label: 'Dashboard',
-                key: 'dashboard'
-            },
-            {
-                label: 'Task List',
-                key: 'taskList'
-            },
-            {
-                label: 'Acceptance List',
-                key: 'acceptanceList'
-            }
-        ]
-    },
+    // {
+    //     label: 'WORKSPACE',
+    //     key: 'workspace',
+    //     children: [
+    //         {
+    //             label: 'Dashboard',
+    //             key: 'dashboard'
+    //         },
+    //         {
+    //             label: 'Task List',
+    //             key: 'taskList'
+    //         },
+    //         {
+    //             label: 'Acceptance List',
+    //             key: 'acceptanceList'
+    //         }
+    //     ]
+    // },
     {
         label: 'NFT',
         key: 'nft',
@@ -59,29 +59,29 @@ const items: MenuProps['items'] = [
                 // key:'https://testnets.opensea.io/zh-CN/collection/amphipass-2'
             }
         ]
-    },
-    {
-        label: 'LEARN',
-        key: 'learn',
-        children: [
-            {
-                label: (
-                    <a
-                        href='https://drive.google.com/file/d/1nfm84w4o458WKZ7wQU9omx5EnAtKplNw/view'
-                        target='_blank'
-                        rel='noreferrer'
-                    >
-                        Whitepaper
-                    </a>
-                ),
-                key: 'whitepaper'
-            },
-            {
-                label: 'FAQ',
-                key: 'faq'
-            }
-        ]
     }
+    // {
+    //     label: 'LEARN',
+    //     key: 'learn',
+    //     children: [
+    //         {
+    //             label: (
+    //                 <a
+    //                     href='https://drive.google.com/file/d/1nfm84w4o458WKZ7wQU9omx5EnAtKplNw/view'
+    //                     target='_blank'
+    //                     rel='noreferrer'
+    //                 >
+    //                     Whitepaper
+    //                 </a>
+    //             ),
+    //             key: 'whitepaper'
+    //         },
+    //         {
+    //             label: 'FAQ',
+    //             key: 'faq'
+    //         }
+    //     ]
+    // }
 ];
 
 const App: React.FC = () => {

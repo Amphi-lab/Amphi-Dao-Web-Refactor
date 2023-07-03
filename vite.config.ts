@@ -31,7 +31,7 @@ export default ({ mode }) => {
                     additionalData: '@use "@/styles/common.scss" as *;'
                 }
             }
-        }
+        },
         // build: {
         //     rollupOptions: {
         //         plugins: [polyfillNode()],
@@ -40,5 +40,17 @@ export default ({ mode }) => {
         // optimizeDeps: {
         //     exclude: ["events"],
         // },
+        build: {
+            chunkSizeWarningLimit: 3000,
+            rollupOptions: {
+                output: {
+                    manualChunks: id => {
+                        if (/\/node_modules\/dayjs\/.*/.test(id)) {
+                            return 'dayjs';
+                        }
+                    }
+                }
+            }
+        }
     });
 };

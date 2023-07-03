@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "vite",
+        "build:test": "vite build --mode staging",
         "build": "vite build",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx ",
         "prettier": "prettier -c --write src/**.{ts,tsx}",

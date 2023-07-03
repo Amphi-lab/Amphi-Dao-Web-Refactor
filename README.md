@@ -1,6 +1,6 @@
 # amphi-dao
 
-amphi dao for translate 
+amphi for translator 
 
 pnpm install
 

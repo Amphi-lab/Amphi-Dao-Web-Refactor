@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { useLocation, useRoutes } from 'react-router-dom';
+import { Spin } from 'antd';
 import Layouts from '@/components/Layouts';
 import { NoticeProvider } from '@/context/NoticeProvider';
 import routes from '~react-pages';
@@ -12,7 +13,21 @@ function App() {
     return (
         <NoticeProvider>
             <Layouts isShowBanner={location.pathname === '/'}>
-                <Suspense fallback={<p>Loading...</p>}>{useRoutes(routes)}</Suspense>
+                <Suspense
+                    fallback={
+                        <div
+                            style={{
+                                textAlign: 'center',
+                                paddingTop: '100px',
+                                paddingBottom: '100px'
+                            }}
+                        >
+                            <Spin />
+                        </div>
+                    }
+                >
+                    {useRoutes(routes)}
+                </Suspense>
             </Layouts>
         </NoticeProvider>
     );

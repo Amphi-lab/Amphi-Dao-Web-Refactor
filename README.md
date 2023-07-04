@@ -1,7 +1,5 @@
-# amphi-dao
-
-amphi dao for translate 
-amphi for translator 
+# Amphi
+Amphi for translator 
 
 # nginx install
 pnpm install

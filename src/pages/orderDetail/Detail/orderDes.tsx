@@ -7,7 +7,7 @@ import { currentLanguages } from '@/constants/selcet.json';
 import { optionsMap } from '@/utils/array';
 import { useClipboard } from 'use-clipboard-copy';
 import { useAppDispatch } from '@/store/hooks';
-import { getTranslationIndex } from '@/store/reducers/orderDetailSlice';
+import { getTranslationIndex, getTranslationState } from '@/store/reducers/orderDetailSlice';
 
 /* {
     "createTime": "2023-07-01 19:01:11",
@@ -70,6 +70,7 @@ const OrderDes = () => {
         api.getOrderDetail(id).then((res: any) => {
             if (res?.code === 200 && res?.data) {
                 dispatch(getTranslationIndex(res.data.translationIndex));
+                dispatch(getTranslationState(res.data.translationState));
                 setDetails(prev => {
                     return {
                         prev,

@@ -7,11 +7,15 @@ import type { RootState } from '../index';
 // 定义 slice state 的类型
 export interface requestTranState {
     translationIndex: number;
+    translationState: number;
+    currentStep: number;
 }
 
 // 使用该类型定义初始 state
 const initialState: requestTranState = {
-    translationIndex: 0
+    translationIndex: 0,
+    translationState: 0,
+    currentStep: 1
 };
 
 export const saveAsync = createAsyncThunk('requestTrans/saveTrans', async (data: {}) => {
@@ -29,6 +33,12 @@ export const counterSlice = createSlice({
     reducers: {
         getTranslationIndex: (state, action: PayloadAction<number>) => {
             state.translationIndex = action.payload;
+        },
+        getTranslationState: (state, action: PayloadAction<number>) => {
+            state.translationState = action.payload;
+        },
+        getCurrentStep: (state, action: PayloadAction<number>) => {
+            state.currentStep = action.payload;
         }
     }
     // extraReducers: builder => {
@@ -47,10 +57,12 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getTranslationIndex } = counterSlice.actions;
+export const { getTranslationIndex, getTranslationState, getCurrentStep } = counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const translationIndex = (state: RootState) => state.orderDetail.translationIndex;
+export const translationState = (state: RootState) => state.orderDetail.translationState;
+export const currentStep = (state: RootState) => state.orderDetail.currentStep;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =(amount: number): AppThunk =>

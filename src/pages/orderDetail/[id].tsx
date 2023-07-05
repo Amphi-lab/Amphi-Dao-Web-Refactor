@@ -19,7 +19,7 @@ const OrderDetail = () => {
             <TranCandidate />
             {step === 2 && <TranContent />}
             {step === 2 && <Notification />}
-            <ServiceRating />
+            {step === 3 && <ServiceRating />}
         </div>
     );
 };

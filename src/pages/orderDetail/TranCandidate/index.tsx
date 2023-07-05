@@ -93,7 +93,10 @@ const columns: ColumnsType<DataType> = [
     }
 ];
 // const data: DataType[] = [];
-
+const cardStyle = {
+    background: '#FFF',
+    padding: '16px 24px 24px'
+};
 const TranCandidate = () => {
     const transIndex = useAppSelector(translationIndex);
     const [tableData, setTableData] = useState<any>([]);
@@ -127,13 +130,13 @@ const TranCandidate = () => {
             }
         });
     };
-    console.log(tableData);
+    // console.log(tableData);
     useEffect(() => {
         getCandidateList();
     }, []);
 
     return (
-        <AmCard title='Translation candidate'>
+        <AmCard title='Translation candidate' cardStyle={cardStyle}>
             <AmTable columns={columns} data={tableData} defaultActiveKey='1' bordered />
         </AmCard>
     );

@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './index.module.scss';
 
 interface Iprops {
-    icon: any;
+    icon?: any;
     text: string;
     onClick?: () => void;
 }

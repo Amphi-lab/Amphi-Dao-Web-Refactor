@@ -1,35 +1,64 @@
-import React from 'react';
-import { SmileOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
 import { Timeline } from 'antd';
+import Dot from '@/components/Icon/Dot';
+import AmCard from '@/components/Card';
+import notifiIcon from '@/assets/svg/notification.svg';
+import api from '@/api';
 
-const Notification: React.FC = () => (
-    <Timeline
-        items={[
-            {
+const cardStyle = {
+    background: '#FFF',
+    padding: '16px 24px 24px'
+};
+
+const Notification = () => {
+    const [timelineItems, setTimelineItems] = useState<any>([]);
+
+    const hanldeTimelineData = (data: []) => {
+        return data.map((item: any) => {
+            return {
                 color: '#0049FF',
-                children: 'Create a services site 2015-09-01'
-            },
-            {
-                color: '#0049FF',
-                children: 'Create a services site 2015-09-01'
-            },
-            {
-                color: 'red',
+                dot: <Dot />,
                 children: (
-                    <>
-                        <p>Solve initial network problems 1</p>
-                        <p>Solve initial network problems 2</p>
-                        <p>Solve initial network problems 3 2015-09-01</p>
-                    </>
+                    <div>
+                        <div className='content'>
+                            <img
+                                src={notifiIcon}
+                                alt=''
+                                style={{
+                                    verticalAlign: 'middle',
+                                    marginRight: '8px'
+                                }}
+                            />
+                            <span>{item.content}</span>
+                        </div>
+                        <p className='time'>{item.createTime}</p>
+                    </div>
                 )
-            },
-            {
-                color: '#00CCFF',
-                dot: <SmileOutlined />,
-                children: <p>Custom color testing</p>
+            };
+        });
+    };
+
+    const getDiscussions = async () => {
+        const formData = new FormData();
+        formData.append('translationIndex', 1);
+
+        api.getDiscussions(formData).then((res: any) => {
+            console.log(res);
+            if (res.code === 200) {
+                setTimelineItems(hanldeTimelineData(res.rows));
             }
-        ]}
-    />
-);
+        });
+    };
+
+    useEffect(() => {
+        getDiscussions();
+    }, []);
+
+    return (
+        <AmCard title='Updates and Discussions' cardStyle={cardStyle}>
+            <Timeline items={timelineItems} />
+        </AmCard>
+    );
+};
 
 export default Notification;

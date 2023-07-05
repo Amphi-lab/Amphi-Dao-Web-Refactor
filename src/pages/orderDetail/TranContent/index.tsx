@@ -12,10 +12,6 @@ const cardStyle = {
     background: '#FFF',
     padding: '16px 24px 24px'
 };
-const titleStyle = {
-    marginBottom: '24px'
-};
-
 const TranContent = () => {
     const onChange = (key: string) => {
         console.log(key);
@@ -35,11 +31,15 @@ const TranContent = () => {
         {
             key: '2',
             label: `Human translation`,
-            children: <p>The translator is working hard to translate, please wait</p>
+            children: (
+                <p className={styles['sub-card-human-content']}>
+                    The translator is working hard to translate, please wait...
+                </p>
+            )
         }
     ];
     return (
-        <AmCard title='Translate Content' cardStyle={cardStyle} titleStyle={titleStyle}>
+        <AmCard title='Translate Content' cardStyle={cardStyle}>
             <div className={styles['trans-content-box']}>
                 <div className={styles['trans-content-sub-card']}>
                     <p className={styles['sub-card-title']}>Original Content</p>
@@ -49,6 +49,7 @@ const TranContent = () => {
                     </div>
                 </div>
                 <img src={lineIcon} alt='' className={styles['trans-content-line']} />
+
                 <div className={styles['trans-content-sub-card']}>
                     <Tabs defaultActiveKey='1' items={items} onChange={onChange} />
                 </div>

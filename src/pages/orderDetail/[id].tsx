@@ -7,6 +7,7 @@ import TranCandidate from './TranCandidate';
 import TranContent from './TranContent';
 import Notification from './Notification';
 import styles from './index.module.scss';
+import ServiceRating from './ServiceRating';
 // import routes from '~react-pages';
 
 const OrderDetail = () => {
@@ -18,6 +19,7 @@ const OrderDetail = () => {
             <TranCandidate />
             {step === 2 && <TranContent />}
             {step === 2 && <Notification />}
+            <ServiceRating />
         </div>
     );
 };

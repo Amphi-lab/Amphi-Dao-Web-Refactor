@@ -1,0 +1,4 @@
+.group-heading {
+  @include font($size: 14px, $weight: 600, $lineH: 22px);
+  margin-bottom: 16px;
+}

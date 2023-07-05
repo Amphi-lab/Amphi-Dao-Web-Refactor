@@ -4,6 +4,8 @@ import Dot from '@/components/Icon/Dot';
 import AmCard from '@/components/Card';
 import notifiIcon from '@/assets/svg/notification.svg';
 import api from '@/api';
+import { useAppSelector } from '@/store/hooks';
+import { translationIndex } from '@/store/reducers/orderDetailSlice';
 
 const cardStyle = {
     background: '#FFF',
@@ -11,6 +13,7 @@ const cardStyle = {
 };
 
 const Notification = () => {
+    const transIndex = useAppSelector(translationIndex);
     const [timelineItems, setTimelineItems] = useState<any>([]);
 
     const hanldeTimelineData = (data: []) => {
@@ -40,7 +43,7 @@ const Notification = () => {
 
     const getDiscussions = async () => {
         const formData = new FormData();
-        formData.append('translationIndex', 1);
+        formData.append('translationIndex', transIndex as any);
 
         api.getDiscussions(formData).then((res: any) => {
             console.log(res);

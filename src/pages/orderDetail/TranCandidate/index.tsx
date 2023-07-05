@@ -7,6 +7,8 @@ import { Space, Tooltip } from 'antd';
 import IconButton from '@/components/IconButton';
 import ViewIcon from '@/components/Icon/View';
 import PledgeIcon from '@/components/Icon/Pledge';
+import { useAppSelector } from '@/store/hooks';
+import { translationIndex } from '@/store/reducers/orderDetailSlice';
 import styles from './index.module.scss';
 
 interface DataType {
@@ -93,6 +95,7 @@ const columns: ColumnsType<DataType> = [
 // const data: DataType[] = [];
 
 const TranCandidate = () => {
+    const transIndex = useAppSelector(translationIndex);
     const [tableData, setTableData] = useState<any>([]);
     // const [totalNum, setTotalNum] = useState(0);
 
@@ -113,7 +116,7 @@ const TranCandidate = () => {
 
     const getCandidateList = async () => {
         const params = {
-            translationIndex: 1,
+            translationIndex: transIndex,
             pageNum: 1,
             pageSize: 10
         };

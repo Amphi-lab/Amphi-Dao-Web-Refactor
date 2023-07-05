@@ -2,12 +2,14 @@ import type { ThunkAction, Action } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './reducers/counterSlice';
 import requestTransReducer from './reducers/requestTransSlice';
+import orderDetailReducer from './reducers/orderDetailSlice';
 
 // configureStore创建一个redux数据
 const store = configureStore({
     reducer: {
         counter: counterReducer,
-        requestTrans: requestTransReducer
+        requestTrans: requestTransReducer,
+        orderDetail: orderDetailReducer
     },
     // 解决报错：serializableStateInvariantMiddleware.ts:234 A non-serializable value was detected in an action, in the path: `payload.0.lastModifiedDate`. Value: Mon Jun 26 2023 17:06:42 GMT+0800
     middleware: getDefaultMiddleware =>

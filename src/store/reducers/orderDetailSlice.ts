@@ -43,7 +43,6 @@ export const counterSlice = createSlice({
             state.currentStep = action.payload;
         },
         getTranslationFileList: (state, action: PayloadAction<[]>) => {
-            console.log('====action=====', action.payload);
             state.translationFileList = [...action.payload];
         }
     }

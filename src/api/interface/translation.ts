@@ -23,3 +23,18 @@ export const getCandidateList = (data: any) => get('/translator/applyingList', d
  * @return {*}
  */
 export const getDiscussions = (data: any) => get('/comment/list', data);
+
+/**
+ * @description:订单完成后评价
+ * @param {any} data:{
+    "translationIndex":"2", --订单号
+    "machine": 1, --机翻是否满意 0=不满意 1=满意
+    "overall":10,  
+    "professional":10,  
+    "timeliness":10, 
+    "attitude":10,
+    "comment":"testtttt" -- 输入的评价
+}
+ * @return {*}
+ */
+export const evalution = (data: any) => post('/evalution/save', data);

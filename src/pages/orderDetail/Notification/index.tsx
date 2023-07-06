@@ -55,7 +55,7 @@ const Notification = () => {
 
     useEffect(() => {
         getDiscussions();
-    });
+    }, []);
 
     return (
         <AmCard title='Updates and Discussions' cardStyle={cardStyle}>

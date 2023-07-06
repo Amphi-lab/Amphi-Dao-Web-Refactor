@@ -9,13 +9,15 @@ export interface requestTranState {
     translationIndex: number;
     translationState: number;
     currentStep: number;
+    translationFileList: [];
 }
 
 // 使用该类型定义初始 state
 const initialState: requestTranState = {
     translationIndex: 0,
     translationState: 0,
-    currentStep: 1
+    currentStep: 1,
+    translationFileList: []
 };
 
 export const saveAsync = createAsyncThunk('requestTrans/saveTrans', async (data: {}) => {
@@ -39,6 +41,10 @@ export const counterSlice = createSlice({
         },
         getCurrentStep: (state, action: PayloadAction<number>) => {
             state.currentStep = action.payload;
+        },
+        getTranslationFileList: (state, action: PayloadAction<[]>) => {
+            console.log('====action=====', action.payload);
+            state.translationFileList = [...action.payload];
         }
     }
     // extraReducers: builder => {
@@ -57,12 +63,14 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getTranslationIndex, getTranslationState, getCurrentStep } = counterSlice.actions;
+export const { getTranslationIndex, getTranslationState, getCurrentStep, getTranslationFileList } =
+    counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const translationIndex = (state: RootState) => state.orderDetail.translationIndex;
 export const translationState = (state: RootState) => state.orderDetail.translationState;
 export const currentStep = (state: RootState) => state.orderDetail.currentStep;
+export const translationFileList = (state: RootState) => state.orderDetail.translationFileList;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =(amount: number): AppThunk =>

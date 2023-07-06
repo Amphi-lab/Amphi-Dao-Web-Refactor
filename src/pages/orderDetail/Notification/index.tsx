@@ -46,7 +46,7 @@ const Notification = () => {
         formData.append('translationIndex', transIndex as any);
 
         api.getDiscussions(formData).then((res: any) => {
-            console.log(res);
+            // console.log(res);
             if (res.code === 200) {
                 setTimelineItems(hanldeTimelineData(res.rows));
             }
@@ -55,7 +55,7 @@ const Notification = () => {
 
     useEffect(() => {
         getDiscussions();
-    }, []);
+    });
 
     return (
         <AmCard title='Updates and Discussions' cardStyle={cardStyle}>

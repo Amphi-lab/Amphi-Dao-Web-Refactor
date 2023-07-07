@@ -10,7 +10,8 @@ import { useAppDispatch } from '@/store/hooks';
 import {
     getTranslationIndex,
     getTranslationState,
-    getTranslationFileList
+    getTranslationFileList,
+    getOrderDetailData
 } from '@/store/reducers/orderDetailSlice';
 
 /* {
@@ -76,6 +77,7 @@ const OrderDes = () => {
                 dispatch(getTranslationIndex(res.data.translationIndex));
                 dispatch(getTranslationState(res.data.translationState));
                 dispatch(getTranslationFileList(res.data.translationFiles));
+                dispatch(getOrderDetailData(res.data));
                 setDetails(prev => {
                     return {
                         prev,

@@ -32,8 +32,13 @@ const props: UploadProps = {
     }
 };
 
-const UploadFile: React.FC = ({ onChange }: UploadProps) => (
-    <Dragger {...props} onChange={onChange} className='amphi-file-upload'>
+const UploadFile: React.FC = ({ onChange, defaultFileList }: UploadProps) => (
+    <Dragger
+        {...props}
+        onChange={onChange}
+        defaultFileList={defaultFileList}
+        className='amphi-file-upload'
+    >
         <p className='ant-upload-drag-icon'>
             <img src={UploadFileIcon} alt='' />
         </p>

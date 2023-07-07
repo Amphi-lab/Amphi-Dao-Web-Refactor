@@ -17,6 +17,7 @@ export const getTimeZoneName = () => {
 };
 
 export const formatFileList = (fileList: [any]) => {
+    // console.log('formatFileList', fileList);
     return fileList?.map(file => {
         return {
             fileName: file?.name,
@@ -60,7 +61,7 @@ export const dateDiff = (
 ) => {
     const diff = dayjs(endTime).diff(dayjs(startTime), 'hour');
     let res = '';
-    if (diff <= 1) {
+    if (diff <= 1 && diff > 0) {
         res = `1 hour`;
     }
     if (diff > 1 && diff < 24) {

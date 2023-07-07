@@ -11,8 +11,9 @@ interface IProps {
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
     ) => void;
+    defaultValue: any;
 }
-const AmDateTimePiker = ({ placeholder, onChange }: IProps) => {
+const AmDateTimePiker = ({ placeholder, onChange, defaultValue }: IProps) => {
     // const onChange = (
     //     value: DatePickerProps['value'] | RangePickerProps['value'],
     //     dateString: [string, string] | string
@@ -47,6 +48,7 @@ const AmDateTimePiker = ({ placeholder, onChange }: IProps) => {
             autoFocus
             placeholder={placeholder}
             format='YYYY-MM-DD HH:mm:ss'
+            defaultValue={defaultValue}
             showTime={{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }}
             disabledDate={disabledDate}
             // disabledTime={disabledDateTime}

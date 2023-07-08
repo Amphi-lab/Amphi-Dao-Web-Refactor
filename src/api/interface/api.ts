@@ -22,6 +22,8 @@ export const ranking = ({ order }: { order: '1' | '2' }) =>
  * url: /translator/list    请求地址
  * @param {object} params    配置对象
  * @param {string} params.language   语言
+ * @param {string} params.orderByOrders   根据订单排序
+ * @param {string} params.orderByScore   根据评分排序
  * @param {number} params.pageNum    页码
  * @param {number} params.pageSize   每页多少条数据
  * @returns {Promise}

@@ -860,5 +860,15 @@
             "value": "127",
             "label": "Uzbek"
         }
+    ],
+    "sortBy": [
+        {
+            "value": "orderByOrders",
+            "label": "Orders"
+        },
+        {
+            "value": "orderByScore",
+            "label": "Score"
+        }
     ]
 }

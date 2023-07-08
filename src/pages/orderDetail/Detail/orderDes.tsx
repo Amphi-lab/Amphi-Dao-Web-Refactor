@@ -6,6 +6,13 @@ import api from '@/api';
 import { currentLanguages } from '@/constants/selcet.json';
 import { optionsMap } from '@/utils/array';
 import { useClipboard } from 'use-clipboard-copy';
+import { useAppDispatch } from '@/store/hooks';
+import {
+    getTranslationIndex,
+    getTranslationState,
+    getTranslationFileList,
+    getOrderDetailData
+} from '@/store/reducers/orderDetailSlice';
 
 /* {
     "createTime": "2023-07-01 19:01:11",
@@ -58,6 +65,7 @@ import { useClipboard } from 'use-clipboard-copy';
   } */
 
 const OrderDes = () => {
+    const dispatch = useAppDispatch();
     const clipboard = useClipboard();
     const location = useLocation();
     const id = location.state || +location.pathname.split('/')[2];
@@ -66,6 +74,10 @@ const OrderDes = () => {
     useEffect(() => {
         api.getOrderDetail(id).then((res: any) => {
             if (res?.code === 200 && res?.data) {
+                dispatch(getTranslationIndex(res.data.translationIndex));
+                dispatch(getTranslationState(res.data.translationState));
+                dispatch(getTranslationFileList(res.data.translationFiles));
+                dispatch(getOrderDetailData(res.data));
                 setDetails(prev => {
                     return {
                         prev,
@@ -74,7 +86,7 @@ const OrderDes = () => {
                 });
             }
         });
-    }, [id]);
+    }, [dispatch, id]);
 
     // 文件下载
     const handleDownlodaFile = (e: any, path: string) => {

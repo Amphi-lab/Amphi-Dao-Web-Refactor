@@ -28,6 +28,11 @@
     padding: 8px;
   }
 
+  .sub-card-human-content {
+    @include font($size: 14px, $color: #969aa0, $weight: 400, $lineH: 20px);
+    padding: 12px;
+  }
+
   .trans-content-line {
     margin: 0 16px;
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import type { DatePickerProps } from 'antd';
 import { Form, Input, Row, Col, message } from 'antd';
@@ -25,6 +25,8 @@ import {
     getBounty,
     amphiServiceCost
 } from '@/store/reducers/requestTransSlice';
+import { orderDetailData } from '@/store/reducers/orderDetailSlice';
+import dayjs from 'dayjs';
 import ConfirmOrder from '../ConfirmOrder';
 
 import styles from './index.module.scss';
@@ -33,7 +35,11 @@ const RequestForm = () => {
     const [form] = Form.useForm();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    // const location = useLocation();
+    // const id = location.state;
     const amServiceCost = useAppSelector(amphiServiceCost);
+    // const [formData, setFormData] = useState<any>({});
+    const formData = useAppSelector(orderDetailData);
 
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
@@ -85,6 +91,7 @@ const RequestForm = () => {
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
     ) => {
+        console.log(value, dateString);
         form.setFieldValue('deadline', dateString);
         dispatch(getDeadline(form.getFieldValue('deadline')));
     };
@@ -116,6 +123,33 @@ const RequestForm = () => {
         dispatch(getBounty(+e.target.value));
     };
 
+    useEffect(() => {
+        // api.getOrderDetail(id).then((res: any) => {
+        //     if (res?.code === 200 && res?.data) {
+        //         console.log('req trans====', res.data);
+        //         setFormData((prev: any) => {
+        //             return {
+        //                 prev,
+        //                 ...res?.data
+        //             };
+        //         });
+        //     }
+        // });
+        dispatch(
+            getTransLang({
+                from: formData?.sourceLang,
+                to: formData?.targetLang
+            })
+        );
+        dispatch(getServiceType(formData?.translationType));
+        dispatch(getDeadline(formData?.deadline) || '');
+
+        // console.log(formData?.deadline);
+        // dispatch(getWorkload(formData.translationFiles));
+    }, []);
+
+    // console.log(formData);
+
     return (
         <Form
             form={form}
@@ -140,6 +174,7 @@ const RequestForm = () => {
                         ]}
                     >
                         <AmSelect
+                            defaultValue={formData?.sourceLang}
                             options={currentLanguages}
                             placeholder='please Select Translation From Language!'
                             onChange={handleSelectChange}
@@ -155,6 +190,7 @@ const RequestForm = () => {
                         ]}
                     >
                         <AmSelect
+                            defaultValue={formData?.targetLang}
                             options={currentLanguages}
                             placeholder='please Select Translation To Language'
                             onChange={handleSelectChange}
@@ -170,6 +206,7 @@ const RequestForm = () => {
                         rules={[{ required: true, message: 'Please Select Service Type!' }]}
                     >
                         <AmSelect
+                            defaultValue={formData?.translationType}
                             options={translationTypes}
                             placeholder='please select Service Type'
                             onChange={handleSelectChange}
@@ -193,6 +230,7 @@ const RequestForm = () => {
                 ]}
             >
                 <Input
+                    defaultValue={formData?.title}
                     showCount
                     maxLength={20}
                     placeholder='please write a brief sentense about your project'
@@ -214,7 +252,14 @@ const RequestForm = () => {
                 ]}
                 tooltip='A maximum of 10 files can be uploaded'
             >
-                <UploadFile onChange={handleFileChange} />
+                <UploadFile
+                    onChange={handleFileChange}
+                    defaultFileList={formData?.translationFiles?.map((file: any) => {
+                        return {
+                            name: file.fileName
+                        };
+                    })}
+                />
             </Form.Item>
             <Form.Item
                 label={<span className={styles['label-title']}>Instructions for Translator</span>}
@@ -231,6 +276,7 @@ const RequestForm = () => {
                     allowClear
                     showCount
                     maxLength={1000}
+                    defaultValue={formData?.instruction}
                 />
             </Form.Item>
             <Form.Item
@@ -244,6 +290,7 @@ const RequestForm = () => {
                     <Col span={12}>
                         <Form.Item name='industry'>
                             <AmSelect
+                                defaultValue={formData?.industry}
                                 options={industry}
                                 placeholder='please select industry'
                                 onChange={handleSelectChange}
@@ -253,6 +300,7 @@ const RequestForm = () => {
                     <Col span={12}>
                         <Form.Item name='jobFunction'>
                             <AmSelect
+                                defaultValue={formData?.jobFunction}
                                 options={jobFunctions}
                                 placeholder='please select jobFunction'
                                 onChange={handleSelectChange}
@@ -275,6 +323,7 @@ const RequestForm = () => {
                         <AmDateTimePiker
                             placeholder='please select deadline'
                             onChange={hanldeDateChange}
+                            defaultValue={dayjs(formData?.deadline)}
                         />
                     </Col>
                     <Col span={12}>
@@ -303,6 +352,7 @@ const RequestForm = () => {
                         min={0}
                         placeholder='please enter bounty'
                         onChange={hanldeInputChange}
+                        defaultValue={formData?.bounty}
                     />
                 </Col>
             </Form.Item>
@@ -323,7 +373,12 @@ const RequestForm = () => {
                 ]}
             >
                 <Col span={12}>
-                    <Input type='email' placeholder='please enter email' allowClear />
+                    <Input
+                        type='email'
+                        placeholder='please enter email'
+                        allowClear
+                        defaultValue={formData?.email}
+                    />
                 </Col>
             </Form.Item>
             {/* <Form.Item>

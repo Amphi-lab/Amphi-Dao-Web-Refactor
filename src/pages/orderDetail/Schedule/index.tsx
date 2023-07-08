@@ -1,8 +1,12 @@
 import { Steps } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AmCard from '@/components/Card';
 import arrowLeft from '@/assets/svg/arrow-left.svg';
 import verBar from '@/assets/svg/vertical-bar.svg';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { translationState, getCurrentStep } from '@/store/reducers/orderDetailSlice';
+import { useNavigate } from 'react-router';
+
 import styles from './index.module.scss';
 
 const cardStyle = {
@@ -10,16 +14,46 @@ const cardStyle = {
     padding: '8px 24px 24px'
 };
 const Schedule = () => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const transState = useAppSelector(translationState);
+    const [currentState, setCurrentState] = useState(1);
+    const getCurrentStepState = () => {
+        switch (transState) {
+            case 0:
+                setCurrentState(1);
+                break;
+            case 1:
+            case 2:
+            case 3:
+                setCurrentState(2);
+                break;
+            case 5:
+                setCurrentState(3);
+                break;
+            default:
+                setCurrentState(1);
+        }
+        dispatch(getCurrentStep(currentState));
+    };
+    useEffect(() => {
+        getCurrentStepState();
+    });
+
+    const backToMyOrder = () => {
+        navigate('/myorders');
+    };
+
     return (
         <AmCard cardStyle={cardStyle}>
-            <div className={styles['order-detail-top-nav']}>
+            <div className={styles['order-detail-top-nav']} onClick={backToMyOrder}>
                 <img src={arrowLeft} alt='' />
                 <img src={verBar} alt='' className={styles['nav-ver-bar']} />
                 <span>Back to my orders</span>
             </div>
             <div className={styles['order-detail-top-steps']}>
                 <Steps
-                    current={1}
+                    current={currentState}
                     items={[
                         {
                             title: 'Submit the order'

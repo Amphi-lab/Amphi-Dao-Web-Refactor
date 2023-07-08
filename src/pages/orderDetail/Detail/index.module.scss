@@ -1,0 +1,16 @@
+.custom-cancal-modal {
+  text-align: right;
+  margin-top: 24px;
+
+  .yes-btn {
+    margin-right: 16px;
+  }
+
+  .no-btn {
+    background-color: #0049ff;
+
+    span {
+      color: #fff;
+    }
+  }
+}

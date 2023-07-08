@@ -8,14 +8,17 @@ import {
     summaryServiceType,
     summaryDeadline
 } from '@/store/reducers/requestTransSlice';
+import { orderDetailData } from '@/store/reducers/orderDetailSlice';
 import AmCard from '@/components/Card';
 import styles from './index.module.scss';
 
 const SummaryCard = () => {
-    const workload = useAppSelector(summaryWorkload);
+    const formData = useAppSelector(orderDetailData);
+    const workload = useAppSelector(summaryWorkload) || formData?.workload;
     const transLang = useAppSelector(summaryTransLang);
     const serviceType = useAppSelector(summaryServiceType);
     const deadline = useAppSelector(summaryDeadline);
+
     return (
         <AmCard title='Summary'>
             <ul className={styles['summary-list']}>

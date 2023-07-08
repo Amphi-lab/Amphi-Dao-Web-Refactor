@@ -1,0 +1,20 @@
+.candidate {
+  border-radius: 32px;
+  background: #f4f4f5;
+  padding-right: 8px;
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+}
+
+span {
+  @include font($size: 12px, $weight: 400, $lineH: 20px);
+}
+
+.message {
+  @include font($size: 12px, $weight: 400, $lineH: 18px, $color: var(--text-desc-color));
+}

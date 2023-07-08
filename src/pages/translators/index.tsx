@@ -6,7 +6,10 @@ import api from '@/api';
 import PageTitle from '@/components/PageTitle';
 
 import './index.scss';
-import { languages as languagesOptions, sortBy as sortByOptions } from '@/constants/selcet.json';
+import {
+    currentLanguages as languagesOptions,
+    sortBy as sortByOptions
+} from '@/constants/selcet.json';
 import type { DefaultOptionType } from 'antd/es/select';
 import TranslatorList from '@/components/Translator/List';
 

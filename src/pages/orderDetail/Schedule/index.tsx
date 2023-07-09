@@ -21,15 +21,15 @@ const Schedule = () => {
     const getCurrentStepState = () => {
         switch (transState) {
             case 0:
-                setCurrentState(1);
+                setCurrentState(1); // 1 pengding
                 break;
             case 1:
             case 2:
             case 3:
-                setCurrentState(2);
+                setCurrentState(2); // 2 in service
                 break;
             case 5:
-                setCurrentState(3);
+                setCurrentState(3); // 3 complete
                 break;
             default:
                 setCurrentState(1);

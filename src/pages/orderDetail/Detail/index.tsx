@@ -3,17 +3,15 @@ import AmCard from '@/components/Card';
 import IconButton from '@/components/IconButton';
 import EditIcon from '@/components/Icon/Edit';
 import CancelIcon from '@/components/Icon/Cancel';
-import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Modal, message } from 'antd';
 import { useNavigate, useLocation } from 'react-router';
 // import { getAmphi } from '@/contracts/contract';
 // import { useAppSelector } from '@/store/hooks';
 // import { translationIndex } from '@/store/reducers/orderDetailSlice';
 import api from '@/api';
+import WarningIcon from '@/assets/svg/warning.svg';
 import OrderDes from './orderDes';
 import styles from './index.module.scss';
-
-const { confirm } = Modal;
 
 const cardStyle = {
     background: '#FFF',
@@ -45,44 +43,20 @@ const Detail = () => {
             });
     };
 
+    // 点击modal Yes 按钮
     const handleOk = () => {
-        console.log('ok', isOpen);
         cancelTask();
         setIsOpen(false);
     };
 
+    // 点击modal No 按钮
     const handleCancel = () => {
-        console.log('cancelled', isOpen);
         setIsOpen(false);
     };
 
-    const showConfirm = () => {
-        confirm({
-            open: isOpen,
-            title: 'Warning!',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to cancel?',
-            closable: true,
-            maskClosable: true,
-            // okText: 'No',
-            // cancelText: 'Yes',
-            // onOk() {
-            //     console.log('OK');
-            // },
-            // onCancel() {
-            //     console.log('Cancel');
-            // },
-            footer: (
-                <div className={styles['custom-cancal-modal']}>
-                    <Button className={styles['yes-btn']} onClick={handleOk}>
-                        Yes
-                    </Button>
-                    <Button className={styles['no-btn']} type='primary' onClick={handleCancel}>
-                        No
-                    </Button>
-                </div>
-            )
-        });
+    // 显示modal
+    const showModalConfirm = () => {
+        setIsOpen(true);
     };
 
     const handleEditOrder = () => {
@@ -92,18 +66,43 @@ const Detail = () => {
     const orderRight = (
         <div>
             <IconButton icon={EditIcon} text='Edit order information' onClick={handleEditOrder} />
-            <IconButton icon={CancelIcon} text='Cancel the order' onClick={showConfirm} />
+            <IconButton icon={CancelIcon} text='Cancel the order' onClick={showModalConfirm} />
         </div>
     );
     return (
-        <AmCard
-            title='Order Detail'
-            cardStyle={cardStyle}
-            titleStyle={titleStyle}
-            rightContent={orderRight}
-        >
-            <OrderDes />
-        </AmCard>
+        <>
+            <AmCard
+                title='Order Detail'
+                cardStyle={cardStyle}
+                titleStyle={titleStyle}
+                rightContent={orderRight}
+            >
+                <OrderDes />
+            </AmCard>
+            <Modal
+                title={
+                    <div className={styles['cancel-modal-title']}>
+                        <img src={WarningIcon} alt='' />
+                        <span>Warning!</span>
+                    </div>
+                }
+                open={isOpen}
+                footer={
+                    <div className={styles['custom-cancal-modal']}>
+                        <Button className={styles['yes-btn']} onClick={handleOk}>
+                            Yes
+                        </Button>
+                        <Button className={styles['no-btn']} type='primary' onClick={handleCancel}>
+                            No
+                        </Button>
+                    </div>
+                }
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <p>Are you sure you want to cancel?</p>
+            </Modal>
+        </>
     );
 };
 

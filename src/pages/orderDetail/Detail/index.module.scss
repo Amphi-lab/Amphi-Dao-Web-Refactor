@@ -1,3 +1,14 @@
+.cancel-modal-title {
+  img {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  span {
+    @include font($size: 16px, $weight: 600, $lineH: 24px);
+  }
+}
+
 .custom-cancal-modal {
   text-align: right;
   margin-top: 24px;

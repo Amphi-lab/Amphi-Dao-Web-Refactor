@@ -1,0 +1,37 @@
+.item-content {
+  background-color: var(--bg-color);
+
+  .header {
+    .title {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .bounty {
+      text-align: right;
+    }
+
+    .light-col,
+    .dark-col {
+      overflow: hidden;
+    }
+  }
+
+  .actions {
+    color: rgb(0 73 255 / 100%);
+  }
+
+  .light-descriptions-item-content,
+  .dark-descriptions-item-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & > span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

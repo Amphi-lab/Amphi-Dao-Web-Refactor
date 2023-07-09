@@ -1,21 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import type { FormInstance, SelectProps } from 'antd';
-import { Form, Row, Col, Select, Pagination } from 'antd';
 
 import api from '@/api';
-import PageTitle from '@/components/PageTitle';
 
-import './index.scss';
 import {
     currentLanguages as languagesOptions,
     sortBy as sortByOptions
 } from '@/constants/selcet.json';
-import type { DefaultOptionType } from 'antd/es/select';
 import TranslatorList from '@/components/Translator/List';
+import LabelSelect from '@/components/Form/LabelSelect';
+import type { QueryContentPageRef, QueryItem } from '@/layout/query-content-page';
+import QueryContentPage from '@/layout/query-content-page';
+import { DefaultPageSize } from '@/contracts/constants';
 
-interface SelectWrapProps extends SelectProps {
-    label: string;
-}
+import './index.scss';
 
 type FormValues = { language: string; sortBy?: string };
 
@@ -23,7 +20,6 @@ const allLanguageOption = {
     value: '-1',
     label: 'all'
 };
-const defaultPageSize = 20;
 const initFormValues = {
     language: allLanguageOption.value
 };
@@ -31,15 +27,6 @@ const initPageState = {
     pageNum: 1,
     total: 0
 };
-
-function defaultSelectFilter(inputValue: string, option?: DefaultOptionType) {
-    if (option?.label && typeof option?.label === 'string') {
-        const label = option.label.toLowerCase() || '';
-        inputValue = inputValue.toLowerCase();
-        return label.includes(inputValue);
-    }
-    return false;
-}
 
 function formatQueryParams(formValues: FormValues, pageNum = 1) {
     const { language, sortBy, ...other } = formValues;
@@ -53,27 +40,11 @@ function formatQueryParams(formValues: FormValues, pageNum = 1) {
         queryParams[`params[${sortBy}]`] = 1;
     }
 
-    return { pageNum, pageSize: defaultPageSize, ...queryParams, ...other };
-}
-
-function SelectWrap({ label, ...select }: SelectWrapProps) {
-    return (
-        <div className='select-wrap'>
-            <p className='label'>{label}</p>
-            <Select
-                showSearch
-                allowClear
-                bordered={false}
-                className='select'
-                filterOption={defaultSelectFilter}
-                {...select}
-            />
-        </div>
-    );
+    return { pageNum, pageSize: DefaultPageSize, ...queryParams, ...other };
 }
 
 export default function Translators() {
-    const formRef = React.useRef<FormInstance>(null);
+    const ref = React.useRef<QueryContentPageRef>(null);
 
     const [pageState, setPageState] = useState(initPageState);
     const [translators, setTranslators] = useState([]);
@@ -82,6 +53,21 @@ export default function Translators() {
         () => ([] as typeof languagesOptions).concat(allLanguageOption, languagesOptions),
         []
     );
+
+    const queryItems = useMemo<QueryItem[]>(() => {
+        return [
+            {
+                colProps: { span: 8 },
+                name: 'language',
+                itemRender: <LabelSelect label='Languages：' options={resolvedLanguagesOptions} />
+            },
+            {
+                colProps: { span: 8 },
+                name: 'sortBy',
+                itemRender: <LabelSelect label='Sort by：' options={sortByOptions} />
+            }
+        ];
+    }, [resolvedLanguagesOptions]);
 
     const fetchTranslatorList = useCallback((query: any = {}) => {
         api.getTranslatorList(query).then((res: any) => {
@@ -102,56 +88,27 @@ export default function Translators() {
     );
     const handlePageChange = useCallback(
         (current: number) => {
-            fetchTranslatorList(formatQueryParams(formRef?.current?.getFieldsValue(), current));
+            fetchTranslatorList(formatQueryParams(ref?.current?.form.getFieldsValue(), current));
         },
         [fetchTranslatorList]
     );
 
     useEffect(() => {
-        fetchTranslatorList(formatQueryParams(formRef?.current?.getFieldsValue()));
+        fetchTranslatorList(formatQueryParams(ref.current?.form?.getFieldsValue()));
     }, [fetchTranslatorList]);
 
     return (
-        <>
-            <PageTitle title='Our Translators' />
-            <div className='translators-content'>
-                <Form
-                    ref={formRef}
-                    initialValues={initFormValues}
-                    onValuesChange={handleFormValuesChange}
-                >
-                    <Row gutter={8}>
-                        <Col span={8}>
-                            <Form.Item name='language'>
-                                <SelectWrap
-                                    label='Languages：'
-                                    options={resolvedLanguagesOptions}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item name='sortBy'>
-                                <SelectWrap label='Sort by：' options={sortByOptions} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-
-                    <TranslatorList translators={translators} />
-
-                    <Row justify='end'>
-                        <Col>
-                            <Pagination
-                                current={pageState.pageNum}
-                                total={pageState.total}
-                                pageSize={defaultPageSize}
-                                showSizeChanger={false}
-                                showTotal={value => `Total ${value} items`}
-                                onChange={handlePageChange}
-                            />
-                        </Col>
-                    </Row>
-                </Form>
-            </div>
-        </>
+        <QueryContentPage
+            ref={ref}
+            title='Our Translators'
+            pageNum={pageState.pageNum}
+            total={pageState.total}
+            queryItems={queryItems}
+            initFormValues={initFormValues}
+            onFormValuesChange={handleFormValuesChange}
+            onPageChange={handlePageChange}
+        >
+            <TranslatorList translators={translators} />
+        </QueryContentPage>
     );
 }

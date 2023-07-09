@@ -47,6 +47,17 @@ export const getTranslationList = (params: any = { pageNum: 1, pageSize: 10 }) =
     get(`/translation/list?${stringify(params)}`);
 
 /**
+ * apply
+ * url: /translation/apply    请求地址
+ * @param {object} params    配置对象
+ * @param {string} params.translationIndex
+ * @param {string} params.address
+ * @param {string} params.message 留言
+ * @returns {Promise}
+ */
+export const postTranslationApply = (params: any) => post('/translation/apply', params);
+
+/**
  * 修改用户信息
  * url: /user/update    请求地址
  * @param {object} params    配置对象

@@ -72,3 +72,5 @@ export const dateDiff = (
     }
     return res;
 };
+
+export function noop() {}

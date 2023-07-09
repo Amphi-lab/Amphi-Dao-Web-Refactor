@@ -167,6 +167,20 @@ export const put = (url: string, data: any) =>
         );
     });
 
+export const deleteFetch = (url: string) => {
+    return new Promise((resolve, reject) => {
+        axios.delete(url).then(
+            response => {
+                resolve(response?.data);
+            },
+            err => {
+                errorMsg(err);
+                reject(err);
+            }
+        );
+    });
+};
+
 export const refreshAPIToken = () => {
     if (typeof window !== 'undefined') {
         const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);

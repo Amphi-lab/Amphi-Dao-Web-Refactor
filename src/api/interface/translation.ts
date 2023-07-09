@@ -1,10 +1,13 @@
-import { post, get } from '../axios';
+import { post, get, deleteFetch } from '../axios';
 
 // confirm order
 export const saveOrder = (data: any) => post('/translation/save', data);
 
-// Order Detail
+// get Order Detail
 export const getOrderDetail = (id: number) => get(`/translation/${id}`);
+
+// cancel order
+export const cancelOrder = (id: number) => deleteFetch(`/translation/${id}`);
 
 /**
  * @description: 获取翻译者列表

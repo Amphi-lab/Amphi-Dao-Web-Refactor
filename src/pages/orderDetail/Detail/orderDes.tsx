@@ -74,6 +74,7 @@ const OrderDes = () => {
     useEffect(() => {
         api.getOrderDetail(id).then((res: any) => {
             if (res?.code === 200 && res?.data) {
+                console.log(String(res.data.translationIndex));
                 dispatch(getTranslationIndex(res.data.translationIndex));
                 dispatch(getTranslationState(res.data.translationState));
                 dispatch(getTranslationFileList(res.data.translationFiles));

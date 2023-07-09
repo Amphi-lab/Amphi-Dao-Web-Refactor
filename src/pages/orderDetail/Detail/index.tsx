@@ -4,12 +4,12 @@ import IconButton from '@/components/IconButton';
 import EditIcon from '@/components/Icon/Edit';
 import CancelIcon from '@/components/Icon/Cancel';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
-import { useNavigate } from 'react-router';
-// import { useLocation } from 'react-router-dom';
+import { Button, Modal, message } from 'antd';
+import { useNavigate, useLocation } from 'react-router';
 // import { getAmphi } from '@/contracts/contract';
 // import { useAppSelector } from '@/store/hooks';
 // import { translationIndex } from '@/store/reducers/orderDetailSlice';
+import api from '@/api';
 import OrderDes from './orderDes';
 import styles from './index.module.scss';
 
@@ -26,23 +26,23 @@ const titleStyle = {
 const Detail = () => {
     // const transIndex = useAppSelector(translationIndex);
     const navigate = useNavigate();
-    // const location = useLocation();
-    // const id = location.state || +location.pathname.split('/')[2];
+    const location = useLocation();
+    const id = location.state || +location.pathname.split('/')[2];
 
     const [isOpen, setIsOpen] = useState(false);
 
     // 取消任务
     const cancelTask = async () => {
-        // const amphi = await getAmphi();
-        // amphi.methods
-        //     .closeTask(transIndex)
-        //     .call()
-        //     .then((data: any) => {
-        //         console.log(data);
-        //     })
-        //     .catch((err: any) => {
-        //         console.log('err', err);
-        //     });
+        api.cancelOrder(id)
+            .then((res: any) => {
+                console.log(res);
+                if (res.code === 200) {
+                    message.success('Order cancelled successfully');
+                }
+            })
+            .catch((err: any) => {
+                console.log(err);
+            });
     };
 
     const handleOk = () => {

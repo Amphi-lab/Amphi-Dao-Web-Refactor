@@ -15,6 +15,7 @@ import { getAmphi } from '@/contracts/contract';
 import dayjs from 'dayjs';
 import { optionsMap } from '@/utils/array';
 import { languages } from '@/constants/selcet.json';
+
 import styles from './index.module.scss';
 
 interface DataType {
@@ -68,8 +69,8 @@ const TranCandidate = () => {
             tasks: detailData.translationFiles, // 子任务
             tasker, // 任务者地址
             transState: 0, // 服务者任务状态
-            state: detailData.translationState, // 项目状态
-            translationIndex: detailData.translationIndex
+            state: detailData.translationState // 项目状态
+            // translationIndex: detailData.translationIndex
         };
         console.log(translationPro);
         amphi.methods
@@ -82,6 +83,35 @@ const TranCandidate = () => {
                 console.log('err', err);
             });
     };
+
+    const handleTableData = (data: []) => {
+        return data.map((item: any) => {
+            return {
+                key: item.translator.id,
+                name: item.translator.username,
+                avatar: item.translator.profile, // --头像链接
+                wordsSbt: item.translator?.badgeSlot?.wordsSbt, // --佩戴的徽章tokenId
+                orderQuantity: item.translator.orders,
+                score: item.translator.score,
+                message: item.translator.message,
+                language: item.translator.languages,
+                address: item.address
+            };
+        });
+    };
+
+    useEffect(() => {
+        const params = {
+            translationIndex: transIndex,
+            pageNum: 1,
+            pageSize: 10
+        };
+        api.getCandidateList(params).then((res: any) => {
+            if (res.code === 200) {
+                setTableData(handleTableData(res.rows as any));
+            }
+        });
+    }, [transIndex]);
 
     const columns: ColumnsType<DataType> = [
         {
@@ -167,49 +197,6 @@ const TranCandidate = () => {
             }
         }
     ];
-
-    const handleTableData = (data: []) => {
-        return data.map((item: any) => {
-            return {
-                key: item.translator.id,
-                name: item.translator.username,
-                avatar: item.translator.profile, // --头像链接
-                wordsSbt: item.translator?.badgeSlot?.wordsSbt, // --佩戴的徽章tokenId
-                orderQuantity: item.translator.orders,
-                score: item.translator.score,
-                message: item.translator.message,
-                language: item.translator.languages,
-                address: item.address
-            };
-        });
-    };
-
-    /* const getCandidateList = async () => {
-        const params = {
-            translationIndex: transIndex,
-            pageNum: 1,
-            pageSize: 10
-        };
-        api.getCandidateList(params).then((res: any) => {
-            if (res.code === 200) {
-                setTableData(handleTableData(res.rows as any));
-                // console.log(tableData);
-            }
-        });
-    }; */
-
-    useEffect(() => {
-        const params = {
-            translationIndex: transIndex,
-            pageNum: 1,
-            pageSize: 10
-        };
-        api.getCandidateList(params).then((res: any) => {
-            if (res.code === 200) {
-                setTableData(handleTableData(res.rows as any));
-            }
-        });
-    }, [transIndex]);
 
     return (
         <AmCard title='Translation candidate' cardStyle={cardStyle}>

@@ -36,4 +36,23 @@
   .trans-content-line {
     margin: 0 16px;
   }
+
+  .human-area {
+    @include layout($horizontal: space-around);
+
+    .human-sub-card {
+      width: 360px;
+      margin-right: auto;
+    }
+
+    .human-area-btns {
+      .accept {
+        margin-left: 16px;
+
+        span {
+          color: #fff;
+        }
+      }
+    }
+  }
 }

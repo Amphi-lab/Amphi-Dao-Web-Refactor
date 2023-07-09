@@ -109,7 +109,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
-    key: React.Key;
+    id: number;
     source: string;
     target: string;
 }
@@ -120,11 +120,9 @@ const App: React.FC = () => {
     const transIndex = useAppSelector(translationIndex);
     const [dataSource, setDataSource] = useState<DataType[]>([]);
     const [count, setCount] = useState(1);
-    const [glossaryList, setGlossaryList] = useState<any>([]);
+    // const [glossaryList, setGlossaryList] = useState<any>([]);
 
-    console.log(glossaryList);
-
-    const fetchDelGlossaryItem = async id => {
+    const fetchDelGlossaryItem = async (id: number) => {
         api.deleteGlossaryItem(id).then((res: any) => {
             if (res.code === 200) {
                 message.success('Deleted successfully');
@@ -132,9 +130,9 @@ const App: React.FC = () => {
         });
     };
 
-    const handleDelete = (key: React.Key) => {
-        fetchDelGlossaryItem(key);
-        const newData = dataSource.filter(item => item.key !== key);
+    const handleDelete = (id: number) => {
+        fetchDelGlossaryItem(id);
+        const newData = dataSource.filter(item => item.id !== id);
         setDataSource(newData);
     };
 
@@ -152,9 +150,9 @@ const App: React.FC = () => {
         {
             title: 'Operation',
             dataIndex: 'operation',
-            render: (_, record: { key: React.Key }) =>
+            render: (_, record: { id: number }) =>
                 dataSource.length >= 1 ? (
-                    <Popconfirm title='Sure to delete?' onConfirm={() => handleDelete(record.key)}>
+                    <Popconfirm title='Sure to delete?' onConfirm={() => handleDelete(record.id)}>
                         <IconButton icon={deleteIcon} text='Delete' />
                     </Popconfirm>
                 ) : null
@@ -163,7 +161,7 @@ const App: React.FC = () => {
 
     const handleAdd = () => {
         const newData: DataType = {
-            key: count,
+            id: count,
             source: `defalut`,
             target: `defalut`
         };
@@ -189,7 +187,7 @@ const App: React.FC = () => {
         fetchAddGlossaryItem(row);
         // console.log('row', row);
         const newData = [...dataSource];
-        const index = newData.findIndex(item => row.key === item.key);
+        const index = newData.findIndex(item => row.id === item.id);
         const item = newData[index];
         newData.splice(index, 1, {
             ...item,
@@ -229,7 +227,9 @@ const App: React.FC = () => {
                 // console.log('glossary', res);
                 if (res.code === 200 && res.rows.length > 0) {
                     console.log('glossary', res.rows);
-                    setGlossaryList([...res.rows]);
+                    // setGlossaryList([...dataSource, ...res.rows]);
+                    setDataSource([...dataSource, ...res.rows]);
+                    console.log(dataSource);
                 }
             });
         }

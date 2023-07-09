@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AmCard from '@/components/Card';
 import { Button, Form, Rate, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
@@ -14,7 +14,9 @@ const ServiceRating = () => {
     const [form] = useForm();
     const transIndex = useAppSelector(translationIndex);
     const [isSatisty, setIsSatisty] = useState(1);
+    const [yetEvalData, setYetEvalData] = useState<any>({});
 
+    // 提交评价
     const handleSubmit = (data: any) => {
         api.evalution(data).then((res: any) => {
             if (res.code === 200) {
@@ -31,11 +33,6 @@ const ServiceRating = () => {
             translationIndex: transIndex
         };
         handleSubmit(finalParmas);
-        // if (!form.getFieldsError()) {
-        //     handleSubmit(finalParmas);
-        // } else {
-        //     message.error('Please comment');
-        // }
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -47,6 +44,20 @@ const ServiceRating = () => {
     const handleMachine = (value: number) => {
         setIsSatisty(value);
     };
+
+    useEffect(() => {
+        // 查询评价
+        if (transIndex !== '0') {
+            api.getEvalutions(transIndex).then((res: any) => {
+                // console.log(res);
+                if (res.code === 200 && res.data) {
+                    setYetEvalData(res.data);
+                }
+            });
+        }
+    }, [transIndex]);
+
+    console.log(yetEvalData);
 
     return (
         <AmCard title='Service rating'>
@@ -63,36 +74,91 @@ const ServiceRating = () => {
                 colon={false}
             >
                 <p className={styles['group-heading']}>The machine translation</p>
-                <Form.Item label='' name='machine'>
-                    <Button className={styles['satisfy-btn']} onClick={() => handleMachine(1)}>
-                        Satisfy
-                    </Button>
-                    <Button className={styles['dis-satisfy-btn']} onClick={() => handleMachine(0)}>
-                        Dissatisfied
-                    </Button>
-                </Form.Item>
-                <p className={styles['group-heading']}>The human validation</p>
-                <Form.Item label='Overall' name='overall'>
-                    <Rate allowClear />
-                </Form.Item>
-                <Form.Item label='Professional' name='professional'>
-                    <Rate allowClear />
-                </Form.Item>
-                <Form.Item label='Timeliness' name='timeliness'>
-                    <Rate allowClear />
-                </Form.Item>
-                <Form.Item label='Service Attitude' name='attitude'>
-                    <Rate allowClear />
-                </Form.Item>
-                <Form.Item label='Comment' name='comment'>
-                    <TextArea placeholder='Comment' allowClear showCount maxLength={1000} />
-                </Form.Item>
+                {yetEvalData.translationIndex &&
+                (yetEvalData.machine === 0 || yetEvalData.machine === 1) ? (
+                    <Form.Item label='' name='machine'>
+                        {yetEvalData.machine === 0 ? (
+                            <span>Dissatisfied</span>
+                        ) : (
+                            <span>Satisfy</span>
+                        )}
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='' name='machine'>
+                        <Button className={styles['satisfy-btn']} onClick={() => handleMachine(1)}>
+                            Satisfy
+                        </Button>
+                        <Button
+                            className={styles['dis-satisfy-btn']}
+                            onClick={() => handleMachine(0)}
+                        >
+                            Dissatisfied
+                        </Button>
+                    </Form.Item>
+                )}
 
-                <Form.Item>
-                    <Button htmlType='submit' className={styles['rate-submit']}>
-                        Submit
-                    </Button>
-                </Form.Item>
+                <p className={styles['group-heading']}>The human validation</p>
+
+                {/*  overall */}
+                {yetEvalData.translationIndex && yetEvalData.overall ? (
+                    <Form.Item label='Overall'>
+                        <Rate disabled defaultValue={yetEvalData.overall} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Overall' name='overall'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* Professional */}
+                {yetEvalData.translationIndex && yetEvalData.professional ? (
+                    <Form.Item label='Professional'>
+                        <Rate disabled defaultValue={yetEvalData.professional} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Professional' name='professional'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* timeliness */}
+                {yetEvalData.translationIndex && yetEvalData.timeliness ? (
+                    <Form.Item label='Timeliness'>
+                        <Rate disabled defaultValue={yetEvalData.timeliness} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Timeliness' name='timeliness'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* attitude */}
+                {yetEvalData.translationIndex && yetEvalData.attitude ? (
+                    <Form.Item label='Service Attitude'>
+                        <Rate disabled defaultValue={yetEvalData.attitude} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Service Attitude' name='attitude'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* comment */}
+                {yetEvalData.translationIndex && yetEvalData.comment ? (
+                    <Form.Item label='Comment'>{yetEvalData.comment}</Form.Item>
+                ) : (
+                    <Form.Item label='Comment' name='comment'>
+                        <TextArea placeholder='Comment' allowClear showCount maxLength={1000} />
+                    </Form.Item>
+                )}
+
+                {!yetEvalData.translationIndex && (
+                    <Form.Item>
+                        <Button htmlType='submit' className={styles['rate-submit']}>
+                            Submit
+                        </Button>
+                    </Form.Item>
+                )}
             </Form>
         </AmCard>
     );

@@ -41,3 +41,6 @@ export const getDiscussions = (data: any) => get('/comment/list', data);
  * @return {*}
  */
 export const evalution = (data: any) => post('/evalution/save', data);
+
+// /evalution/{translationIndex} 查询评价
+export const getEvalutions = (transIndex: number) => get(`/evalution/${transIndex}`);

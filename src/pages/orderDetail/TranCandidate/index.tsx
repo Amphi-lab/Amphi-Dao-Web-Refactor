@@ -13,6 +13,8 @@ import { translationIndex, orderDetailData } from '@/store/reducers/orderDetailS
 import { useNavigate } from 'react-router';
 import { getAmphi } from '@/contracts/contract';
 import dayjs from 'dayjs';
+import { optionsMap } from '@/utils/array';
+import { languages } from '@/constants/selcet.json';
 import styles from './index.module.scss';
 
 interface DataType {
@@ -31,6 +33,7 @@ const cardStyle = {
     background: '#FFF',
     padding: '16px 24px 24px'
 };
+const langOptions = optionsMap(languages);
 const TranCandidate = () => {
     const navigate = useNavigate();
     const transIndex = useAppSelector(translationIndex);
@@ -121,7 +124,13 @@ const TranCandidate = () => {
         {
             title: 'Language',
             dataIndex: 'language',
-            key: 'language'
+            key: 'language',
+            render: value => {
+                value = value
+                    .map((item: any) => langOptions.get(String(item.workLangValue)))
+                    .join(',');
+                return <span>{value || '-'}</span>;
+            }
         },
         {
             title: 'Message',
@@ -169,30 +178,29 @@ const TranCandidate = () => {
                 orderQuantity: item.translator.orders,
                 score: item.translator.score,
                 message: item.translator.message,
-                languages: item.translator.languages,
+                language: item.translator.languages,
                 address: item.address
             };
         });
     };
 
-    // const getCandidateList = async () => {
-    //     const params = {
-    //         translationIndex: transIndex,
-    //         pageNum: 1,
-    //         pageSize: 10
-    //     };
-    //     api.getCandidateList(params).then((res: any) => {
-    //         if (res.code === 200) {
-    //             setTableData(handleTableData(res.rows as any));
-    //             // console.log(tableData);
-    //         }
-    //     });
-    // };
-    // console.log(tableData);
+    /* const getCandidateList = async () => {
+        const params = {
+            translationIndex: transIndex,
+            pageNum: 1,
+            pageSize: 10
+        };
+        api.getCandidateList(params).then((res: any) => {
+            if (res.code === 200) {
+                setTableData(handleTableData(res.rows as any));
+                // console.log(tableData);
+            }
+        });
+    }; */
 
     useEffect(() => {
         const params = {
-            translationIndex: '872583425863847936',
+            translationIndex: transIndex,
             pageNum: 1,
             pageSize: 10
         };

@@ -6,7 +6,7 @@ import type { RootState } from '../index';
 
 // 定义 slice state 的类型
 export interface requestTranState {
-    translationIndex: number;
+    translationIndex: string;
     translationState: number;
     currentStep: number;
     translationFileList: [];
@@ -15,7 +15,7 @@ export interface requestTranState {
 
 // 使用该类型定义初始 state
 const initialState: requestTranState = {
-    translationIndex: 0,
+    translationIndex: '0',
     translationState: 0,
     currentStep: 1,
     translationFileList: [],
@@ -35,8 +35,8 @@ export const counterSlice = createSlice({
     initialState,
     // 定义action，这里的属性会自动的导出为actions，在组件中可以直接通过dispatch进行触发
     reducers: {
-        getTranslationIndex: (state, action: PayloadAction<number>) => {
-            console.log('getTranslationIndex', action.payload);
+        getTranslationIndex: (state, action: PayloadAction<string>) => {
+            // console.log('getTranslationIndex', action.payload);
             state.translationIndex = action.payload;
         },
         getTranslationState: (state, action: PayloadAction<number>) => {

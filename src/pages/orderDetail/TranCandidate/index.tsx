@@ -3,12 +3,17 @@ import AmTable from '@/components/Table';
 import AmCard from '@/components/Card';
 import type { ColumnsType } from 'antd/es/table';
 import api from '@/api';
-import { Space, Tooltip } from 'antd';
+import { Space, Tooltip, message } from 'antd';
 import IconButton from '@/components/IconButton';
 import ViewIcon from '@/components/Icon/View';
 import PledgeIcon from '@/components/Icon/Pledge';
-import { useAppSelector } from '@/store/hooks';
-import { translationIndex, orderDetailData } from '@/store/reducers/orderDetailSlice';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import {
+    translationIndex,
+    orderDetailData,
+    getTaskIndex,
+    getCurrentStep
+} from '@/store/reducers/orderDetailSlice';
 // import BigNumber from 'bignumber.js';
 import { useNavigate } from 'react-router';
 import { getAmphi } from '@/contracts/contract';
@@ -35,11 +40,30 @@ const cardStyle = {
     padding: '16px 24px 24px'
 };
 const langOptions = optionsMap(languages);
+
 const TranCandidate = () => {
+    const dispath = useAppDispatch();
     const navigate = useNavigate();
     const transIndex = useAppSelector(translationIndex);
     const detailData = useAppSelector<any>(orderDetailData);
     const [tableData, setTableData] = useState<any>([]);
+
+    const formatFileForContract = (filelist: []) => {
+        return filelist.map((file: any) => {
+            return {
+                name: file.fileName,
+                size: file.fileSize,
+                videoLength: file.videoLength,
+                Page: file.filePage,
+                words: file.fileWords,
+                fileType: file.fileType, // 文件类型
+                path: file.filePath, // 文件链接
+                transFile: '',
+                taskerFile: '',
+                lastUpload: dayjs(file.updateTime || new Date()).unix() // 最后更新时间
+            };
+        });
+    };
 
     // 查看翻译者简介
     const hanldeViewprofile = (address: string) => {
@@ -66,20 +90,29 @@ const TranCandidate = () => {
             isCustomize: false, // 是否为组织
             isAITrans: true, // 是否加入了AI翻译
             bounty: Number(detailData.bounty), // 赏金
-            tasks: detailData.translationFiles, // 子任务
+            tasks: formatFileForContract(detailData.translationFiles), // 子任务
             tasker, // 任务者地址
             transState: 0, // 服务者任务状态
-            state: detailData.translationState // 项目状态
-            // translationIndex: detailData.translationIndex
+            state: detailData.translationState, // 项目状态
+            translationIndex: detailData.translationIndex
         };
-        console.log(translationPro);
+        // console.log(translationPro);
         amphi.methods
             .postTask(translationPro)
             .call()
             .then((data: any) => {
-                console.log(data);
+                console.log('postTask', typeof data);
+                if (typeof data === 'string' && Number(data) > 0) {
+                    message.success('Choose & pledge successfully!');
+                    dispath(getTaskIndex(data));
+                    dispath(getCurrentStep(2));
+                    // window.location.reload();
+                } else {
+                    message.error('Choose & pledge failed !');
+                }
             })
             .catch((err: any) => {
+                message.error('Contract request error, please try again!');
                 console.log('err', err);
             });
     };

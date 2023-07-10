@@ -35,11 +35,29 @@ const cardStyle = {
     padding: '16px 24px 24px'
 };
 const langOptions = optionsMap(languages);
+
 const TranCandidate = () => {
     const navigate = useNavigate();
     const transIndex = useAppSelector(translationIndex);
     const detailData = useAppSelector<any>(orderDetailData);
     const [tableData, setTableData] = useState<any>([]);
+
+    const formatFileForContract = (filelist: []) => {
+        return filelist.map((file: any) => {
+            return {
+                name: file.fileName,
+                size: file.fileSize,
+                videoLength: file.videoLength,
+                Page: file.filePage,
+                words: file.fileWords,
+                fileType: file.fileType, // 文件类型
+                path: file.filePath, // 文件链接
+                transFile: '',
+                taskerFile: '',
+                lastUpload: dayjs(file.updateTime || new Date()).unix() // 最后更新时间
+            };
+        });
+    };
 
     // 查看翻译者简介
     const hanldeViewprofile = (address: string) => {
@@ -66,7 +84,7 @@ const TranCandidate = () => {
             isCustomize: false, // 是否为组织
             isAITrans: true, // 是否加入了AI翻译
             bounty: Number(detailData.bounty), // 赏金
-            tasks: detailData.translationFiles, // 子任务
+            tasks: formatFileForContract(detailData.translationFiles), // 子任务
             tasker, // 任务者地址
             transState: 0, // 服务者任务状态
             state: detailData.translationState // 项目状态

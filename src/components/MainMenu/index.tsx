@@ -12,11 +12,11 @@ const items: MenuProps['items'] = [
             {
                 label: 'Request Translation',
                 key: 'requestTranslation'
+            },
+            {
+                label: 'Translation',
+                key: 'translation'
             }
-            // {
-            //     label: 'Translation',
-            //     key: 'translation'
-            // },
             // {
             //     label: 'Validation',
             //     key: 'validation'

@@ -7,10 +7,10 @@ import IconButton from '@/components/IconButton';
 import { Button, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { useAppSelector } from '@/store/hooks';
-import { translationFileList, translationIndex } from '@/store/reducers/orderDetailSlice';
+import { translationFileList } from '@/store/reducers/orderDetailSlice';
 import api from '@/api';
 import glossaryIcon from '@/components/Icon/Glossary';
-import { getAmphi } from '@/contracts/contract';
+// import { getAmphi } from '@/contracts/contract';
 import styles from './index.module.scss';
 import Glossary from './glossary';
 import RejectForm from './receive/rejectForm';
@@ -24,32 +24,16 @@ const textStyle = {
     color: '#323335'
 };
 const TranContent = () => {
-    const childRef: any = React.createRef();
+    const childGlossaryRef: any = React.createRef();
+    const childRejctRef: any = React.createRef();
     const fileList = useAppSelector(translationFileList);
-    const transIndex = useAppSelector(translationIndex);
 
     const onChange = (key: string) => {
         console.log(key);
     };
 
-    const handlereceiveTask = async (isPass: boolean) => {
-        childRef?.current?.showModal();
-        const amphi = await getAmphi();
-        const receivePro = {
-            index: transIndex,
-            isPass,
-            file: isPass ? '' : '',
-            illustrate: isPass ? '' : ''
-        };
-        amphi.methods
-            .receiveTask(receivePro)
-            .call()
-            .then((data: any) => {
-                console.log(data);
-            })
-            .catch((err: any) => {
-                console.log('err', err);
-            });
+    const handlereceiveTask = async () => {
+        childRejctRef?.current?.showRejectModal();
     };
 
     // 文件下载
@@ -169,13 +153,13 @@ const TranContent = () => {
                     </div>
 
                     <div className={styles['human-area-btns']}>
-                        <Button ghost onClick={() => handlereceiveTask(false)}>
+                        <Button ghost onClick={() => handlereceiveTask()}>
                             Reject
                         </Button>
                         <Button
                             type='primary'
                             className={styles.accept}
-                            onClick={() => handlereceiveTask(true)}
+                            onClick={() => handlereceiveTask()}
                         >
                             Accept
                         </Button>
@@ -186,7 +170,7 @@ const TranContent = () => {
     ];
 
     const showGlossaryModal = () => {
-        childRef?.current?.showModal();
+        childGlossaryRef?.current?.showGlossaryModal();
     };
 
     const rightContent = (
@@ -207,8 +191,8 @@ const TranContent = () => {
                     </div>
                 </div>
             </AmCard>
-            <Glossary onRef={childRef} />
-            <RejectForm onRef={childRef} />
+            <Glossary onRef={childGlossaryRef} />
+            <RejectForm onRef={childRejctRef} />
         </>
     );
 };

@@ -47,6 +47,7 @@ const TranCandidate = () => {
     const transIndex = useAppSelector(translationIndex);
     const detailData = useAppSelector<any>(orderDetailData);
     const [tableData, setTableData] = useState<any>([]);
+    const [isPledgeLoading, setIsPledgeLoading] = useState(false);
 
     const formatFileForContract = (filelist: []) => {
         return filelist.map((file: any) => {
@@ -72,6 +73,9 @@ const TranCandidate = () => {
 
     // 需求方选择翻译者并发单
     const handleChoosePledge = async (tasker: string) => {
+        console.log('tasker address', tasker);
+        setIsPledgeLoading(true);
+        console.log('handleChoosePledge');
         const amphi = await getAmphi();
         const translationPro = {
             buyer: detailData.buyerAddress, // 发布者
@@ -96,7 +100,7 @@ const TranCandidate = () => {
             state: detailData.translationState, // 项目状态
             translationIndex: detailData.translationIndex
         };
-        // console.log(translationPro);
+        console.log(translationPro);
         amphi.methods
             .postTask(translationPro)
             .call()
@@ -104,6 +108,7 @@ const TranCandidate = () => {
                 console.log('postTask', typeof data);
                 if (typeof data === 'string' && Number(data) > 0) {
                     message.success('Choose & pledge successfully!');
+                    setIsPledgeLoading(false);
                     dispath(getTaskIndex(data));
                     dispath(getCurrentStep(2));
                     // window.location.reload();
@@ -221,6 +226,7 @@ const TranCandidate = () => {
                             onClick={() => hanldeViewprofile(record.address)}
                         />
                         <IconButton
+                            loading={isPledgeLoading}
                             text='Choose & pledge'
                             icon={PledgeIcon}
                             onClick={() => handleChoosePledge(record.address)}

@@ -1,7 +1,9 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { Form, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import AmSelect from '@/components/Form/Select';
+import { taskIndex } from '@/store/reducers/orderDetailSlice';
+import { getAmphi } from '@/contracts/contract';
+import { useAppSelector } from '@/store/hooks';
 
 type Iprops = {
     onRef?: any;
@@ -10,6 +12,7 @@ type Iprops = {
 const RejectForm = ({ onRef }: Iprops) => {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const pledgeTaskIndex = useAppSelector(taskIndex);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -19,12 +22,32 @@ const RejectForm = ({ onRef }: Iprops) => {
     useImperativeHandle(onRef, () => {
         // 需要将暴露的接口返回出去
         return {
-            showModal
+            showRejectModal: showModal
         };
     });
 
-    const handleOk = () => {
-        setIsModalOpen(false);
+    const handleOk = async () => {
+        console.log('reject confirm', form.getFieldsValue());
+        const amphi = await getAmphi();
+
+        // reject api
+        const rejectPro = {
+            index: Number(pledgeTaskIndex),
+            isPass: false,
+            file: '',
+            illustrate: form.getFieldValue('rejectReason')
+        };
+        console.log('reject param', rejectPro);
+        amphi.methods
+            .receiveTask(rejectPro.index, rejectPro.isPass, rejectPro.file, rejectPro.illustrate)
+            .call()
+            .then((data: any) => {
+                console.log(data);
+                setIsModalOpen(false);
+            })
+            .catch((err: any) => {
+                console.log('err', err);
+            });
     };
 
     const handleCancel = () => {
@@ -57,15 +80,14 @@ const RejectForm = ({ onRef }: Iprops) => {
                 layout='vertical'
             >
                 <Form.Item label='The Version' name='rejectVersion'>
-                    <AmSelect />
+                    <p>version</p>
                 </Form.Item>
                 <Form.Item label='The Reason' name='rejectReason'>
                     <TextArea
                         allowClear
                         showCount
                         maxLength={1000}
-                        placeholder='Please enter a detailed description so translators can modlify it
-'
+                        placeholder='Please enter a detailed description so translators can modlify it'
                     />
                 </Form.Item>
             </Form>

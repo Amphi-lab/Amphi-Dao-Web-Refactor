@@ -14,8 +14,9 @@ import { DefaultPageSize } from '@/contracts/constants';
 import { TranslationItemActionType } from '@/components/Translation/Item';
 
 import './index.scss';
+import { useAccount } from 'wagmi';
 
-type FormValues = { translationTypeArray?: string[]; languages: string[]; sortBy?: string };
+type FormValues = { translationTypeArray?: string[]; languageArray: string[]; sortBy?: string };
 
 const sortByOptions = [
     {
@@ -29,11 +30,11 @@ const sortByOptions = [
 ];
 
 function formatQueryParams(formValues: FormValues, pageNum = 1) {
-    const { translationTypeArray, sortBy, languages, ...other } = formValues;
+    const { translationTypeArray, sortBy, languageArray, ...other } = formValues;
 
     const queryParams: any = {};
-    if (languages) {
-        queryParams.languages = languages;
+    if (languageArray) {
+        queryParams.languageArray = languageArray;
     }
 
     if (translationTypeArray) {
@@ -49,6 +50,8 @@ function formatQueryParams(formValues: FormValues, pageNum = 1) {
 
 export default function Translations() {
     const ref = React.useRef<QueryContentPageRef>(null);
+
+    const { address } = useAccount();
     const [pageState, setPageState] = useState({
         pageNum: 1,
         total: 0
@@ -59,7 +62,7 @@ export default function Translations() {
         return [
             {
                 colProps: { span: 7 },
-                name: 'languages',
+                name: 'languageArray',
                 itemRender: (
                     <LabelSelect
                         label='Languages：'
@@ -117,13 +120,15 @@ export default function Translations() {
             if (type === TranslationItemActionType.VIEW_DETAIL) {
                 // empty
             } else if (type === TranslationItemActionType.APPLY) {
-                api.postTranslationApply({
-                    translationIndex,
-                    address: ''
-                });
+                if (address) {
+                    api.postTranslationApply({
+                        translationIndex,
+                        address
+                    });
+                }
             }
         },
-        []
+        [address]
     );
 
     useEffect(() => {

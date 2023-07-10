@@ -1,10 +1,10 @@
 import { Steps } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AmCard from '@/components/Card';
 import arrowLeft from '@/assets/svg/arrow-left.svg';
 import verBar from '@/assets/svg/vertical-bar.svg';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { translationState, getCurrentStep } from '@/store/reducers/orderDetailSlice';
+import { useAppSelector } from '@/store/hooks';
+import { currentStep } from '@/store/reducers/orderDetailSlice';
 import { useNavigate } from 'react-router';
 
 import styles from './index.module.scss';
@@ -14,31 +14,31 @@ const cardStyle = {
     padding: '8px 24px 24px'
 };
 const Schedule = () => {
+    const step = useAppSelector(currentStep);
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const transState = useAppSelector(translationState);
-    const [currentState, setCurrentState] = useState(1);
-    const getCurrentStepState = () => {
-        switch (transState) {
-            case 0:
-                setCurrentState(1); // 1 pengding
-                break;
-            case 1:
-            case 2:
-            case 3:
-                setCurrentState(2); // 2 in service
-                break;
-            case 5:
-                setCurrentState(3); // 3 complete
-                break;
-            default:
-                setCurrentState(1);
-        }
-        dispatch(getCurrentStep(currentState));
-    };
-    useEffect(() => {
-        getCurrentStepState();
-    });
+    // const dispatch = useAppDispatch();
+    // const transState = useAppSelector(translationState);
+    // const [currentState, setCurrentState] = useState(1);
+    // const getCurrentStepState = () => {
+    //     switch (transState) {
+    //         case 0:
+    //             dispatch(getCurrentStep(1)); // 1 pengding
+    //             break;
+    //         case 1:
+    //         case 2:
+    //         case 3:
+    //             dispatch(getCurrentStep(2)); // 2 in service
+    //             break;
+    //         case 5:
+    //             dispatch(getCurrentStep(3)); // 3 complete
+    //             break;
+    //         default:
+    //             dispatch(getCurrentStep(1)); // 1 pengding
+    //     }
+    // };
+    // useEffect(() => {
+    //     getCurrentStepState();
+    // });
 
     const backToMyOrder = () => {
         navigate('/myorders');
@@ -53,7 +53,7 @@ const Schedule = () => {
             </div>
             <div className={styles['order-detail-top-steps']}>
                 <Steps
-                    current={currentState}
+                    current={step}
                     items={[
                         {
                             title: 'Submit the order'

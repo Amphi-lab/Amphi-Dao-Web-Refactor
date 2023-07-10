@@ -11,6 +11,7 @@ export interface requestTranState {
     currentStep: number;
     translationFileList: [];
     orderDetailData: {};
+    taskIndex: string;
 }
 
 // 使用该类型定义初始 state
@@ -19,7 +20,27 @@ const initialState: requestTranState = {
     translationState: 0,
     currentStep: 1,
     translationFileList: [],
-    orderDetailData: {}
+    orderDetailData: {},
+    taskIndex: ''
+};
+
+// 初始化 currentStep
+const initCurrentStep = (currentStep: number, transState: number) => {
+    switch (transState) {
+        case 0:
+            currentStep = 1; // 1 pengding
+            break;
+        case 1:
+        case 2:
+        case 3:
+            currentStep = 2; // 2 in service
+            break;
+        case 5:
+            currentStep = 3; // 3 complete
+            break;
+        default:
+            currentStep = 4; // 1 pengding
+    }
 };
 
 export const saveAsync = createAsyncThunk('requestTrans/saveTrans', async (data: {}) => {
@@ -41,6 +62,7 @@ export const counterSlice = createSlice({
         },
         getTranslationState: (state, action: PayloadAction<number>) => {
             state.translationState = action.payload;
+            initCurrentStep(state.currentStep, state.translationState);
         },
         getCurrentStep: (state, action: PayloadAction<number>) => {
             state.currentStep = action.payload;
@@ -50,6 +72,9 @@ export const counterSlice = createSlice({
         },
         getOrderDetailData: (state, action: PayloadAction<{}>) => {
             state.orderDetailData = { ...action.payload };
+        },
+        getTaskIndex: (state, action: PayloadAction<string>) => {
+            state.taskIndex = action.payload;
         }
     }
     // extraReducers: builder => {
@@ -73,7 +98,8 @@ export const {
     getTranslationState,
     getCurrentStep,
     getTranslationFileList,
-    getOrderDetailData
+    getOrderDetailData,
+    getTaskIndex
 } = counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
@@ -82,6 +108,7 @@ export const translationState = (state: RootState) => state.orderDetail.translat
 export const currentStep = (state: RootState) => state.orderDetail.currentStep;
 export const translationFileList = (state: RootState) => state.orderDetail.translationFileList;
 export const orderDetailData = (state: RootState) => state.orderDetail.orderDetailData;
+export const taskIndex = (state: RootState) => state.orderDetail.taskIndex;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =(amount: number): AppThunk =>

@@ -7,9 +7,10 @@ import IconButton from '@/components/IconButton';
 import { Button, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { useAppSelector } from '@/store/hooks';
-import { translationFileList } from '@/store/reducers/orderDetailSlice';
+import { translationFileList, translationIndex } from '@/store/reducers/orderDetailSlice';
 import api from '@/api';
 import glossaryIcon from '@/components/Icon/Glossary';
+import { getAmphi } from '@/contracts/contract';
 import styles from './index.module.scss';
 import Glossary from './glossary';
 
@@ -24,9 +25,29 @@ const textStyle = {
 const TranContent = () => {
     const childRef: any = React.createRef();
     const fileList = useAppSelector(translationFileList);
+    const transIndex = useAppSelector(translationIndex);
 
     const onChange = (key: string) => {
         console.log(key);
+    };
+
+    const handlereceiveTask = async (isPass: boolean) => {
+        const amphi = await getAmphi();
+        const receivePro = {
+            index: transIndex,
+            isPass,
+            file: isPass ? '' : '',
+            illustrate: isPass ? '' : ''
+        };
+        amphi.methods
+            .postTask(receivePro)
+            .call()
+            .then((data: any) => {
+                console.log(data);
+            })
+            .catch((err: any) => {
+                console.log('err', err);
+            });
     };
 
     // 文件下载
@@ -90,39 +111,39 @@ const TranContent = () => {
     };
 
     // 人工翻译文件
-    const getHumanFileList = () => {
-        const humanFiles = fileList.filter((file: any) => file?.filePurpose === 1);
-        if (humanFiles.length === 0) {
-            return (
-                <p className={styles['sub-card-human-content']}>
-                    The translator is working hard to translate, please wait...
-                </p>
-            );
-        }
-        return humanFiles?.map((item: any) => {
-            return (
-                <>
-                    <div className={styles['sub-card-content']} key={item.id}>
-                        <IconButton
-                            icon={languageIcon}
-                            text={item.fileName}
-                            textStyle={textStyle}
-                        />
-                        <IconButton
-                            icon={downloadIcon}
-                            text='Download'
-                            onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
-                        />
-                    </div>
+    // const getHumanFileList = () => {
+    //     const humanFiles = fileList.filter((file: any) => file?.filePurpose === 1);
+    //     if (humanFiles.length === 0) {
+    //         return (
+    //             <p className={styles['sub-card-human-content']}>
+    //                 The translator is working hard to translate, please wait...
+    //             </p>
+    //         );
+    //     }
+    //     return humanFiles?.map((item: any) => {
+    //         return (
+    //             <>
+    //                 <div className={styles['sub-card-content']} key={item.id}>
+    //                     <IconButton
+    //                         icon={languageIcon}
+    //                         text={item.fileName}
+    //                         textStyle={textStyle}
+    //                     />
+    //                     <IconButton
+    //                         icon={downloadIcon}
+    //                         text='Download'
+    //                         onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
+    //                     />
+    //                 </div>
 
-                    <div>
-                        <Button>Reject</Button>
-                        <Button>Accept</Button>
-                    </div>
-                </>
-            );
-        });
-    };
+    //                 <div>
+    //                     <Button>Reject</Button>
+    //                     <Button>Accept</Button>
+    //                 </div>
+    //             </>
+    //         );
+    //     });
+    // };
 
     const items: TabsProps['items'] = [
         {
@@ -133,8 +154,8 @@ const TranContent = () => {
         {
             key: '2',
             label: `Proofreading`,
-            children: getHumanFileList()
-            /*  children: (
+            // children: getHumanFileList()
+            children: (
                 <div className={styles['human-area']}>
                     <div className={`${styles['sub-card-content']} ${styles['human-sub-card']}`}>
                         <IconButton icon={languageIcon} text='sfjlsfjsl' textStyle={textStyle} />
@@ -146,13 +167,19 @@ const TranContent = () => {
                     </div>
 
                     <div className={styles['human-area-btns']}>
-                        <Button ghost>Reject</Button>
-                        <Button type='primary' className={styles.accept}>
+                        <Button ghost onClick={() => handlereceiveTask(false)}>
+                            Reject
+                        </Button>
+                        <Button
+                            type='primary'
+                            className={styles.accept}
+                            onClick={() => handlereceiveTask(true)}
+                        >
                             Accept
                         </Button>
                     </div>
                 </div>
-            ) */
+            )
         }
     ];
 

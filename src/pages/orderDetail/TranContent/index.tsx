@@ -13,6 +13,7 @@ import glossaryIcon from '@/components/Icon/Glossary';
 import { getAmphi } from '@/contracts/contract';
 import styles from './index.module.scss';
 import Glossary from './glossary';
+import RejectForm from './receive/rejectForm';
 
 const cardStyle = {
     background: '#FFF',
@@ -32,6 +33,7 @@ const TranContent = () => {
     };
 
     const handlereceiveTask = async (isPass: boolean) => {
+        childRef?.current?.showModal();
         const amphi = await getAmphi();
         const receivePro = {
             index: transIndex,
@@ -40,7 +42,7 @@ const TranContent = () => {
             illustrate: isPass ? '' : ''
         };
         amphi.methods
-            .postTask(receivePro)
+            .receiveTask(receivePro)
             .call()
             .then((data: any) => {
                 console.log(data);
@@ -206,6 +208,7 @@ const TranContent = () => {
                 </div>
             </AmCard>
             <Glossary onRef={childRef} />
+            <RejectForm onRef={childRef} />
         </>
     );
 };

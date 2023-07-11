@@ -1,21 +1,21 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Form, Row, Col, Pagination } from 'antd';
 
-import type { ColProps, FormInstance, FormProps, PaginationProps } from 'antd';
+import type { ColProps, FormInstance, FormProps, PaginationProps, FormItemProps } from 'antd';
 
 import PageTitle from '@/components/PageTitle';
 import { DefaultPageSize } from '@/contracts/constants';
 import { noop } from '@/utils/util';
 
-import './query-content-page.scss';
+import './queryContentLayout.scss';
 
 export type QueryItem = {
     colProps?: ColProps;
     name: string;
     itemRender: React.ReactNode;
-};
+} & FormItemProps;
 
-type QueryContentPageProps = React.PropsWithChildren<{
+type QueryContentLayoutProps = React.PropsWithChildren<{
     initFormValues: FormProps['initialValues'];
     pageNum: number;
     total: number;
@@ -26,9 +26,9 @@ type QueryContentPageProps = React.PropsWithChildren<{
     onPageChange?: PaginationProps['onChange'];
 }>;
 
-export type QueryContentPageRef = { form: FormInstance };
+export type QueryContentLayoutRef = { form: FormInstance };
 
-export default forwardRef<QueryContentPageRef, QueryContentPageProps>(function QueryContentPage(
+export default forwardRef<QueryContentLayoutRef, QueryContentLayoutProps>(function QueryContentPage(
     {
         initFormValues,
         title,
@@ -70,7 +70,7 @@ export default forwardRef<QueryContentPageRef, QueryContentPageProps>(function Q
 
                     {children}
 
-                    <Row justify='end'>
+                    <Row style={{ marginTop: '16px' }} justify='end'>
                         <Col>
                             <Pagination
                                 current={pageNum}

@@ -8,8 +8,8 @@ import {
 } from '@/constants/selcet.json';
 import TranslatorList from '@/components/Translator/List';
 import LabelSelect from '@/components/Form/LabelSelect';
-import type { QueryContentPageRef, QueryItem } from '@/layout/query-content-page';
-import QueryContentPage from '@/layout/query-content-page';
+import type { QueryContentLayoutRef, QueryItem } from '@/layout/QueryContentLayout';
+import QueryContentLayout from '@/layout/QueryContentLayout';
 import { DefaultPageSize } from '@/contracts/constants';
 
 import './index.scss';
@@ -44,7 +44,7 @@ function formatQueryParams(formValues: FormValues, pageNum = 1) {
 }
 
 export default function Translators() {
-    const ref = React.useRef<QueryContentPageRef>(null);
+    const ref = React.useRef<QueryContentLayoutRef>(null);
 
     const [pageState, setPageState] = useState(initPageState);
     const [translators, setTranslators] = useState([]);
@@ -98,7 +98,7 @@ export default function Translators() {
     }, [fetchTranslatorList]);
 
     return (
-        <QueryContentPage
+        <QueryContentLayout
             ref={ref}
             title='Our Translators'
             pageNum={pageState.pageNum}
@@ -109,6 +109,6 @@ export default function Translators() {
             onPageChange={handlePageChange}
         >
             <TranslatorList translators={translators} />
-        </QueryContentPage>
+        </QueryContentLayout>
     );
 }

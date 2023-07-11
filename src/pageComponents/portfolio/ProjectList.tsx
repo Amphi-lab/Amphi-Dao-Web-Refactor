@@ -56,7 +56,7 @@ export default ({ setCompletedNum }: any) => {
 
     const fetchList = useCallback((addr: string) => {
         if (addr) {
-            api.getProjectList({ address: addr })
+            api.getProjectList({ address: addr, translationState: 7 })
                 .then((res: any) => {
                     setLoading(false);
                     if (res?.code === 200) {

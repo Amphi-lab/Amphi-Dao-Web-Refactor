@@ -40,6 +40,11 @@ const items: any = [
         // label: <a href='/portfolio'>Portfolio</a>
         label: 'My Orders',
         path: '/myorders'
+    },
+    {
+        key: '/workspace',
+        label: 'Workspace',
+        path: '/workspace'
     }
 ];
 

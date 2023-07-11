@@ -6,8 +6,8 @@ import {
     serviceTypes as serviceTypeOptions
 } from '@/constants/selcet.json';
 import LabelSelect from '@/components/Form/LabelSelect';
-import type { QueryContentPageRef, QueryItem } from '@/layout/query-content-page';
-import QueryContentPage from '@/layout/query-content-page';
+import type { QueryContentLayoutRef, QueryItem } from '@/layout/QueryContentLayout';
+import QueryContentLayout from '@/layout/QueryContentLayout';
 import TranslationList from '@/components/Translation/List';
 import type ITransaction from '@/types/ITransaction';
 import { DefaultPageSize } from '@/contracts/constants';
@@ -15,6 +15,7 @@ import { TranslationItemActionType } from '@/components/Translation/Item';
 
 import './index.scss';
 import { useAccount } from 'wagmi';
+import { useNavigate } from 'react-router';
 
 type FormValues = { translationTypeArray?: string[]; languageArray: string[]; sortBy?: string };
 
@@ -49,9 +50,10 @@ function formatQueryParams(formValues: FormValues, pageNum = 1) {
 }
 
 export default function Translations() {
-    const ref = React.useRef<QueryContentPageRef>(null);
+    const ref = React.useRef<QueryContentLayoutRef>(null);
 
     const { address } = useAccount();
+    const navigate = useNavigate();
     const [pageState, setPageState] = useState({
         pageNum: 1,
         total: 0
@@ -124,11 +126,15 @@ export default function Translations() {
                     api.postTranslationApply({
                         translationIndex,
                         address
+                    }).then((res: { code: number }) => {
+                        if (res.code === 200) {
+                            navigate('/workspace');
+                        }
                     });
                 }
             }
         },
-        [address]
+        [address, navigate]
     );
 
     useEffect(() => {
@@ -136,7 +142,7 @@ export default function Translations() {
     }, [fetchTranslationList]);
 
     return (
-        <QueryContentPage
+        <QueryContentLayout
             ref={ref}
             title='Translation'
             pageNum={pageState.pageNum}
@@ -147,6 +153,6 @@ export default function Translations() {
             onPageChange={handlePageChange}
         >
             <TranslationList translations={translations} onAction={handleAction} />
-        </QueryContentPage>
+        </QueryContentLayout>
     );
 }

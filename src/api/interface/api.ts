@@ -82,8 +82,8 @@ export const getUserInfo = ({ address }: { address: string }) =>
  * @param {string} params.address   钱包地址
  * @returns {Promise}
  */
-export const getProjectList = ({ address }: { address: string }) =>
-    get(`/translation/acceptedList?address=${address}&translationState=7`);
+export const getProjectList = (params: { address: string; translationState: number }) =>
+    get(`/translation/acceptedList?${stringify(params)}`);
 
 // `/ipfs/getJson?${uris.join('&')}`
 export const getIpfsJson = ({ uris }: { uris: string[] }) => get(`/ipfs/getJson?${uris.join('&')}`);

@@ -7,11 +7,11 @@ import DateIcon from '../Icon/Date';
 
 interface IProps {
     placeholder: string;
-    onChange: (
+    onChange?: (
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
     ) => void;
-    defaultValue: any;
+    defaultValue?: any;
 }
 const AmDateTimePiker = ({ placeholder, onChange, defaultValue }: IProps) => {
     // const onChange = (

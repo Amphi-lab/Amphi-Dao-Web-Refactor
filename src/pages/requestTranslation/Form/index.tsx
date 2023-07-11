@@ -9,7 +9,7 @@ import AmSelect from '@/components/Form/Select';
 import AmDateTimePiker from '@/components/Form/DateTimePicker';
 import { currentLanguages, serviceTypes, industry, jobFunctions } from '@/constants/selcet.json';
 import { formatFileList, getTimeZoneName } from '@/utils/util';
-import { amountToToken } from '@/utils/number';
+import { amountToToken, amountFromToken } from '@/utils/number';
 
 import api from '@/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -20,7 +20,8 @@ import {
     getDeadline,
     getBounty,
     amphiServiceCost,
-    translatorFee
+    translatorFee,
+    summaryWorkload
 } from '@/store/reducers/requestTransSlice';
 import { orderDetailData } from '@/store/reducers/orderDetailSlice';
 import dayjs from 'dayjs';
@@ -37,9 +38,12 @@ const RequestForm = () => {
     // const id = location.state;
     const amServiceCost = useAppSelector(amphiServiceCost);
     const amTranslatorFee = useAppSelector(translatorFee);
+    const workload = useAppSelector(summaryWorkload);
     // const [formData, setFormData] = useState<any>({});
-    const formData = useAppSelector(orderDetailData);
+    const formData: any = useAppSelector(orderDetailData);
+    console.log('formData', formData);
 
+    // comfirm order 发单
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
             if (res?.code === 200) {
@@ -58,6 +62,7 @@ const RequestForm = () => {
             aiBounty: amountToToken(Number(amServiceCost)),
             humanBounty: amountToToken(Number(amTranslatorFee)),
             bounty: amountToToken(Number(values.bounty)),
+            workload,
             // bounty: web3.utils.toWei(values.bounty, 'ether'),
             translationFiles: formatFileList(values?.translationFiles?.fileList)
         };
@@ -146,7 +151,7 @@ const RequestForm = () => {
 
         // console.log(formData?.deadline);
         // dispatch(getWorkload(formData.translationFiles));
-    }, []);
+    }, [formData]);
 
     // console.log(formData);
 
@@ -352,7 +357,7 @@ const RequestForm = () => {
                         min={0}
                         placeholder='please enter bounty'
                         onChange={hanldeInputChange}
-                        defaultValue={formData?.bounty}
+                        defaultValue={amountFromToken(formData?.bounty)}
                     />
                 </Col>
             </Form.Item>

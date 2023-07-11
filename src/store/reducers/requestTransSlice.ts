@@ -49,7 +49,8 @@ export const counterSlice = createSlice({
                 state.workload += Number(file?.response?.data?.wordCount || 0);
             });
             state.translatorFee = state.workload * 0.055;
-            state.totalCost = Number(state.amphiServiceCost) + Number(state.bounty);
+            state.totalCost =
+                Number(state.amphiServiceCost) + Number(state.translatorFee) + Number(state.bounty);
         },
         getTransLang: (state, action: PayloadAction<{ from: string; to: string }>) => {
             state.transLang = action.payload.from

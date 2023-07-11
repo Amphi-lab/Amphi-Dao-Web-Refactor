@@ -20,6 +20,8 @@ import { getAmphi } from '@/contracts/contract';
 import dayjs from 'dayjs';
 import { optionsMap } from '@/utils/array';
 import { languages } from '@/constants/selcet.json';
+// import { web3 } from '@/contracts/config';
+// import { amountFromToken } from '@/utils/number';
 
 import styles from './index.module.scss';
 
@@ -92,7 +94,9 @@ const TranCandidate = () => {
             isNonDisclosure: false, // 是否保密
             isCustomize: false, // 是否为组织
             isAITrans: true, // 是否加入了AI翻译
-            bounty: Number(detailData.bounty), // 赏金
+            bounty: 1,
+            // bounty: Number(amountFromToken(detailData.bounty)), // 赏金
+            // bounty: web3.utils.toWei(detailData.bounty, 'ether'), // 赏金
             tasks: formatFileForContract(detailData.translationFiles), // 子任务
             tasker, // 任务者地址
             transState: 0, // 服务者任务状态
@@ -107,15 +111,16 @@ const TranCandidate = () => {
                 console.log('postTask', typeof data);
                 if (typeof data === 'object') {
                     message.success('Choose & pledge successfully!');
-                    setIsPledgeLoading(false);
                     dispath(getTaskIndex(data));
                     dispath(getCurrentStep(2));
                     // window.location.reload();
                 } else {
                     message.error('Choose & pledge failed !');
                 }
+                setIsPledgeLoading(false);
             })
             .catch((err: any) => {
+                setIsPledgeLoading(false);
                 message.error('Contract request error, please try again!');
                 console.log('err', err);
             });
@@ -217,6 +222,7 @@ const TranCandidate = () => {
             dataIndex: 'operation',
             key: 'operation',
             render: (value, record: any) => {
+                // console.log(record);
                 return (
                     <Space>
                         <IconButton
@@ -225,8 +231,7 @@ const TranCandidate = () => {
                             onClick={() => hanldeViewprofile(record.address)}
                         />
                         <IconButton
-                            loading={isPledgeLoading}
-                            text={isPledgeLoading ? 'loading' : 'Choose & pledge'}
+                            text='Choose & pledge'
                             icon={PledgeIcon}
                             onClick={() => handleChoosePledge(record.address)}
                         />
@@ -238,7 +243,13 @@ const TranCandidate = () => {
 
     return (
         <AmCard title='Translation candidate' cardStyle={cardStyle}>
-            <AmTable columns={columns} data={tableData} defaultActiveKey='1' bordered />
+            <AmTable
+                columns={columns}
+                data={tableData}
+                defaultActiveKey='1'
+                bordered
+                loading={isPledgeLoading}
+            />
         </AmCard>
     );
 };

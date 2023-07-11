@@ -8,10 +8,11 @@ interface Iprops {
     text: string;
     onClick?: any;
     textStyle?: {};
+    loading?: boolean;
 }
-const IconButton: React.FC<Iprops> = ({ icon, text, onClick, textStyle }) => {
+const IconButton: React.FC<Iprops> = ({ icon, text, onClick, textStyle, loading }) => {
     return (
-        <Button onClick={onClick} className={styles['amphi-icon-button']}>
+        <Button onClick={onClick} className={styles['amphi-icon-button']} loading={loading}>
             <Icon component={icon} />
             <span style={textStyle}>{text || 'text'}</span>
         </Button>

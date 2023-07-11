@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { selectMap, dateDiff } from '@/utils/util';
-import { currentLanguages, translationTypes } from '@/constants/selcet.json';
+import { currentLanguages, serviceTypes } from '@/constants/selcet.json';
 import api from '@/api';
 import type { RootState } from '../index';
 
@@ -48,8 +48,9 @@ export const counterSlice = createSlice({
             action.payload.forEach((file: { response: { data: { wordCount: any } } }) => {
                 state.workload += Number(file?.response?.data?.wordCount || 0);
             });
-            state.amphiServiceCost = state.workload * 0.055;
-            state.totalCost = Number(state.amphiServiceCost) + Number(state.bounty);
+            state.translatorFee = state.workload * 0.055;
+            state.totalCost =
+                Number(state.amphiServiceCost) + Number(state.translatorFee) + Number(state.bounty);
         },
         getTransLang: (state, action: PayloadAction<{ from: string; to: string }>) => {
             state.transLang = action.payload.from
@@ -60,14 +61,16 @@ export const counterSlice = createSlice({
                 : '-';
         },
         getServiceType: (state, action: PayloadAction<string>) => {
-            state.serviceType = selectMap(action.payload, translationTypes);
+            state.serviceType = selectMap(action.payload, serviceTypes);
         },
         getDeadline: (state, action: PayloadAction<string>) => {
             state.deadline = dateDiff(action.payload);
         },
         getBounty: (state, action: PayloadAction<number>) => {
             state.bounty = action.payload;
-            state.totalCost = Number(state.amphiServiceCost) + Number(state.bounty);
+            state.amphiServiceCost = Number(state.bounty) * 0.2;
+            state.totalCost =
+                Number(state.amphiServiceCost) + Number(state.translatorFee) + Number(state.bounty);
         }
     }
     // extraReducers: builder => {
@@ -97,6 +100,7 @@ export const summaryDeadline = (state: RootState) => state.requestTrans.deadline
 export const totalCost = (state: RootState) => state.requestTrans.totalCost;
 export const amphiServiceCost = (state: RootState) => state.requestTrans.amphiServiceCost;
 export const bounty = (state: RootState) => state.requestTrans.bounty;
+export const translatorFee = (state: RootState) => state.requestTrans.translatorFee;
 
 // 内置了thunk插件，可以直接处理异步请求
 // export const incrementIfOdd =(amount: number): AppThunk =>

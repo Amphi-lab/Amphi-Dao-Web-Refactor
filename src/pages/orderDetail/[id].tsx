@@ -12,7 +12,7 @@ import ServiceRating from './ServiceRating';
 
 const OrderDetail = () => {
     const step = useAppSelector(currentStep);
-    console.log('order index step', step);
+    // console.log('order index step', step);
     return (
         <div className={styles['order-detail-wrapper']}>
             <Schedule />

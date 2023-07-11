@@ -7,15 +7,17 @@ interface Iprops {
     data: any[];
     bordered?: boolean;
     defaultActiveKey?: string | number;
+    loading?: boolean;
 }
 
-const AmTable: React.FC<Iprops> = ({ columns, data, bordered, defaultActiveKey }) => {
+const AmTable: React.FC<Iprops> = ({ columns, data, bordered, defaultActiveKey, loading }) => {
     return (
         <Table
             columns={columns}
             dataSource={data}
             bordered={bordered}
             defaultActiveKey={defaultActiveKey}
+            loading={loading}
         />
     );
 };

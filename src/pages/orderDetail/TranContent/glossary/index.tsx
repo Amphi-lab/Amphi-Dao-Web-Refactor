@@ -26,7 +26,7 @@ const Glossary = ({ onRef }: Iprops) => {
     useImperativeHandle(onRef, () => {
         // 需要将暴露的接口返回出去
         return {
-            showModal
+            showGlossaryModal: showModal
         };
     });
 

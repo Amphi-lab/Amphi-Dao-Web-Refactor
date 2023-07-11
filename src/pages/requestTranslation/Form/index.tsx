@@ -43,7 +43,7 @@ const RequestForm = () => {
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
             if (res?.code === 200) {
-                message.success(res.message);
+                message.success('confirm order successfully');
                 navigate(`/orderDetail/${res?.data}`, { state: res?.data });
             }
         });

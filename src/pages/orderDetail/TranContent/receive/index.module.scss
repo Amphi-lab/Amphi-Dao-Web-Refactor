@@ -1,0 +1,38 @@
+.group-heading {
+  @include font($size: 14px, $weight: 600, $lineH: 22px);
+  margin-bottom: 16px;
+}
+
+.satisfy-btn {
+  border-radius: 4px;
+  border: 1px solid #0049ff;
+  background: #fff;
+
+  span {
+    @include font($size: 14px, $color: #0049ff, $weight: 400, $lineH: 22px);
+  }
+}
+
+.dis-satisfy-btn {
+  border-radius: 4px;
+
+  span {
+    @include font($size: 14px, $color: #323335, $weight: 400, $lineH: 22px);
+  }
+}
+
+.rate-submit {
+  border-radius: 8px;
+  background-color: #0049ff;
+  padding: 8px 32px;
+  height: inherit;
+
+  &.light-btn {
+    height: 0;
+  }
+
+  span {
+    @include font($size: 16px, $color: #fff, $weight: 500, $lineH: 24px);
+    letter-spacing: 2px;
+  }
+}

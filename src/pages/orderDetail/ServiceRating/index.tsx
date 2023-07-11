@@ -57,7 +57,7 @@ const ServiceRating = () => {
         }
     }, [transIndex]);
 
-    console.log(yetEvalData);
+    // console.log(yetEvalData);
 
     return (
         <AmCard title='Service rating'>

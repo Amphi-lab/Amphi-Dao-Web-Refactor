@@ -14,6 +14,7 @@ import glossaryIcon from '@/components/Icon/Glossary';
 import styles from './index.module.scss';
 import Glossary from './glossary';
 import RejectForm from './receive/rejectForm';
+import AcceptForm from './receive/AcceptForm';
 
 const cardStyle = {
     background: '#FFF',
@@ -26,14 +27,19 @@ const textStyle = {
 const TranContent = () => {
     const childGlossaryRef: any = React.createRef();
     const childRejctRef: any = React.createRef();
+    const childAcceptRef: any = React.createRef();
     const fileList = useAppSelector(translationFileList);
 
     const onChange = (key: string) => {
         console.log(key);
     };
 
-    const handlereceiveTask = async () => {
+    const handleReceiveTask = async () => {
         childRejctRef?.current?.showRejectModal();
+    };
+
+    const handleAcceptTask = async () => {
+        childAcceptRef?.current?.showAcceptModal();
     };
 
     // 文件下载
@@ -153,13 +159,13 @@ const TranContent = () => {
                     </div>
 
                     <div className={styles['human-area-btns']}>
-                        <Button ghost onClick={() => handlereceiveTask()}>
+                        <Button ghost onClick={() => handleReceiveTask()}>
                             Reject
                         </Button>
                         <Button
                             type='primary'
                             className={styles.accept}
-                            onClick={() => handlereceiveTask()}
+                            onClick={() => handleAcceptTask()}
                         >
                             Accept
                         </Button>
@@ -193,6 +199,7 @@ const TranContent = () => {
             </AmCard>
             <Glossary onRef={childGlossaryRef} />
             <RejectForm onRef={childRejctRef} />
+            <AcceptForm onRef={childAcceptRef} />
         </>
     );
 };

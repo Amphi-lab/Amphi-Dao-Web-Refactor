@@ -19,3 +19,11 @@ export enum ORDER_STATUS_CODE {
     COMPLETED = '5',
     CANCELLED = '4,6'
 }
+
+export enum WORKSPACE_STATUS_CODE {
+    PENDING = '0',
+    TRANSLATING = '1',
+    TOBEMODIFIED = '2',
+    COMPLETED = '5',
+    CANCELLED = '4,6'
+}

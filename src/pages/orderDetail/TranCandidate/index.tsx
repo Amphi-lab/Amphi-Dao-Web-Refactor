@@ -78,31 +78,58 @@ const TranCandidate = () => {
         console.log('current row address', tasker);
         setIsPledgeLoading(true);
         const amphi = await getAmphi();
-        const translationPro = {
-            buyer: detailData.buyerAddress, // 发布者
-            releaseTime: dayjs(detailData.createTime).unix(), // 发布时间
-            introduce: detailData.title, // 项目介绍
-            need: detailData.instruction, // 项目需求说明
-            deadline: dayjs(detailData.deadline).unix(), // 截至日期
-            sourceLanguage: Number(detailData.sourceLang), // 源语言
-            goalLanguage: Number(detailData.targetLang), // 目标语言
-            preferList: [Number(detailData.industry), Number(detailData.jobFunction)], // 偏好
-            translationType: Number(detailData.translationType), // 类型
-            workLoad: Number(detailData.workload), // 工作量
-            workLoadType:
-                Number(detailData.workloadType) === -1 ? 0 : Number(detailData.workloadType), // 任务类型
-            isNonDisclosure: false, // 是否保密
-            isCustomize: false, // 是否为组织
-            isAITrans: true, // 是否加入了AI翻译
-            bounty: 1,
+
+        const translationPro = [
+            detailData.buyerAddress, // 发布者
+            dayjs(detailData.createTime).unix(), // 发布时间
+            detailData.title, // 项目介绍
+            detailData.instruction, // 项目需求说明
+            dayjs(detailData.deadline).unix(), // 截至日期
+            Number(detailData.sourceLang), // 源语言
+            Number(detailData.targetLang), // 目标语言
+            [Number(detailData.industry), Number(detailData.jobFunction)], // 偏好
+            Number(detailData.translationType), // 类型
+            Number(detailData.workload), // 工作量
+
+            Number(detailData.workloadType) === -1 ? 0 : Number(detailData.workloadType), // 任务类型
+            false, // 是否保密
+            false, // 是否为组织
+            true, // 是否加入了AI翻译
+            1,
             // bounty: Number(amountFromToken(detailData.bounty)), // 赏金
             // bounty: web3.utils.toWei(detailData.bounty, 'ether'), // 赏金
-            tasks: formatFileForContract(detailData.translationFiles), // 子任务
+            formatFileForContract(detailData.translationFiles), // 子任务
             tasker, // 任务者地址
-            transState: 0, // 服务者任务状态
-            state: detailData.translationState, // 项目状态
-            translationIndex: detailData.translationIndex
-        };
+            0, // 服务者任务状态
+            detailData.translationState, // 项目状态
+            detailData.translationIndex
+        ];
+
+        // const translationPro = {
+        //     buyer: detailData.buyerAddress, // 发布者
+        //     releaseTime: dayjs(detailData.createTime).unix(), // 发布时间
+        //     introduce: detailData.title, // 项目介绍
+        //     need: detailData.instruction, // 项目需求说明
+        //     deadline: dayjs(detailData.deadline).unix(), // 截至日期
+        //     sourceLanguage: Number(detailData.sourceLang), // 源语言
+        //     goalLanguage: Number(detailData.targetLang), // 目标语言
+        //     preferList: [Number(detailData.industry), Number(detailData.jobFunction)], // 偏好
+        //     translationType: Number(detailData.translationType), // 类型
+        //     workLoad: Number(detailData.workload), // 工作量
+        //     workLoadType:
+        //         Number(detailData.workloadType) === -1 ? 0 : Number(detailData.workloadType), // 任务类型
+        //     isNonDisclosure: false, // 是否保密
+        //     isCustomize: false, // 是否为组织
+        //     isAITrans: true, // 是否加入了AI翻译
+        //     bounty: 1,
+        //     // bounty: Number(amountFromToken(detailData.bounty)), // 赏金
+        //     // bounty: web3.utils.toWei(detailData.bounty, 'ether'), // 赏金
+        //     tasks: formatFileForContract(detailData.translationFiles), // 子任务
+        //     tasker, // 任务者地址
+        //     transState: 0, // 服务者任务状态
+        //     state: detailData.translationState, // 项目状态
+        //     translationIndex: detailData.translationIndex
+        // };
         console.log(translationPro);
         amphi.methods
             .postTask(translationPro)

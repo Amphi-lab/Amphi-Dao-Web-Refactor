@@ -1,9 +1,10 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { Button, Form, Modal, Rate, Space, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { translationIndex } from '@/store/reducers/orderDetailSlice';
+import { translationIndex, getCurrentStep } from '@/store/reducers/orderDetailSlice';
 import { getAmphi } from '@/contracts/contract';
-import { useAppSelector } from '@/store/hooks';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+
 // import BigNumber from 'bignumber.js';
 import api from '@/api';
 import styles from './index.module.scss';
@@ -17,6 +18,7 @@ const AcceptForm = ({ onRef }: Iprops) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const transIndex = useAppSelector(translationIndex);
     const [isSatisty, setIsSatisty] = useState(1);
+    const dispath = useAppDispatch();
 
     console.log(transIndex);
 
@@ -37,6 +39,7 @@ const AcceptForm = ({ onRef }: Iprops) => {
         api.evalution(data).then((res: any) => {
             if (res.code === 200) {
                 message.success('Evaluate success');
+                dispath(getCurrentStep(3));
             }
         });
     };
@@ -44,6 +47,11 @@ const AcceptForm = ({ onRef }: Iprops) => {
     const handleOk = async () => {
         console.log(form.getFieldsValue());
         const amphi = await getAmphi();
+        const acceptParmas = {
+            ...form.getFieldsValue(),
+            machine: isSatisty,
+            translationIndex: transIndex
+        };
         const pro = {
             index: transIndex,
             isPass: true,
@@ -56,13 +64,9 @@ const AcceptForm = ({ onRef }: Iprops) => {
             .call()
             .then((data: any) => {
                 console.log('accept res', data);
-                const finalParmas = {
-                    ...form.getFieldsValue(),
-                    machine: isSatisty,
-                    translationIndex: transIndex
-                };
-                console.log('final param', finalParmas);
-                handleSubmit(finalParmas);
+
+                console.log('final param', acceptParmas);
+                handleSubmit(acceptParmas);
                 setIsModalOpen(false);
             })
             .catch((err: any) => {

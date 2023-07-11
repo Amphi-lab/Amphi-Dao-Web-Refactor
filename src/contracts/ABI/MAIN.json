@@ -74,9 +74,9 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "taskIndex",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -99,9 +99,9 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "taskIndex",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -143,9 +143,9 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			}
 		],
 		"name": "newSubmitFile",
@@ -162,9 +162,9 @@
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "taskIndex",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -181,9 +181,9 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "index",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -206,9 +206,9 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "index",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -384,9 +384,9 @@
 						"type": "uint8"
 					},
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "translationIndex",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
 				"internalType": "struct LibProject.TranslationPro",
@@ -402,9 +402,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"internalType": "bool",
@@ -435,9 +435,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			}
 		],
 		"name": "closeTask",
@@ -485,9 +485,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			}
 		],
 		"name": "getTaskInfo",
@@ -642,9 +642,9 @@
 						"type": "uint8"
 					},
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "translationIndex",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
 				"internalType": "struct LibProject.TranslationPro",
@@ -742,9 +742,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"internalType": "address",
@@ -928,9 +928,9 @@
 						"type": "uint8"
 					},
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "translationIndex",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
 				"internalType": "struct LibProject.TranslationPro",
@@ -965,9 +965,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"internalType": "bool",
@@ -1000,9 +1000,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_index",
-				"type": "uint256"
+				"type": "string"
 			},
 			{
 				"internalType": "string[]",

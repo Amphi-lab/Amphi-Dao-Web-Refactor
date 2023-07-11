@@ -13,6 +13,7 @@ import {
     getTranslationFileList,
     getOrderDetailData
 } from '@/store/reducers/orderDetailSlice';
+import { amountFromToken } from '@/utils/number';
 
 /* {
     "createTime": "2023-07-01 19:01:11",
@@ -127,7 +128,7 @@ const OrderDes = () => {
             )} to ${optionsMap(currentLanguages).get(details?.targetLang)}`}</Descriptions.Item>
             <Descriptions.Item label='Workload'>{details?.workload} words</Descriptions.Item>
             <Descriptions.Item label='Your upcoming payment'>
-                {details?.humanBounty}USTD
+                {amountFromToken(details?.humanBounty)}USDT
             </Descriptions.Item>
             <Descriptions.Item label='Submission time'>{details?.createTime}</Descriptions.Item>
             <Descriptions.Item label='Deadline'>{details?.deadline}</Descriptions.Item>

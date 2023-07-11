@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Col, Form, Row, Select } from 'antd';
-import { currentLanguages, translationTypes } from '@/constants/selcet.json';
+import { currentLanguages, serviceTypes } from '@/constants/selcet.json';
 import { useNavigate } from 'react-router';
 
 interface IProps {
@@ -31,7 +31,7 @@ export default ({ isRequired = true, size = 'middle' }: IProps) => {
             name: 'translationType',
             rules: isRequired ? [{ required: true, message: 'Please select Service Type' }] : [],
             placeholder: 'Select a Service Type',
-            options: translationTypes
+            options: serviceTypes
         }
     ];
     const handleStart = () => {

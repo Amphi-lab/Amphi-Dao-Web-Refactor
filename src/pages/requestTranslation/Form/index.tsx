@@ -7,13 +7,9 @@ import type { RangePickerProps } from 'antd/es/date-picker';
 import UploadFile from '@/components/UploadFile';
 import AmSelect from '@/components/Form/Select';
 import AmDateTimePiker from '@/components/Form/DateTimePicker';
-import {
-    currentLanguages,
-    translationTypes,
-    industry,
-    jobFunctions
-} from '@/constants/selcet.json';
+import { currentLanguages, serviceTypes, industry, jobFunctions } from '@/constants/selcet.json';
 import { formatFileList, getTimeZoneName } from '@/utils/util';
+import { amountToToken } from '@/utils/number';
 
 import api from '@/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -23,10 +19,12 @@ import {
     getServiceType,
     getDeadline,
     getBounty,
-    amphiServiceCost
+    amphiServiceCost,
+    translatorFee
 } from '@/store/reducers/requestTransSlice';
 import { orderDetailData } from '@/store/reducers/orderDetailSlice';
 import dayjs from 'dayjs';
+// import { web3 } from '@/contracts/config';
 import ConfirmOrder from '../ConfirmOrder';
 
 import styles from './index.module.scss';
@@ -38,6 +36,7 @@ const RequestForm = () => {
     // const location = useLocation();
     // const id = location.state;
     const amServiceCost = useAppSelector(amphiServiceCost);
+    const amTranslatorFee = useAppSelector(translatorFee);
     // const [formData, setFormData] = useState<any>({});
     const formData = useAppSelector(orderDetailData);
 
@@ -56,12 +55,13 @@ const RequestForm = () => {
         console.log('onfinish', values);
         const finalParams = {
             ...values,
-            aiBounty: 0,
-            humanBounty: amServiceCost,
-            bounty: Number(values.bounty),
+            aiBounty: amountToToken(Number(amServiceCost)),
+            humanBounty: amountToToken(Number(amTranslatorFee)),
+            bounty: amountToToken(Number(values.bounty)),
+            // bounty: web3.utils.toWei(values.bounty, 'ether'),
             translationFiles: formatFileList(values?.translationFiles?.fileList)
         };
-        // console.log('finalParams', finalParams);
+        console.log('finalParams', finalParams);
         const validRes = await form.validateFields();
         // console.log('validRes', validRes);
         if (!validRes?.outOfDate) {
@@ -164,7 +164,7 @@ const RequestForm = () => {
             <Row gutter={8}>
                 <Col span={12}>
                     <Form.Item
-                        label={<span className={styles['label-title']}>Translation From</span>}
+                        label={<span className={styles['label-title']}>Translate From</span>}
                         name='sourceLang'
                         rules={[
                             {
@@ -183,7 +183,7 @@ const RequestForm = () => {
                 </Col>
                 <Col span={12}>
                     <Form.Item
-                        label={<span className={styles['label-title']}>Translation To</span>}
+                        label={<span className={styles['label-title']}>Translate To</span>}
                         name='targetLang'
                         rules={[
                             { required: true, message: 'Please Select Translate To Language!' }
@@ -207,7 +207,7 @@ const RequestForm = () => {
                     >
                         <AmSelect
                             defaultValue={formData?.translationType}
-                            options={translationTypes}
+                            options={serviceTypes}
                             placeholder='please select Service Type'
                             onChange={handleSelectChange}
                         />
@@ -302,7 +302,7 @@ const RequestForm = () => {
                             <AmSelect
                                 defaultValue={formData?.jobFunction}
                                 options={jobFunctions}
-                                placeholder='please select jobFunction'
+                                placeholder='please select job function'
                                 onChange={handleSelectChange}
                             />
                         </Form.Item>
@@ -374,7 +374,6 @@ const RequestForm = () => {
             >
                 <Col span={12}>
                     <Input
-                        type='email'
                         placeholder='please enter email'
                         allowClear
                         defaultValue={formData?.email}

@@ -1,9 +1,10 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { Form, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { taskIndex } from '@/store/reducers/orderDetailSlice';
+import { translationIndex } from '@/store/reducers/orderDetailSlice';
 import { getAmphi } from '@/contracts/contract';
 import { useAppSelector } from '@/store/hooks';
+// import BigNumber from 'bignumber.js';
 
 type Iprops = {
     onRef?: any;
@@ -12,7 +13,9 @@ type Iprops = {
 const RejectForm = ({ onRef }: Iprops) => {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const pledgeTaskIndex = useAppSelector(taskIndex);
+    const transIndex = useAppSelector(translationIndex);
+
+    console.log(transIndex);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -32,17 +35,17 @@ const RejectForm = ({ onRef }: Iprops) => {
 
         // reject api
         const rejectPro = {
-            index: Number(pledgeTaskIndex),
+            index: transIndex,
             isPass: false,
             file: '',
-            illustrate: form.getFieldValue('rejectReason')
+            illustrate: form.getFieldValue('rejectReason') || ''
         };
         console.log('reject param', rejectPro);
         amphi.methods
             .receiveTask(rejectPro.index, rejectPro.isPass, rejectPro.file, rejectPro.illustrate)
             .call()
             .then((data: any) => {
-                console.log(data);
+                console.log('reject res', data);
                 setIsModalOpen(false);
             })
             .catch((err: any) => {

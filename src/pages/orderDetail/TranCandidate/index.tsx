@@ -73,9 +73,8 @@ const TranCandidate = () => {
 
     // 需求方选择翻译者并发单
     const handleChoosePledge = async (tasker: string) => {
-        console.log('tasker address', tasker);
+        console.log('current row address', tasker);
         setIsPledgeLoading(true);
-        console.log('handleChoosePledge');
         const amphi = await getAmphi();
         const translationPro = {
             buyer: detailData.buyerAddress, // 发布者
@@ -106,7 +105,7 @@ const TranCandidate = () => {
             .call()
             .then((data: any) => {
                 console.log('postTask', typeof data);
-                if (typeof data === 'string' && Number(data) > 0) {
+                if (typeof data === 'object') {
                     message.success('Choose & pledge successfully!');
                     setIsPledgeLoading(false);
                     dispath(getTaskIndex(data));
@@ -227,7 +226,7 @@ const TranCandidate = () => {
                         />
                         <IconButton
                             loading={isPledgeLoading}
-                            text='Choose & pledge'
+                            text={isPledgeLoading ? 'loading' : 'Choose & pledge'}
                             icon={PledgeIcon}
                             onClick={() => handleChoosePledge(record.address)}
                         />

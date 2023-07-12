@@ -7,15 +7,25 @@ import {
     bounty,
     translatorFee
 } from '@/store/reducers/requestTransSlice';
+import { orderDetailData } from '@/store/reducers/orderDetailSlice';
 import { Tooltip } from 'antd';
 
+import { amountFromToken } from '@/utils/number';
 import styles from './index.module.scss';
 
 const TotalCost = () => {
-    const amServiceCost = useAppSelector(amphiServiceCost);
+    const formData: any = useAppSelector(orderDetailData);
+    const amServiceCost =
+        useAppSelector(amphiServiceCost) || amountFromToken(formData.aiBounty || 0);
     const amTotalCost = useAppSelector(totalCost);
-    const amBounty = useAppSelector(bounty);
-    const amTranslatorFee = useAppSelector(translatorFee);
+    const amBounty = useAppSelector(bounty) || amountFromToken(formData.bounty || 0);
+    const amTranslatorFee =
+        useAppSelector(translatorFee) || amountFromToken(formData.humanBounty || 0);
+
+    const returnTotal =
+        +amountFromToken(formData.aiBounty || 0) +
+        +amountFromToken(formData.bounty || 0) +
+        +amountFromToken(formData.humanBounty || 0);
     return (
         <AmCard title='Total cost'>
             <ul className={styles['total-cost-list']}>
@@ -37,7 +47,7 @@ const TotalCost = () => {
                 </li>
                 <li>
                     <span>Total</span>
-                    <strong>{amTotalCost} USDT</strong>
+                    <strong>{amTotalCost || returnTotal} USDT</strong>
                 </li>
             </ul>
         </AmCard>

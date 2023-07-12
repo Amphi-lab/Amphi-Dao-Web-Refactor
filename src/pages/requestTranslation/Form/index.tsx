@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import type { DatePickerProps } from 'antd';
 import { Form, Input, Row, Col, message } from 'antd';
@@ -21,7 +21,8 @@ import {
     getBounty,
     amphiServiceCost,
     translatorFee,
-    summaryWorkload
+    summaryWorkload,
+    getTranslatorFee
 } from '@/store/reducers/requestTransSlice';
 import { orderDetailData } from '@/store/reducers/orderDetailSlice';
 import dayjs from 'dayjs';
@@ -41,13 +42,23 @@ const RequestForm = () => {
     const workload = useAppSelector(summaryWorkload);
     // const [formData, setFormData] = useState<any>({});
     const formData: any = useAppSelector(orderDetailData);
-    console.log('formData', formData);
+    const [confirmLoading, setConfirmLoading] = useState(false);
+    // console.log('formData', formData);
+    // const [defaultFileList, setDefaultFileList] = useState(
+    //     formData?.translationFiles?.map((file: any) => {
+    //         return {
+    //             name: file.fileName
+    //         };
+    //     })
+    // );
 
     // comfirm order 发单
     const saveOrder = async (parmas: any) => {
         api.saveOrder(parmas).then((res: any) => {
             if (res?.code === 200) {
+                setConfirmLoading(false);
                 message.success('confirm order successfully');
+                console.log('order detail id', res.data);
                 navigate(`/orderDetail/${res?.data}`, { state: res?.data });
             }
         });
@@ -55,33 +66,35 @@ const RequestForm = () => {
 
     // save form handler funciton
     const onFinish = async (values: any) => {
-        // navigate('/orderDetail');
-        console.log('onfinish', values);
-        const finalParams = {
-            ...values,
-            aiBounty: amountToToken(Number(amServiceCost)),
-            humanBounty: amountToToken(Number(amTranslatorFee)),
-            bounty: amountToToken(Number(values.bounty)),
-            workload,
-            // bounty: web3.utils.toWei(values.bounty, 'ether'),
-            translationFiles: formatFileList(values?.translationFiles?.fileList)
-        };
-        console.log('finalParams', finalParams);
+        // console.log('onfinish', values);
+        const fieldsValue = form.getFieldsValue();
+        if (fieldsValue.industry === undefined || fieldsValue.jobFunction === undefined) {
+            fieldsValue.industry = '';
+            fieldsValue.jobFunction = '';
+        }
         const validRes = await form.validateFields();
-        // console.log('validRes', validRes);
         if (!validRes?.outOfDate) {
+            setConfirmLoading(true);
+            const finalParams = {
+                ...fieldsValue,
+                aiBounty: amountToToken(Number(amServiceCost) || 0) || 0,
+                humanBounty: amountToToken(Number(amTranslatorFee) || 0) || 0,
+                bounty: amountToToken(Number(values.bounty) || 0) || 0,
+                workload,
+                translationFiles: formatFileList(values?.translationFiles?.fileList)
+            };
+            // console.log('finalParams', finalParams);
             saveOrder(finalParams);
         }
     };
 
-    const onFinishFailed = () => {
-        // console.log('Failed:', errorInfo);
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
     };
 
     // select change hanlder funciton
     // eslint-disable-next-line no-unused-vars
     const handleSelectChange = (value: string, opiton: any) => {
-        // get summary Translation Language
         dispatch(
             getTransLang({
                 from: form.getFieldValue('sourceLang'),
@@ -96,7 +109,7 @@ const RequestForm = () => {
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string
     ) => {
-        console.log(value, dateString);
+        // console.log(value, dateString);
         form.setFieldValue('deadline', dateString);
         dispatch(getDeadline(form.getFieldValue('deadline')));
     };
@@ -112,6 +125,7 @@ const RequestForm = () => {
             if (response?.code === 200) {
                 message.success(`${info.file.name} file uploaded successfully.`);
                 dispatch(getWorkload(info.fileList));
+                dispatch(getTranslatorFee());
             } else if (response?.status === 403) {
                 info.file.status = 'error';
                 message.warning(`Please Log in and try again`);
@@ -121,6 +135,7 @@ const RequestForm = () => {
         }
         if (status === 'removed') {
             dispatch(getWorkload(info.fileList));
+            dispatch(getTranslatorFee());
         }
     };
 
@@ -148,6 +163,8 @@ const RequestForm = () => {
         );
         dispatch(getServiceType(formData?.translationType));
         dispatch(getDeadline(formData?.deadline) || '');
+        // console.log(formData);
+        // console.log(defaultFileList);
 
         // console.log(formData?.deadline);
         // dispatch(getWorkload(formData.translationFiles));
@@ -159,7 +176,7 @@ const RequestForm = () => {
         <Form
             form={form}
             name='basic'
-            initialValues={{ remember: true }}
+            initialValues={formData}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete='off'
@@ -259,11 +276,13 @@ const RequestForm = () => {
             >
                 <UploadFile
                     onChange={handleFileChange}
-                    defaultFileList={formData?.translationFiles?.map((file: any) => {
-                        return {
-                            name: file.fileName
-                        };
-                    })}
+                    // defaultFileList={defaultFileList}
+
+                    // defaultFileList={formData?.translationFiles?.map((file: any) => {
+                    //     return {
+                    //         name: file.fileName
+                    //     };
+                    // })}
                 />
             </Form.Item>
             <Form.Item
@@ -391,7 +410,7 @@ const RequestForm = () => {
                 </Button>
             </Form.Item> */}
             <div className={styles['submit-div']}>
-                <ConfirmOrder onSave={onFinish} />
+                <ConfirmOrder onSave={onFinish} loading={confirmLoading} />
             </div>
         </Form>
     );

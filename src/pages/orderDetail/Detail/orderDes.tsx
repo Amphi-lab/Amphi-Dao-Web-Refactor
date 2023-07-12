@@ -70,7 +70,7 @@ const OrderDes = () => {
     const clipboard = useClipboard();
     const location = useLocation();
     const id = location.state || +location.pathname.split('/')[2];
-    const [details, setDetails] = useState({});
+    const [details, setDetails] = useState<any>({});
 
     useEffect(() => {
         api.getOrderDetail(id).then((res: any) => {
@@ -79,7 +79,7 @@ const OrderDes = () => {
                 dispatch(getTranslationState(res.data.translationState));
                 dispatch(getTranslationFileList(res.data.translationFiles));
                 dispatch(getOrderDetailData(res.data));
-                setDetails(prev => {
+                setDetails((prev: any) => {
                     return {
                         prev,
                         ...res?.data

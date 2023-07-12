@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { selectMap, dateDiff } from '@/utils/util';
 import { currentLanguages, serviceTypes } from '@/constants/selcet.json';
 import api from '@/api';
+// import BigNumber from 'bignumber.js';
 import type { RootState } from '../index';
 
 // 定义 slice state 的类型
@@ -12,9 +13,9 @@ export interface requestTranState {
     workload: number;
     deadline: string;
 
-    amphiServiceCost: Number;
-    translatorFee: Number;
-    bounty: Number;
+    amphiServiceCost: number;
+    translatorFee: number;
+    bounty: number;
     totalCost: number;
 }
 
@@ -48,9 +49,12 @@ export const counterSlice = createSlice({
             action.payload.forEach((file: { response: { data: { wordCount: any } } }) => {
                 state.workload += Number(file?.response?.data?.wordCount || 0);
             });
-            state.translatorFee = state.workload * 0.055;
-            state.totalCost =
-                Number(state.amphiServiceCost) + Number(state.translatorFee) + Number(state.bounty);
+            // state.translatorFee = state.workload * 0.055;
+            // state.totalCost =
+            //     Number(state.amphiServiceCost) + Number(state.translatorFee) + Number(state.bounty);
+        },
+        setWorkload: (state, action: PayloadAction<number>) => {
+            state.workload = action.payload;
         },
         getTransLang: (state, action: PayloadAction<{ from: string; to: string }>) => {
             state.transLang = action.payload.from
@@ -67,10 +71,22 @@ export const counterSlice = createSlice({
             state.deadline = dateDiff(action.payload);
         },
         getBounty: (state, action: PayloadAction<number>) => {
+            console.log('bounty', action.payload);
             state.bounty = action.payload;
-            state.amphiServiceCost = Number(state.bounty) * 0.2;
-            state.totalCost =
-                Number(state.amphiServiceCost) + Number(state.translatorFee) + Number(state.bounty);
+            state.amphiServiceCost = +(Number(state.bounty) * 0.2).toFixed(2);
+            state.totalCost = +(
+                Number(state.amphiServiceCost) +
+                Number(state.translatorFee) +
+                Number(state.bounty)
+            ).toFixed(2);
+        },
+        getTranslatorFee: state => {
+            state.translatorFee = +(state.workload * 0.055).toFixed(2);
+            state.totalCost = +(
+                Number(state.amphiServiceCost) +
+                Number(state.translatorFee) +
+                Number(state.bounty)
+            ).toFixed(2);
         }
     }
     // extraReducers: builder => {
@@ -89,8 +105,14 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getWorkload, getTransLang, getServiceType, getDeadline, getBounty } =
-    counterSlice.actions;
+export const {
+    getWorkload,
+    getTransLang,
+    getServiceType,
+    getDeadline,
+    getBounty,
+    getTranslatorFee
+} = counterSlice.actions;
 
 // selectors 等其他代码可以使用导入的 `RootState` 类型
 export const summaryWorkload = (state: RootState) => state.requestTrans.workload;

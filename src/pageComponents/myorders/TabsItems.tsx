@@ -3,7 +3,9 @@ import Jazzicon from 'react-jazzicon';
 import { Form, Select, Table, Space, Button, Tooltip, Badge, Avatar } from 'antd';
 import { SwitcherOutlined, EyeOutlined } from '@ant-design/icons';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
+import { useNavigate } from 'react-router';
 import dayjs from 'dayjs';
+
 import type IOrder from '@/types/IOrder';
 import { serviceTypes, languages } from '@/constants/selcet.json';
 // components
@@ -13,9 +15,9 @@ import SBTTag from '@/components/SBTTag';
 import SBTImage from '@/constants/sbt';
 import { getSubStr } from '@/utils/string';
 import { ORDER_STATUS_CODE } from '@/constants/enums';
-import { useNavigate } from 'react-router';
 import type { QueryItem } from '@/layout/QueryContentLayout';
 import { noop } from '@/utils/util';
+import AvatarLabel from '@/components/AvatarLabel';
 
 const { Option } = Select;
 const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
@@ -80,10 +82,11 @@ export const customerColumn: ColumnType<IOrder> = {
     width: 150,
     ellipsis: true,
     render: ({ profile, username, address, ...value }) => (
-        <div className='address-head-tips'>
-            {profile ? <Avatar src={profile} size={22} /> : <Jazzicon diameter={22} seed={value} />}
-            <span className='address'>{username || 'unknown'}</span>
-        </div>
+        <AvatarLabel avatar={profile} seed={value} label={username} />
+        // <div className='address-head-tips'>
+        //     {profile ? <Avatar src={profile} size={22} /> : <Jazzicon diameter={22} seed={value} />}
+        //     <span className='address'>{username || 'unknown'}</span>
+        // </div>
     )
 };
 export const acceptAddressColumn: ColumnType<IOrder> = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import type { ColumnsType, TableProps } from 'antd/es/table';
 
-interface Iprops {
+interface Iprops extends TableProps<any> {
     columns: ColumnsType<any>;
     data: any[];
     bordered?: boolean;
@@ -10,7 +10,14 @@ interface Iprops {
     loading?: boolean;
 }
 
-const AmTable: React.FC<Iprops> = ({ columns, data, bordered, defaultActiveKey, loading }) => {
+const AmTable: React.FC<Iprops> = ({
+    columns,
+    data,
+    bordered,
+    defaultActiveKey,
+    loading,
+    ...others
+}) => {
     return (
         <Table
             columns={columns}
@@ -18,6 +25,7 @@ const AmTable: React.FC<Iprops> = ({ columns, data, bordered, defaultActiveKey, 
             bordered={bordered}
             defaultActiveKey={defaultActiveKey}
             loading={loading}
+            {...others}
         />
     );
 };

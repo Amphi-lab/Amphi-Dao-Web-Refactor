@@ -7,6 +7,7 @@ import amphi from './ABI/MAIN.json'; // 主合约ABI
 import erc20 from './ABI/ERC20.json'; // erc20合约ABI
 import amphiPass from './ABI/NFT.json'; // NFT合约ABI
 import sbtABI from './ABI/SBT.json'; // SBT合约ABI
+import NewErc20 from './ABI/NewERC20.json'; // 新的Erc20合约 2023.07.12新增
 
 // 主合约
 let contract: Contract;
@@ -28,6 +29,12 @@ export async function getErc20Contract(address: any) {
 export async function getErc20() {
     // @ts-ignore
     return new web3.eth.Contract(erc20.abi as AbiItem[], erc20.address);
+}
+
+/* new erc 20 */
+export async function getNewErc20() {
+    // @ts-ignore
+    return new web3.eth.Contract(NewErc20.abi as AbiItem[], NewErc20.address);
 }
 
 // 获取NFT合约

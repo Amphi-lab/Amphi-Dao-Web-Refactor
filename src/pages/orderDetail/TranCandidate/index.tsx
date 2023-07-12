@@ -19,12 +19,12 @@ import {
     getCurrentStep
 } from '@/store/reducers/orderDetailSlice';
 // import BigNumber from 'bignumber.js';
-import { getAmphi } from '@/contracts/contract';
+import { getAmphi, getNewErc20 } from '@/contracts/contract';
 import { optionsMap } from '@/utils/array';
 import { languages } from '@/constants/selcet.json';
 // import { web3 } from '@/contracts/config';
-// import { amountFromToken } from '@/utils/number';
-
+import { amountFromToken } from '@/utils/number';
+import { useAccount } from 'wagmi';
 import styles from './index.module.scss';
 
 interface DataType {
@@ -52,6 +52,7 @@ const TranCandidate = () => {
     const detailData = useAppSelector<any>(orderDetailData);
     const [tableData, setTableData] = useState<any>([]);
     const [isPledgeLoading, setIsPledgeLoading] = useState(false);
+    const { address: userAddress } = useAccount();
 
     const formatFileForContract = (filelist: []) => {
         return filelist.map((file: any) => {
@@ -68,11 +69,6 @@ const TranCandidate = () => {
                 lastUpload: dayjs(file.updateTime || new Date()).unix() // 最后更新时间
             };
         });
-    };
-
-    // 查看翻译者简介
-    const hanldeViewprofile = (address: string) => {
-        navigate(`/portfolio/?address=${address}`);
     };
 
     // 需求方选择翻译者并发单
@@ -97,8 +93,8 @@ const TranCandidate = () => {
             false, // 是否保密
             false, // 是否为组织
             true, // 是否加入了AI翻译
-            1,
-            // bounty: Number(amountFromToken(detailData.bounty)), // 赏金
+            // 1,
+            Number(amountFromToken(detailData.bounty)), // 赏金
             // bounty: web3.utils.toWei(detailData.bounty, 'ether'), // 赏金
             formatFileForContract(detailData.translationFiles), // 子任务
             tasker, // 任务者地址
@@ -152,6 +148,30 @@ const TranCandidate = () => {
                 setIsPledgeLoading(false);
                 message.error('Contract request error, please try again!');
                 console.log('err', err);
+            });
+    };
+
+    // 查看翻译者简介
+    const hanldeViewprofile = (address: string) => {
+        navigate(`/portfolio/?address=${address}`);
+    };
+
+    const hanldeERC20Approve = async (tasker: string) => {
+        const erc20 = await getNewErc20();
+        erc20.methods
+            .approve(
+                import.meta.env.VITE_PUBLIC_CONTRACT_ADDRESS,
+                Number(amountFromToken(detailData.bounty))
+            )
+            .send({
+                from: userAddress
+            })
+            .then((res: any) => {
+                console.log('erc20 res', res);
+                handleChoosePledge(tasker);
+            })
+            .catch((err: any) => {
+                console.log('erc20 err', err);
             });
     };
 
@@ -262,7 +282,7 @@ const TranCandidate = () => {
                         <IconButton
                             text='Choose & pledge'
                             icon={PledgeIcon}
-                            onClick={() => handleChoosePledge(record.address)}
+                            onClick={() => hanldeERC20Approve(record.address)}
                         />
                     </Space>
                 );

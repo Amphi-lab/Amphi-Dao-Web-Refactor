@@ -103,62 +103,32 @@ const TranContent = () => {
     };
 
     // 人工翻译文件
-    // const getHumanFileList = () => {
-    //     const humanFiles = fileList.filter((file: any) => file?.filePurpose === 1);
-    //     if (humanFiles.length === 0) {
-    //         return (
-    //             <p className={styles['sub-card-human-content']}>
-    //                 The translator is working hard to translate, please wait...
-    //             </p>
-    //         );
-    //     }
-    //     return humanFiles?.map((item: any) => {
-    //         return (
-    //             <>
-    //                 <div className={styles['sub-card-content']} key={item.id}>
-    //                     <IconButton
-    //                         icon={languageIcon}
-    //                         text={item.fileName}
-    //                         textStyle={textStyle}
-    //                     />
-    //                     <IconButton
-    //                         icon={downloadIcon}
-    //                         text='Download'
-    //                         onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
-    //                     />
-    //                 </div>
-
-    //                 <div>
-    //                     <Button>Reject</Button>
-    //                     <Button>Accept</Button>
-    //                 </div>
-    //             </>
-    //         );
-    //     });
-    // };
-
-    const items: TabsProps['items'] = [
-        {
-            key: '1',
-            label: `Al Translation`,
-            children: getAIFileList()
-        },
-        {
-            key: '2',
-            label: `Proofreading`,
-            // children: getHumanFileList()
-            children: (
-                <div className={styles['human-area']}>
-                    <div className={`${styles['sub-card-content']} ${styles['human-sub-card']}`}>
-                        <IconButton icon={languageIcon} text='sfjlsfjsl' textStyle={textStyle} />
+    const getHumanFileList = () => {
+        const humanFiles = fileList.filter((file: any) => file?.filePurpose === 1);
+        if (humanFiles.length === 0) {
+            return (
+                <p className={styles['sub-card-human-content']}>
+                    The translator is working hard to translate, please wait...
+                </p>
+            );
+        }
+        return humanFiles?.map((item: any) => {
+            return (
+                <>
+                    <div className={styles['sub-card-content']} key={item.id}>
+                        <IconButton
+                            icon={languageIcon}
+                            text={item.fileName}
+                            textStyle={textStyle}
+                        />
                         <IconButton
                             icon={downloadIcon}
                             text='Download'
-                            onClick={(e: any) => handleDownlodaFile(e, 'sjflsfsljf')}
+                            onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
                         />
                     </div>
 
-                    <div className={styles['human-area-btns']}>
+                    <div>
                         <Button ghost onClick={() => handleReceiveTask()}>
                             Reject
                         </Button>
@@ -170,8 +140,21 @@ const TranContent = () => {
                             Accept
                         </Button>
                     </div>
-                </div>
-            )
+                </>
+            );
+        });
+    };
+
+    const items: TabsProps['items'] = [
+        {
+            key: '1',
+            label: `Al Translation`,
+            children: getAIFileList()
+        },
+        {
+            key: '2',
+            label: `Proofreading`,
+            children: getHumanFileList()
         }
     ];
 

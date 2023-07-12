@@ -73,7 +73,8 @@ const OrderDes = () => {
     const { id } = location.state || searchParams;
     const [details, setDetails] = useState<any>({});
 
-    // console.log(id);
+    console.log(id);
+    console.log(searchParams);
 
     useEffect(() => {
         api.getOrderDetail(id).then((res: any) => {

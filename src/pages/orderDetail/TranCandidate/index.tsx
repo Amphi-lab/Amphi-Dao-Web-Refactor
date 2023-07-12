@@ -15,16 +15,13 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import {
     translationIndex,
     orderDetailData,
-    getTaskIndex,
     getCurrentStep
 } from '@/store/reducers/orderDetailSlice';
-// import BigNumber from 'bignumber.js';
-import { getAmphi, getNewErc20 } from '@/contracts/contract';
 import { optionsMap } from '@/utils/array';
 import { languages } from '@/constants/selcet.json';
 // import { web3 } from '@/contracts/config';
 import { amountFromToken } from '@/utils/number';
-import { useAccount } from 'wagmi';
+import { useAmphiFactoryFunctionWriter } from '@/hooks/useAmphi';
 import styles from './index.module.scss';
 
 interface DataType {
@@ -52,7 +49,7 @@ const TranCandidate = () => {
     const detailData = useAppSelector<any>(orderDetailData);
     const [tableData, setTableData] = useState<any>([]);
     const [isPledgeLoading, setIsPledgeLoading] = useState(false);
-    const { address: userAddress } = useAccount();
+    const { writeAsync } = useAmphiFactoryFunctionWriter('postTask');
 
     const formatFileForContract = (filelist: []) => {
         return filelist.map((file: any) => {
@@ -73,9 +70,7 @@ const TranCandidate = () => {
 
     // 需求方选择翻译者并发单
     const handleChoosePledge = async (tasker: string) => {
-        console.log('current row address', tasker);
         setIsPledgeLoading(true);
-        const amphi = await getAmphi();
 
         const translationPro = [
             detailData.buyerAddress, // 发布者
@@ -128,27 +123,30 @@ const TranCandidate = () => {
         //     state: detailData.translationState, // 项目状态
         //     translationIndex: detailData.translationIndex
         // };
-        console.log(translationPro);
-        amphi.methods
-            .postTask(translationPro)
-            .call()
-            .then((data: any) => {
-                console.log('postTask', typeof data);
-                if (typeof data === 'object') {
-                    message.success('Choose & pledge successfully!');
-                    dispath(getTaskIndex(data));
-                    dispath(getCurrentStep(2));
-                    // window.location.reload();
+
+        // console.log(translationPro);
+
+        try {
+            writeAsync?.({
+                args: [translationPro]
+            }).then(tx => {
+                if (tx) {
+                    console.log(tx);
+                    if (tx.hash) {
+                        message.success('Choose & pledge successfully!');
+                        setIsPledgeLoading(false);
+                        dispath(getCurrentStep(2));
+                    } else {
+                        message.error('Choose & pledge failed !');
+                    }
                 } else {
                     message.error('Choose & pledge failed !');
                 }
-                setIsPledgeLoading(false);
-            })
-            .catch((err: any) => {
-                setIsPledgeLoading(false);
-                message.error('Contract request error, please try again!');
-                console.log('err', err);
             });
+        } catch (err: any) {
+            message.error('Choose & pledge failed !');
+            console.log('catch error', err);
+        }
     };
 
     // 查看翻译者简介
@@ -156,7 +154,8 @@ const TranCandidate = () => {
         navigate(`/portfolio/?address=${address}`);
     };
 
-    const hanldeERC20Approve = async (tasker: string) => {
+    /*     const hanldeERC20Approve = async (tasker: string) => {
+        getNonce();
         const erc20 = await getNewErc20();
         erc20.methods
             .approve(
@@ -174,7 +173,7 @@ const TranCandidate = () => {
                 console.log('erc20 err', err);
             });
     };
-
+ */
     const handleTableData = (data: []) => {
         return data.map((item: any) => {
             return {
@@ -282,7 +281,7 @@ const TranCandidate = () => {
                         <IconButton
                             text='Choose & pledge'
                             icon={PledgeIcon}
-                            onClick={() => hanldeERC20Approve(record.address)}
+                            onClick={() => handleChoosePledge(record.address)}
                         />
                     </Space>
                 );

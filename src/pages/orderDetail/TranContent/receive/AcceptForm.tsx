@@ -2,8 +2,9 @@ import React, { useImperativeHandle, useState } from 'react';
 import { Button, Form, Modal, Rate, Space, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { translationIndex, getCurrentStep } from '@/store/reducers/orderDetailSlice';
-import { getAmphi } from '@/contracts/contract';
+// import { getAmphi } from '@/contracts/contract';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { useAmphiFactoryFunctionWriter } from '@/hooks/useAmphi';
 
 // import BigNumber from 'bignumber.js';
 import api from '@/api';
@@ -19,6 +20,7 @@ const AcceptForm = ({ onRef }: Iprops) => {
     const transIndex = useAppSelector(translationIndex);
     const [isSatisty, setIsSatisty] = useState(1);
     const dispath = useAppDispatch();
+    const { writeAsync } = useAmphiFactoryFunctionWriter('receiveTask');
 
     console.log(transIndex);
 
@@ -45,33 +47,55 @@ const AcceptForm = ({ onRef }: Iprops) => {
     };
 
     const handleOk = async () => {
-        console.log(form.getFieldsValue());
-        const amphi = await getAmphi();
-        const acceptParmas = {
-            ...form.getFieldsValue(),
-            machine: isSatisty,
-            translationIndex: transIndex
-        };
-        const pro = {
-            index: transIndex,
-            isPass: true,
-            file: '',
-            illustrate: ''
-        };
+        // console.log(form.getFieldsValue());
+        // const amphi = await getAmphi();
+        // const acceptParmas = {
+        //     ...form.getFieldsValue(),
+        //     machine: isSatisty,
+        //     translationIndex: transIndex
+        // };
+        const pro = [transIndex, true, '', ''];
+        // const pro = {
+        //     index: transIndex,
+        //     isPass: true,
+        //     file: '',
+        //     illustrate: ''
+        // };
         console.log('accept param', pro);
-        amphi.methods
-            .receiveTask(pro.index, pro.isPass, pro.file, pro.illustrate)
-            .call()
-            .then((data: any) => {
-                console.log('accept res', data);
-
-                console.log('final param', acceptParmas);
-                handleSubmit(acceptParmas);
-                setIsModalOpen(false);
-            })
-            .catch((err: any) => {
-                console.log('err', err);
+        try {
+            writeAsync?.({
+                args: pro
+            }).then((tx: { hash: any }) => {
+                if (tx) {
+                    console.log(tx);
+                    if (tx.hash) {
+                        message.success('Choose & pledge successfully!');
+                        // setIsPledgeLoading(false);
+                        dispath(getCurrentStep(3));
+                    } else {
+                        message.error('Choose & pledge failed !');
+                    }
+                } else {
+                    message.error('Choose & pledge failed !');
+                }
             });
+        } catch (err: any) {
+            message.error('Choose & pledge failed !');
+            console.log('catch error', err);
+        }
+        // amphi.methods
+        //     .receiveTask(pro.index, pro.isPass, pro.file, pro.illustrate)
+        //     .call()
+        //     .then((data: any) => {
+        //         console.log('accept res', data);
+
+        //         console.log('final param', acceptParmas);
+        //         handleSubmit(acceptParmas);
+        //         setIsModalOpen(false);
+        //     })
+        //     .catch((err: any) => {
+        //         console.log('err', err);
+        //     });
     };
 
     const handleCancel = () => {

@@ -78,4 +78,4 @@ export const FilecoinHyperspaceTestnet: Chain = {
 };
 
 // export const ChainDetail = TestMode ? TestChainDetail : MainChainDetail;
-export const ChainDetail = TestMode ? FilecoinHyperspaceTestnet : MumbaiChainDetail;
+export const ChainDetail = TestMode ? FilecoinHyperspaceTestnet : MoonbeamMainChainDetail;

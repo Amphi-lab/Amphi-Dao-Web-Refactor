@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { Space, Tooltip, message } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import { useNavigate } from 'react-router';
+import dayjs from 'dayjs';
+
 import AmTable from '@/components/Table';
 import AmCard from '@/components/Card';
-import type { ColumnsType } from 'antd/es/table';
 import api from '@/api';
-import { Space, Tooltip, message } from 'antd';
 import IconButton from '@/components/IconButton';
 import ViewIcon from '@/components/Icon/View';
 import PledgeIcon from '@/components/Icon/Pledge';
+import AvatarLabel from '@/components/AvatarLabel';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import {
     translationIndex,
@@ -15,9 +19,7 @@ import {
     getCurrentStep
 } from '@/store/reducers/orderDetailSlice';
 // import BigNumber from 'bignumber.js';
-import { useNavigate } from 'react-router';
 import { getAmphi } from '@/contracts/contract';
-import dayjs from 'dayjs';
 import { optionsMap } from '@/utils/array';
 import { languages } from '@/constants/selcet.json';
 // import { web3 } from '@/contracts/config';
@@ -187,12 +189,12 @@ const TranCandidate = () => {
             title: 'Candidate',
             dataIndex: 'candidate',
             key: 'candidate',
+            width: 150,
             render: (value, record) => {
                 return (
                     <>
                         <Space className={styles.candidate}>
-                            <img className={styles.avatar} src={record.avatar} alt='' />
-                            <span>{record.name}</span>
+                            <AvatarLabel avatar={record.avatar} seed={record} label={record.name} />
                         </Space>
                         <img src={record.wordsSbt} alt='' />
                     </>
@@ -275,6 +277,7 @@ const TranCandidate = () => {
                 data={tableData}
                 defaultActiveKey='1'
                 bordered
+                scroll={{ x: 'max-content' }}
                 loading={isPledgeLoading}
             />
         </AmCard>

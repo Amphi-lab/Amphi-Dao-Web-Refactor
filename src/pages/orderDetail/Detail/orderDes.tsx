@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, message } from 'antd';
 import copyIcon from '@/assets/svg/icon-copy.svg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import api from '@/api';
 import { currentLanguages } from '@/constants/selcet.json';
 import { optionsMap } from '@/utils/array';
@@ -69,8 +69,11 @@ const OrderDes = () => {
     const dispatch = useAppDispatch();
     const clipboard = useClipboard();
     const location = useLocation();
-    const id = location.state || +location.pathname.split('/')[2];
+    const searchParams = useParams();
+    const { id } = location.state || searchParams;
     const [details, setDetails] = useState({});
+
+    console.log(id);
 
     useEffect(() => {
         api.getOrderDetail(id).then((res: any) => {

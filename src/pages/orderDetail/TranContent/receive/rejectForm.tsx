@@ -1,11 +1,12 @@
 import React, { useImperativeHandle, useState } from 'react';
-import { Form, Modal } from 'antd';
+import { Form, Modal, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { translationIndex, getCurrentStep } from '@/store/reducers/orderDetailSlice';
 
-import { getAmphi } from '@/contracts/contract';
+// import { getAmphi } from '@/contracts/contract';
 // import BigNumber from 'bignumber.js';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { useAmphiFactoryFunctionWriter } from '@/hooks/useAmphi';
 
 type Iprops = {
     onRef?: any;
@@ -16,6 +17,8 @@ const RejectForm = ({ onRef }: Iprops) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const transIndex = useAppSelector(translationIndex);
     const dispath = useAppDispatch();
+    const { writeAsync } = useAmphiFactoryFunctionWriter('receiveTask');
+    const [isLoading, setIsLoading] = useState(false);
 
     // console.log(transIndex);
 
@@ -33,27 +36,52 @@ const RejectForm = ({ onRef }: Iprops) => {
 
     const handleOk = async () => {
         console.log('reject confirm', form.getFieldsValue());
-        const amphi = await getAmphi();
+        setIsLoading(true);
+        // const amphi = await getAmphi();
 
         // reject api
-        const rejectPro = {
-            index: transIndex,
-            isPass: false,
-            file: '',
-            illustrate: form.getFieldValue('rejectReason') || ''
-        };
-        console.log('reject param', rejectPro);
-        amphi.methods
-            .receiveTask(rejectPro.index, rejectPro.isPass, rejectPro.file, rejectPro.illustrate)
-            .call()
-            .then((data: any) => {
-                console.log('reject res', data);
-                setIsModalOpen(false);
-                dispath(getCurrentStep(1));
-            })
-            .catch((err: any) => {
-                console.log('err', err);
+        const pro = [transIndex, false, '', form.getFieldValue('rejectReason') || ''];
+        // const rejectPro = {
+        //     index: transIndex,
+        //     isPass: false,
+        //     file: '',
+        //     illustrate: form.getFieldValue('rejectReason') || ''
+        // };
+        console.log('reject param', pro);
+        try {
+            writeAsync?.({
+                args: pro
+            }).then((tx: { hash: any }) => {
+                if (tx) {
+                    console.log(tx);
+                    if (tx.hash) {
+                        message.success('Reject successfully!');
+                        setIsLoading(false);
+                        setIsModalOpen(false);
+                        dispath(getCurrentStep(1));
+                    } else {
+                        message.error('Reject failed !');
+                    }
+                } else {
+                    message.error('Reject failed !');
+                }
             });
+        } catch (err: any) {
+            message.error('Reject failed !');
+            console.log('catch error', err);
+        }
+
+        // amphi.methods
+        //     .receiveTask(rejectPro.index, rejectPro.isPass, rejectPro.file, rejectPro.illustrate)
+        //     .call()
+        //     .then((data: any) => {
+        //         console.log('reject res', data);
+        //         setIsModalOpen(false);
+        //         dispath(getCurrentStep(1));
+        //     })
+        //     .catch((err: any) => {
+        //         console.log('err', err);
+        //     });
     };
 
     const handleCancel = () => {
@@ -75,6 +103,7 @@ const RejectForm = ({ onRef }: Iprops) => {
             okText='Confirm'
             onOk={handleOk}
             onCancel={handleCancel}
+            confirmLoading={isLoading}
         >
             <Form
                 name='reject-form'

@@ -65,6 +65,7 @@ export const counterSlice = createSlice({
             initCurrentStep(state.currentStep, state.translationState);
         },
         getCurrentStep: (state, action: PayloadAction<number>) => {
+            console.log(action.payload);
             state.currentStep = action.payload;
         },
         getTranslationFileList: (state, action: PayloadAction<[]>) => {

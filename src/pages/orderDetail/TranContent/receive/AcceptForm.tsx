@@ -21,8 +21,9 @@ const AcceptForm = ({ onRef }: Iprops) => {
     const [isSatisty, setIsSatisty] = useState(1);
     const dispath = useAppDispatch();
     const { writeAsync } = useAmphiFactoryFunctionWriter('receiveTask');
+    const [isLoading, setIsLoading] = useState(false);
 
-    console.log(transIndex);
+    // console.log(transIndex);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -47,13 +48,7 @@ const AcceptForm = ({ onRef }: Iprops) => {
     };
 
     const handleOk = async () => {
-        // console.log(form.getFieldsValue());
-        // const amphi = await getAmphi();
-        // const acceptParmas = {
-        //     ...form.getFieldsValue(),
-        //     machine: isSatisty,
-        //     translationIndex: transIndex
-        // };
+        setIsLoading(true);
         const pro = [transIndex, true, '', ''];
         // const pro = {
         //     index: transIndex,
@@ -69,33 +64,21 @@ const AcceptForm = ({ onRef }: Iprops) => {
                 if (tx) {
                     console.log(tx);
                     if (tx.hash) {
-                        message.success('Choose & pledge successfully!');
-                        // setIsPledgeLoading(false);
+                        message.success('Accept successfully!');
+                        setIsLoading(false);
+                        setIsModalOpen(false);
                         dispath(getCurrentStep(3));
                     } else {
-                        message.error('Choose & pledge failed !');
+                        message.error('Accept failed !');
                     }
                 } else {
-                    message.error('Choose & pledge failed !');
+                    message.error('Accept failed !');
                 }
             });
         } catch (err: any) {
-            message.error('Choose & pledge failed !');
+            message.error('Accept failed !');
             console.log('catch error', err);
         }
-        // amphi.methods
-        //     .receiveTask(pro.index, pro.isPass, pro.file, pro.illustrate)
-        //     .call()
-        //     .then((data: any) => {
-        //         console.log('accept res', data);
-
-        //         console.log('final param', acceptParmas);
-        //         handleSubmit(acceptParmas);
-        //         setIsModalOpen(false);
-        //     })
-        //     .catch((err: any) => {
-        //         console.log('err', err);
-        //     });
     };
 
     const handleCancel = () => {
@@ -127,6 +110,7 @@ const AcceptForm = ({ onRef }: Iprops) => {
             open={isModalOpen}
             okText='Confirm'
             onOk={handleOk}
+            confirmLoading={isLoading}
             onCancel={handleCancel}
         >
             <Space style={{ marginBottom: '10px' }}>

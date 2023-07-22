@@ -14,8 +14,8 @@ import { DefaultPageSize } from '@/contracts/constants';
 import { TranslationItemActionType } from '@/components/Translation/Item';
 
 import './index.scss';
-import { useAccount } from 'wagmi';
 import { useNavigate } from 'react-router';
+import MessageModalWrap from '@/pageComponents/translation/MessageModalWrap';
 
 type FormValues = { translationTypeArray?: string[]; languageArray: string[]; sortBy?: string };
 
@@ -52,8 +52,10 @@ function formatQueryParams(formValues: FormValues, pageNum = 1) {
 export default function Translations() {
     const ref = React.useRef<QueryContentLayoutRef>(null);
 
-    const { address } = useAccount();
     const navigate = useNavigate();
+
+    const [translationIndex, setTranslationIndex] = useState<number | undefined>();
+    const [messageModalOpen, setMessageModalOpen] = useState(false);
     const [pageState, setPageState] = useState({
         pageNum: 1,
         total: 0
@@ -118,23 +120,16 @@ export default function Translations() {
         [fetchTranslationList]
     );
     const handleAction = useCallback(
-        (type: TranslationItemActionType, { translationIndex }: ITransaction) => {
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        (type: TranslationItemActionType, { translationIndex, id }: ITransaction) => {
             if (type === TranslationItemActionType.VIEW_DETAIL) {
-                // empty
+                navigate(`/translation/${id}`);
             } else if (type === TranslationItemActionType.APPLY) {
-                if (address) {
-                    api.postTranslationApply({
-                        translationIndex,
-                        address
-                    }).then((res: { code: number }) => {
-                        if (res.code === 200) {
-                            navigate('/workspace');
-                        }
-                    });
-                }
+                setTranslationIndex(translationIndex);
+                setMessageModalOpen(true);
             }
         },
-        [address, navigate]
+        [navigate]
     );
 
     useEffect(() => {
@@ -153,6 +148,12 @@ export default function Translations() {
             onPageChange={handlePageChange}
         >
             <TranslationList translations={translations} onAction={handleAction} />
+            <MessageModalWrap
+                translationIndex={translationIndex}
+                open={messageModalOpen}
+                onApplyResult={() => setTranslationIndex(undefined)}
+                onCancel={() => setMessageModalOpen(false)}
+            />
         </QueryContentLayout>
     );
 }

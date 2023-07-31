@@ -1,3 +1,5 @@
+import { stringify } from 'qs';
+
 import { post, get, deleteFetch } from '../axios';
 
 // confirm order
@@ -25,7 +27,8 @@ export const getCandidateList = (data: any) => get('/translator/applyingList', d
  * @param {any} formDaata:translationIndex
  * @return {*}
  */
-export const getDiscussions = (data: any) => get('/comment/list', data);
+export const getDiscussions = (data: any) => get(`/comment/list?${stringify(data)}`);
+export const sendCandidate = (data: any) => post('/evalution/save', data);
 
 /**
  * @description:订单完成后评价

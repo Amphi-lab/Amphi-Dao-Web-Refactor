@@ -1,20 +1,5 @@
 .translation-detail-wrapper {
-  margin-top: 16px;
-  padding: 16px 120px 0;
-}
-
-.translation-detail-top-nav {
-  @include layout($horizontal: flex-start);
-  padding: 16px;
-  cursor: pointer;
-
-  .nav-ver-bar {
-    margin: 0 12px;
-  }
-
-  span {
-    @include font($size: 14px, $weight: 400, $lineH: 22px);
-  }
+  width: inherit;
 }
 
 .confirm-btn {

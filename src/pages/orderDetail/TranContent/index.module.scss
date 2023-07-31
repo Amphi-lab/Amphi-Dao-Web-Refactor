@@ -28,6 +28,10 @@
     padding: 8px;
   }
 
+  .workspace-sub-card-content {
+    @include layout($horizontal: space-between);
+  }
+
   .sub-card-human-content {
     @include font($size: 14px, $color: #969aa0, $weight: 400, $lineH: 20px);
     padding: 12px;

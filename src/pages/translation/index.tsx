@@ -15,7 +15,7 @@ import { TranslationItemActionType } from '@/components/Translation/Item';
 
 import './index.scss';
 import { useNavigate } from 'react-router';
-import MessageModalWrap from '@/pageComponents/translation/MessageModalWrap';
+import MessageModalWrap from '@/pageComponents/others/MessageModalWrap';
 
 type FormValues = { translationTypeArray?: string[]; languageArray: string[]; sortBy?: string };
 

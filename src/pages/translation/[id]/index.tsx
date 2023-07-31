@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
 import { Descriptions, Button } from 'antd';
 import { TranslationOutlined } from '@ant-design/icons';
+import { useParams } from 'react-router';
 
 import { currentLanguages, jobFunctions } from '@/constants/selcet.json';
 import AmCard from '@/components/Card';
-import arrowLeft from '@/assets/svg/arrow-left.svg';
-import verBar from '@/assets/svg/vertical-bar.svg';
 import { amountFromToken } from '@/utils/number';
 import { optionsMap } from '@/utils/array';
 import AvatarLabel from '@/components/AvatarLabel';
+import MessageModalWrap from '@/pageComponents/others/MessageModalWrap';
+import BackTopNav from '@/pageComponents/others/BackTopNav';
+import BaseLayout from '@/layout/BaseLayout';
 import api from '@/api';
 
 import './index.scss';
-import MessageModalWrap from '@/pageComponents/translation/MessageModalWrap';
 
 const cardStyle = {
     background: '#FFF',
@@ -21,15 +21,10 @@ const cardStyle = {
 };
 
 export default function TranslationDetail() {
-    const navigate = useNavigate();
     const { id } = useParams();
 
     const [messageModalOpen, setMessageModalOpen] = useState(false);
     const [detail, setDetail] = useState<any>();
-
-    const backToMyOrder = () => {
-        navigate(-1);
-    };
 
     useEffect(() => {
         if (id) {
@@ -51,14 +46,8 @@ export default function TranslationDetail() {
     }, [id]);
 
     return (
-        <div className='translation-detail-wrapper'>
-            <AmCard cardStyle={cardStyle}>
-                <div className='translation-detail-top-nav' onClick={backToMyOrder}>
-                    <img src={arrowLeft} alt='' />
-                    <img src={verBar} alt='' className='nav-ver-bar' />
-                    <span>Back to the list</span>
-                </div>
-            </AmCard>
+        <BaseLayout className='translation-detail-wrapper'>
+            <BackTopNav title='Back to the list' />
 
             <AmCard
                 title={detail?.title}
@@ -123,6 +112,6 @@ export default function TranslationDetail() {
                     </Button>
                 </MessageModalWrap>
             </AmCard>
-        </div>
+        </BaseLayout>
     );
 }

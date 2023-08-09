@@ -30,26 +30,28 @@ const { Meta } = Card;
 
 const dataList = [
     {
-        title: 'Decentralized',
+        title: 'Global Language Service Network',
         imageUrl: ImageAbout1,
         description:
-            'Increase translation process efficiency, One-station language service platform.'
+            'By aggregating global language service providers, it breaks geographical limitations and allows efficient allocation of worldwide language resources.'
     },
     {
-        title: 'Earn',
+        title: 'Decentralized Project Management',
         imageUrl: ImageAbout2,
-        description: 'Increase accuracy of AI model with specific database.'
+        description:
+            'Projects are initiated and organized on a decentralized platform, reducing intermediaries and fostering efficiency and direct engagement.'
     },
     {
-        title: 'Trustless',
+        title: 'AI Assistance for Efficiency',
         imageUrl: ImageAbout3,
         description:
-            'More convenient settlement, native web3 Dapp supports cryptocurrency payments.'
+            'The application of AI in language services, such as automatic translation and voice recognition, greatly boosts efficiency and focus.'
     },
     {
-        title: 'Transparemt',
+        title: 'Metaverse for Transactions and Socializing',
         imageUrl: ImageAbout4,
-        description: 'Translator build influence in Amphi and sync propagate to the world.'
+        description:
+            'All services and transactions occur within the built metaverse, offering a more free, direct, and enriching exchange and social experience.'
     }
 ];
 

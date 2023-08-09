@@ -1,6 +1,6 @@
 # amphi-dao for translate 
 
-npm install
+pnpm install
 
 
 # How to run project

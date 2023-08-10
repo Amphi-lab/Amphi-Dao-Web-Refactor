@@ -1,9 +1,9 @@
 import React from 'react';
-import PageTitle from '@/components/PageTitle';
-import RequestForm from './Form';
-import SummaryCard from './Summary';
-import TotalCostCard from './TotalCost';
-import styles from './index.module.scss';
+import PageTitle from '@/components/PageTitle'; // 引入自定义的 PageTitle 组件
+import RequestForm from './Form'; // 引入本地的 RequestForm 组件
+import SummaryCard from './Summary'; // 引入本地的 SummaryCard 组件
+import TotalCostCard from './TotalCost'; // 引入本地的 TotalCostCard 组件
+import styles from './index.module.scss'; // 导入 CSS 模块的样式
 
 const RequestTranslation = () => {
     return (
@@ -23,4 +23,4 @@ const RequestTranslation = () => {
     );
 };
 
-export default RequestTranslation;
+export default RequestTranslation; // 导出 RequestTranslation 组件

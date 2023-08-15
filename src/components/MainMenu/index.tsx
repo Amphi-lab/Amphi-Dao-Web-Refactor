@@ -59,29 +59,25 @@ const items: MenuProps['items'] = [
                 // key:'https://testnets.opensea.io/zh-CN/collection/amphipass-2'
             }
         ]
+    },
+    {
+        label: 'Translation Competition',
+        key: 'competition',
+        children: [
+            {
+                label: (
+                    <a href='https://forms.gle/w1hiSKuj3F8K8zp16' target='_blank' rel='noreferrer'>
+                        Join
+                    </a>
+                ),
+                key: 'whitepaper'
+            },
+            {
+                label: 'FAQ',
+                key: 'faq'
+            }
+        ]
     }
-    // {
-    //     label: 'LEARN',
-    //     key: 'learn',
-    //     children: [
-    //         {
-    //             label: (
-    //                 <a
-    //                     href='https://drive.google.com/file/d/1nfm84w4o458WKZ7wQU9omx5EnAtKplNw/view'
-    //                     target='_blank'
-    //                     rel='noreferrer'
-    //                 >
-    //                     Whitepaper
-    //                 </a>
-    //             ),
-    //             key: 'whitepaper'
-    //         },
-    //         {
-    //             label: 'FAQ',
-    //             key: 'faq'
-    //         }
-    //     ]
-    // }
 ];
 
 const App: React.FC = () => {

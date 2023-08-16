@@ -10,7 +10,7 @@ import ImageAbout3 from '@/assets/images/about3.png';
 import ImageAbout4 from '@/assets/images/about4.png';
 import HomeSection from '@/pageComponents/home/HomeSection';
 import Bounties from '@/pageComponents/home/Bounties';
-import Translators from '@/pageComponents/home/Translators';
+// import Translators from '@/pageComponents/home/Translators';
 import './index.scss';
 
 const { Meta } = Card;
@@ -63,7 +63,7 @@ const index: FC = () => {
             {/* Earn Bounties by Translating */}
             <Bounties />
             {/* Our Translators */}
-            <Translators />
+            {/* <Translators /> */}
             {/* Get your professional translation */}
             <HomeSection
                 className='home-prof-translation'

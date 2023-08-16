@@ -87,11 +87,11 @@ export default [
                     {
                         id: 1,
                         userId: 1,
-                        username: 'aaa',
+                        username: 'kim',
                         address: '0x867f1469356D37313406b75c461fA057c829c749',
                         profile: 'ipfs.nft.io/demo.json',
                         languages: null,
-                        orders: 10,
+                        orders: 30,
                         score: 9.0,
                         latestAcceptTime: '2023-06-09T14:31:18.000+00:00'
                     }

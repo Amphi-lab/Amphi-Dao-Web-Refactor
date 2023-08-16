@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import logo from '@/assets/svg/logo.svg';
 import MainMenu from '../MainMenu';
 import ConnectWallet from '../ConnectWallet';
+// import EmailLogin from '../EmailLogin';
 import styles from './index.module.scss';
 
 const { Header } = Layout;

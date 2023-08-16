@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 const items: MenuProps['items'] = [
     {
-        label: 'START',
+        label: 'Bounty',
         key: 'start',
         children: [
             {
@@ -61,7 +61,7 @@ const items: MenuProps['items'] = [
         ]
     },
     {
-        label: 'Translation Competition',
+        label: 'Competition',
         key: 'competition',
         children: [
             {

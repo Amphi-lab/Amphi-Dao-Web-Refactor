@@ -1,7 +1,11 @@
-# amphi-dao for translate 
-
+# Build project (will  add node_modules)
+```shell
 pnpm install
+```
 
 
-# How to run project
+# Run project
+```shell
 npm run  dev
+```
+

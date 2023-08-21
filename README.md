@@ -6,7 +6,7 @@ pnpm install
 
 # Run project
 ```shell
-npm run  dev
+npm run dev
 ```
 
 

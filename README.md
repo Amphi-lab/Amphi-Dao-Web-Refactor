@@ -18,7 +18,7 @@ npx -p @storybook/cli sb init --type react_scripts
 
 ## 启动你的storybook组件库项目
 ```shell
-yarn storybook
+yarn storybook 1
 ```
 or use 
 ```shell

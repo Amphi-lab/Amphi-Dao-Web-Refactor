@@ -17,30 +17,8 @@ const items: MenuProps['items'] = [
                 label: 'Translation',
                 key: 'translation'
             }
-            // {
-            //     label: 'Validation',
-            //     key: 'validation'
-            // }
         ]
     },
-    // {
-    //     label: 'WORKSPACE',
-    //     key: 'workspace',
-    //     children: [
-    //         {
-    //             label: 'Dashboard',
-    //             key: 'dashboard'
-    //         },
-    //         {
-    //             label: 'Task List',
-    //             key: 'taskList'
-    //         },
-    //         {
-    //             label: 'Acceptance List',
-    //             key: 'acceptanceList'
-    //         }
-    //     ]
-    // },
     {
         label: 'NFT',
         key: 'nft',

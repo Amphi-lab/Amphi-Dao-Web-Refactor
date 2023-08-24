@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-// eslint-disable-next-line import/no-duplicates
-import { message, Button } from 'antd'; // 用于显示成功消息，你可能需要根据你的项目使用其他库或组件
-import api from '@/api'; // 替换为你的API服务路径
+import { message } from 'antd'; // 用于显示成功消息，你可能需要根据你的项目使用其他库或组件
+// import api from 'path-to-your-api-service'; // 替换为你的API服务路径
 // import storage, { storageKeys } from 'path-to-your-storage-service'; // 替换为你的存储服务路径
 
 const EmailLogin = () => {
@@ -72,13 +71,10 @@ const EmailLogin = () => {
                     onChange={e => setVerificationCode(e.target.value)}
                 />
             )}
-            <Button
-                type='primary' // 主要类型
-                shape='round' // 圆角形状
-                onClick={handleButtonClick}
-            >
+            {/* eslint-disable-next-line react/button-has-type */}
+            <button onClick={handleButtonClick}>
                 {isVerificationSent ? '使用邮箱登录' : '邮箱注册（登录）'}
-            </Button>
+            </button>
             {loginError && <div>{loginError}</div>}
         </div>
     );

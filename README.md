@@ -9,15 +9,6 @@ pnpm install
 npm run dev
 ```
 
-# Test Tool: [Cypress](https://www.cypress.io)
-```shell
-npm install cypress --save-dev
-```
-
-```shell (after start npm run dev)
-npx cypress open
-```
-
 # [Storybook](https://storybook.js.org/docs/react/get-started/install)
 ```shell
 pnpm dlx storybook@latest init
@@ -26,6 +17,15 @@ pnpm dlx storybook@latest init
 ## 启动你的storybook组件库项目
 ```shell
 yarn storybook
+```
+
+# Test Tool: [Cypress](https://www.cypress.io)
+```shell
+npm install cypress --save-dev
+```
+
+```shell (after start npm run dev)
+npx cypress open
 ```
 
 # Reference:

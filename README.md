@@ -9,7 +9,7 @@ pnpm install
 npm run dev
 ```
 
-# Test [Cypress](https://www.cypress.io)
+# Test Tool: [Cypress](https://www.cypress.io)
 ```shell
 npm install cypress --save-dev
 ```

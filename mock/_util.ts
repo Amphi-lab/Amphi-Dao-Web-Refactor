@@ -10,7 +10,7 @@ export function resultSuccess<T = Recordable>(result: T, { message = 'ok' } = {}
         code: ResultEnum.SUCCESS,
         result,
         message,
-        type: 'success',
+        type: 'success'
     };
 }
 
@@ -18,28 +18,29 @@ export function resultPageSuccess<T = any>(
     page: number,
     pageSize: number,
     list: T[],
-    { message = 'ok' } = {},
+    { message = 'ok' } = {}
 ) {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const pageData = pagination(page, pageSize, list);
 
     return {
         ...resultSuccess({
             items: pageData,
-            total: list.length,
+            total: list.length
         }),
-        message,
+        message
     };
 }
 
 export function resultError(
     message = 'Request failed',
-    { code = ResultEnum.ERROR, result = null } = {},
+    { code = ResultEnum.ERROR, result = null } = {}
 ) {
     return {
         code,
         result,
         message,
-        type: 'error',
+        type: 'error'
     };
 }
 

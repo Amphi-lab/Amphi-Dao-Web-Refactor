@@ -23,7 +23,7 @@
         "jsx": "react-jsx",
         "types": ["vite/client", "node"]
     },
-    "include": ["src", "mock", ".eslintrc.cjs", "commitlint.config.cjs"],
+    "include": ["src", "mock", ".eslintrc.cjs", "commitlint.config.cjs", ".storybook/**/*.ts", "cypress/**/*.ts", "cypress.config.ts"],
     "references": [
         {
             "path": "./tsconfig.node.json"

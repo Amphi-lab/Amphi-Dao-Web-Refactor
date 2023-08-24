@@ -24,7 +24,7 @@ or use
 ```shell
 npm run storybook 
 ```
-
+1
 # Reference:
 
 ## 1. [Fontend documents for Amphi project](https://kxez5oqjhd.feishu.cn/docx/Ag8Rdf0RnoRBr3x5cOncUzQmnSe)

@@ -3,14 +3,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-
-import '@rainbow-me/rainbowkit/styles.css';
-import { metaMaskWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets';
-import { ConnectButton, connectorsForWallets } from '@rainbow-me/rainbowkit';
-
-import type { Chain } from 'wagmi';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import { configureChains, createConfig, useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { DynamicWidget, useDynamicContext,DynamicUserProfile } from '@dynamic-labs/sdk-react';
+import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 
 import api from '@/api';
 // import { refreshAPIToken } from '@/api/axios';
@@ -21,6 +15,8 @@ import ArrowDown from '@/assets/svg/arrow-down-solid.svg';
 import type { MenuProps } from 'antd';
 import { message, Dropdown } from 'antd';
 import styles from './index.module.scss';
+
+
 
 const items: any = [
     {
@@ -48,94 +44,26 @@ const items: any = [
     }
 ];
 
-/* const mumbaiChain: Chain = {
-    id: 80001,
-    name: 'Mumbai',
-    network: 'Mumbai',
-    // iconUrl: 'https://example.com/icon.svg',
-    // iconBackground: '#fff',
-    nativeCurrency: {
-        name: 'MATIC',
-        symbol: 'MATIC',
-        decimals: 18
-    },
-    rpcUrls: {
-        default: {
-            http: ['https://rpc-mumbai.maticvigil.com']
-        },
-        public: {
-            http: ['https://rpc-mumbai.maticvigil.com']
-        }
-    },
-    blockExplorers: {
-        default: { name: 'SnowTrace', url: 'https://mumbai.polygonscan.com/' }
-    },
-    testnet: true
-}; */
-const moonbeamChain: Chain = {
-    id: 1287,
-    name: 'Moonbase Alpha',
-    network: 'Moonbase Alpha',
-    // iconUrl: 'https://example.com/icon.svg',
-    // iconBackground: '#fff',
-    nativeCurrency: {
-        name: 'GLMR',
-        symbol: 'GLMR',
-        decimals: 18
-    },
-    rpcUrls: {
-        default: {
-            http: ['https://rpc.api.moonbase.moonbeam.network']
-        },
-        public: {
-            http: ['https://rpc.api.moonbase.moonbeam.network']
-        }
-    },
-    blockExplorers: {
-        default: { name: 'SnowTrace', url: 'https://moonbase.moonscan.io/' }
-    },
-    testnet: true
-};
-
-const { chains, publicClient } = configureChains(
-    [moonbeamChain],
-    [
-        jsonRpcProvider({
-            rpc: chain => ({ http: chain.rpcUrls.default.http[0] })
-        })
-    ]
-);
-
-const connectors = connectorsForWallets([
-    {
-        groupName: 'Recommended',
-        wallets: [
-            injectedWallet({ chains }),
-            metaMaskWallet({
-                chains,
-                projectId: '2072a5454eeabccffc2fffda4c3c0b26',
-                shimDisconnect: true
-            })
-        ]
-    }
-]);
-
-const wagmiConfig = createConfig({
-    autoConnect: true,
-    connectors,
-    publicClient
-});
-
-export { wagmiConfig, chains };
-
 const ConnectWallet = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [nonce, setNonce] = useState('');
+    const [balance, setBalance] = useState(null);
     const { data: signature, signMessageAsync } = useSignMessage();
     const { address, isConnected, isDisconnected } = useAccount();
+    console.log(useAccount(), useDynamicContext())
     const addressInfo = useRef({ address });
     const { disconnect } = useDisconnect();
     const navigate = useNavigate();
+    // const { chain } = useNetwork();
+    const {
+        // handleLogOut,
+        setShowAuthFlow,
+        // showAuthFlow,
+        primaryWallet,
+        user,
+        setShowDynamicUserProfile
+    } = useDynamicContext();
+
 
     const handleMenuClick: MenuProps['onClick'] = e => {
         // message.info('Click on menu item.');
@@ -181,14 +109,14 @@ const ConnectWallet = () => {
                 signature
             });
             if (res.code === 200) {
-                const user = res.data;
+                const _user = res.data;
                 if (userInfo !== user) {
-                    setUserInfo(user);
+                    setUserInfo(_user);
                 }
 
-                const accessToken = user.token;
+                const accessToken = _user.token;
                 storage.setLocalStorage(storageKeys.AMPHI_USERTOKEN, accessToken);
-                storage.setLocalStorage(storageKeys.EXPIRE_TIME, user?.expireTime.toString());
+                storage.setLocalStorage(storageKeys.EXPIRE_TIME, _user?.expireTime.toString());
                 storage.setLocalStorage(storageKeys.CURRENT_ADDRESS, address as string);
                 // refreshAPIToken();
                 addressInfo.current.address = address;
@@ -280,91 +208,52 @@ const ConnectWallet = () => {
         })();
     }, [address]);
 
+    // 查询余额
+    useEffect(() => {
+        const fetchBalance = async () => {
+            if (primaryWallet) {
+                const value = await primaryWallet.connector.getBalance();
+                setBalance(value as any);
+            }
+        };
+        fetchBalance();
+    }, [primaryWallet]);
+
     return (
-        <ConnectButton.Custom>
-            {({
-                account,
-                chain,
-                openAccountModal,
-                openChainModal,
-                openConnectModal,
-                authenticationStatus,
-                mounted
-            }) => {
-                // console.log(account);
-                // Note: If your app doesn't use authentication, you
-                // can remove all 'authenticationStatus' checks
-                const ready = mounted && authenticationStatus !== 'loading';
-                const connected =
-                    ready &&
-                    account &&
-                    chain &&
-                    (!authenticationStatus || authenticationStatus === 'authenticated');
-                return (
-                    <div
-                        {...(!ready && {
-                            'aria-hidden': true,
-                            style: {
-                                opacity: 0,
-                                pointerEvents: 'none',
-                                userSelect: 'none'
-                            }
-                        })}
-                    >
-                        {(() => {
-                            if (!connected) {
-                                return (
-                                    <button
-                                        onClick={openConnectModal}
-                                        type='button'
-                                        className={styles['wallet-btn']}
-                                    >
-                                        Connect Wallet
-                                    </button>
-                                );
-                            }
-
-                            if (chain.unsupported) {
-                                return (
-                                    <button
-                                        onClick={openChainModal}
-                                        type='button'
-                                        className={`${styles['wallet-btn']} ${styles.wrong}`}
-                                    >
-                                        Wrong network
-                                    </button>
-                                );
-                            }
-
-                            return (
-                                <Dropdown
-                                    menu={menuProps}
-                                    overlayClassName={styles['home-person-menu']}
-                                >
-                                    <div style={{ display: 'flex' }}>
-                                        <img
-                                            src={account.ensAvatar || DefaultAvatar}
-                                            alt='avatar'
-                                        />
-                                        <button
-                                            onClick={openAccountModal}
-                                            type='button'
-                                            className={styles['connected-btn']}
-                                        >
-                                            {account.displayName}
-                                            {account.displayBalance
-                                                ? ` (${account.displayBalance})`
-                                                : ''}
-                                        </button>
-                                        <img src={ArrowDown} alt='' />
-                                    </div>
-                                </Dropdown>
-                            );
-                        })()}
-                    </div>
-                );
-            }}
-        </ConnectButton.Custom>
+        <>
+<DynamicWidget/>
+        { user?  
+        
+        <Dropdown
+        menu={menuProps}
+        overlayClassName={styles['home-person-menu']}
+    >
+        <div style={{ display: 'flex' }}>
+            <img
+                src={user?.ens?.avatar || DefaultAvatar}
+                alt='avatar'
+            />
+            <button
+                onClick={()=>setShowDynamicUserProfile(true)}
+                type='button'
+                className={styles['connected-btn']}
+            >
+                {user?.lastName || user?.email}
+                {balance}
+            </button>
+            <DynamicUserProfile />           
+             <img src={ArrowDown} alt='' />
+        </div>
+    </Dropdown>: 
+                 <button
+                 onClick={() => setShowAuthFlow(true)}
+                 type='button'
+                 className={`${styles['wallet-btn']}`}
+             >
+                 Sign in / Sign up
+             </button>
+            }
+        </>
     );
 };
 

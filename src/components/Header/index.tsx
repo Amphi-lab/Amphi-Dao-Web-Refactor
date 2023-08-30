@@ -15,7 +15,6 @@ const AmHeader = () => {
                 <img src={logo} alt='' />
             </a>
             <MainMenu />
-            {/* <EmailLogin /> */}
             <ConnectWallet />
         </Header>
     );

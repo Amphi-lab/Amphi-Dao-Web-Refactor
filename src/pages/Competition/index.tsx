@@ -14,7 +14,7 @@ const Join = () => {
                 Humans and AI coexist and draw a new era of literature!
             </Paragraph>
             <Divider />
-            <Title level={4}>1. Competition Introduction:</Title>
+            <Title level={4}>1.  Introduction:</Title>
             <Paragraph>
                 <h1> This is paragraph one </h1>
             </Paragraph>

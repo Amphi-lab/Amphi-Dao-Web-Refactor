@@ -45,7 +45,7 @@ const items: MenuProps['items'] = [
         children: [
             {
                 label: "Join Competition",
-                key: 'Join'
+                key: 'competition'
             },
             {
                 label: 'FAQ',

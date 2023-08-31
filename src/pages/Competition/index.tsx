@@ -36,12 +36,14 @@ const Join = () => {
             Event organizing committee: composed of senior executives of Amphi , Metale and other cooperative units;
             Organizer: Amphi, Metale
             Academic support unit: We sincerely invite dozens of professional foreign language schools around the world to join us
-    Co-organizer/Sponsor: We sincerely invite outstanding companies in web3-related fields to join
-    Partner media: Metamedia, Cointime, lxdao, Builderdao, Seedao;
-    (More media will be added one after another);
+            Co-organizer/Sponsor: We sincerely invite outstanding companies in web3-related fields to join
+            Partner media: Metamedia, Cointime, lxdao, Builderdao, Seedao;
+            (More media will be added one after another);
             </Paragraph>
             ▶ Group targets: foreign language colleges, professional translation agencies, companies, studios around the world
+            <Paragraph>
             ▶ Individual targets: professional translators, foreign language majors, other language lovers
+            </Paragraph>
         </div>
     );
 };

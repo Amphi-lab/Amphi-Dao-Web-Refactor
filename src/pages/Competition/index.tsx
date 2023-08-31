@@ -9,7 +9,8 @@ const Join = () => {
         <div style={{ padding: '20px' }}>
             <Title>Activity Introduction-Public Version V2-Metale “Amphi Cup” AI Growth Novel Proofreading Contest</Title>
             <Divider />
-            <Title level={3}>Metale “Amphi Cup” AI Bildungsroman Proofreading Contest</Title>
+            {/* <Title level={3}>Metale “Amphi Cup” AI Bildungsroman Proofreading Contest</Title> */}
+            <Title level={3}>Metale &ldquo;Amphi Cup&rdquo; AI Bildungsroman Proofreading Contest</Title>
             <Paragraph>
                 Humans and AI coexist and draw a new era of literature!
             </Paragraph>
@@ -32,9 +33,15 @@ const Join = () => {
             <Divider />
             <Title level={4}>2. Organization:</Title>
             <Paragraph>
-                {/* ...其他描述... */}
+            Event organizing committee: composed of senior executives of Amphi , Metale and other cooperative units;
+    Organizer: Amphi, Metale
+    Academic support unit: We sincerely invite dozens of professional foreign language schools around the world to join us
+    Co-organizer/Sponsor: We sincerely invite outstanding companies in web3-related fields to join
+    Partner media: Metamedia, Cointime, lxdao, Builderdao, Seedao;
+    (More media will be added one after another);
             </Paragraph>
-            {/* ...更多段落和标题... */}
+            ▶ Group targets: foreign language colleges, professional translation agencies, companies, studios around the world
+▶ Individual targets: professional translators, foreign language majors, other language lovers
         </div>
     );
 };

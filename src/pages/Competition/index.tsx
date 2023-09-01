@@ -1,7 +1,8 @@
 import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
-// import IconDiscord from '@/assets/svg/icon-discord.svg';
+import discordIocn from '@/assets/svg/discord.svg';
+import telegramIcon from '@/assets/svg/telegram.svg';
 import styles from './index.module.scss';
 
 // const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;
@@ -417,6 +418,14 @@ const Join: React.FC = () => {
       setMode(e.target.value);
     };
 
+    const handleDiscordClick = () => {
+      window.open('https://discord.gg/bWwUutdGCC', '_blank');
+    };
+
+    const handleTelegramClick = () => {
+      window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); // Replace with your Telegram URL
+    };
+
     return (
         <div style={{ padding: '20px' }}>
           <Radio.Group onChange={handleModeChange} value={mode} style={{ marginBottom: 8 }}>
@@ -607,20 +616,15 @@ const Join: React.FC = () => {
                 <br />Contact: Kim
                 <br />WeChat: kimdcai
                 <br/>Email:amphiassistance@gmail.com
-                <br/>Competition Q&A:
                 <br/>💬 Community Q&A:
-                <br/>Discord community click here 
-                {/* <div className="sb-section-item"> */}
-                {/*  <img src={Discord} alt="Discord logo" className="sb-explore-image"/> */}
-                {/*  <div> */}
-                {/*    Get support and chat with frontend developers. */}
-                {/*    <a */}
-                {/*      href="https://discord.gg/storybook" */}
-                {/*      target="_blank" rel="noreferrer" */}
-                {/*    >Join Discord server<RightArrow /></a> */}
-                {/*  </div> */}
-                {/*  </div> */}
-                <br/>Telegram group click here
+                <br/>Discord community click there:
+                <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
+                  <img src={discordIocn} alt="Discord Icon" />
+                </div>
+                <br/>Telegram group click there:
+                <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
+                  <img src={telegramIcon} alt="Telegram Icon" /> {/* Telegram Icon */}
+                </div>
               </Paragraph>
               </TabPane>
           </Tabs>

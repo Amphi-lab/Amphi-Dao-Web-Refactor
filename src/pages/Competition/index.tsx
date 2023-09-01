@@ -140,33 +140,31 @@ const Join: React.FC = () => {
             style={{ height: 'auto' }}  // 修改了这里的高度，以适应内容
           >
             <TabPane tab="Activity Introduction" key="1">
-            <Title>Activity Introduction-Public Version V2-Metale “Amphi Cup” AI Growth Novel Proofreading Contest</Title>
+            <Title>Public Version V2-Metale “Amphi Cup” AI Growth Novel Proofreading Contest</Title>
             <Divider />
             <Title level={3}>Metale &ldquo;Amphi Cup&rdquo; AI Bildungsroman Proofreading Contest</Title>
             <Paragraph>
                 Humans and AI coexist and draw a new era of literature!
             </Paragraph>
+
+              <Divider />
+              <Title level={4}>1. Competition Introduction:</Title>
+              <Paragraph>
+                With the rise of Web3 and AI technology, we are ushering in a new era in the wave of digitalization. To this end, Singapore-based Metale and the Amphi platform have joined hands to launch the &ldquo;Metale &lsquo;Amphi Cup&rsquo; AI Bildungsroman Proofreading Contest&rdquo;.
+                This is not only a combination of technology and talents, but also an exploration and challenge for the future translation industry.
+                Translation, as a cultural bridge, plays a key role in global communication. Today,
+                AI technology has brought unprecedented opportunities to translation and provided powerful support for translators.
+                This competition aims to promote the progress of the translation industry and create greater value for society.
+                For contestants, this is a unique platform for presentation and growth. Whether you are a professional
+                translator or a language enthusiast, there are opportunities for you here. You will have the opportunity to
+                communicate with top translators, improve yourself, and hopefully receive rich rewards.
+                Overall, this competition is not only an arena for talents, but also an in-depth
+                reflection on the future of the translation industry. We eagerly look forward to the participation
+                of translators from around the world to jointly explore a new era of literary translation in the Web3 era.
+              </Paragraph>
             </TabPane>
 
-          <TabPane tab="Competition Introduction" key="2">
-            <Divider />
-            <Title level={4}>1. Competition Introduction:</Title>
-            <Paragraph>
-            With the rise of Web3 and AI technology, we are ushering in a new era in the wave of digitalization. To this end, Singapore-based Metale and the Amphi platform have joined hands to launch the &ldquo;Metale &lsquo;Amphi Cup&rsquo; AI Bildungsroman Proofreading Contest&rdquo;. 
-            This is not only a combination of technology and talents, but also an exploration and challenge for the future translation industry.
-            Translation, as a cultural bridge, plays a key role in global communication. Today, 
-            AI technology has brought unprecedented opportunities to translation and provided powerful support for translators. 
-            This competition aims to promote the progress of the translation industry and create greater value for society.
-            For contestants, this is a unique platform for presentation and growth. Whether you are a professional 
-            translator or a language enthusiast, there are opportunities for you here. You will have the opportunity to 
-            communicate with top translators, improve yourself, and hopefully receive rich rewards.
-            Overall, this competition is not only an arena for talents, but also an in-depth 
-            reflection on the future of the translation industry. We eagerly look forward to the participation 
-            of translators from around the world to jointly explore a new era of literary translation in the Web3 era.
-            </Paragraph>
-          </TabPane>
-
-            <TabPane tab="Organization" key="3">
+            <TabPane tab="Organization" key="2">
             <Divider />
             <Title level={4}>2. Organization:</Title>
                 <Paragraph>
@@ -192,7 +190,7 @@ const Join: React.FC = () => {
                 </Paragraph>
             </TabPane>
 
-            <TabPane tab="Activity Objects" key="4">
+            <TabPane tab="Activity Objects" key="3">
             <Divider />
             <Title level={4}>3. Activity objects:</Title>
                 ▶ Group targets: foreign language colleges, professional translation agencies, companies, studios around the world
@@ -200,7 +198,7 @@ const Join: React.FC = () => {
                 ▶ Individual targets: professional translators, foreign language majors, other language lovers
             </TabPane>
 
-            <TabPane tab="Competition Time" key="5">
+            <TabPane tab="Competition Time" key="4">
             <Divider />
             <Title level={4}>4. Competition time:</Title>
                 <Paragraph>
@@ -236,7 +234,7 @@ const Join: React.FC = () => {
                 </Paragraph>
             </TabPane>
 
-            <TabPane tab="Competition Content" key="6">
+            <TabPane tab="Competition Content" key="5">
             <Divider />
             <Title level={4}>5. Competition content:</Title>
                  <Paragraph><strong>Details of translated works</strong></Paragraph>
@@ -282,13 +280,14 @@ const Join: React.FC = () => {
                  </Paragraph>
             </TabPane>
 
-            <TabPane tab="Evaluation Rules" key="7">
+            <TabPane tab="Evaluation Rules" key="6">
             <Divider />
             <Title level={4}>6. Evaluation rules:</Title>
                 <Paragraph>
                   The review method of this competition is double review by AI artificial intelligence + translation experts.
                   <br /><strong>The first round of AI artificial intelligence preliminary screening</strong> to evaluate the translation completion of the translation. Works whose translation completion rate is less than 40% will be considered unqualified and will not enter the follow-up review.
-                  <br/>The second round of AI artificial intelligence further screening, focusing on the repetition rate and similarity between translations. <span style={{ color: 'red' }}>Works with a repetition rate or similarity higher than 80% will be excluded</span> to ensure the independence and originality of the translation.
+                  <br/>The second round of AI artificial intelligence further sc
+                  reening, focusing on the repetition rate and similarity between translations. <span style={{ color: 'red' }}>Works with a repetition rate or similarity higher than 80% will be excluded</span> to ensure the independence and originality of the translation.
                   <br/><strong>The third round is manually reviewed by translation experts</strong>, looking at language quality, cultural transmission and emotional expression. Experts will deeply analyze the accuracy, fluency and cultural connotation of the translation to ensure that the translation accurately conveys the emotion and meaning of the original work.
                   <br/>The comprehensive score will combine the degree of difficulty of the translated works, the number of translated words and the diversity of the languages involved, etc. These factors jointly determine the overall score of each work, and corresponding awards will be selected based on the score.
                 </Paragraph>

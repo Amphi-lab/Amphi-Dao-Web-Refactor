@@ -138,7 +138,17 @@ const columns2 = [
     title: 'Scoring Criteria',
     dataIndex: 'criteria',
     key: 'criteria',
-    width: '50%'
+    width: '50%',
+    render: (text, record) => (
+      <ul>
+        {record.criteria.map((item) => (
+          <li key={item.score}>
+            <strong>{item.score}</strong> - {item.description}
+          </li>
+        ))}
+      </ul>
+    )
+
   }
 ];
 

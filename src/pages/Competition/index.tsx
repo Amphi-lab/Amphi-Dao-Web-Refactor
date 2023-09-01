@@ -293,7 +293,7 @@ const Join: React.FC = () => {
                 </Paragraph>
             </TabPane>
 
-            <TabPane tab="Awards" key="8">
+            <TabPane tab="Awards" key="7">
             <Divider />
             <Title level={4}><strong>Review Dimensions:</strong></Title>
                 <Paragraph>sfd</Paragraph>

@@ -4,7 +4,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { DynamicWidget, useDynamicContext,DynamicUserProfile } from '@dynamic-labs/sdk-react';
-import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { useAccount, useDisconnect,useSignMessage } from 'wagmi';
+// import { signMessageAsync } from 'wagmi';
 
 import api from '@/api';
 // import { refreshAPIToken } from '@/api/axios';
@@ -46,9 +47,10 @@ const items: any = [
 
 const ConnectWallet = () => {
     const [userInfo, setUserInfo] = useState(null);
-    const [nonce, setNonce] = useState('');
+    // const [nonce, setNonce] = useState('');
     const [balance, setBalance] = useState(null);
-    const { data: signature, signMessageAsync } = useSignMessage();
+    // const { data: signature, signMessageAsync } = useSignMessage();
+    const { data: signature } = useSignMessage();
     const { address, isConnected, isDisconnected } = useAccount();
     console.log(useAccount(), useDynamicContext())
     const addressInfo = useRef({ address });
@@ -77,28 +79,28 @@ const ConnectWallet = () => {
     };
 
     // 获取Nonce
-    const getNonce = async () => {
-        try {
-            const formData = new FormData();
-            formData.append('address', address as string);
-
-            const nonceRes = await api.getNonce(formData);
-
-            if (nonceRes?.code === 200) {
-                if (nonceRes?.msg) {
-                    setNonce(nonceRes?.msg);
-                    await signMessageAsync({
-                        message: nonceRes?.msg
-                    });
-                }
-            } else {
-                disconnect();
-            }
-        } catch (err) {
-            console.log('error', err);
-            disconnect();
-        }
-    };
+    // const getNonce = async () => {
+    //     try {
+    //         const formData = new FormData();
+    //         formData.append('address', address as string);
+    //
+    //         const nonceRes = await api.getNonce(formData);
+    //
+    //         if (nonceRes?.code === 200) {
+    //             if (nonceRes?.msg) {
+    //                 setNonce(nonceRes?.msg);
+    //                 await signMessageAsync({
+    //                     message: nonceRes?.msg
+    //                 });
+    //             }
+    //         } else {
+    //             disconnect();
+    //         }
+    //     } catch (err) {
+    //         console.log('error', err);
+    //         disconnect();
+    //     }
+    // };
 
     // login
     const login = async () => {
@@ -143,22 +145,22 @@ const ConnectWallet = () => {
     // };
 
     // 处理nonce
-    useEffect(() => {
-        (async () => {
-            if (isConnected) {
-                const currentAccessToken = storage.getLocalStorage(storageKeys.AMPHI_USERTOKEN);
-                const expireTime = storage.getLocalStorage(storageKeys.EXPIRE_TIME);
-                if (new Date().getTime() > Number(expireTime || 0)) {
-                    await getNonce();
-                } else {
-                    const currentAddress = storage.getLocalStorage(storageKeys.CURRENT_ADDRESS);
-                    if (address !== currentAddress && !currentAccessToken) {
-                        await getNonce();
-                    }
-                }
-            }
-        })();
-    }, [isConnected]);
+    // useEffect(() => {
+    //     (async () => {
+    //         if (isConnected) {
+    //             const currentAccessToken = storage.getLocalStorage(storageKeys.AMPHI_USERTOKEN);
+    //             const expireTime = storage.getLocalStorage(storageKeys.EXPIRE_TIME);
+    //             if (new Date().getTime() > Number(expireTime || 0)) {
+    //                 await getNonce();
+    //             } else {
+    //                 const currentAddress = storage.getLocalStorage(storageKeys.CURRENT_ADDRESS);
+    //                 if (address !== currentAddress && !currentAccessToken) {
+    //                     await getNonce();
+    //                 }
+    //             }
+    //         }
+    //     })();
+    // }, [isConnected]);
 
     // 处理登录
     useEffect(() => {

@@ -1,13 +1,15 @@
 import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
-import styles from './index.module.scss'; // 导入 CSS 模块的样式
+// import IconDiscord from '@/assets/svg/icon-discord.svg';
+import styles from './index.module.scss';
 
+// const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
 type TabPosition = 'left' | 'right' | 'top' | 'bottom';
 
-const columns = [
+const columns1 = [
   {
     title: 'Novel Title',
     dataIndex: 'novelTitle'
@@ -58,7 +60,7 @@ const columns = [
   }
 ];
 
-const data = [
+const data1 = [
   {
     key: '1',
     novelTitle: 'Bitcoin',
@@ -121,8 +123,295 @@ const data = [
   }
 ];
 
+const columns2 = [
+  {
+    title: 'Scoring Dimension',
+    dataIndex: 'dimension',
+    key: 'dimension',
+    width: '25%'
+  },
+  {
+    title: 'Maximum Score',
+    dataIndex: 'maxScore',
+    key: 'maxScore',
+    width: '25%'
+  },
+  {
+    title: 'Scoring Criteria',
+    dataIndex: 'criteria',
+    key: 'criteria',
+    width: '50%',
+    render: (text, record) => (
+      <ul>
+        {record.criteria.map((item) => (
+          <li key={item.score}>
+            <strong>{item.score}</strong> - {item.description}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+];
+
+const data2 = [
+  {
+    key: '1',
+    dimension: '1. Language Quality',
+    maxScore: '(25 points)',
+    criteria: [
+      { score: '8 points', description: 'No grammatical errors' },
+      { score: '5 points', description: 'Few grammatical errors' },
+      { score: '2 points', description: 'Many grammatical errors' },
+      { score: '0 points', description: 'Full of grammatical errors' }
+    ]
+  },
+  {
+    key: '2',
+    dimension: '2. Cultural transmission',
+    maxScore: '(25 points)',
+    criteria: [
+      { score: '8 points', description: 'Completely adapted' },
+      { score: '5 points', description: 'Mostly adapted' },
+      { score: '3 points', description: 'Partially adapted' },
+      { score: '0 points', description: 'Not adapted at all' }
+    ]
+  },
+  {
+    key: '3',
+    dimension: '3. Translation Difficulty Factor',
+    maxScore: '(20 points)',
+    criteria: [
+      { score: '20 points', description: 'Technology' },
+      { score: '15 points', description: 'Autobiography' },
+      { score: '15 points', description: 'Unwritten rules of the workplace' },
+      { score: '15 points', description: 'Gay campus' }
+    ]
+  },
+  {
+    key: '4',
+    dimension: '4. Word count and language diversity',
+    maxScore: '(20 points)',
+    criteria: [
+      { score: '10 points', description: 'More than 200,000 words' },
+      { score: '7 points', description: '100,000-200,000 words' },
+      { score: '5 points', description: '50,000-100,000 words' },
+      { score: '3 points', description: 'Less than 50,000 words' }
+    ]
+  },
+  {
+    key: '5',
+    dimension: '5. Overall impression',
+    maxScore: '(10 points)',
+    criteria: [
+      { score: '10 points', description: 'Very coherent' },
+      { score: '7 points', description: 'Somewhat coherent' },
+      { score: '4 points', description: 'Not coherent enough' },
+      { score: '0 points', description: 'Not at all coherent' }
+    ]
+  }
+];
+
+const columns3 = [
+  {
+    title: 'Awards',
+    dataIndex: 'awards',
+    key: 'awards'
+  },
+  {
+    title: 'Quota',
+    dataIndex: 'quota',
+    key: 'quota'
+  },
+  {
+    title: 'WCM Tokens',
+    dataIndex: 'wcmTokens',
+    key: 'wcmTokens'
+  },
+  {
+    title: 'Metale NFT',
+    dataIndex: 'metaleNFT',
+    key: 'metaleNFT'
+  },
+  {
+    title: 'Amphi SBT',
+    dataIndex: 'amphiSBT',
+    key: 'amphiSBT'
+  },
+  {
+    title: 'Additional Rights',
+    dataIndex: 'additionalRights',
+    key: 'additionalRights'
+  }
+];
+
+const data3 = [
+  {
+    key: '1',
+    awards: 'First Prize Best Group Award',
+    quota: '1 person',
+    wcmTokens: 'Metale 20000 WCM Tokens',
+    metaleNFT: 'Metale NFT*1',
+    amphiSBT: 'Amphi SBT*1',
+    additionalRights: 'Authorization rights for translated works'
+  },
+  {
+    key: '2',
+    awards: 'Second Prize (Excellent Group Award)',
+    quota: '2 people',
+    wcmTokens: 'Metale 10000 WCM',
+    metaleNFT: 'Metale NFT*1',
+    amphiSBT: 'Amphi SBT*1',
+    additionalRights: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '3',
+    awards: 'Third Prize (Outstanding Group Award)',
+    quota: '3 people',
+    wcmTokens: 'Metale 5000 WCM',
+    metaleNFT: 'Metale NFT*1',
+    amphiSBT: 'Amphi SBT*1',
+    additionalRights: 'Opportunity to obtain authorship rights for proofreading works'
+  }
+];
+
+const columns4 = [
+  {
+    title: 'Awards',
+    dataIndex: 'awards',
+    key: 'awards'
+  },
+  {
+    title: 'Number of Winners',
+    dataIndex: 'numberOfWinners',
+    key: 'numberOfWinners'
+  },
+  {
+    title: 'Award',
+    key: 'award',
+    children: [
+      {
+        title: 'WCM',
+        dataIndex: 'wcm',
+        key: 'wcm'
+      },
+      {
+        title: 'Amphi SBT',
+        dataIndex: 'amphiSBT',
+        key: 'amphiSBT'
+      },
+      {
+        title: 'Opportunity',
+        dataIndex: 'opportunity',
+        key: 'opportunity'
+      }
+    ]
+  }
+];
+
+const data4 = [
+  {
+    key: '1',
+    awards: 'Russian - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '2',
+    awards: 'French - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '3',
+    awards: 'Korean - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '4',
+    awards: 'Japanese - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '5',
+    awards: 'Spanish - Award of Excellence',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '6',
+    awards: 'Indonesian - Merit Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '7',
+    awards: 'English - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '8',
+    awards: 'Portuguese - Award of Excellence',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '9',
+    awards: 'Best Potential Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  }
+];
+
+const columns5 = [
+  {
+  title: 'Awards',
+  dataIndex: 'awards',
+  key: 'awards'
+  },
+  {
+    title: 'Quota',
+    dataIndex: 'quota',
+    key: 'quota'
+  },
+  {
+    title: 'Award',
+    dataIndex: 'award',
+    key: 'award'
+  }
+];
+
+const data5 = [
+  {
+    key: '1',
+    awards: 'Lucky Prize',
+    quota: '12',
+    award: 'Amphi pass NFT 1 per person'
+  }
+];
+
 const Join: React.FC = () => {
-    const [mode, setMode] = useState<TabPosition>('top');
+    const [mode, setMode] = useState<TabPosition>('left');
 
     const handleModeChange = (e: RadioChangeEvent) => {
       setMode(e.target.value);
@@ -131,8 +420,8 @@ const Join: React.FC = () => {
     return (
         <div style={{ padding: '20px' }}>
           <Radio.Group onChange={handleModeChange} value={mode} style={{ marginBottom: 8 }}>
-            <Radio.Button value="top">Horizontal</Radio.Button>
-            <Radio.Button value="left">Vertical</Radio.Button>
+            {/* <Radio.Button value="top">Horizontal</Radio.Button> */}
+            <Radio.Button value="left">Catalog</Radio.Button>
           </Radio.Group>
           <Tabs
             defaultActiveKey="1"
@@ -238,10 +527,10 @@ const Join: React.FC = () => {
             <Divider />
             <Title level={4}>5. Competition content:</Title>
                  <Paragraph><strong>Details of translated works</strong></Paragraph>
-                 <Table columns={columns} dataSource={data} pagination={false} />
+                 {/* 每页显示多少条数据、当前页码、总页数 */}
+                 <Table columns={columns1} dataSource={data1} pagination={{ pageSize: 10, current: 5, total: data1.length }} />
                  <Paragraph><strong>Content description:</strong></Paragraph>
                  <Paragraph>
-
                    <strong>1. Novel works designated for translation and their sources:</strong>
                    <br />
                    The novels used in the competition are all provided by Metale. All novels are carefully selected, have rich plots and in-depth characterization, and also reflect various cultural backgrounds, allowing contestants to fully experience the challenge and fun of translation.
@@ -291,13 +580,49 @@ const Join: React.FC = () => {
                   <br/><strong>The third round is manually reviewed by translation experts</strong>, looking at language quality, cultural transmission and emotional expression. Experts will deeply analyze the accuracy, fluency and cultural connotation of the translation to ensure that the translation accurately conveys the emotion and meaning of the original work.
                   <br/>The comprehensive score will combine the degree of difficulty of the translated works, the number of translated words and the diversity of the languages involved, etc. These factors jointly determine the overall score of each work, and corresponding awards will be selected based on the score.
                 </Paragraph>
+                <Paragraph>
+                <strong>Review Dimensions:</strong>
+                </Paragraph>
+                <Table columns={columns2} dataSource={data2} pagination={false} />
             </TabPane>
 
-            <TabPane tab="Awards" key="8">
+            <TabPane tab="Awards" key="7">
             <Divider />
-            <Title level={4}><strong>Review Dimensions:</strong></Title>
-                <Paragraph>sfd</Paragraph>
+            <Title level={4}><strong>Group Award (translated into 2 or more languages):</strong></Title>
+                <Paragraph> <Table columns={columns3} dataSource={data3} /> </Paragraph>
+                <Paragraph><span style={{ color: 'red' }}>*Award rules: Rank the translations according to their total scores and select the corresponding awards.</span></Paragraph>
+                <Paragraph><strong>1. Individual Award (translated into 1 language):</strong></Paragraph>
+                <Paragraph><Table columns={columns4} dataSource={data4} pagination={false} /></Paragraph>
+                <Paragraph><span style={{ color: 'red' }}>*Rules for awards: Rank according to the total score of the translations, and select the corresponding awards.</span></Paragraph>
+                <Paragraph><strong>2.Lucky prize (entrants who meet the basic eligibility requirements will be randomly selected)</strong></Paragraph>
+                <Paragraph><Table columns={columns5} dataSource={data5} pagination={false} /></Paragraph>
+                <Paragraph><span style={{ color: 'red' }}>Special Note: The above group awards and individual awards cannot be applied for at the same time.</span></Paragraph>
             </TabPane>
+
+            <TabPane tab="Contact us:" key="8">
+              <Divider />
+              <Title level={4}><strong>Contact us:</strong></Title>
+              <Paragraph><strong>Competition consultation:</strong>
+                <br />Official website of the competition : https://amphi.space
+                <br />Contact: Kim
+                <br />WeChat: kimdcai
+                <br/>Email:amphiassistance@gmail.com
+                <br/>Competition Q&A:
+                <br/>💬 Community Q&A:
+                <br/>Discord community click here 
+                {/* <div className="sb-section-item"> */}
+                {/*  <img src={Discord} alt="Discord logo" className="sb-explore-image"/> */}
+                {/*  <div> */}
+                {/*    Get support and chat with frontend developers. */}
+                {/*    <a */}
+                {/*      href="https://discord.gg/storybook" */}
+                {/*      target="_blank" rel="noreferrer" */}
+                {/*    >Join Discord server<RightArrow /></a> */}
+                {/*  </div> */}
+                {/*  </div> */}
+                <br/>Telegram group click here
+              </Paragraph>
+              </TabPane>
           </Tabs>
         </div>
     );

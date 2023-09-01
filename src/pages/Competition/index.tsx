@@ -1,9 +1,10 @@
 import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
+// import IconDiscord from '@/assets/svg/icon-discord.svg';
 import styles from './index.module.scss';
 
-
+// const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
 type TabPosition = 'left' | 'right' | 'top' | 'bottom';
@@ -608,7 +609,17 @@ const Join: React.FC = () => {
                 <br/>Email:amphiassistance@gmail.com
                 <br/>Competition Q&A:
                 <br/>💬 Community Q&A:
-                <br/>Discord community click here
+                <br/>Discord community click here 
+                {/* <div className="sb-section-item"> */}
+                {/*  <img src={Discord} alt="Discord logo" className="sb-explore-image"/> */}
+                {/*  <div> */}
+                {/*    Get support and chat with frontend developers. */}
+                {/*    <a */}
+                {/*      href="https://discord.gg/storybook" */}
+                {/*      target="_blank" rel="noreferrer" */}
+                {/*    >Join Discord server<RightArrow /></a> */}
+                {/*  </div> */}
+                {/*  </div> */}
                 <br/>Telegram group click here
               </Paragraph>
               </TabPane>

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { DynamicWidget, useDynamicContext,DynamicUserProfile } from '@dynamic-labs/sdk-react';
 import { useAccount, useDisconnect,useSignMessage } from 'wagmi';
-
+// import { signMessageAsync } from 'wagmi';
 
 import api from '@/api';
 // import { refreshAPIToken } from '@/api/axios';
@@ -49,7 +49,7 @@ const ConnectWallet = () => {
     const [userInfo, setUserInfo] = useState(null);
     // const [nonce, setNonce] = useState('');
     const [balance, setBalance] = useState(null);
-    // const { data: signature, signMessageAsync } = useSignMessage(); 
+    // const { data: signature, signMessageAsync } = useSignMessage();
     const { data: signature } = useSignMessage();
     const { address, isConnected, isDisconnected } = useAccount();
     console.log(useAccount(), useDynamicContext())

@@ -121,8 +121,89 @@ const data = [
   }
 ];
 
+const columns2 = [
+  {
+    title: 'Scoring Dimension',
+    dataIndex: 'dimension',
+    key: 'dimension',
+    width: '25%'
+  },
+  {
+    title: 'Maximum Score',
+    dataIndex: 'maxScore',
+    key: 'maxScore',
+    width: '25%'
+  },
+  {
+    title: 'Scoring Criteria',
+    dataIndex: 'criteria',
+    key: 'criteria',
+    width: '50%'
+  }
+];
+
+const data2 = [
+  {
+    key: '1',
+    dimension: '1. Language Quality',
+    maxScore: '(25 points)',
+    criteria: [
+      { score: '8 points', description: 'No grammatical errors' },
+      { score: '5 points', description: 'Few grammatical errors' },
+      { score: '2 points', description: 'Many grammatical errors' },
+      { score: '0 points', description: 'Full of grammatical errors' }
+    ]
+  },
+  {
+    key: '2',
+    dimension: '2. Cultural transmission',
+    maxScore: '(25 points)',
+    criteria: [
+      { score: '8 points', description: 'Completely adapted' },
+      { score: '5 points', description: 'Mostly adapted' },
+      { score: '3 points', description: 'Partially adapted' },
+      { score: '0 points', description: 'Not adapted at all' }
+    ]
+  },
+  {
+    key: '3',
+    dimension: '3. Translation Difficulty Factor',
+    maxScore: '(20 points)',
+    criteria: [
+      { score: '20 points', description: 'Technology' },
+      { score: '15 points', description: 'Autobiography' },
+      { score: '15 points', description: 'Unwritten rules of the workplace' },
+      { score: '15 points', description: 'Gay campus' }
+    ]
+  },
+  {
+    key: '4',
+    dimension: '4. Word count and language diversity',
+    maxScore: '(20 points)',
+    criteria: [
+      { score: '10 points', description: 'More than 200,000 words' },
+      { score: '7 points', description: '100,000-200,000 words' },
+      { score: '5 points', description: '50,000-100,000 words' },
+      { score: '3 points', description: 'Less than 50,000 words' }
+    ]
+  },
+  {
+    key: '5',
+    dimension: '5. Overall impression',
+    maxScore: '(10 points)',
+    criteria: [
+      { score: '10 points', description: 'Very coherent' },
+      { score: '7 points', description: 'Somewhat coherent' },
+      { score: '4 points', description: 'Not coherent enough' },
+      { score: '0 points', description: 'Not at all coherent' }
+    ]
+  }
+];
+
+
+
 const Join: React.FC = () => {
-    const [mode, setMode] = useState<TabPosition>('top');
+    const [mode, setMode] = useState<TabPosition>('left');
 
     const handleModeChange = (e: RadioChangeEvent) => {
       setMode(e.target.value);
@@ -131,8 +212,8 @@ const Join: React.FC = () => {
     return (
         <div style={{ padding: '20px' }}>
           <Radio.Group onChange={handleModeChange} value={mode} style={{ marginBottom: 8 }}>
-            <Radio.Button value="top">Horizontal</Radio.Button>
-            <Radio.Button value="left">Vertical</Radio.Button>
+            {/* <Radio.Button value="top">Horizontal</Radio.Button> */}
+            <Radio.Button value="left">Catalog</Radio.Button>
           </Radio.Group>
           <Tabs
             defaultActiveKey="1"
@@ -238,10 +319,10 @@ const Join: React.FC = () => {
             <Divider />
             <Title level={4}>5. Competition content:</Title>
                  <Paragraph><strong>Details of translated works</strong></Paragraph>
-                 <Table columns={columns} dataSource={data} pagination={false} />
+                 {/* 每页显示多少条数据、当前页码、总页数 */}
+                 <Table columns={columns} dataSource={data} pagination={{ pageSize: 10, current: 5, total: data.length }} />
                  <Paragraph><strong>Content description:</strong></Paragraph>
                  <Paragraph>
-
                    <strong>1. Novel works designated for translation and their sources:</strong>
                    <br />
                    The novels used in the competition are all provided by Metale. All novels are carefully selected, have rich plots and in-depth characterization, and also reflect various cultural backgrounds, allowing contestants to fully experience the challenge and fun of translation.
@@ -291,6 +372,10 @@ const Join: React.FC = () => {
                   <br/><strong>The third round is manually reviewed by translation experts</strong>, looking at language quality, cultural transmission and emotional expression. Experts will deeply analyze the accuracy, fluency and cultural connotation of the translation to ensure that the translation accurately conveys the emotion and meaning of the original work.
                   <br/>The comprehensive score will combine the degree of difficulty of the translated works, the number of translated words and the diversity of the languages involved, etc. These factors jointly determine the overall score of each work, and corresponding awards will be selected based on the score.
                 </Paragraph>
+                <Paragraph>
+                <strong>Review Dimensions:</strong>
+                </Paragraph>
+                <Table columns={columns2} dataSource={data2} pagination={false} />
             </TabPane>
 
             <TabPane tab="Awards" key="7">

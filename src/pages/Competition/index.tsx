@@ -1,13 +1,14 @@
 import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
-import styles from './index.module.scss'; // 导入 CSS 模块的样式
+import styles from './index.module.scss';
+
 
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
 type TabPosition = 'left' | 'right' | 'top' | 'bottom';
 
-const columns = [
+const columns1 = [
   {
     title: 'Novel Title',
     dataIndex: 'novelTitle'
@@ -58,7 +59,7 @@ const columns = [
   }
 ];
 
-const data = [
+const data1 = [
   {
     key: '1',
     novelTitle: 'Bitcoin',
@@ -148,7 +149,6 @@ const columns2 = [
         ))}
       </ul>
     )
-
   }
 ];
 
@@ -210,7 +210,204 @@ const data2 = [
   }
 ];
 
+const columns3 = [
+  {
+    title: 'Awards',
+    dataIndex: 'awards',
+    key: 'awards'
+  },
+  {
+    title: 'Quota',
+    dataIndex: 'quota',
+    key: 'quota'
+  },
+  {
+    title: 'WCM Tokens',
+    dataIndex: 'wcmTokens',
+    key: 'wcmTokens'
+  },
+  {
+    title: 'Metale NFT',
+    dataIndex: 'metaleNFT',
+    key: 'metaleNFT'
+  },
+  {
+    title: 'Amphi SBT',
+    dataIndex: 'amphiSBT',
+    key: 'amphiSBT'
+  },
+  {
+    title: 'Additional Rights',
+    dataIndex: 'additionalRights',
+    key: 'additionalRights'
+  }
+];
 
+const data3 = [
+  {
+    key: '1',
+    awards: 'First Prize Best Group Award',
+    quota: '1 person',
+    wcmTokens: 'Metale 20000 WCM Tokens',
+    metaleNFT: 'Metale NFT*1',
+    amphiSBT: 'Amphi SBT*1',
+    additionalRights: 'Authorization rights for translated works'
+  },
+  {
+    key: '2',
+    awards: 'Second Prize (Excellent Group Award)',
+    quota: '2 people',
+    wcmTokens: 'Metale 10000 WCM',
+    metaleNFT: 'Metale NFT*1',
+    amphiSBT: 'Amphi SBT*1',
+    additionalRights: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '3',
+    awards: 'Third Prize (Outstanding Group Award)',
+    quota: '3 people',
+    wcmTokens: 'Metale 5000 WCM',
+    metaleNFT: 'Metale NFT*1',
+    amphiSBT: 'Amphi SBT*1',
+    additionalRights: 'Opportunity to obtain authorship rights for proofreading works'
+  }
+];
+
+const columns4 = [
+  {
+    title: 'Awards',
+    dataIndex: 'awards',
+    key: 'awards'
+  },
+  {
+    title: 'Number of Winners',
+    dataIndex: 'numberOfWinners',
+    key: 'numberOfWinners'
+  },
+  {
+    title: 'Award',
+    key: 'award',
+    children: [
+      {
+        title: 'WCM',
+        dataIndex: 'wcm',
+        key: 'wcm'
+      },
+      {
+        title: 'Amphi SBT',
+        dataIndex: 'amphiSBT',
+        key: 'amphiSBT'
+      },
+      {
+        title: 'Opportunity',
+        dataIndex: 'opportunity',
+        key: 'opportunity'
+      }
+    ]
+  }
+];
+
+const data4 = [
+  {
+    key: '1',
+    awards: 'Russian - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '2',
+    awards: 'French - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '3',
+    awards: 'Korean - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '4',
+    awards: 'Japanese - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '5',
+    awards: 'Spanish - Award of Excellence',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '6',
+    awards: 'Indonesian - Merit Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '7',
+    awards: 'English - Excellence Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '8',
+    awards: 'Portuguese - Award of Excellence',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  },
+  {
+    key: '9',
+    awards: 'Best Potential Award',
+    numberOfWinners: '1 person',
+    wcm: 'Metale 5000 WCM',
+    amphiSBT: 'Amphi SBT*1',
+    opportunity: 'Opportunity to obtain authorship rights for proofreading works'
+  }
+];
+
+const columns5 = [
+  {
+  title: 'Awards',
+  dataIndex: 'awards',
+  key: 'awards'
+  },
+  {
+    title: 'Quota',
+    dataIndex: 'quota',
+    key: 'quota'
+  },
+  {
+    title: 'Award',
+    dataIndex: 'award',
+    key: 'award'
+  }
+];
+
+const data5 = [
+  {
+    key: '1',
+    awards: 'Lucky Prize',
+    quota: '12',
+    award: 'Amphi pass NFT 1 per person'
+  }
+];
 
 const Join: React.FC = () => {
     const [mode, setMode] = useState<TabPosition>('left');
@@ -330,7 +527,7 @@ const Join: React.FC = () => {
             <Title level={4}>5. Competition content:</Title>
                  <Paragraph><strong>Details of translated works</strong></Paragraph>
                  {/* 每页显示多少条数据、当前页码、总页数 */}
-                 <Table columns={columns} dataSource={data} pagination={{ pageSize: 10, current: 5, total: data.length }} />
+                 <Table columns={columns1} dataSource={data1} pagination={{ pageSize: 10, current: 5, total: data1.length }} />
                  <Paragraph><strong>Content description:</strong></Paragraph>
                  <Paragraph>
                    <strong>1. Novel works designated for translation and their sources:</strong>
@@ -390,9 +587,31 @@ const Join: React.FC = () => {
 
             <TabPane tab="Awards" key="7">
             <Divider />
-            <Title level={4}><strong>Review Dimensions:</strong></Title>
-                <Paragraph>sfd</Paragraph>
+            <Title level={4}><strong>Group Award (translated into 2 or more languages):</strong></Title>
+                <Paragraph> <Table columns={columns3} dataSource={data3} /> </Paragraph>
+                <Paragraph><span style={{ color: 'red' }}>*Award rules: Rank the translations according to their total scores and select the corresponding awards.</span></Paragraph>
+                <Paragraph><strong>1. Individual Award (translated into 1 language):</strong></Paragraph>
+                <Paragraph><Table columns={columns4} dataSource={data4} pagination={false} /></Paragraph>
+                <Paragraph><span style={{ color: 'red' }}>*Rules for awards: Rank according to the total score of the translations, and select the corresponding awards.</span></Paragraph>
+                <Paragraph><strong>2.Lucky prize (entrants who meet the basic eligibility requirements will be randomly selected)</strong></Paragraph>
+                <Paragraph><Table columns={columns5} dataSource={data5} pagination={false} /></Paragraph>
+                <Paragraph><span style={{ color: 'red' }}>Special Note: The above group awards and individual awards cannot be applied for at the same time.</span></Paragraph>
             </TabPane>
+
+            <TabPane tab="Contact us:" key="8">
+              <Divider />
+              <Title level={4}><strong>Contact us:</strong></Title>
+              <Paragraph><strong>Competition consultation:</strong>
+                <br />Official website of the competition : https://amphi.space
+                <br />Contact: Kim
+                <br />WeChat: kimdcai
+                <br/>Email:amphiassistance@gmail.com
+                <br/>Competition Q&A:
+                <br/>💬 Community Q&A:
+                <br/>Discord community click here
+                <br/>Telegram group click here
+              </Paragraph>
+              </TabPane>
           </Tabs>
         </div>
     );

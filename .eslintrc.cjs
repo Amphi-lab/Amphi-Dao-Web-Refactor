@@ -5,14 +5,7 @@ module.exports = {
         es2021: true,
         es6: true
     },
-    extends: [
-        'airbnb',
-        'plugin:react/recommended',
-        'plugin:react-hooks/recommended',
-        'plugin:import/typescript',
-        'prettier',
-        'plugin:prettier/recommended'
-    ],
+    extends: ['airbnb', 'plugin:react/recommended', 'plugin:react-hooks/recommended', 'plugin:import/typescript', 'prettier', 'plugin:prettier/recommended'],
     plugins: ['react', '@babel', '@typescript-eslint', 'react-hooks'],
     globals: {
         NodeJS: true

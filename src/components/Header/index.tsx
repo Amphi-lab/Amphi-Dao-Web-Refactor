@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
 import logo from '@/assets/svg/logo.svg';
-import EmailLogin from '@/components/EmailLogin';
 import MainMenu from '../MainMenu';
 import ConnectWallet from '../ConnectWallet';
 // import EmailLogin from '../EmailLogin';
@@ -16,7 +15,6 @@ const AmHeader = () => {
                 <img src={logo} alt='' />
             </a>
             <MainMenu />
-            <EmailLogin />
             <ConnectWallet />
         </Header>
     );

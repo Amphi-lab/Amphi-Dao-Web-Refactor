@@ -1,26 +1,14 @@
-# Build project
-```shell
+# amphi-dao
+
+amphi for translator 
+
 pnpm install
-```
 
 
-# Run project
-```shell
-npm run dev
-```
 
 
-# [Storybook](https://juejin.cn/post/7044428114264326175)
-## 安装storybook/cli脚手架并安装依赖
-```shell
-npx -p @storybook/cli sb init --type react_scripts
-```
+# How to run project
 
-## 启动你的storybook组件库项目
-```shell
-yarn storybook
-```
-or use 
-```shell
-npm run storybook 
-```
+copy the file .env.sample and rename to .env.
+
+npm run  dev

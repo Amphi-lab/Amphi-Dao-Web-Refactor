@@ -1,0 +1,63 @@
+.competition-wrapper {
+  width: 100%;
+  font-size: 16px;
+  background: #fff;
+  padding-bottom: 30px;
+}
+
+.competition-title {
+  margin-top: 60px;
+}
+
+.competition-banner {
+  height: 700px;
+  width: 100%;
+  background-image: url("/src/assets/svg/activities/home-banner.svg");
+  background-size: cover;
+}
+
+.competition-tabs-wrap {
+  width: 100%;
+  background: linear-gradient(45deg, #ade0f0, #ecc3d6);
+  padding: 20px 60px 60px;
+}
+
+.competition-materials {
+  width: 100%;
+  min-height: 400px;
+  padding: 0 60px;
+  background: #fff;
+}
+
+.competition-card {
+  margin: 16px;
+  background: #f2f2fa;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow:
+      0 1px 2px -2px rgb(0 0 0 / 16%),
+      0 3px 6px 0 rgb(0 0 0 / 12%),
+      0 5px 12px 4px rgb(0 0 0 / 9%);
+  }
+
+  :global {
+    .light-card-body {
+      padding-top: 0 !important;
+    }
+  }
+}
+
+.competition-button {
+  background: #e66ea3;
+  color: #fff;
+
+  &:hover {
+    color: #fff !important;
+    border: 0 !important;
+  }
+}
+
+.competition-label {
+  color: #999;
+}

@@ -28,8 +28,8 @@ export default {
             controlHeightSM: 20
         },
         Tabs: {
-            lineWidth: 0,
-            lineWidthBold: 4,
+            // lineWidth: 0,
+            // lineWidthBold: 4,
             margin: 24
         },
         Card: {

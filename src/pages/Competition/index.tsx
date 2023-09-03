@@ -127,89 +127,112 @@ const data1 = [
 const columns2 = [
   {
     title: 'Scoring Dimension',
-    dataIndex: 'dimension',
-    key: 'dimension',
-    width: '25%'
+    dataIndex: 'Scoring Dimension',
+    key: 'Scoring Dimension'
   },
   {
     title: 'Maximum Score',
-    dataIndex: 'maxScore',
-    key: 'maxScore',
-    width: '25%'
+    dataIndex: 'Maximum Score',
+    key: 'Maximum Score'
   },
   {
     title: 'Scoring Criteria',
-    dataIndex: 'criteria',
-    key: 'criteria',
-    width: '50%',
-    render: (text, record) => (
-      <ul>
-        {record.criteria.map((item) => (
-          <li key={item.score}>
-            <strong>{item.score}</strong> - {item.description}
-          </li>
-        ))}
-      </ul>
-    )
+    dataIndex: 'Scoring Criteria',
+    key: 'Scoring Criteria'
   }
-];
+]
 
 const data2 = [
-  {
-    key: '1',
-    dimension: '1. Language Quality',
-    maxScore: '(25 points)',
-    criteria: [
-      { score: '8 points', description: 'No grammatical errors' },
-      { score: '5 points', description: 'Few grammatical errors' },
-      { score: '2 points', description: 'Many grammatical errors' },
-      { score: '0 points', description: 'Full of grammatical errors' }
-    ]
-  },
-  {
-    key: '2',
-    dimension: '2. Cultural transmission',
-    maxScore: '(25 points)',
-    criteria: [
-      { score: '8 points', description: 'Completely adapted' },
-      { score: '5 points', description: 'Mostly adapted' },
-      { score: '3 points', description: 'Partially adapted' },
-      { score: '0 points', description: 'Not adapted at all' }
-    ]
-  },
-  {
-    key: '3',
-    dimension: '3. Translation Difficulty Factor',
-    maxScore: '(20 points)',
-    criteria: [
-      { score: '20 points', description: 'Technology' },
-      { score: '15 points', description: 'Autobiography' },
-      { score: '15 points', description: 'Unwritten rules of the workplace' },
-      { score: '15 points', description: 'Gay campus' }
-    ]
-  },
-  {
-    key: '4',
-    dimension: '4. Word count and language diversity',
-    maxScore: '(20 points)',
-    criteria: [
-      { score: '10 points', description: 'More than 200,000 words' },
-      { score: '7 points', description: '100,000-200,000 words' },
-      { score: '5 points', description: '50,000-100,000 words' },
-      { score: '3 points', description: 'Less than 50,000 words' }
-    ]
-  },
-  {
-    key: '5',
-    dimension: '5. Overall impression',
-    maxScore: '(10 points)',
-    criteria: [
-      { score: '10 points', description: 'Very coherent' },
-      { score: '7 points', description: 'Somewhat coherent' },
-      { score: '4 points', description: 'Not coherent enough' },
-      { score: '0 points', description: 'Not at all coherent' }
-    ]
-  }
+    {
+      "key": "1",
+      "Scoring Dimension": "1. Language Quality",
+      "Maximum Score": "25 points",
+      "Scoring Criteria": "N/A"
+    },
+    {
+      "key": "2",
+      "Scoring Dimension": "grammatical accuracy",
+      "Maximum Score": "8 points",
+      "Scoring Criteria": "No grammatical errors (8 points), few grammatical errors (5 points), many grammatical errors (2 points), full of grammatical errors (0 points)"
+    },
+    {
+      "key": "3",
+      "Scoring Dimension": "Accuracy of wording",
+      "Maximum Score": "8 points",
+      "Scoring Criteria": "The words are completely accurate (8 points), a few inappropriate words are used (5 points), many inappropriate words are used (2 points), and completely inappropriate words are used (0 points)"
+    },
+    {
+      "key": "4",
+      "Scoring Dimension": "sentence fluency",
+      "Maximum Score": "9 points",
+      "Scoring Criteria": "Very fluent (9 points), somewhat fluent (6 points), not fluent (3 points), not fluent at all (0 points)"
+    },
+    {
+      "key": "5",
+      "Scoring Dimension": "2. Cultural transmission",
+      "Maximum Score": "25 points",
+      "Scoring Criteria": "N/A"
+    },
+    {
+      "key": "6",
+      "Scoring Dimension": "cultural fit",
+      "Maximum Score": "8 points",
+      "Scoring Criteria": "Completely adapted (8 points), Mostly adapted (5 points), Partially adapted (3 points), Not adapted at all (0 points)"
+    },
+    {
+      "key": "7",
+      "Scoring Dimension": "Preservation and Transmission of Local Colors",
+      "Maximum Score": "8 points",
+      "Scoring Criteria": "Fully retained (8 points), mostly retained (5 points), partially retained (3 points), not retained (0 points)"
+    },
+    {
+      "key": "8",
+      "Scoring Dimension": "Fidelity to the emotion and context of the original text",
+      "Maximum Score": "9 points",
+      "Scoring Criteria": "Completely loyal (9 points), Mostly loyal (6 points), Partially loyal (3 points), Not at all loyal (0 points)"
+    },
+    {
+      "key": "9",
+      "Scoring Dimension": "3. Translation Difficulty Factor",
+      "Maximum Score": "20 points",
+      "Scoring Criteria": "N/A"
+    },
+    {
+      "key": "10",
+      "Scoring Dimension": "Specific Difficulty for Fiction Genres",
+      "Maximum Score": "20 points",
+      "Scoring Criteria": "Technology (20 points), Autobiography (15 points), Unwritten rules of the workplace (15 points), Gay campus (15 points)"
+    },
+    {
+      "key": "11",
+      "Scoring Dimension": "4. Word count and language diversity",
+      "Maximum Score": "20 points",
+      "Scoring Criteria": "N/A"
+    },
+    {
+      "key": "12",
+      "Scoring Dimension": "Rating based on word count of novels",
+      "Maximum Score": "10 points",
+      "Scoring Criteria": "More than 200,000 words (10 points), 100,000-200,000 words (7 points), 50,000-100,000 words (5 points), less than 50,000 words (3 points)"
+    },
+    {
+      "key": "13",
+      "Scoring Dimension": "Score based on target language diversity",
+      "Maximum Score": "10 points",
+      "Scoring Criteria": "8 languages (10 points), 7 languages (8 points), 6 languages (6 points), 2-5 languages (4 points), *Individual single language does not count for this item"
+    },
+    {
+      "key": "14",
+      "Scoring Dimension": "5. Overall impression",
+      "Maximum Score": "10 points",
+      "Scoring Criteria": "N/A"
+    },
+    {
+      "key": "15",
+      "Scoring Dimension": "Overall coherence and readability of the work",
+      "Maximum Score": "10 points",
+      "Scoring Criteria": "Very coherent (10 points), somewhat coherent (7 points), not coherent enough (4 points), not at all coherent (0 points)"
+    }
 ];
 
 const columns3 = [

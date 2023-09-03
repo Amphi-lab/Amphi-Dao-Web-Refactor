@@ -20,7 +20,7 @@ pnpm dlx storybook@latest init
 ```shell
 yarn storybook
 ```
-or use 
+or use
 ```shell
 npm run storybook 
 ```

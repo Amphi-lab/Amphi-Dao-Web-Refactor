@@ -9,6 +9,7 @@ module.exports = {
         // 'prettier/prettier': [true, { singleQuote: false }],
         // 屏蔽一些scss等语法检查
         'at-rule-no-unknown': null,
+        'selector-pseudo-class-no-unknown':null,
         'scss/at-rule-no-unknown': true,
         'rule-empty-line-before': [
             // 要求或禁止在规则声明之前有空行

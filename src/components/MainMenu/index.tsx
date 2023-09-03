@@ -12,11 +12,11 @@ const items: MenuProps['items'] = [
         key: 'start',
         children: [
             {
-                label: 'Request Translation',
+                label: 'Publish Task',
                 key: 'requestTranslation'
             },
             {
-                label: 'Translation',
+                label: 'Task Hall',
                 key: 'translation'
             }
         ]

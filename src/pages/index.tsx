@@ -10,6 +10,7 @@ import ImageAbout3 from '@/assets/images/about3.png';
 import ImageAbout4 from '@/assets/images/about4.png';
 import HomeSection from '@/pageComponents/home/HomeSection';
 import Bounties from '@/pageComponents/home/Bounties';
+import CompetitionHome from '@/components/competitionHome';
 // import Translators from '@/pageComponents/home/Translators';
 import './index.scss';
 
@@ -87,4 +88,5 @@ const index: FC = () => {
     );
 };
 
-export default index;
+export { index };
+export default CompetitionHome;

@@ -1,36 +1,47 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from 'react';
 import type { TabsProps } from 'antd';
 import { Tabs, Row, Col, Card, Typography, Button } from 'antd';
+import { useDynamicContext } from '@dynamic-labs/sdk-react';
+import { useNavigate } from 'react-router';
 import api from '@/api';
 import { languages } from '@/constants/selcet.json';
 import { optionsMap } from '@/utils/array';
-import { PrizeTab, CompDetaisTab, GudingTab } from './tabContent';
+import GenerateTab from './tabContent';
 import styles from './index.module.scss';
 
 const languagesOptions = optionsMap(languages);
 const { Title } = Typography;
-
 const items: TabsProps['items'] = [
     {
-        key: '1',
+        key: 'prizeTab',
         label: 'Prize',
-        children: PrizeTab
+        children: <GenerateTab tabKey='prizeTab'/>
     },
     {
-        key: '2',
+        key: 'compDetaisTab',
         label: 'Competition Details',
-        children: CompDetaisTab
+        children: <GenerateTab tabKey='compDetaisTab'/>
     },
     {
-        key: '3',
+        key: 'gudingTab',
         label: 'Judging Criteria',
-        children: GudingTab
+        children: <GenerateTab tabKey='gudingTab'/>
     }
 ];
 
 const CompetitionHome: React.FC = () => {
     const [translationList, setTranslationList] = useState([]);
+    const { setShowAuthFlow, user } = useDynamicContext();
+    const navigate  = useNavigate();
 
+    const onApply = useCallback(()=>{
+     if(user){
+        navigate('competition');
+     }else{
+       setShowAuthFlow(true)
+     }
+    },[user]);
+    
     const getTranslationList = useCallback((queryParams?: any) => {
         return api.getTranslationList(queryParams).then((res: any) => {
             if (res.code === 200) {
@@ -78,7 +89,7 @@ const CompetitionHome: React.FC = () => {
                                     </span>
                                     {deadline}
                                 </p>
-                                <Button className={styles['competition-button']}>Apply</Button>
+                                <Button onClick={onApply} className={styles['competition-button']}>Apply</Button>
                             </Card>
                         </Col>
                     );

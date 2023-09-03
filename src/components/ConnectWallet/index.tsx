@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable import/no-extraneous-dependencies */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, Fragment} from 'react';
 import { useNavigate } from 'react-router';
-import { DynamicWidget, useDynamicContext,DynamicUserProfile } from '@dynamic-labs/sdk-react';
+import { useDynamicContext,DynamicUserProfile } from '@dynamic-labs/sdk-react';
 import { useAccount, useDisconnect,useSignMessage } from 'wagmi';
 // import { signMessageAsync } from 'wagmi';
 
@@ -223,7 +223,6 @@ const ConnectWallet = () => {
 
     return (
         <>
-<DynamicWidget/>
         { user?  
         
         <Dropdown

@@ -145,7 +145,7 @@ const columns2 = [
 const data2 = [
     {
       "key": "1",
-      "Scoring Dimension": "1. Language Quality",
+      "Scoring Dimension": "(1). Language Quality",
       "Maximum Score": "25 points",
       "Scoring Criteria": "N/A"
     },
@@ -169,7 +169,7 @@ const data2 = [
     },
     {
       "key": "5",
-      "Scoring Dimension": "2. Cultural transmission",
+      "Scoring Dimension": "(2). Cultural transmission",
       "Maximum Score": "25 points",
       "Scoring Criteria": "N/A"
     },
@@ -193,7 +193,7 @@ const data2 = [
     },
     {
       "key": "9",
-      "Scoring Dimension": "3. Translation Difficulty Factor",
+      "Scoring Dimension": "(3). Translation Difficulty Factor",
       "Maximum Score": "20 points",
       "Scoring Criteria": "N/A"
     },
@@ -205,7 +205,7 @@ const data2 = [
     },
     {
       "key": "11",
-      "Scoring Dimension": "4. Word count and language diversity",
+      "Scoring Dimension": "(4). Word count and language diversity",
       "Maximum Score": "20 points",
       "Scoring Criteria": "N/A"
     },
@@ -223,7 +223,7 @@ const data2 = [
     },
     {
       "key": "14",
-      "Scoring Dimension": "5. Overall impression",
+      "Scoring Dimension": "(5). Overall impression",
       "Maximum Score": "10 points",
       "Scoring Criteria": "N/A"
     },
@@ -604,18 +604,25 @@ const Join: React.FC = () => {
             <TabPane tab="Evaluation Rules" key="6">
             <Divider />
             <Title level={4}>6. Evaluation rules:</Title>
+                <Paragraph><strong><span style={{ color: 'red' }}>1. Evaluation Process:</span></strong></Paragraph>
                 <Paragraph>
                   The review method of this competition is double review by AI artificial intelligence + translation experts.
-                  <br /><strong>The first round of AI artificial intelligence preliminary screening</strong> to evaluate the translation completion of the translation. Works whose translation completion rate is less than 40% will be considered unqualified and will not enter the follow-up review.
-                  <br/>The second round of AI artificial intelligence further sc
-                  reening, focusing on the repetition rate and similarity between translations. <span style={{ color: 'red' }}>Works with a repetition rate or similarity higher than 80% will be excluded</span> to ensure the independence and originality of the translation.
+                  <br /><strong>The first round of AI preliminary screening</strong> to evaluate the translation completion of the translation. Works whose translation completion rate is less than 40% will be considered unqualified and will not enter the follow-up review.
+                  <br/><strong>The second round of AI further screening</strong>, focusing on the repetition rate and similarity between translations. <span style={{ color: 'red' }}>Works with a repetition rate or similarity higher than 80% will be excluded</span> to ensure the independence and originality of the translation.
                   <br/><strong>The third round is manually reviewed by translation experts</strong>, looking at language quality, cultural transmission and emotional expression. Experts will deeply analyze the accuracy, fluency and cultural connotation of the translation to ensure that the translation accurately conveys the emotion and meaning of the original work.
                   <br/>The comprehensive score will combine the degree of difficulty of the translated works, the number of translated words and the diversity of the languages involved, etc. These factors jointly determine the overall score of each work, and corresponding awards will be selected based on the score.
                 </Paragraph>
                 <Paragraph>
-                <strong>Review Dimensions:</strong>
+                <strong>2. Review Dimensions:</strong>
                 </Paragraph>
                 <Table columns={columns2} dataSource={data2} pagination={false} />
+                <Paragraph>3. Scoring calculation formula (scoring according to works):</Paragraph>
+                 <Paragraph>
+                   (1) Team:
+                   <span style={{ color: 'red' }}><br/>(Grammar accuracy + word accuracy + sentence fluency + cultural adaptability + retention and transmission of local colors + fidelity to the original emotion and context + translation difficulty + novel word count + overall coherence and readability of the work ) / number of submissions + language diversity.</span>
+                 </Paragraph>
+                   (2) Person:<br/>
+                   <span style={{ color: 'red' }}>Grammar accuracy + word accuracy + sentence fluency + cultural adaptability + retention and transmission of local colors + fidelity to the original emotion and context + translation difficulty + novel word count + overall coherence and readability of the work + linguistic diversity.</span>
             </TabPane>
 
             <TabPane tab="Awards" key="7">

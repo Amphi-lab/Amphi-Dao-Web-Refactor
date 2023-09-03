@@ -1,9 +1,16 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React, {useCallback} from 'react';
+import { Typography, Button } from 'antd';
+import { useDynamicContext } from '@dynamic-labs/sdk-react';
+import { useNavigate } from 'react-router';
+import styles from './index.module.scss';
 
 const { Title } = Typography;
 
-const PrizeTab = (
+interface TabContentProps{
+    onApply: () => void,
+}
+
+const PrizeTab:React.FC<TabContentProps> = ({ onApply })=> (
     <Typography style={{ fontSize: '20px' }}>
         <Title level={5}>
             Total award 100,000 wcm token! Opportunity to obtain authorship rights for proofreading
@@ -57,13 +64,13 @@ const PrizeTab = (
 
             <p>
                 *Group award and individual excellenc award cannot be superimposed for
-                participation.
+                participation.<Button onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
             </p>
         </section>
     </Typography>
 );
 
-const CompDetaisTab = (
+const CompDetaisTab :React.FC<TabContentProps>= ({ onApply })=> (
     <Typography style={{ fontSize: '20px' }}>
         <section>
             <Title level={5}>
@@ -116,13 +123,13 @@ const CompDetaisTab = (
             <Title level={5}> distribution period: December 29, 2023-December 31, 2023</Title>
             <p>
                 Relevant rewards will be issued through the wallet address registered by the
-                contestants:
+                contestants <Button  onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
             </p>
         </section>
     </Typography>
 );
 
-const GudingTab = (
+const GudingTab:React.FC<TabContentProps> = ({ onApply }) => (
     <Typography style={{ fontSize: '20px' }}>
         <section>
             <Title level={5}> Language quality (25 points)</Title>
@@ -161,10 +168,40 @@ const GudingTab = (
         <section>
             <Title level={5}> Overall impression (10 points)</Title>
             <ul>
-                <li>Overall coherence and readability of the work 10 points</li>
+                <li>Overall coherence and readability of the work 10 points</li><Button onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
             </ul>
         </section>
     </Typography>
 );
 
-export { PrizeTab, CompDetaisTab, GudingTab };
+interface GenerateTabProps {
+    tabKey: 'prizeTab' | 'compDetaisTab' | 'gudingTab';
+}
+
+const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
+ const { setShowAuthFlow, user } = useDynamicContext();
+ const navigate = useNavigate();
+
+ const tabItem:{
+    prizeTab:React.FC<TabContentProps>,
+    compDetaisTab:React.FC<TabContentProps>,
+    gudingTab:React.FC<TabContentProps>
+ } = {
+     prizeTab: PrizeTab,
+     compDetaisTab: CompDetaisTab,
+     gudingTab: GudingTab
+    };
+
+const onApply = useCallback(()=>{
+    if(user){
+        navigate('competition');
+    }else{
+        setShowAuthFlow(true)
+    }
+},[user]);
+
+ const TabCom: React.ElementType<TabContentProps> = tabItem[tabKey];
+ return <TabCom onApply={onApply}/>
+}
+
+export default GenerateTab;

@@ -58,6 +58,11 @@
   }
 }
 
+.competition-button-tab {
+  @extend .competition-button;
+  float: right;
+}
+
 .competition-label {
   color: #999;
 }

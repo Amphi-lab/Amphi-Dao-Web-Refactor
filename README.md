@@ -10,7 +10,7 @@ npm run dev
 ```
 
 
-# [Storybook](https://juejin.cn/post/7044428114264326175)
+# [Storybook](https://storybook.js.org/docs/react/writing-tests/introduction)
 ## 安装storybook/cli脚手架并安装依赖
 ```shell
 pnpm dlx storybook@latest init

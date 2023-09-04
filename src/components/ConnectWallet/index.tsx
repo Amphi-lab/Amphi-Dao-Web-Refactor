@@ -34,7 +34,6 @@ const items: any = [
     },
     {
         key: '/myorders',
-        // label: <a href='/portfolio'>Portfolio</a>
         label: 'My Orders',
         path: '/myorders'
     },
@@ -42,11 +41,22 @@ const items: any = [
         key: '/workspace',
         label: 'Workspace',
         path: '/workspace'
+    },
+    {
+        key: '/judge',
+        label: 'Judge',
+        path: '/judge'
+    },
+    {
+        key: '/allreviews',
+        label: 'All Reviews',
+        path: '/allreviews'
     }
 ];
 
 const ConnectWallet = () => {
     const [userInfo, setUserInfo] = useState(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const [nonce, setNonce] = useState('');
     const [balance, setBalance] = useState(null);
     // const { data: signature, signMessageAsync } = useSignMessage();

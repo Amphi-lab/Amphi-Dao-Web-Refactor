@@ -1,0 +1,55 @@
+.competition-wrapper {
+  width: 100%;
+  padding-bottom: 30px;
+  font-size: 16px;
+  background: #fff;
+}
+
+.competition-title {
+  margin-top: 60px;
+}
+
+.competition-materials {
+  width: 100%;
+  min-height: 400px;
+  padding: 0 60px;
+  background: #fff;
+}
+
+.competition-card {
+  margin: 16px;
+  background: #f2f2fa;
+
+  &:hover {
+    box-shadow:
+      0 1px 2px -2px rgb(0 0 0 / 16%),
+      0 3px 6px 0 rgb(0 0 0 / 12%),
+      0 5px 12px 4px rgb(0 0 0 / 9%);
+    transform: scale(1.1);
+  }
+
+  :global {
+    .light-card-body {
+      padding-top: 0 !important;
+    }
+  }
+}
+
+.competition-button {
+  color: #fff;
+  background: #e66ea3;
+
+  &:hover {
+    color: #fff !important;
+    border: 0 !important;
+  }
+}
+
+.competition-button-tab {
+  @extend .competition-button;
+  float: right;
+}
+
+.competition-label {
+  color: #999;
+}

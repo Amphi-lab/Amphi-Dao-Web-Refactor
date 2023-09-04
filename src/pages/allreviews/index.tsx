@@ -1,108 +1,100 @@
-import React, { useCallback, useMemo } from 'react';
-import { Select, Tabs } from 'antd';
-import dayjs from 'dayjs';
-
+import React, { memo, useState, useCallback, useMemo, useEffect } from 'react';
+import { Row, Col, Card, Typography, Button } from 'antd';
+import { useDynamicContext } from '@dynamic-labs/sdk-react';
+import { useNavigate } from 'react-router';
 import api from '@/api';
-import {
-    acceptAddressColumn,
-    actionColumn,
-    bountyColumn,
-    deadlineColumn,
-    titleColumn,
-    translateTypeColumn,
-    translationStateColumn,
-    translationTypeArrayFormItem
-} from '@/pageComponents/myorders/TabsItems';
-import OrderLayout, { createBaseTabItems } from '@/layout/OrderLayout';
-import { useAccount } from 'wagmi';
+import { languages } from '@/constants/selcet.json';
+import { optionsMap } from '@/utils/array';
+import styles from './index.module.scss';
 
-const { Option } = Select;
+const languagesOptions = optionsMap(languages);
+const { Title } = Typography;
 
-const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
+const Allreviews: React.FC = () => {
+    // 创建了一个名为 translationList 的状态变量，以及一个用于更新该状态的函数 setTranslationList。初始状态为一个空数组 []
+    const [translationList, setTranslationList] = useState([]);
+    // 这个 Hook 可能返回了一个上下文对象，其中包含了多个值。我们在这里解构了其中的两个属性：setShowAuthFlow 和 user。
+    const { setShowAuthFlow, user } = useDynamicContext();
+    const navigate  = useNavigate();
 
-export default () => {
-    const { address } = useAccount();
-
-    const currentDate = dayjs().format(formatType);
-    const year = dayjs().year();
-    const yearRange = JSON.stringify([
-        dayjs().startOf('year').format(formatType),
-        dayjs().endOf('year').format(formatType)
-    ]);
-    const monthRange = JSON.stringify([
-        dayjs().subtract(3, 'month').startOf('day').format(formatType),
-        currentDate
-    ]);
-    const dayRange = JSON.stringify([
-        dayjs().subtract(30, 'day').startOf('day').format(formatType),
-        currentDate
-    ]);
-
-    const queryItems = useMemo(() => {
-        return [
-            translationTypeArrayFormItem,
-            {
-                name: 'createTime',
-                className: 'filter-create-time',
-                label: 'Created at',
-                itemRender: (
-                    <Select placeholder='Select a option and change input text above'>
-                        <Option value={dayRange}>last 30 days</Option>
-                        <Option value={monthRange}>past 3 months</Option>
-                        <Option value={yearRange}>{year}</Option>
-                        <Option value=''>all time periods</Option>
-                    </Select>
-                )
-            }
-        ];
-    }, [dayRange, monthRange, year, yearRange]);
-
-    const columns = useMemo(() => {
-        return [
-            titleColumn,
-            acceptAddressColumn,
-            bountyColumn,
-            translationStateColumn,
-            deadlineColumn,
-            translateTypeColumn,
-            actionColumn
-        ];
-    }, []);
-
-    const getTranslationList = useCallback((queryParams: any) => {
+    const onApply = useCallback(()=>{
+     if(user){
+        navigate('../competition');
+     }else{
+       setShowAuthFlow(true)
+     }
+    },[user]);
+    
+    const getTranslationList = useCallback((queryParams?: any) => {
         return api.getTranslationList(queryParams).then((res: any) => {
             if (res.code === 200) {
-                const { rows, total } = res;
-                return { rows, total };
+                const { rows } = res;
+                console.log(rows);
+                setTranslationList(rows);
             }
         });
     }, []);
-    const formatQueryParams = useCallback(
-        (formValues: any, status?: string) => {
-            const { translationTypeArray, createTime } = formValues;
-            const options: any = {
-                translationStateArray: status?.split(','),
-                buyerAddress: address
-            };
-            if (translationTypeArray.length > 0) {
-                options.translationTypeArray = translationTypeArray.join();
-            }
-            const [beginCreateTime, endCreateTime] = createTime ? JSON.parse(createTime) : [];
-            if (beginCreateTime) options.params = { ...options.params, beginCreateTime };
-            if (endCreateTime) options.params = { ...options.params, endCreateTime };
 
-            return options;
-        },
-        [address]
-    );
+    useEffect(() => {
+        getTranslationList();
+    }, [getTranslationList]);
 
-    const items = useMemo(() => {
-        return createBaseTabItems(columns, getTranslationList, formatQueryParams, queryItems);
-    }, [columns, getTranslationList, formatQueryParams, queryItems]);
+    const renderMaterials = useMemo(() => {
+        return (
+            <Row gutter={30}>
+                {translationList.map((item: any) => {
+                    const { title, Role, sourceLang, targetLang } = item;
+                    const language = `${languagesOptions.get(sourceLang) || '--'} 
+                    -> ${languagesOptions.get(targetLang) || '--'}`;
+
+                    return (
+                        <Col key={item.id} span={8}>
+                            <Card
+                                className={styles['competition-card']}
+                                title={title}
+                                bordered={false}
+                            >
+                                <p>
+                                    <span className={styles['competition-label']}>
+                                        Language:&nbsp;
+                                    </span>
+                                    {language}
+                                </p>
+                                <p>
+                                    <span className={styles['competition-label']}>
+                                        Role: {Role}&nbsp;
+                                    </span>
+                                    {language}
+                                </p>
+                                <p>
+                                    <span className={styles['competition-label']}>
+                                        Completed on: 2023/11/15&nbsp;
+                                    </span>
+                                </p>
+                                <p>
+                                    <span className={styles['competition-label']}>
+                                        Status: Pending review&nbsp;
+                                    </span>
+                                </p>
+                                <Button onClick={onApply} className={styles['competition-button']}>Review</Button>
+                            </Card>
+                        </Col>
+                    );
+                })}
+            </Row>
+        );
+    }, [translationList]);
 
     return (
-        <OrderLayout title='Review' tabsItems={items}>
-            <Tabs defaultActiveKey='1' items={items} />
-        </OrderLayout>
+        <div className={styles['competition-wrapper']}>
+            <div className={styles['competition-materials']}>
+                <Title className={styles['competition-title']} level={5}>
+                    Reviews
+                </Title>
+                {renderMaterials}
+            </div>
+        </div>
     );
 };
+
+export default memo(Allreviews);

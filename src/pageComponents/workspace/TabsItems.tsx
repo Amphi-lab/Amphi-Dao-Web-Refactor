@@ -39,7 +39,7 @@ const ActionCom = ({ status, id }: any) => {
             size='small'
             wrap
             onClick={() => {
-                navigate(`/orderDetail/${id}`, { state: { id } });
+                navigate(`/workspace/${id}`, { state: { id } });
             }}
         >
             <Button type='link' size='small' icon={<EyeOutlined />}>

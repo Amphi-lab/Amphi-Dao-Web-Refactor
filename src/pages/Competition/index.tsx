@@ -574,9 +574,14 @@ const Join: React.FC = () => {
                    <span style={{ color: 'red' }}>At the same time, the organizer will assist the contestants to provide a novel manuscript + an AI translation manuscript in each language for reference by the participating teams. The participating teams can proofread and translate based on the original manuscript and the AI translation manuscript.</span>
                    <br />
                    <strong>3. Guidance and requirements for translation content:</ strong>
-                    <br />
-                   During the translation process, please strictly follow the guidance requirements of the &ldquo;Amphi Translation Manual&rdquo; (click to download or view) for proofreading and translation.
-                    <br />
+                    <br />During the translation process, the following points should be particularly noted:<br/>
+                   <ol>
+                     <li><strong>Faithfulness to the Original</strong>: Contestants should strive to remain faithful to the original text, including retaining the emotions of the characters, the depiction of the scenes, and the development of the plot. There should be no deliberate deviation, misinterpretation, or omission of the original text during the translation process.</li>
+                     <li><strong>Fluency of Language</strong>: The translated language should be as fluent as possible, allowing readers of the target language to read it as if they are reading a work in their own language. While both literal and free translation are acceptable, the priority should be to ensure the best reading experience for the target language readers.</li>
+                     <li><strong>Cultural Transmission</strong>: The translation of cultural elements is a major challenge in this competition. When encountering elements with specific cultural meanings, one should seek the best way to convey its meaning, whether through direct translation, free translation, or the addition of footnotes.</li>
+                     <li><strong>Accurate Terminology</strong>: When translating specific terms or concepts, it&apos;s essential to ensure the accuracy of the translation. If necessary, research or reference materials can be consulted (with a list of terms attached).</li>
+                     <li><strong>Maintain Consistency</strong>: Throughout the translation of the entire novel, consistency should be maintained for character names, place names, specific terms, and the like.</li>
+                   </ol>
                    <strong>4. Submission method and deadline:</strong>
                    <br/>
                    (1) Work submission method: All translation works should be submitted through the competition-specific online submission system. After completing the translation, the contestants need to save the work in word format and upload it through the online submission system. At the same time, entrants need to ensure that their works do not contain any personally identifiable information to ensure the fairness of the competition.

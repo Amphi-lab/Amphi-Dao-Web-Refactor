@@ -616,7 +616,7 @@ const Join: React.FC = () => {
                 <strong>2. Review Dimensions:</strong>
                 </Paragraph>
                 <Table columns={columns2} dataSource={data2} pagination={false} />
-                <Paragraph>3. Scoring calculation formula (scoring according to works):</Paragraph>
+                <Paragraph><strong>3. Scoring calculation formula (scoring according to works):</strong></Paragraph>
                  <Paragraph>
                    (1) Team:
                    <span style={{ color: 'red' }}><br/>(Grammar accuracy + word accuracy + sentence fluency + cultural adaptability + retention and transmission of local colors + fidelity to the original emotion and context + translation difficulty + novel word count + overall coherence and readability of the work ) / number of submissions + language diversity.</span>

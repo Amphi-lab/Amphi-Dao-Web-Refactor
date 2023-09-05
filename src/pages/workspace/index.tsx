@@ -11,7 +11,7 @@ import TabsItems, {
     translateTypeColumn,
     translationStateColumn,
     translationTypeArrayFormItem
-} from '@/pageComponents/myorders/TabsItems';
+} from '@/pageComponents/workspace/TabsItems';
 import OrderLayout from '@/layout/OrderLayout';
 import { useAccount } from 'wagmi';
 import { WORKSPACE_STATUS_CODE } from '@/constants/enums';

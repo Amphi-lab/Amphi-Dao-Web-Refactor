@@ -66,7 +66,6 @@ export default () => {
             if (deadline) {
                 options.deadline = deadline.format(formatType);
             }
-
             return options;
         },
         [address]

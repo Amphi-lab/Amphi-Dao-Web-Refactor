@@ -40,20 +40,20 @@ const WorkspaceDetail = () => {
 
     return (
         <BaseLayout>
-            <BackTopNav title='Back to my mission'>
+            <BackTopNav title='Back to workspace'>
                 <Divider style={{ margin: '12px 0' }} />
                 <div style={{ padding: '0 60px' }}>
                     <Steps
                         current={step}
                         items={[
                             {
-                                title: 'In translation'
+                                title: 'Submit the order'
                             },
                             {
-                                title: 'Under Review'
+                                title: 'In service'
                             },
                             {
-                                title: 'To be modified'
+                                title: 'Pending Review'
                             },
                             {
                                 title: 'Order completed'

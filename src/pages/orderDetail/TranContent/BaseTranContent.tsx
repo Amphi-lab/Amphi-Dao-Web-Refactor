@@ -8,7 +8,6 @@ import { Button, Tabs, Upload, message } from 'antd';
 import type { TabsProps, UploadProps } from 'antd';
 import api from '@/api';
 import glossaryIcon from '@/components/Icon/Glossary';
-// import { getAmphi } from '@/contracts/contract';
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 import { noop } from '@/utils/util';
 import styles from './index.module.scss';

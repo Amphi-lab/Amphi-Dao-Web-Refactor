@@ -65,7 +65,7 @@ const CompetitionHome: React.FC = () => {
                     to ${languagesOptions.get(targetLang) || '--'}`;
 
                     return (
-                        <Col key={item.id} span={8}>
+                        <Col key={item.id} span={6}>
                             <Card
                                 className={styles['competition-card']}
                                 title={title}

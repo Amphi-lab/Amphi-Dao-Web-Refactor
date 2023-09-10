@@ -531,25 +531,24 @@ const Join: React.FC = () => {
                 <br/>
                 </Paragraph>
                 <Paragraph>
-                    2. Work review stage: November 16, 2023 - December 16, 2023
+                    2. Work review stage: November 16, 2023 - December 15, 2023
                     <br />
                     Contestants can check whether the review status of their proofread translation works has been completed in the registration background of the official website.
                 </Paragraph>
                 <Paragraph>
-                    3. Award announcement stage: December 17, 2023 - December 24, 2023
+                    3. Award announcement stage: December 18, 2023 - December 22, 2023
                     <br />
                         The results of the review will be announced on the official website from December 17th to 24th, 2023, and all contestants can log on to the official website to check.
                 </Paragraph>
                 <Paragraph>
-                    4. Award distribution period: December 29, 2023-December 31, 2023
+                    4. Award distribution period: December 26, 2023-December 29, 2023
                     <br />
                         Relevant rewards will be issued through the wallet address registered by the contestants:
                         <ul>
-                                <li>(1) Metale WCM issuance:</li>
-                                <li>(2) Metale NFT issuance:</li>
-                                <li>(3) Amphi pass NFT and SBT issuance:</li>
-                                <li>(4) Display and feedback of the authorship rights of the winning works:</li>
-                                <li>(5) Other reward distribution:</li>
+                                <li>(1) Metale WCM and NFT issuance:</li>
+                                <li>(2) Amphi pass NFT and SBT issuance:</li>
+                                <li>(3) Display and feedback of the authorship rights of the winning works:</li>
+                                <li>(4) Other reward distribution:</li>
                         </ul>
                         The above time will be adjusted in case of force majeure or special circumstances, and the details will be subject to notification.
                 </Paragraph>

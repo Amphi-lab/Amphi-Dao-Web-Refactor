@@ -72,7 +72,7 @@ const Detail = () => {
     return (
         <>
             <AmCard
-                title='Order Detail'
+                title='Order Title'
                 cardStyle={cardStyle}
                 titleStyle={titleStyle}
                 rightContent={orderRight}

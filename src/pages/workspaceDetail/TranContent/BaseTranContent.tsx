@@ -1,13 +1,14 @@
 import React from 'react';
 import AmCard from '@/components/Card';
-import lineIcon from '@/assets/svg/trans-content-line.svg';
+// import lineIcon from '@/assets/svg/trans-content-line.svg';
 import languageIcon from '@/components/Icon/Language';
 import downloadIcon from '@/components/Icon/Download';
 import IconButton from '@/components/IconButton';
-import { Button, Tabs, Upload, message } from 'antd';
+import { Row, Col, Button, Tabs, Upload, message } from 'antd';
+
 import type { TabsProps, UploadProps } from 'antd';
 import api from '@/api';
-import glossaryIcon from '@/components/Icon/Glossary';
+// import glossaryIcon from '@/components/Icon/Glossary';
 // import { getAmphi } from '@/contracts/contract';
 import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
 import { noop } from '@/utils/util';
@@ -98,18 +99,27 @@ const BaseTranContent = ({
                 </p>
             );
         }
-        return originFiles?.map((item: any) => {
-            return (
-                <div className={styles['sub-card-content']} key={item.id}>
-                    <IconButton icon={languageIcon} text={item.fileName} textStyle={textStyle} />
-                    <IconButton
-                        icon={downloadIcon}
-                        text='Download'
-                        onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
-                    />
-                </div>
-            );
-        });
+        return (
+            <>
+                {originFiles?.map((item: any) => {
+                    return (
+                        <div className={styles['sub-card-content']} key={item.id}>
+                            <IconButton icon={languageIcon} text={item.fileName} textStyle={textStyle} />
+                            <IconButton
+                                icon={downloadIcon}
+                                text='Download'
+                                onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
+                            />
+                        </div>
+                    );
+                })}
+                <Upload {...uploadProps}>
+                    <Button type='primary' className={styles.accept}>
+                        Upload
+                    </Button>
+                </Upload>
+            </>
+        );
     };
 
     // AI 翻译的文件
@@ -185,9 +195,14 @@ const BaseTranContent = ({
             return (
                 <div className={styles['workspace-sub-card-content']}>
                     <p className={styles['sub-card-human-content']}>Show after upload</p>
+                    <IconButton
+                        icon={downloadIcon}
+                        text='Download'
+                        onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
+                    />
                     <Upload {...uploadProps}>
                         <Button type='primary' className={styles.accept}>
-                            Add file
+                            Upload
                         </Button>
                     </Upload>
                 </div>
@@ -239,27 +254,45 @@ const BaseTranContent = ({
         }
     ];
 
-    const showGlossaryModal = () => {
-        childGlossaryRef?.current?.showGlossaryModal();
-    };
+    // const showGlossaryModal = () => {
+    //     childGlossaryRef?.current?.showGlossaryModal();
+    // };
 
-    const rightContent = (
-        <IconButton icon={glossaryIcon} text='View Glossary' onClick={showGlossaryModal} />
-    );
+    // const rightContent = (
+    //     <IconButton icon={glossaryIcon} text='View Glossary' onClick={showGlossaryModal} />
+    // );
+
     return (
         <>
-            <AmCard title='Translate Content' cardStyle={cardStyle} rightContent={rightContent}>
-                <div className={styles['trans-content-box']}>
-                    <div className={styles['trans-content-sub-card']}>
-                        <p className={styles['sub-card-title']}>Original Content</p>
-                        {getOriginFileList()}
-                    </div>
-                    <img src={lineIcon} alt='' className={styles['trans-content-line']} />
+            {/* <AmCard title='Translate Content' cardStyle={cardStyle} rightContent={rightContent}> */}
+            <AmCard title='Translate Content' cardStyle={cardStyle}>
+                <Row gutter={16}>
+                    <Col span={12}>
+                        <div className={styles['trans-content-sub-card']}>
+                            <p className={styles['sub-card-title']}>Original Content</p>
+                            {getOriginFileList()}
+                            <IconButton
+                                icon={downloadIcon}
+                                text='Download'
+                                onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
+                            />
+                        </div>
+                    </Col>
 
-                    <div className={styles['trans-content-sub-card']}>
-                        <Tabs defaultActiveKey='1' items={items} onChange={onChange} />
-                    </div>
-                </div>
+                    {/* <img src={lineIcon} alt='' className={styles['trans-content-line']} /> */}
+                    <Col span={12}>
+                        <div className={styles['trans-content-sub-card']}>
+                            <Tabs defaultActiveKey='1' items={items} onChange={onChange} />
+                            {workspace && (
+                                <Upload {...uploadProps}>
+                                    <Button type='primary' className={styles.accept}>
+                                        Upload
+                                    </Button>
+                                </Upload>
+                            )}
+                        </div>
+                    </Col>
+                </Row>
             </AmCard>
             <Glossary onRef={childGlossaryRef} />
             <RejectForm onRef={childRejctRef} />

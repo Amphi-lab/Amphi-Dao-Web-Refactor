@@ -290,7 +290,7 @@ const TranCandidate = () => {
     ];
 
     return (
-        <AmCard title='Translation candidate' cardStyle={cardStyle}>
+        <AmCard title='Translation Content' cardStyle={cardStyle}>
             <AmTable
                 columns={columns}
                 data={tableData}

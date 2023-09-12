@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 const ServiceRating = () => {
     const [form] = useForm();
     const transIndex = useAppSelector(translationIndex);
-    const [isSatisty, setIsSatisty] = useState(1);
+    // const [isSatisty, setIsSatisty] = useState(1);
     const [yetEvalData, setYetEvalData] = useState<any>({});
 
     // 提交评价
@@ -29,7 +29,7 @@ const ServiceRating = () => {
         console.log('Success:', values);
         const finalParmas = {
             ...values,
-            machine: isSatisty,
+            // machine: isSatisty,
             translationIndex: transIndex
         };
         handleSubmit(finalParmas);
@@ -41,9 +41,9 @@ const ServiceRating = () => {
     };
 
     //  --机翻是否满意 0=不满意 1=满意
-    const handleMachine = (value: number) => {
-        setIsSatisty(value);
-    };
+    // const handleMachine = (value: number) => {
+    //     setIsSatisty(value);
+    // };
 
     useEffect(() => {
         // 查询评价
@@ -60,7 +60,7 @@ const ServiceRating = () => {
     // console.log(yetEvalData);
 
     return (
-        <AmCard title='Service rating'>
+        <AmCard title='Reviewing'>
             <Form
                 form={form}
                 labelAlign='left'
@@ -73,72 +73,80 @@ const ServiceRating = () => {
                 autoComplete='off'
                 colon={false}
             >
-                <p className={styles['group-heading']}>The machine translation</p>
-                {yetEvalData.translationIndex &&
-                (yetEvalData.machine === 0 || yetEvalData.machine === 1) ? (
-                    <Form.Item label='' name='machine'>
-                        {yetEvalData.machine === 0 ? (
-                            <span>Dissatisfied</span>
-                        ) : (
-                            <span>Satisfy</span>
-                        )}
+
+                {/* Grammatical accuracy */}
+                {yetEvalData.translationIndex && yetEvalData.grammaticalAccuracy ? (
+                    <Form.Item label='Grammatical accuracy'>
+                        <Rate disabled defaultValue={yetEvalData.grammaticalAccuracy} />
                     </Form.Item>
                 ) : (
-                    <Form.Item label='' name='machine'>
-                        <Button className={styles['satisfy-btn']} onClick={() => handleMachine(1)}>
-                            Satisfy
-                        </Button>
-                        <Button
-                            className={styles['dis-satisfy-btn']}
-                            onClick={() => handleMachine(0)}
-                        >
-                            Dissatisfied
-                        </Button>
+                    <Form.Item label='Grammatical accuracy' name='grammaticalAccuracy'>
+                        <Rate allowClear />
                     </Form.Item>
                 )}
 
-                <p className={styles['group-heading']}>The human validation</p>
+                {/* words accuracy */}
+                {yetEvalData.translationIndex && yetEvalData.wordsAccuracy ? (
+                    <Form.Item label='Words accuracy'>
+                        <Rate disabled defaultValue={yetEvalData.wordsAccuracy} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Words accuracy' name='wordsAccuracy'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
 
-                {/*  overall */}
+                {/* Sentence fluency */}
+                {yetEvalData.translationIndex && yetEvalData.sentenceFluency ? (
+                    <Form.Item label='Sentence fluency'>
+                        <Rate disabled defaultValue={yetEvalData.sentenceFluency} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Sentence fluency' name='sentenceFluency'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* Culture fit */}
+                {yetEvalData.translationIndex && yetEvalData.cultureFit ? (
+                    <Form.Item label='Culture fit'>
+                        <Rate disabled defaultValue={yetEvalData.cultureFit} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Culture fit' name='cultureFit'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* perservation */}
+                {yetEvalData.translationIndex && yetEvalData.perservation ? (
+                    <Form.Item label='Perservation and Transmission of Local Colors'>
+                        <Rate disabled defaultValue={yetEvalData.perservation} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Perservation and Transmission of Local Colors' name='perservation'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/* fidelity */}
+                {yetEvalData.translationIndex && yetEvalData.fidelity ? (
+                    <Form.Item label='Fidelity to the emotion and context of the original text'>
+                        <Rate disabled defaultValue={yetEvalData.fidelity} />
+                    </Form.Item>
+                ) : (
+                    <Form.Item label='Fidelity to the emotion and context of the original text' name='fidelity'>
+                        <Rate allowClear />
+                    </Form.Item>
+                )}
+
+                {/*  Overall */}
                 {yetEvalData.translationIndex && yetEvalData.overall ? (
                     <Form.Item label='Overall'>
                         <Rate disabled defaultValue={yetEvalData.overall} />
                     </Form.Item>
                 ) : (
                     <Form.Item label='Overall' name='overall'>
-                        <Rate allowClear />
-                    </Form.Item>
-                )}
-
-                {/* Professional */}
-                {yetEvalData.translationIndex && yetEvalData.professional ? (
-                    <Form.Item label='Professional'>
-                        <Rate disabled defaultValue={yetEvalData.professional} />
-                    </Form.Item>
-                ) : (
-                    <Form.Item label='Professional' name='professional'>
-                        <Rate allowClear />
-                    </Form.Item>
-                )}
-
-                {/* timeliness */}
-                {yetEvalData.translationIndex && yetEvalData.timeliness ? (
-                    <Form.Item label='Timeliness'>
-                        <Rate disabled defaultValue={yetEvalData.timeliness} />
-                    </Form.Item>
-                ) : (
-                    <Form.Item label='Timeliness' name='timeliness'>
-                        <Rate allowClear />
-                    </Form.Item>
-                )}
-
-                {/* attitude */}
-                {yetEvalData.translationIndex && yetEvalData.attitude ? (
-                    <Form.Item label='Service Attitude'>
-                        <Rate disabled defaultValue={yetEvalData.attitude} />
-                    </Form.Item>
-                ) : (
-                    <Form.Item label='Service Attitude' name='attitude'>
                         <Rate allowClear />
                     </Form.Item>
                 )}

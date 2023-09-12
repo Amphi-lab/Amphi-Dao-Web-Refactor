@@ -65,12 +65,12 @@ const WorkspaceDetail = () => {
             </BackTopNav>
 
             <AmCard
-                title='Mission title'
+                title='Order Title'
                 cardStyle={cardStyle}
                 titleStyle={{ margin: '12px 0 24px 0' }}
             >
                 <Descriptions layout='vertical'>
-                    <Descriptions.Item label='Mission ID'>{detail?.instruction}</Descriptions.Item>
+                    <Descriptions.Item label='Order ID'>{detail?.instruction}</Descriptions.Item>
                     <Descriptions.Item label='Language'>{`From ${optionsMap(currentLanguages).get(
                         detail?.sourceLang
                     )} to ${optionsMap(currentLanguages).get(

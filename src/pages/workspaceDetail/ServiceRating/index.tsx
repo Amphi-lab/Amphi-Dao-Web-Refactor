@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AmCard from '@/components/Card';
-import { Button, Form, Rate, message } from 'antd';
+import { Button, Form, message, Select } from 'antd';  // delete Rate
 import TextArea from 'antd/es/input/TextArea';
 // import UnSelectedStar from '@/components/Icon/UnSelectedStar';
 // import SelectedStar from '@/components/Icon/SelectedStar';
@@ -74,80 +74,161 @@ const ServiceRating = () => {
                 colon={false}
             >
 
-                {/* Grammatical accuracy */}
+                 {/* Grammatical accuracy */}
+                 {/* {yetEvalData.translationIndex && yetEvalData.grammaticalAccuracy ? ( */}
+                 {/*   <Form.Item label='Grammatical accuracy'> */}
+                 {/*       <Rate disabled defaultValue={yetEvalData.grammaticalAccuracy} /> */}
+                 {/*   </Form.Item> */}
+                 {/* ) : ( */}
+                 {/*   <Form.Item label='Grammatical accuracy' name='grammaticalAccuracy'> */}
+                 {/*       <Rate allowClear /> */}
+                 {/*   </Form.Item> */}
+                 {/* )} */}
+                
                 {yetEvalData.translationIndex && yetEvalData.grammaticalAccuracy ? (
                     <Form.Item label='Grammatical accuracy'>
-                        <Rate disabled defaultValue={yetEvalData.grammaticalAccuracy} />
+                        <Select disabled defaultValue={yetEvalData.grammaticalAccuracy}>
+                            <Select.Option value={8}>No grammatical errors (8 points)</Select.Option>
+                            <Select.Option value={5}>Few grammatical errors (5 points)</Select.Option>
+                            <Select.Option value={2}>Many grammatical errors (2 points)</Select.Option>
+                            <Select.Option value={0}>Full of grammatical errors (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Grammatical accuracy' name='grammaticalAccuracy'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={8}>No grammatical errors (8 points)</Select.Option>
+                            <Select.Option value={5}>Few grammatical errors (5 points)</Select.Option>
+                            <Select.Option value={2}>Many grammatical errors (2 points)</Select.Option>
+                            <Select.Option value={0}>Full of grammatical errors (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
 
                 {/* words accuracy */}
                 {yetEvalData.translationIndex && yetEvalData.wordsAccuracy ? (
                     <Form.Item label='Words accuracy'>
-                        <Rate disabled defaultValue={yetEvalData.wordsAccuracy} />
+                        <Select disabled defaultValue={yetEvalData.wordsAccuracy}>
+                            <Select.Option value={8}>The words are completely accurate (8 points)</Select.Option>
+                            <Select.Option value={5}>a few inappropriate words are used (5 points)</Select.Option>
+                            <Select.Option value={2}>many inappropriate words are used (2 points)</Select.Option>
+                            <Select.Option value={0}>completely inappropriate words are used (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Words accuracy' name='wordsAccuracy'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={8}>The words are completely accurate (8 points)</Select.Option>
+                            <Select.Option value={5}>a few inappropriate words are used (5 points)</Select.Option>
+                            <Select.Option value={2}>many inappropriate words are used (2 points)</Select.Option>
+                            <Select.Option value={0}>completely inappropriate words are used (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
+
 
                 {/* Sentence fluency */}
                 {yetEvalData.translationIndex && yetEvalData.sentenceFluency ? (
                     <Form.Item label='Sentence fluency'>
-                        <Rate disabled defaultValue={yetEvalData.sentenceFluency} />
+                        <Select disabled defaultValue={yetEvalData.sentenceFluency}>
+                            <Select.Option value={8}>Very Fluent (8 points)</Select.Option>
+                            <Select.Option value={5}>Moderately Fluent (5 points)</Select.Option>
+                            <Select.Option value={2}>Not Fluent (2 points)</Select.Option>
+                            <Select.Option value={0}>Not Fluent at All (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Sentence fluency' name='sentenceFluency'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={8}>Very Fluent (8 points)</Select.Option>
+                            <Select.Option value={5}>Moderately Fluent (5 points)</Select.Option>
+                            <Select.Option value={2}>Not Fluent (2 points)</Select.Option>
+                            <Select.Option value={0}>Not Fluent at All (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
 
                 {/* Culture fit */}
                 {yetEvalData.translationIndex && yetEvalData.cultureFit ? (
                     <Form.Item label='Culture fit'>
-                        <Rate disabled defaultValue={yetEvalData.cultureFit} />
+                        <Select disabled defaultValue={yetEvalData.cultureFit}>
+                            <Select.Option value={8}>Excellent Fit (8 points)</Select.Option>
+                            <Select.Option value={5}>Good Fit (5 points)</Select.Option>
+                            <Select.Option value={2}>Poor Fit (2 points)</Select.Option>
+                            <Select.Option value={0}>Not a Fit at All (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Culture fit' name='cultureFit'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={8}>Excellent Fit (8 points)</Select.Option>
+                            <Select.Option value={5}>Good Fit (5 points)</Select.Option>
+                            <Select.Option value={2}>Poor Fit (2 points)</Select.Option>
+                            <Select.Option value={0}>Not a Fit at All (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
 
-                {/* perservation */}
+                {/* Perservation and Transmission of Local Colors */}
                 {yetEvalData.translationIndex && yetEvalData.perservation ? (
                     <Form.Item label='Perservation and Transmission of Local Colors'>
-                        <Rate disabled defaultValue={yetEvalData.perservation} />
+                        <Select disabled defaultValue={yetEvalData.perservation}>
+                            <Select.Option value={8}>Fully retained (8 points)</Select.Option>
+                            <Select.Option value={5}>mostly retained (5 points)</Select.Option>
+                            <Select.Option value={2}>partially retained (2 points)</Select.Option>
+                            <Select.Option value={0}>not retained (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Perservation and Transmission of Local Colors' name='perservation'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={8}>Fully retained (8 points)</Select.Option>
+                            <Select.Option value={5}>mostly retained (5 points)</Select.Option>
+                            <Select.Option value={2}>partially retained (2 points)</Select.Option>
+                            <Select.Option value={0}>not retained (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
 
-                {/* fidelity */}
+                {/* Fidelity to the emotion and context of the original text */}
                 {yetEvalData.translationIndex && yetEvalData.fidelity ? (
                     <Form.Item label='Fidelity to the emotion and context of the original text'>
-                        <Rate disabled defaultValue={yetEvalData.fidelity} />
+                        <Select disabled defaultValue={yetEvalData.fidelity}>
+                            <Select.Option value={9}>Completely loyal (9 points)</Select.Option>
+                            <Select.Option value={6}>Mostly loyal (6 points)</Select.Option>
+                            <Select.Option value={3}>Partially loyal (3 points)</Select.Option>
+                            <Select.Option value={0}>No Fidelity at All (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Fidelity to the emotion and context of the original text' name='fidelity'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={9}>Completely loyal (9 points)</Select.Option>
+                            <Select.Option value={6}>Mostly loyal (6 points)</Select.Option>
+                            <Select.Option value={3}>Partially loyal (3 points)</Select.Option>
+                            <Select.Option value={0}>No Fidelity at All (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
 
-                {/*  Overall */}
+                {/* Overall */}
                 {yetEvalData.translationIndex && yetEvalData.overall ? (
                     <Form.Item label='Overall'>
-                        <Rate disabled defaultValue={yetEvalData.overall} />
+                        <Select disabled defaultValue={yetEvalData.overall}>
+                            <Select.Option value={10}>Very coherent (10 points)</Select.Option>
+                            <Select.Option value={7}>Good (7 points)</Select.Option>
+                            <Select.Option value={4}>Fair (4 points)</Select.Option>
+                            <Select.Option value={0}>Poor (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 ) : (
                     <Form.Item label='Overall' name='overall'>
-                        <Rate allowClear />
+                        <Select allowClear>
+                            <Select.Option value={10}>Very coherent (10 points)</Select.Option>
+                            <Select.Option value={7}>Good (7 points)</Select.Option>
+                            <Select.Option value={4}>Fair (4 points)</Select.Option>
+                            <Select.Option value={0}>Poor (0 points)</Select.Option>
+                        </Select>
                     </Form.Item>
                 )}
 

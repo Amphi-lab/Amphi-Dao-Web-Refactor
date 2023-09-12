@@ -15,6 +15,7 @@ import TabsItems, {
 import OrderLayout from '@/layout/OrderLayout';
 import { useAccount } from 'wagmi';
 import { WORKSPACE_STATUS_CODE } from '@/constants/enums';
+// import workspaceData from '/Users/hangyiwang/Documents/GitHub/Amphi-Dao-Web-Refactor/mock/workspace';
 
 const formatType = 'YYYY-MM-DD HH:mm:ss'; // HH:mm:ss
 
@@ -52,7 +53,15 @@ export default () => {
                 return { rows, total };
             }
         });
+        
+        // use mock data
+        // return new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve({ rows: workspaceData, total: workspaceData.length });
+        //     }, 500);
+        // });
     }, []);
+
     const formatQueryParams = useCallback(
         (formValues: any, status?: string) => {
             const { translationTypeArray, deadline } = formValues;
@@ -103,7 +112,7 @@ export default () => {
             },
             {
                 key: '3',
-                label: `Translating`,
+                label: `In service`,
                 children: (
                     <TabsItems
                         tabName='translating'
@@ -111,14 +120,14 @@ export default () => {
                         columns={columns}
                         onFetchData={fetchProjectList}
                         onFormatQueryParams={(formValues: any) =>
-                            formatQueryParams(formValues, WORKSPACE_STATUS_CODE.TRANSLATING)
+                            formatQueryParams(formValues, WORKSPACE_STATUS_CODE.INSERVICE)
                         }
                     />
                 )
             },
             {
                 key: '4',
-                label: `To be modified`,
+                label: `Review`,
                 children: (
                     <TabsItems
                         tabName='tobeModified'
@@ -126,7 +135,7 @@ export default () => {
                         onFetchData={fetchProjectList}
                         queryItems={queryItems}
                         onFormatQueryParams={(formValues: any) =>
-                            formatQueryParams(formValues, WORKSPACE_STATUS_CODE.TOBEMODIFIED)
+                            formatQueryParams(formValues, WORKSPACE_STATUS_CODE.PRENDINGREVIEW)
                         }
                     />
                 )
@@ -145,28 +154,13 @@ export default () => {
                         }
                     />
                 )
-            },
-            {
-                key: '6',
-                label: `Cancelled`,
-                children: (
-                    <TabsItems
-                        tabName='cancelled'
-                        columns={columns}
-                        onFetchData={fetchProjectList}
-                        queryItems={queryItems}
-                        onFormatQueryParams={(formValues: any) =>
-                            formatQueryParams(formValues, WORKSPACE_STATUS_CODE.CANCELLED)
-                        }
-                    />
-                )
             }
         ];
     }, [columns, fetchProjectList, formatQueryParams, queryItems]);
 
     return (
         <OrderLayout title='Workspace' tabsItems={items}>
-            <Tabs defaultActiveKey='1' items={items} />
+            <Tabs defaultActiveKey='2' items={items} />
         </OrderLayout>
     );
 };

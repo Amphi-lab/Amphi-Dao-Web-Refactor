@@ -59,10 +59,10 @@ const Schedule = () => {
                             title: 'Submit the order'
                         },
                         {
-                            title: 'Pending agreement'
+                            title: 'In service'
                         },
                         {
-                            title: 'In service'
+                            title: 'Pending Review'
                         },
                         {
                             title: 'Order completed'

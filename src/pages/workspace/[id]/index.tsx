@@ -21,7 +21,7 @@ const cardStyle = {
 const WorkspaceDetail = () => {
     const { id } = useParams();
 
-    const [step] = useState(0);
+    const [step] = useState(1);
     const [detail, setDetail] = useState<any>();
 
     useEffect(() => {
@@ -96,7 +96,7 @@ const WorkspaceDetail = () => {
             {/* {step === 1 && <TranCandidate />} */}
             {/* {(step <= 2) && <BaseTranContent />} */}
             {/* Pending Review part, add serviceRating */}
-            {step === 0 && <ServiceRating />}
+            {step === 2 && <ServiceRating />}
         </BaseLayout>
     );
 };

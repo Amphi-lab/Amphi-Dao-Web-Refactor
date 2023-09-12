@@ -96,7 +96,7 @@ const WorkspaceDetail = () => {
             {/* {step === 1 && <TranCandidate />} */}
             {/* {(step <= 2) && <BaseTranContent />} */}
             {/* Pending Review part, add serviceRating */}
-            {step === 2 && <ServiceRating />}
+            {step === 0 && <ServiceRating />}
         </BaseLayout>
     );
 };

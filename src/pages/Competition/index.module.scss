@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  padding: 20px;
+}
+
+.left-nav {
+  width: 200px;
+  overflow-y: scroll;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.event-info {
+  margin-top: 20px;
+  list-style-type: none;
+}
+
+.event-info-item {
+  margin-bottom: 10px;
+}

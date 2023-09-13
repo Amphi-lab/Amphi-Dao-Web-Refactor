@@ -62,7 +62,7 @@ storage.getLocalMaxSpace = () => {
         console.log('当前浏览器不支持localStorage!');
     }
     let test = '0123456789';
-    const add = function (num) {
+    const add = (num: any) => {
         num += num;
         if (num.length === 10240) {
             test = num;
@@ -72,7 +72,7 @@ storage.getLocalMaxSpace = () => {
     };
     add(test);
     let sum = test;
-    const show = setInterval(function () {
+    const show = setInterval(() => {
         sum += test;
         try {
             window.localStorage.removeItem('test');
@@ -137,7 +137,7 @@ storage.getSessionMaxSpace = () => {
         console.log('当前浏览器不支持sessionStorage!');
     }
     let test = '0123456789';
-    const add = function (num) {
+    const add = (num: any) => {
         num += num;
         if (num.length === 10240) {
             test = num;
@@ -147,7 +147,7 @@ storage.getSessionMaxSpace = () => {
     };
     add(test);
     let sum = test;
-    const show = setInterval(function () {
+    const show = setInterval(() => {
         sum += test;
         try {
             window.sessionStorage.removeItem('test');

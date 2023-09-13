@@ -1,0 +1,8 @@
+.translaton-content {
+  @include contentMaxWidth;
+  margin-top: 16px;
+  margin-bottom: 50px;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+}

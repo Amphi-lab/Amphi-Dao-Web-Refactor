@@ -1,8 +1,9 @@
-import { ConfigProvider, theme as antdTheme } from 'antd';
 import React, { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react';
+import { ConfigProvider, theme as antdTheme } from 'antd';
+import type { ThemeConfig } from 'antd';
 import enUS from 'antd/es/locale/en_US';
 import zhCN from 'antd/es/locale/zh_CN';
-import customTheme from '@/styles/theme.json';
+import customTheme from '@/styles/theme';
 import { useTranslation } from 'react-i18next';
 import Storage from '@/utils/storage';
 import { ThemeStorageKey } from '@/constants/storageKeys';
@@ -17,7 +18,7 @@ function getStoredIsCompact(): boolean {
     return Storage.setLocalStorage(ThemeStorageKey.isCompact) === 'true';
 }
 
-function storeIsCompact(isCompact: boolean) {
+function setStoreIsCompact(isCompact: boolean) {
     Storage.setLocalStorage(ThemeStorageKey.isCompact, isCompact.toString());
 }
 
@@ -27,7 +28,8 @@ const ThemeProvider = (props: any) => {
     const [algorithm, setAlgorithm] = useState([antdTheme.defaultAlgorithm]);
 
     const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(getSystemTheme());
-    const [theme, setTheme] = useState<'dark' | 'light' | 'system'>(systemTheme);
+    // const [theme, setTheme] = useState<'dark' | 'light' | 'system'>(systemTheme);   // 默认跟随系统
+    const [theme, setTheme] = useState<'dark' | 'light' | 'system'>('light'); // 默认白色
     const [isCompact, setIsCompact] = useState<boolean>(getStoredIsCompact());
 
     useEffect(() => setLocale(i18n.language === 'en-US' ? enUS : zhCN), [i18n.language]);
@@ -49,19 +51,23 @@ const ThemeProvider = (props: any) => {
 
     useEffect(() => {
         const setThemeFromLocalStore = () => {
-            const _theme = Storage.getLocalStorage('theme') as 'dark' | 'light' | 'system';
-            if (_theme) {
-                switchTheme(_theme);
+            const _themeMode = Storage.getLocalStorage(ThemeStorageKey.mode) as
+                | 'dark'
+                | 'light'
+                | 'system';
+            if (_themeMode) {
+                switchTheme(_themeMode);
             } else {
-                switchTheme(getSystemTheme());
+                // switchTheme(getSystemTheme());   // 默认跟随系统
+                switchTheme('light'); // 默认白色
             }
         };
 
         setThemeFromLocalStore();
-    }, [switchTheme]);
+    }, [systemTheme, switchTheme]);
 
     useEffect(() => {
-        storeIsCompact(isCompact);
+        setStoreIsCompact(isCompact);
     }, [isCompact]);
 
     useEffect(() => {
@@ -85,11 +91,11 @@ const ThemeProvider = (props: any) => {
         () => ({ theme, switchTheme, isCompact, setIsCompact }),
         [theme, switchTheme, isCompact]
     );
-    const themeOption = useMemo(() => ({ ...customTheme, algorithm }), [algorithm]);
+    const themeOption: ThemeConfig = useMemo(() => ({ ...customTheme, algorithm }), [algorithm]);
 
     return (
         <ThemeContext.Provider value={themeContextProp}>
-            <ConfigProvider prefixCls={systemTheme} locale={locale} theme={themeOption}>
+            <ConfigProvider prefixCls={theme} locale={locale} theme={themeOption}>
                 {props.children}
             </ConfigProvider>
         </ThemeContext.Provider>

@@ -1,42 +1,23 @@
+// Import necessary modules and types
 import React, { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import styles from './index.module.scss';
 
+// Data for menu items
 const items: MenuProps['items'] = [
     {
-        label: 'START',
+        label: 'Bounty',
         key: 'start',
         children: [
             {
-                label: 'Request Translation',
+                label: 'Publish Task',
                 key: 'requestTranslation'
             },
             {
-                label: 'Translation',
+                label: 'Task Hall',
                 key: 'translation'
-            },
-            {
-                label: 'Validation',
-                key: 'validation'
-            }
-        ]
-    },
-    {
-        label: 'WORKSPACE',
-        key: 'workspace',
-        children: [
-            {
-                label: 'Dashboard',
-                key: 'dashboard'
-            },
-            {
-                label: 'Task List',
-                key: 'taskList'
-            },
-            {
-                label: 'Acceptance List',
-                key: 'acceptanceList'
             }
         ]
     },
@@ -55,48 +36,48 @@ const items: MenuProps['items'] = [
                     </a>
                 ),
                 key: 'amphiPassNFT'
-                // key:'https://testnets.opensea.io/zh-CN/collection/amphipass-2'
             }
         ]
     },
     {
-        label: 'LEARN',
-        key: 'learn',
+        label: 'Competition',
+        key: 'competition',
         children: [
             {
-                label: (
-                    <a
-                        href='https://drive.google.com/file/d/1nfm84w4o458WKZ7wQU9omx5EnAtKplNw/view'
-                        target='_blank'
-                        rel='noreferrer'
-                    >
-                        Whitepaper
-                    </a>
-                ),
-                key: 'whitepaper'
-            },
-            {
-                label: 'FAQ',
-                key: 'faq'
+                label: "Join Competition",
+                key: 'competition'
             }
         ]
     }
 ];
 
+// Main functional component
 const App: React.FC = () => {
+    // React Router hook for navigation
+    const navigate = useNavigate();
+
+    // Local state to manage currently selected menu item
     const [current, setCurrent] = useState('');
 
+    // Event handler for Menu onClick
     const onClick: MenuProps['onClick'] = e => {
-        console.log('click ', e);
         setCurrent(e.key);
+        // Navigate to the new route based on the clicked menu item
+        navigate(`/${e.key}`);
     };
 
+    // Render the Menu component
     return (
         <Menu
+            // Custom CSS class for styling
             className={styles['main-menu']}
+            // onClick handler
             onClick={onClick}
+            // Highlight the currently selected menu item
             selectedKeys={[current]}
+            // Menu orientation
             mode='horizontal'
+            // Pass in menu items
             items={items}
         />
     );

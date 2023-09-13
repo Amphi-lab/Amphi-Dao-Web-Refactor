@@ -31,14 +31,22 @@ export default ({ mode }) => {
                     additionalData: '@use "@/styles/common.scss" as *;'
                 }
             }
+        },
+        build: {
+            chunkSizeWarningLimit: 2000,
+            rollupOptions: {
+                output: {
+                    manualChunks: {
+                        ant: ['antd'],
+                        antico: ['@ant-design/icons'],
+                        utils: ['dayjs'],
+                        rrr: ['react', 'react-dom', 'react-router-dom']
+                    }
+                }
+            }
+        },
+        define: {
+            'process.env': process.env
         }
-        // build: {
-        //     rollupOptions: {
-        //         plugins: [polyfillNode()],
-        //     }
-        // },
-        // optimizeDeps: {
-        //     exclude: ["events"],
-        // },
     });
 };

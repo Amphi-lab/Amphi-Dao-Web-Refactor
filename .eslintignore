@@ -1,6 +1,6 @@
+!.eslintrc.cjs
 dist
 node_modules
-package.json
-package-lock.json
+package.jsonwW
 *.html
-.eslintrc.cjs
+*.cjs

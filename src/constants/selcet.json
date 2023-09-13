@@ -1,4 +1,10 @@
 {
+    "serviceTypes": [
+        { "value": "0", "label": "Text translation" },
+        { "value": "1", "label": "Voice translation" },
+        { "value": "2", "label": "Subtitling" },
+        { "value": "3", "label": "Local errand" }
+    ],
     "translationTypes": [
         {
             "value": "0",
@@ -23,6 +29,36 @@
         {
             "value": "5",
             "label": "Interpreting"
+        }
+    ],
+    "translationState": [
+        {
+            "value": "0",
+            "label": "Pending agreement"
+        },
+        {
+            "value": "1",
+            "label": "In service"
+        },
+        {
+            "value": "2",
+            "label": "In service"
+        },
+        {
+            "value": "3",
+            "label": "In service"
+        },
+        {
+            "value": "5",
+            "label": "Order completed"
+        },
+        {
+            "value": "4",
+            "label": "cancel"
+        },
+        {
+            "value": "5",
+            "label": "cancel"
         }
     ],
     "industry": [
@@ -823,6 +859,16 @@
         {
             "value": "127",
             "label": "Uzbek"
+        }
+    ],
+    "sortBy": [
+        {
+            "value": "orderByOrders",
+            "label": "Orders"
+        },
+        {
+            "value": "orderByScore",
+            "label": "Score"
         }
     ]
 }

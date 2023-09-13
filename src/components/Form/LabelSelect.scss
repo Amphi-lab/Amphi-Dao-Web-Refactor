@@ -1,0 +1,17 @@
+.select-wrap {
+  display: flex;
+  width: 100%;
+  background-color: #f2f2fb;
+  padding-left: 10px;
+
+  .label {
+    left: 10px;
+    z-index: 9;
+    color: var(--text-sub-color);
+    line-height: 32px;
+  }
+
+  .select {
+    flex: 1;
+  }
+}

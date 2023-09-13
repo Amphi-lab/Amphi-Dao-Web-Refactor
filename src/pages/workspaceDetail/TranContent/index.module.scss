@@ -1,0 +1,62 @@
+.trans-content-box {
+  @include layout($horizontal: flex-start);
+
+  .trans-content-sub-card {
+    padding: 12px 16px;
+    background: #f4f4f5;
+    border-radius: 10px;
+
+    &:first-of-type {
+      flex: 1;
+
+      .sub-card-title {
+        margin-bottom: 24px;
+
+        @include font($weight: 500, $lineH: 20px);
+      }
+    }
+
+    &:last-of-type {
+      flex: 2;
+    }
+  }
+
+  .sub-card-content {
+    @include layout($horizontal: space-between);
+    padding: 8px;
+    background: #fff;
+    border-radius: 4px;
+  }
+
+  .workspace-sub-card-content {
+    @include layout($horizontal: space-between);
+  }
+
+  .sub-card-human-content {
+    @include font($size: 14px, $color: #969aa0, $weight: 400, $lineH: 20px);
+    padding: 12px;
+  }
+
+  .trans-content-line {
+    margin: 0 16px;
+  }
+
+  .human-area {
+    @include layout($horizontal: space-around);
+
+    .human-sub-card {
+      width: 360px;
+      margin-right: auto;
+    }
+
+    .human-area-btns {
+      .accept {
+        margin-left: 16px;
+
+        span {
+          color: #fff;
+        }
+      }
+    }
+  }
+}

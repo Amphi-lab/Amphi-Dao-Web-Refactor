@@ -5,14 +5,7 @@ module.exports = {
         es2021: true,
         es6: true
     },
-    extends: [
-        'airbnb',
-        'plugin:react/recommended',
-        'plugin:react-hooks/recommended',
-        'plugin:import/typescript',
-        'prettier',
-        'plugin:prettier/recommended'
-    ],
+    extends: ['airbnb', 'plugin:react/recommended', 'plugin:react-hooks/recommended', 'plugin:import/typescript', 'prettier', 'plugin:prettier/recommended'],
     plugins: ['react', '@babel', '@typescript-eslint', 'react-hooks'],
     globals: {
         NodeJS: true
@@ -42,6 +35,7 @@ module.exports = {
         'react/jsx-indent': 0,
         'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false }],
         'react/jsx-filename-extension': 0,
+        "react/jsx-no-useless-fragment": 0,
         'react/state-in-constructor': 0,
         'react/jsx-props-no-spreading': 0,
         'react/destructuring-assignment': 0, // TODO: remove later
@@ -59,20 +53,6 @@ module.exports = {
         'import/no-unresolved': [2, { ignore: ['~*'] }],
         'import/extensions': 0,
         'import/no-cycle': 0,
-        'import/no-extraneous-dependencies': [
-            'error',
-            {
-                devDependencies: [
-                    'site/**',
-                    'tests/**',
-                    'scripts/**',
-                    '**/*.test.js',
-                    '**/__tests__/*',
-                    '*.config.js',
-                    '**/*.md'
-                ]
-            }
-        ],
         'jsx-a11y/no-static-element-interactions': 0,
         'jsx-a11y/anchor-has-content': 0,
         'jsx-a11y/click-events-have-key-events': 0,
@@ -109,7 +89,7 @@ module.exports = {
                 endOfLine: 'auto'
             }
         ],
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.ts", "**/*.tsx"]}]
+        "import/no-extraneous-dependencies": 0
     },
     overrides: [
         {

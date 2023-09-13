@@ -1,15 +1,25 @@
+import { message } from 'antd';
+import { AMPHI_USERTOKEN } from '@/constants/storageKeys';
+import storage from '@/utils/storage';
 import axios from 'axios';
 
 axios.defaults.timeout = 100000;
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
-
+// if (typeof window !== 'undefined') {
+//     const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
+//     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+//     accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
+// }
 /**
  * http request 拦截器
  */
 axios.interceptors.request.use(
     config => {
+        const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
+        if (config.url === '/nonce' || config.url === '/file/createGetUrl') return config;
         config.data = JSON.stringify(config.data);
         config.headers.set('Content-Type', 'application/json');
+        config.headers.set('token', `${accessToken}`);
         return config;
     },
     error => Promise.reject(error)
@@ -20,9 +30,8 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
     response => {
-        if (response.status === 403) {
-            // eslint-disable-next-line no-console
-            console.log('Login Information Expired, Please Log In Again');
+        if (response.data?.status === 500 && response.data?.message?.includes('JWT')) {
+            message.warning('Please Login');
         }
         return response;
     },
@@ -35,6 +44,7 @@ axios.interceptors.response.use(
 // 失败提示
 function errorMsg(err: any) {
     if (err && err.response) {
+        console.log(err.response);
         switch (err.response.status) {
             case 400:
                 // eslint-disable-next-line no-alert
@@ -62,7 +72,9 @@ function errorMsg(err: any) {
 
             case 500:
                 // eslint-disable-next-line no-alert
-                alert('服务器内部错误');
+                // alert('服务器内部错误');
+                // message.error('服务器内部错误');
+
                 break;
 
             case 501:
@@ -106,7 +118,7 @@ export const get = (url: string, params = {}) =>
         axios
             .get(url, { params })
             .then(res => {
-                resolve(res.data);
+                resolve(res?.data);
             })
             .catch(err => {
                 errorMsg(err);
@@ -125,8 +137,9 @@ export const post = (url: string, data: any) =>
         axios
             .post(url, data)
             .then(res => {
+                // console.log('put axios', res);
                 // 关闭进度条
-                resolve(res.data);
+                resolve(res?.data);
             })
             .catch(err => {
                 errorMsg(err);
@@ -145,7 +158,7 @@ export const put = (url: string, data: any) =>
     new Promise((resolve, reject) => {
         axios.put(url, data).then(
             response => {
-                resolve(response.data);
+                resolve(response?.data);
             },
             err => {
                 errorMsg(err);
@@ -153,5 +166,27 @@ export const put = (url: string, data: any) =>
             }
         );
     });
+
+export const deleteFetch = (url: string) => {
+    return new Promise((resolve, reject) => {
+        axios.delete(url).then(
+            response => {
+                resolve(response?.data);
+            },
+            err => {
+                errorMsg(err);
+                reject(err);
+            }
+        );
+    });
+};
+
+export const refreshAPIToken = () => {
+    if (typeof window !== 'undefined') {
+        const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
+    }
+};
 
 export default axios;

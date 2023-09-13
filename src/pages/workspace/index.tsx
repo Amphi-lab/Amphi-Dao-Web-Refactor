@@ -95,21 +95,21 @@ export default () => {
                     />
                 )
             },
-            {
-                key: '2',
-                label: `Pending reply`,
-                children: (
-                    <TabsItems
-                        tabName='pendingrReply'
-                        queryItems={queryItems}
-                        columns={columns}
-                        onFetchData={fetchProjectList}
-                        onFormatQueryParams={(formValues: any) =>
-                            formatQueryParams(formValues, WORKSPACE_STATUS_CODE.PENDING)
-                        }
-                    />
-                )
-            },
+            // {
+            //     key: '2',
+            //     label: `Pending reply`,
+            //     children: (
+            //         <TabsItems
+            //             tabName='pendingrReply'
+            //             queryItems={queryItems}
+            //             columns={columns}
+            //             onFetchData={fetchProjectList}
+            //             onFormatQueryParams={(formValues: any) =>
+            //                 formatQueryParams(formValues, WORKSPACE_STATUS_CODE.PENDING)
+            //             }
+            //         />
+            //     )
+            // },
             {
                 key: '3',
                 label: `In service`,

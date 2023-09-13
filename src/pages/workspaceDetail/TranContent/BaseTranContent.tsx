@@ -244,7 +244,7 @@ const BaseTranContent = ({
     const items: TabsProps['items'] = [
         {
             key: '1',
-            label: `Al Translation`,
+            label: `AI Translation`,
             children: getAIFileList()
         },
         {

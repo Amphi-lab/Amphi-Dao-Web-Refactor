@@ -34,9 +34,9 @@ const CompetitionHome: React.FC = () => {
     const { setShowAuthFlow, user } = useDynamicContext();
     const navigate  = useNavigate();
 
-    const onApply = useCallback(()=>{
+    const onApply = useCallback((id: string)=>{ // id may not be one string
      if(user){
-        navigate('competition');
+        navigate(`/workspace/${id}`);
      }else{
        setShowAuthFlow(true)
      }

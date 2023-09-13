@@ -17,9 +17,9 @@ const Allreviews: React.FC = () => {
     const { setShowAuthFlow, user } = useDynamicContext();
     const navigate  = useNavigate();
 
-    const onApply = useCallback(()=>{
+    const onApply = useCallback((id : string)=>{
      if(user){
-        navigate('../competition');
+        navigate(`/workspace/${id}`);
      }else{
        setShowAuthFlow(true)
      }

@@ -1,7 +1,7 @@
 import { get, post } from '../axios';
 
-// 注册
-export const logins = (data: any) => post('/login', data);
+// 比赛报名的页面
+export const competRegistration = (data: any) => post('/login', data);
 
 // 获取参赛团队信息
 export const getGroupInfo = (data:any) => get('/competition/getGroupInfo', data);

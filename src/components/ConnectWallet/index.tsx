@@ -32,11 +32,11 @@ const items: any = [
         label: 'Portfolio',
         path: '/portfolio'
     },
-    {
-        key: '/myorders',
-        label: 'My Orders',
-        path: '/myorders'
-    },
+    // {
+    //     key: '/myorders',
+    //     label: 'My Orders',
+    //     path: '/myorders'
+    // },
     {
         key: '/workspace',
         label: 'Workspace',
@@ -51,6 +51,11 @@ const items: any = [
         key: '/allreviews',
         label: 'All Reviews',
         path: '/allreviews'
+    },
+    {
+        key: '/registration',
+        label: 'Registration',
+        path: '/registration'
     }
 ];
 
@@ -76,8 +81,6 @@ const ConnectWallet = () => {
         user,
         setShowDynamicUserProfile
     } = useDynamicContext();
-
-
     const handleMenuClick: MenuProps['onClick'] = e => {
         // message.info('Click on menu item.');
         // console.log('click', e);
@@ -229,7 +232,6 @@ const ConnectWallet = () => {
     
     // 查询余额
     useEffect(() => {
-        storeToken();
         const fetchBalance = async () => {
             if (primaryWallet) {
                 const value = await primaryWallet.connector.getBalance();

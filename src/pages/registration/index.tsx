@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Select, message, Row, Col, Radio } from 'antd';
-import { useAccount } from 'wagmi';
+// import { useAccount } from 'wagmi';
 import {
     industry as IndustryOptions,
     jobFunctions as JobFunctionsOptions
@@ -16,29 +16,64 @@ import { optionsToArray, optionsToString } from '@/utils/userInfo';
 // api
 import api from '@/api';
 
+import storage from '@/utils/storage';
+// import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
+import discordIocn from '@/assets/svg/icon-discord.svg';
+import telegramIcon from '@/assets/svg/telegram.svg';
 import styles from './index.module.scss';
+
+
+const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user');
+const {address} = verifiedCredentials[0]
 
 type IUserInfoProps =
     | IUserInfo
     | (Omit<IUserInfo, 'id' | 'industry' | 'jobFunction'> & {
-          industry: string[];
+           industryBackground: string[];
           jobFunction: string[];
       });
 const initialValue: IUserInfoProps = {
     address: '',
-    username: '',
-    email: '',
+    wallet:address,
+    name: '',
+    email,
     profile: '',
     backgroundUrl: '',
-    industry: [],
+    industryBackground: [],
     jobFunction: [],
-    languageList: []
+    languages: []
 };
 
 export default () => {
+    const handleDiscordClick = () => { window.open('https://discord.gg/bWwUutdGCC', '_blank'); };
+  
+    const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); }; // Replace with your Telegram URL
+
     const [form] = Form.useForm();
-    const { address } = useAccount();
+    // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
+    
+    // console.log(address, 'address');
+    console.log(verifiedCredentials,'userInfo');
+    console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
+    // const { verifyEmail } = useEmailVerificationRequest();
+    // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
+    // const [defaultEmail, setDefaultEmai] = useState(email);
+
+    // const handleVerify = async (verificationToken: string) => {
+    //     try {
+    //       const verifyEmailResponse = await verifyEmail(verificationToken);
+    //       console.log(verifyEmailResponse);
+    //       // Handle successful email verification, e.g., show a success message or redirect
+    //     } catch (error) {
+    //       // Handle errors, e.g., show an error message or prompt for the correct token
+    //     }
+    //   };
+    
+    // useEffect( () => {
+    //     setDefaultWalletAddress(address);
+    //     setDefaultEmai(email)
+    // })
 
     useEffect(() => {
         /** TODO:
@@ -60,22 +95,43 @@ export default () => {
         }
     }, [address, form]);
 
+    // const onFinish = (values: any) => {
+    //     console.log(values);
+    //     api.updateUserInfo({
+    //         id: userId,
+    //         address,
+    //         ...values,
+    //         industry: optionsToString(values.industry, IndustryOptions),
+    //         jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions)
+    //     }).then((res: any) => {
+    //         if (res?.code === 200) {
+    //             message.success('success');
+    //         } else {
+    //             message.error(res.message);
+    //         }
+    //     });
+    // };
     const onFinish = (values: any) => {
-        console.log(values);
-        api.updateUserInfo({
-            id: userId,
-            address,
-            ...values,
-            industry: optionsToString(values.industry, IndustryOptions),
-            jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions)
-        }).then((res: any) => {
-            if (res?.code === 200) {
-                message.success('success');
-            } else {
-                message.error(res.message);
-            }
-        });
-    };
+            console.log(values);
+            api.competRegistration({
+                // id: userId,
+                address,
+                ...values,
+                industry: optionsToString(values.industry, IndustryOptions),
+                jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions)
+            }).then((res: any) => {
+                if (res?.code === 200) {
+                    message.success('success');
+                } else {
+                    message.error(res.message);
+                }
+            });
+        };
+
+    // const emailChange = (value:any) => {
+    //     console.log('djsklfjslfjsl')
+    //     console.log(value);
+    // }
 
     return (
         <div className={styles['registration-container']}>
@@ -98,7 +154,7 @@ export default () => {
                     <Row gutter={100}>
                         <Col span='12'>
                             <Form.Item
-                                name='username'
+                                name='name'
                                 label='Name'
                                 rules={[{ required: true, message: 'Please input username' }]}
                             >
@@ -114,20 +170,22 @@ export default () => {
                                     <Radio value='pear'> Team Competitor</Radio>
                                 </Radio.Group>
                             </Form.Item>
-                            <Form.Item name='languageList' label='Languages'>
+                            <Form.Item name='languages' label='Languages'>
                                 <LanguageSelect form={form} userId={userId} />
                             </Form.Item>
+
                             <Form.Item
                                 name='email'
                                 label='Email Address'
+                                
                                 rules={[
                                     { required: true, message: 'Please input email' },
                                     { type: 'email', message: 'Email Address is not valid email.' }
                                 ]}
                             >
-                                <Input placeholder='Enter email' />
+                                <Input placeholder='Enter email' defaultValue={email}/>
                             </Form.Item>
-                            <Form.Item name='industry' label='Relevant Work Experience'>
+                            <Form.Item name='industryBackground' label='Relevant Work Experience'>
                                 <Select
                                     mode='multiple'
                                     allowClear
@@ -164,19 +222,28 @@ export default () => {
                                 />
                             </Form.Item>
                             <Form.Item
+                                initialValue={address}
                                 name='wallet'
                                 label='Verify your wallet'
                                 rules={[{ required: true, message: 'Please input username' }]}
                             >
-                                <Input placeholder='0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' />
+                                <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' value={address} />
                             </Form.Item>
-                            <Form.Item name='wallet' label='Telegram'>
+                            <Form.Item name='telegram' label='Telegram'>
                                 <Input />
+                                <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
+                                <img src={telegramIcon} alt="Telegram Icon" />
+                                </div>
+                            </Form.Item>
+                            
+
+                            <Form.Item name='discord' label='Discord'>
+                                <Input />
+                                <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
+                                <img src={discordIocn} alt="Discord Icon" />
+                                </div>
                             </Form.Item>
 
-                            <Form.Item name='wallet' label='Discord'>
-                                <Input />
-                            </Form.Item>
                             <Form.Item>
                                 <Button type='primary' htmlType='submit'>
                                     Submit

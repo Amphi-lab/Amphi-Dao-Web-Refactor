@@ -751,6 +751,42 @@
             "label": "Zulu"
         }
     ],
+
+    "competitionlanguages": [
+        {
+            "value": "1",
+            "label": "Russian"
+        },
+        {
+            "value": "2",
+            "label": "Indonesia"
+        },
+        {
+            "value": "3",
+            "label": "German"
+        },
+        {
+            "value": "4",
+            "label": "Japanese"
+        },
+        {
+            "value": "5",
+            "label": "French"
+        },
+        {
+            "value": "6",
+            "label": "Portuguese"
+        },
+        {
+            "value": "7",
+            "label": "Spanish"
+        },
+        {
+            "value": "8",
+            "label": "Korean"
+        }
+    ],
+    
     "certificationOptions": [
         {
             "label": "A1(CEFR)",

@@ -3,7 +3,7 @@ import { Space, Select, Button } from 'antd';
 import type { FormInstance } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import './index.scss';
-import { languages as languagesOptions, certificationOptions } from '@/constants/selcet.json';
+import { competitionlanguages as languagesOptions, certificationOptions } from '@/constants/selcet.json';  // change languages to competitionlanguages
 import { optionsMap } from '@/utils/array';
 
 const languagesMap = optionsMap(languagesOptions);

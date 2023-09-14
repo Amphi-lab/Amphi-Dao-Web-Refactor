@@ -1,20 +1,28 @@
+/*
+ * @Author: echo heart0magic@163.com
+ * @Date: 2023-09-14 20:10:08
+ * @LastEditors: echo heart0magic@163.com
+ * @LastEditTime: 2023-09-14 20:10:08
+ * @FilePath: \Amphi-Dao-Web\src\components\ConnectWallet\index copy.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable import/no-extraneous-dependencies */
-import { useEffect, useState} from 'react';
+import { useEffect, useRef, useState, Fragment} from 'react';
 import { useNavigate } from 'react-router';
 import { useDynamicContext,DynamicUserProfile } from '@dynamic-labs/sdk-react';
-// import { useAccount, useDisconnect,useSignMessage } from 'wagmi';
+import { useAccount, useDisconnect,useSignMessage } from 'wagmi';
 // import { signMessageAsync } from 'wagmi';
 
-// import api from '@/api';
+import api from '@/api';
 // import { refreshAPIToken } from '@/api/axios';
-// import storage from '@/utils/storage';
-// import * as storageKeys from '@/constants/storageKeys';
+import storage from '@/utils/storage';
+import * as storageKeys from '@/constants/storageKeys';
 import DefaultAvatar from '@/assets/svg/default-avatar.svg';
 import ArrowDown from '@/assets/svg/arrow-down-solid.svg';
 import type { MenuProps } from 'antd';
-import { Dropdown } from 'antd';
+import { message, Dropdown } from 'antd';
 import styles from './index.module.scss';
 
 
@@ -32,11 +40,11 @@ const items: any = [
         label: 'Portfolio',
         path: '/portfolio'
     },
-    // {
-    //     key: '/myorders',
-    //     label: 'My Orders',
-    //     path: '/myorders'
-    // },
+    {
+        key: '/myorders',
+        label: 'My Orders',
+        path: '/myorders'
+    },
     {
         key: '/workspace',
         label: 'Workspace',
@@ -51,26 +59,20 @@ const items: any = [
         key: '/allreviews',
         label: 'All Reviews',
         path: '/allreviews'
-    },
-    {
-        key: '/registration',
-        label: 'Registration',
-        path: '/registration'
     }
 ];
 
 const ConnectWallet = () => {
-    // const dynamicJwtToken = getAuthToken();
-    // const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const [nonce, setNonce] = useState('');
     const [balance, setBalance] = useState(null);
     // const { data: signature, signMessageAsync } = useSignMessage();
-    // const { data: signature } = useSignMessage();
-    // const { address, isConnected, isDisconnected } = useAccount();
+    const { data: signature } = useSignMessage();
+    const { address, isConnected, isDisconnected } = useAccount();
     // console.log(useAccount(), useDynamicContext());
-    // const addressInfo = useRef({ address });
-    // const { disconnect } = useDisconnect();
+    const addressInfo = useRef({ address });
+    const { disconnect } = useDisconnect();
     const navigate = useNavigate();
     // const { chain } = useNetwork();
     const {
@@ -81,6 +83,8 @@ const ConnectWallet = () => {
         user,
         setShowDynamicUserProfile
     } = useDynamicContext();
+
+
     const handleMenuClick: MenuProps['onClick'] = e => {
         // message.info('Click on menu item.');
         // console.log('click', e);
@@ -91,11 +95,6 @@ const ConnectWallet = () => {
         items,
         onClick: handleMenuClick
     };
-
-    // function storeToken(){
-    //     console.log('storeToken')
-    //     storage.setStorage(storageKeys.AMPHI_USERTOKEN, dynamicJwtToken);
-    // }
 
     // 获取Nonce
     // const getNonce = async () => {
@@ -122,38 +121,38 @@ const ConnectWallet = () => {
     // };
 
     // login
-    // const login = async () => {
-    //     console.log('login 111');
-    //     try {
-    //         const res = await api.login({
-    //             address,
-    //             msg: nonce,
-    //             signature
-    //         });
-    //         if (res.code === 200) {
-    //             const _user = res.data;
-    //             if (userInfo !== user) {
-    //                 setUserInfo(_user);
-    //             }
+    const login = async () => {
+        console.log('login 111');
+        try {
+            const res = await api.login({
+                address,
+                msg: nonce,
+                signature
+            });
+            if (res.code === 200) {
+                const _user = res.data;
+                if (userInfo !== user) {
+                    setUserInfo(_user);
+                }
 
-    //             const accessToken = _user.token;
-    //             storage.setLocalStorage(storageKeys.AMPHI_USERTOKEN, accessToken);
-    //             storage.setLocalStorage(storageKeys.EXPIRE_TIME, _user?.expireTime.toString());
-    //             storage.setLocalStorage(storageKeys.CURRENT_ADDRESS, address as string);
-    //             // refreshAPIToken();
-    //             addressInfo.current.address = address;
-    //             message.success('Login successful');
-    //             window.location.reload();
-    //             if (!res.username) {
-    //                 // navigate('/');
-    //             } else {
-    //                 // navigate('/');
-    //             }
-    //         }
-    //     } catch (err) {
-    //         disconnect();
-    //     }
-    // };
+                const accessToken = _user.token;
+                storage.setLocalStorage(storageKeys.AMPHI_USERTOKEN, accessToken);
+                storage.setLocalStorage(storageKeys.EXPIRE_TIME, _user?.expireTime.toString());
+                storage.setLocalStorage(storageKeys.CURRENT_ADDRESS, address as string);
+                // refreshAPIToken();
+                addressInfo.current.address = address;
+                message.success('Login successful');
+                window.location.reload();
+                if (!res.username) {
+                    // navigate('/');
+                } else {
+                    // navigate('/');
+                }
+            }
+        } catch (err) {
+            disconnect();
+        }
+    };
 
     // logout
     // const logout = async () => {
@@ -183,53 +182,53 @@ const ConnectWallet = () => {
     // }, [isConnected]);
 
     // 处理登录
-    // useEffect(() => {
-    //     (async () => {
-    //         const currentAccessToken = storage.getLocalStorage(storageKeys.AMPHI_USERTOKEN);
-    //         if (signature && !currentAccessToken) {
-    //             await login();
-    //         }
-    //     })();
-    // }, [isConnected, signature]);
+    useEffect(() => {
+        (async () => {
+            const currentAccessToken = storage.getLocalStorage(storageKeys.AMPHI_USERTOKEN);
+            if (signature && !currentAccessToken) {
+                await login();
+            }
+        })();
+    }, [isConnected, signature]);
 
     // 退出处理;
-    // useEffect(() => {
-    //     (async () => {
-    //         const currentAccessToken = storage.getLocalStorage(storageKeys.AMPHI_USERTOKEN);
-    //         if (isDisconnected && currentAccessToken) {
-    //             // console.log('logout 111');
-    //             // await getNonce();
-    //             // await logout();
-    //             storage.removeLocalStorage(storageKeys.AMPHI_USERTOKEN);
-    //             storage.removeLocalStorage(storageKeys.CURRENT_ADDRESS);
-    //             storage.removeLocalStorage(storageKeys.EXPIRE_TIME);
-    //             // refreshAPIToken();
-    //             // navigate('/');
-    //             window.location.reload();
-    //         }
-    //     })();
-    // }, [isDisconnected]);
+    useEffect(() => {
+        (async () => {
+            const currentAccessToken = storage.getLocalStorage(storageKeys.AMPHI_USERTOKEN);
+            if (isDisconnected && currentAccessToken) {
+                // console.log('logout 111');
+                // await getNonce();
+                // await logout();
+                storage.removeLocalStorage(storageKeys.AMPHI_USERTOKEN);
+                storage.removeLocalStorage(storageKeys.CURRENT_ADDRESS);
+                storage.removeLocalStorage(storageKeys.EXPIRE_TIME);
+                // refreshAPIToken();
+                // navigate('/');
+                window.location.reload();
+            }
+        })();
+    }, [isDisconnected]);
 
     // 退出处理;
-    // useEffect(() => {
-    //     (async () => {
-    //         if (address && addressInfo.current.address && addressInfo.current.address !== address) {
-    //             // await getNonce();
-    //             // await logout();
-    //             storage.removeLocalStorage(storageKeys.AMPHI_USERTOKEN);
-    //             storage.removeLocalStorage(storageKeys.CURRENT_ADDRESS);
-    //             storage.removeLocalStorage(storageKeys.EXPIRE_TIME);
-    //             console.log('logout 222');
+    useEffect(() => {
+        (async () => {
+            if (address && addressInfo.current.address && addressInfo.current.address !== address) {
+                // await getNonce();
+                // await logout();
+                storage.removeLocalStorage(storageKeys.AMPHI_USERTOKEN);
+                storage.removeLocalStorage(storageKeys.CURRENT_ADDRESS);
+                storage.removeLocalStorage(storageKeys.EXPIRE_TIME);
+                console.log('logout 222');
 
-    //             // refreshAPIToken();
-    //             disconnect();
-    //             addressInfo.current.address = undefined;
-    //             // navigate('/');
-    //             window.location.reload();
-    //         }
-    //     })();
-    // }, [address]);
-    
+                // refreshAPIToken();
+                disconnect();
+                addressInfo.current.address = undefined;
+                // navigate('/');
+                window.location.reload();
+            }
+        })();
+    }, [address]);
+
     // 查询余额
     useEffect(() => {
         const fetchBalance = async () => {

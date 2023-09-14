@@ -5,11 +5,11 @@ import axios from 'axios';
 
 axios.defaults.timeout = 100000;
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
-// if (typeof window !== 'undefined') {
-//     const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
-//     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-//     accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
-// }
+if (typeof window !== 'undefined') {
+    const accessToken = storage.getLocalStorage(AMPHI_USERTOKEN);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    accessToken && (axios.defaults.headers.common.token = `${accessToken}`);
+}
 /**
  * http request 拦截器
  */
@@ -19,7 +19,7 @@ axios.interceptors.request.use(
         if (config.url === '/nonce' || config.url === '/file/createGetUrl') return config;
         config.data = JSON.stringify(config.data);
         config.headers.set('Content-Type', 'application/json');
-        config.headers.set('token', `${accessToken}`);
+        config.headers.set('Authorization', `Bearer ${accessToken}`);
         return config;
     },
     error => Promise.reject(error)

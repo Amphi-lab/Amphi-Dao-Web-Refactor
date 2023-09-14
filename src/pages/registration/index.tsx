@@ -166,6 +166,7 @@ export default () => {
                             <Form.Item name='languages' label='Languages'>
                                 <LanguageSelect form={form} userId={userId} />
                             </Form.Item>
+
                             <Form.Item
                                 name='email'
                                 label='Email Address'

@@ -5,7 +5,7 @@ export const ThemeStorageKey = {
     isCompact: 'isCompact'
 };
 
-export const AMPHI_USERTOKEN = 'AMPHI_USERTOKEN';
+export const AMPHI_USERTOKEN = 'dynamic_authentication_token';
 export const EXPIRE_TIME = 'expireTime';
 export const CURRENT_ADDRESS = 'currentAddress';
 

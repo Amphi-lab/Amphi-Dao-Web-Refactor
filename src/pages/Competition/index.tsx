@@ -3,6 +3,7 @@ import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
 import discordIocn from '@/assets/svg/discordQrcode.svg';
 import telegramIcon from '@/assets/svg/telegramQRcode.svg';
+// import { useMediaQuery } from 'react-responsive';
 
 // const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;
 const { Title, Paragraph } = Typography;
@@ -123,6 +124,7 @@ const data2 = [
 
 const Join: React.FC = () => {
     const [mode, setMode] = useState<TabPosition>('left');
+    // const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
     const handleModeChange = (e: RadioChangeEvent) => {
       setMode(e.target.value);
@@ -144,7 +146,7 @@ const Join: React.FC = () => {
           </Radio.Group>
           <Tabs
             defaultActiveKey="1"
-            tabPosition={mode}
+            // tabPosition={isMobile ? 'top' : mode}
             style={{ height: 'auto' }}  // 修改了这里的高度，以适应内容
           >
             <TabPane tab="I. Backgound of competition" key="1">
@@ -295,4 +297,5 @@ const Join: React.FC = () => {
 };
 
 export default Join;
+
 

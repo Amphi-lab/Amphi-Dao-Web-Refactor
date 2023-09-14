@@ -17,6 +17,7 @@ import { optionsToArray, optionsToString } from '@/utils/userInfo';
 import api from '@/api';
 
 import storage from '@/utils/storage';
+// import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import styles from './index.module.scss';
 
 type IUserInfoProps =
@@ -44,6 +45,7 @@ export default () => {
     const {address} = verifiedCredentials[0]
     // console.log(address, 'address');
     // console.log(verifiedCredentials,'userInfo');
+    // const { verifyEmail } = useEmailVerificationRequest();
 
     useEffect(() => {
         /** TODO:
@@ -192,11 +194,11 @@ export default () => {
                             >
                                 <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' defaultValue={address} />
                             </Form.Item>
-                            <Form.Item name='wallet' label='Telegram'>
+                            <Form.Item name='telegram' label='Telegram'>
                                 <Input />
                             </Form.Item>
 
-                            <Form.Item name='wallet' label='Discord'>
+                            <Form.Item name='discord' label='Discord'>
                                 <Input />
                             </Form.Item>
                             <Form.Item>

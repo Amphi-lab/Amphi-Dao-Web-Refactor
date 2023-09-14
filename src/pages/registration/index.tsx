@@ -17,7 +17,7 @@ import { optionsToArray, optionsToString } from '@/utils/userInfo';
 import api from '@/api';
 
 import storage from '@/utils/storage';
-// import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
+import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import styles from './index.module.scss';
 
 type IUserInfoProps =
@@ -41,13 +41,34 @@ export default () => {
     const [form] = Form.useForm();
     // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
-    const { verifiedCredentials } = storage.getLocalStorage('dynamic_authenticated_user');
-    const {address} = verifiedCredentials[0]
+    const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user');
+    const {address} = verifiedCredentials[0];
     // console.log(address, 'address');
     // console.log(verifiedCredentials,'userInfo');
-    // const { verifyEmail } = useEmailVerificationRequest();
+    // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'users')
+    const { verifyEmail } = useEmailVerificationRequest();
+    // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
+    // const [defaultEmail, setDefaultEmai] = useState(email);
+
+    const handleVerify = async (verificationToken: string) => {
+        try {
+          const verifyEmailResponse = await verifyEmail(verificationToken);
+          console.log(verifyEmailResponse);
+          // Handle successful email verification, e.g., show a success message or redirect
+        } catch (error) {
+          // Handle errors, e.g., show an error message or prompt for the correct token
+        }
+      };
+    
+    // useEffect( () => {
+    //     setDefaultWalletAddress(address);
+    //     setDefaultEmai(email)
+    // })
 
     useEffect(() => {
+        if(!email){
+            handleVerify(storage.getLocalStorage('dynamic_authentication_token'));
+        }
         /** TODO:
          * fetch useinfo 待测试
          */
@@ -100,6 +121,11 @@ export default () => {
             });
         };
 
+    // const emailChange = (value:any) => {
+    //     console.log('djsklfjslfjsl')
+    //     console.log(value);
+    // }
+
     return (
         <div className={styles['registration-container']}>
             <div className={styles['registration-wrap']}>
@@ -121,7 +147,7 @@ export default () => {
                     <Row gutter={100}>
                         <Col span='12'>
                             <Form.Item
-                                name='username'
+                                name='name'
                                 label='Name'
                                 rules={[{ required: true, message: 'Please input username' }]}
                             >
@@ -137,20 +163,21 @@ export default () => {
                                     <Radio value='pear'> Team Competitor</Radio>
                                 </Radio.Group>
                             </Form.Item>
-                            <Form.Item name='languageList' label='Languages'>
+                            <Form.Item name='languages' label='Languages'>
                                 <LanguageSelect form={form} userId={userId} />
                             </Form.Item>
                             <Form.Item
                                 name='email'
                                 label='Email Address'
+                                initialValue={email}
                                 rules={[
                                     { required: true, message: 'Please input email' },
                                     { type: 'email', message: 'Email Address is not valid email.' }
                                 ]}
                             >
-                                <Input placeholder='Enter email' />
+                                <Input placeholder='Enter email' value={email}/>
                             </Form.Item>
-                            <Form.Item name='industry' label='Relevant Work Experience'>
+                            <Form.Item name='industryBackground' label='Relevant Work Experience'>
                                 <Select
                                     mode='multiple'
                                     allowClear
@@ -187,12 +214,12 @@ export default () => {
                                 />
                             </Form.Item>
                             <Form.Item
-                                
+                                initialValue={address}
                                 name='wallet'
                                 label='Verify your wallet'
                                 rules={[{ required: true, message: 'Please input username' }]}
                             >
-                                <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' defaultValue={address} />
+                                <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' value={address} />
                             </Form.Item>
                             <Form.Item name='telegram' label='Telegram'>
                                 <Input />

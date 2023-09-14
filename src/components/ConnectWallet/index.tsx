@@ -87,6 +87,8 @@ const ConnectWallet = () => {
         navigate(e.key);
     };
 
+    console.log(user,'login user');
+
     const menuProps = {
         items,
         onClick: handleMenuClick

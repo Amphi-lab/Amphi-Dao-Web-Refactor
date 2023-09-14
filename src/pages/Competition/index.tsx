@@ -1,8 +1,8 @@
 import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
-import discordIocn from '@/assets/svg/discord.svg';
-import telegramIcon from '@/assets/svg/telegram.svg';
+import discordIocn from '@/assets/svg/discordQrcode.svg';
+import telegramIcon from '@/assets/svg/telegramQRcode.svg';
 
 // const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;
 const { Title, Paragraph } = Typography;
@@ -271,17 +271,19 @@ const Join: React.FC = () => {
 
             <TabPane tab="V. Inquiries and Clarifications" key="5">
               <Title level={4}><strong>Contact us:</strong></Title>
-              <Paragraph><strong>Competition consultation:</strong>
-                <br />Official website of the competition : https://amphi.space
+              <Paragraph>
+                  {/* <strong>Competition consultation:</strong> */}
+                {/* <br />Official website of the competition : https://amphi.space */}
                 <br />Contact: Kim
                 <br />WeChat: kimdcai
                 <br/>Email:amphiassistance@gmail.com
                 <br/>💬 Community Q&A:
-                <br/>Discord community click there:
+                <br/>Discord community click or scan there:
                 <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
                   <img src={discordIocn} alt="Discord Icon" />
                 </div>
-                <br/>Telegram group click there:
+
+                <br/>Telegram group click or scan there:
                 <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
                   <img src={telegramIcon} alt="Telegram Icon" /> {/* Telegram Icon */}
                 </div>

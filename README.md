@@ -10,21 +10,6 @@ npm run dev
 ```
 
 
-# [Storybook](https://storybook.js.org/docs/react/writing-tests/introduction)
-## 安装storybook/cli脚手架并安装依赖
-```shell
-pnpm dlx storybook@latest init
-```
-
-## 启动你的storybook组件库项目
-```shell
-yarn storybook
-```
-or use
-```shell
-npm run storybook 
-```
-
 # Reference:
 
 ## 1. [Fontend documents for Amphi project](https://kxez5oqjhd.feishu.cn/docx/Ag8Rdf0RnoRBr3x5cOncUzQmnSe)
@@ -35,3 +20,7 @@ npm run storybook
 ### 3.1 Connect Wallet: [Rainbowkit](https://www.rainbowkit.com/docs/custom-connect-button)
 
 ## 4. [Dapp-learning](https://github.com/Dapp-Learning-DAO/Dapp-Learning/blob/main/README-CN.md)
+
+## 5. [Storybook](https://storybook.js.org/docs/react/writing-tests/introduction)
+
+## 6. [cypress](https://www.cypress.io/)

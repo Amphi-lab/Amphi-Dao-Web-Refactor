@@ -12,55 +12,27 @@ interface TabContentProps{
 
 const PrizeTab:React.FC<TabContentProps> = ({ onApply })=> (
     <Typography style={{ fontSize: '20px' }}>
-        <Title level={5}>
-            Total award 100,000 wcm token! Opportunity to obtain authorship rights for proofreading
-            works!!
-        </Title>
-
         <section>
-            <Title level={5}>Team Award</Title>
-            <p>
-                Team <strong>1st</strong> Prize: 1 winner, with a reward of 20,000 wcm tokens +
-                Metale NFT + Amphi SBT
-            </p>
-
-            <p>
-                Team <strong>2nd</strong> Prize: 2 winners, each receiving 10,000 wcm tokens +
-                Metale NFT+ Amphi SBT
-            </p>
-
-            <p>
-                Team <strong>3rd</strong> Prize: 3 winners, each receiving 5,000 wcm tokens + Metale
-                NFT + Amphi SBT
-            </p>
-
-            <p>
-                *Rules for awards: The corresponding awards will be selected according to the
-                ranking of the total scores of the translations.
-            </p>
+            <Title level={4}>Group Awards</Title>
+            <p>Team <strong>1st</strong> Prize: 20,000 wcm & Metale NFTs & Amphi SBT!</p>
+            <p> Only 1 winner</p>
+            <p>Team <strong>2nd</strong> Prize: 10,000 wcm & Metale NFTs & Amphi SBT!</p>
+            <p>2 winners</p>
+            <p>Team <strong>3rd</strong> Prize: 5,000 wcm, Metale NFT, and Amphi SBT</p>
+            <p>3 winners</p>
         </section>
 
         <section>
-            <Title level={5}>Individual Monolingual Excellence Award</Title>
-            <p>
-                Single Language Excellence Award: <strong>9 winners,</strong> each receiving 5,000
-                wcm tokens + Amphi SBT
-            </p>
-            <p>
-                Best Potential Award: 1 winner, with a reward of 5,000 wcm tokens + an Amphi Pass
-                NFT
-            </p>
-
-            <p>
-                *Rules for awards: The corresponding awards will be selected according to the
-                ranking of the total scores of the translations.
-            </p>
+            <Title level={4}>Individual Awards</Title>
+            <p>5,000 wcm, Metale NFT and Amphi SBT</p>
+            <p>9 winners</p>
         </section>
 
         <section>
-            <Title level={5}>Lucky award</Title>
+            <Title level={4}>Lucky award</Title>
 
-            <p>Amphi pass NFT * 12 lucky attendances</p>
+            <p>Amphi pass NFT</p>
+            <p>12 lucky attendances</p>
 
             <p>
                 *Group award and individual excellenc award cannot be superimposed for
@@ -73,57 +45,33 @@ const PrizeTab:React.FC<TabContentProps> = ({ onApply })=> (
 const CompDetaisTab :React.FC<TabContentProps>= ({ onApply })=> (
     <Typography style={{ fontSize: '20px' }}>
         <section>
-            <Title level={5}>
-                Registration and translation stage: September 15, 2023-November 15, 2023
-                <p>
-                    (1) Log in to Amphi&apos;s official website: https://amphi.space to register for
-                    free and fill in your personal information, and select the registration type
-                    (group registration or individual registration); after submitting the
-                    registration application, you will receive an email verification notification,
-                    and follow the prompts to verify.
-                </p>
-            </Title>
-        </section>
-        <section>
-            <Title level={5}>
-                Registration and translation stage: September 15, 2023-November 15, 2023
-            </Title>
+            <Title level={4}>Registration Period (15th September - 15th November 2023)</Title>
             <p>
                 (1) Log in to Amphi&apos;s official website: https://amphi.space to register for
-                free and fill in your personal information, and select the registration type (group
-                registration or individual registration); after submitting the registration
-                application, you will receive an email verification notification, and follow the
-                prompts to verify.
+                free and fill in personal information, select the registration type (group registration or individual registration); after submitting the registration application, you will receive an email verification notification, follow the prompts to verify.
             </p>
             <p>
-                (2) Contestants who have successfully registered log in to the Amphi official
-                website, check and select the novels they need to proofread and translate, and
-                download the works after selecting the works (original manuscript and AI
-                translation). And translation, upload and submit the translated works in word
-                document format before the deadline of the translation stage .
+                (2) Successfully registered contestants log in to the Amphi official website, view and select the novel and proofread. After selecting novels task, download original manuscript and AI translation draft to proofread. After complete proofreading, submit translation works in word document format before 15th November 2023.
             </p>
         </section>
         <section>
-            <Title level={5}>Work review stage: November 16, 2023-December 16, 2023</Title>
+            <Title level={4}>Review Period (16th November - 16th December 2023)</Title>
             <p>
-                Contestants can check whether the evaluation status of their proofreading and
-                translation works has been completed in the registration background of the official
-                website.
+                Contestants can check whether the review status of their proofread translation works 
+                has been completed in the registration background of the official website.
             </p>
         </section>
         <section>
-            <Title level={5}> Award publicity stage: December 17, 2023-December 24, 2023</Title>
+            <Title level={4}> Award Announcement Period (December 18 - December 22, 2023)</Title>
             <p>
-                The results of the review will be announced on the official website from December
-                17th to 24th, 2023, and all contestants can log on to the official website to check.
-                Award
+                Delve into the outstanding talents of the competition! Results will be showcased on the official website from December 17-24, 2023. All participants are encouraged to check the website for updates.
             </p>
         </section>
         <section>
-            <Title level={5}> distribution period: December 29, 2023-December 31, 2023</Title>
+            <Title level={4}> Prize Distribution Phase: December 26 - December 29, 2023 </Title>
             <p>
-                Relevant rewards will be issued through the wallet address registered by the
-                contestants <Button  onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
+                Attention Participants! Please ensure you provide a valid email address and digital wallet during registration for a seamless reward distribution. 
+                <Button  onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
             </p>
         </section>
     </Typography>
@@ -145,14 +93,14 @@ const GudingTab:React.FC<TabContentProps> = ({ onApply }) => (
             <ul>
                 <li>Cultural fit 8 points</li>
                 <li>Preservation and Transmission of Local Colors 8 points</li>
-                <li>Fidelity to the emotion and context of the original text 9 points</li>
+                <li>Faithful to the original text 9 points</li>
             </ul>
         </section>
 
         <section>
-            <Title level={5}> Translation Difficulty Factor (20 points)</Title>
+            <Title level={5}> Translation Difficulty (20 points)</Title>
             <ul>
-                <li>Specific Difficulty for Fiction Genres 20 points</li>
+                <li>Difficulty of types 20 points</li>
                 {/*  */}
             </ul>
         </section>
@@ -192,13 +140,22 @@ const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
      gudingTab: GudingTab
     };
 
-const onApply = useCallback(()=>{
+// const onApply = useCallback(()=>{
+//     if(user){
+//         navigate('competition');
+//     }else{
+//         setShowAuthFlow(true)
+//     }
+// },[user]);
+
+const onApply = useCallback((id: any)=>{ // id may not be one string
     if(user){
-        navigate('competition');
+        navigate(`/workspace/${id}`);
     }else{
+        navigate(`/registration/`);
         setShowAuthFlow(true)
-    }
-},[user]);
+}},[user]);
+
 
  const TabCom: React.ElementType<TabContentProps> = tabItem[tabKey];
  return <TabCom onApply={onApply}/>

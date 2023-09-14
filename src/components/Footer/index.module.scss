@@ -1,39 +1,43 @@
 .amphi-footer {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 436px;
-    padding: 0;
-    background: linear-gradient(
-        234.93deg,
-        rgb(30 187 239 / 50%) 0%,
-        rgb(35 186 237 / 50%) 0%,
-        rgb(230 132 177 / 50%) 87.46%
+  position: relative;
+  bottom: 0;  // 0px; 位于最底部
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;  // 1920px;
+  height: 226px;
+  margin-top: auto;  // Add this line to push footer to the bottom
+  padding: 0;
+  background:
+    linear-gradient(
+      234.93deg,
+      rgb(30 187 239 / 50%) 0%,
+      rgb(35 186 237 / 50%) 0%,
+      rgb(230 132 177 / 50%) 87.46%
     );
 
-    .copyright {
-        position: absolute;
-        top: 77px;
-        left: 93px;
+  .copyright {
+    position: absolute;
+    top: 77px;
+    left: 93px;
 
-        p {
-            @include font($weight: 400, $size: 26px, $color: #fff);
-            margin-top: 19px;
-        }
+    p {
+      @include font($weight: 400, $size: 26px, $color: #fff);
+      margin-top: 19px;
     }
+  }
 
-    .shares {
-        position: absolute;
-        top: 50%;
-        margin-left: 810px;
-        transform: translateY(-50%);
+  .shares {
+    position: absolute;
+    top: 50%;
+    margin-left: 810px;
+    transform: translateY(-50%);
 
-        a {
-            margin-right: 22px;
+    a {
+      margin-right: 22px;
 
-            :last-of-type {
-                margin-right: 0;
-            }
-        }
+      :last-of-type {
+        margin-right: 0;
+      }
     }
+  }
 }

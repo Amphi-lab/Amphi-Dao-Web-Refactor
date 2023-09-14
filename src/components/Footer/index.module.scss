@@ -9,27 +9,27 @@
   padding: 0;
   background:
     linear-gradient(
-       235deg,
-       rgba(30, 187, 239, 0.50) 0%,
-       rgba(35, 186, 237, 0.50) 0%, 
-       rgba(230, 132, 177, 0.50) 87.46%
+      235deg,
+      rgb(30 187 239 / 50%) 0%,
+      rgb(35 186 237 / 50%) 0%,
+      rgb(230 132 177 / 50%) 87.46%
     );
 
   .copyright {
     position: absolute;
     top: 77px;
     left: 93px;
+    flex-shrink: 0;
     width: 246px;
     height: 16px;
-    flex-shrink: 0;
 
     p {
-        color: #000;
-        font-family: Public Sans;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+      color: #000;
+      font-weight: 400;
+      font-size: 16px;
+      font-family: "Public Sans", sans-serif;
+      font-style: normal;
+      line-height: normal;
     }
   }
 

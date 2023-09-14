@@ -3,26 +3,33 @@
   bottom: 0;  // 0px; 位于最底部
   display: flex;
   flex-shrink: 0;
-  width: 100%;  // 1920px;
-  height: 226px;
+  width: 100%;  // 100%;
+  height: 226px;  // 100%;
   margin-top: auto;  // Add this line to push footer to the bottom
   padding: 0;
   background:
     linear-gradient(
-      234.93deg,
-      rgb(30 187 239 / 50%) 0%,
-      rgb(35 186 237 / 50%) 0%,
-      rgb(230 132 177 / 50%) 87.46%
+       235deg,
+       rgba(30, 187, 239, 0.50) 0%,
+       rgba(35, 186, 237, 0.50) 0%, 
+       rgba(230, 132, 177, 0.50) 87.46%
     );
 
   .copyright {
     position: absolute;
     top: 77px;
     left: 93px;
+    width: 246px;
+    height: 16px;
+    flex-shrink: 0;
 
     p {
-      @include font($weight: 400, $size: 26px, $color: #fff);
-      margin-top: 19px;
+        color: #000;
+        font-family: Public Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
     }
   }
 

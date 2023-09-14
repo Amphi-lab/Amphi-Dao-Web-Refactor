@@ -17,7 +17,7 @@ import { optionsToArray, optionsToString } from '@/utils/userInfo';
 import api from '@/api';
 
 import storage from '@/utils/storage';
-import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
+// import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import styles from './index.module.scss';
 
 type IUserInfoProps =
@@ -46,19 +46,19 @@ export default () => {
     // console.log(address, 'address');
     // console.log(verifiedCredentials,'userInfo');
     // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'users')
-    const { verifyEmail } = useEmailVerificationRequest();
+    // const { verifyEmail } = useEmailVerificationRequest();
     // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
     // const [defaultEmail, setDefaultEmai] = useState(email);
 
-    const handleVerify = async (verificationToken: string) => {
-        try {
-          const verifyEmailResponse = await verifyEmail(verificationToken);
-          console.log(verifyEmailResponse);
-          // Handle successful email verification, e.g., show a success message or redirect
-        } catch (error) {
-          // Handle errors, e.g., show an error message or prompt for the correct token
-        }
-      };
+    // const handleVerify = async (verificationToken: string) => {
+    //     try {
+    //       const verifyEmailResponse = await verifyEmail(verificationToken);
+    //       console.log(verifyEmailResponse);
+    //       // Handle successful email verification, e.g., show a success message or redirect
+    //     } catch (error) {
+    //       // Handle errors, e.g., show an error message or prompt for the correct token
+    //     }
+    //   };
     
     // useEffect( () => {
     //     setDefaultWalletAddress(address);
@@ -66,9 +66,6 @@ export default () => {
     // })
 
     useEffect(() => {
-        if(!email){
-            handleVerify(storage.getLocalStorage('dynamic_authentication_token'));
-        }
         /** TODO:
          * fetch useinfo 待测试
          */

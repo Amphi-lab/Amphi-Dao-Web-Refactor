@@ -20,32 +20,35 @@ import storage from '@/utils/storage';
 // import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import styles from './index.module.scss';
 
+const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user');
+const {address} = verifiedCredentials[0]
+
 type IUserInfoProps =
     | IUserInfo
     | (Omit<IUserInfo, 'id' | 'industry' | 'jobFunction'> & {
-          industry: string[];
+           industryBackground: string[];
           jobFunction: string[];
       });
 const initialValue: IUserInfoProps = {
     address: '',
-    username: '',
-    email: '',
+    wallet:address,
+    name: '',
+    email,
     profile: '',
     backgroundUrl: '',
-    industry: [],
+    industryBackground: [],
     jobFunction: [],
-    languageList: []
+    languages: []
 };
 
 export default () => {
     const [form] = Form.useForm();
     // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
-    const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user');
-    const {address} = verifiedCredentials[0];
+    
     // console.log(address, 'address');
-    // console.log(verifiedCredentials,'userInfo');
-    // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'users')
+    console.log(verifiedCredentials,'userInfo');
+    console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
     // const { verifyEmail } = useEmailVerificationRequest();
     // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
     // const [defaultEmail, setDefaultEmai] = useState(email);
@@ -166,13 +169,13 @@ export default () => {
                             <Form.Item
                                 name='email'
                                 label='Email Address'
-                                initialValue={email}
+                                
                                 rules={[
                                     { required: true, message: 'Please input email' },
                                     { type: 'email', message: 'Email Address is not valid email.' }
                                 ]}
                             >
-                                <Input placeholder='Enter email' value={email}/>
+                                <Input placeholder='Enter email' defaultValue={email}/>
                             </Form.Item>
                             <Form.Item name='industryBackground' label='Relevant Work Experience'>
                                 <Select

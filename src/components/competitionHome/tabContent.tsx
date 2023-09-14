@@ -140,13 +140,22 @@ const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
      gudingTab: GudingTab
     };
 
-const onApply = useCallback(()=>{
+// const onApply = useCallback(()=>{
+//     if(user){
+//         navigate('competition');
+//     }else{
+//         setShowAuthFlow(true)
+//     }
+// },[user]);
+
+const onApply = useCallback((id: any)=>{ // id may not be one string
     if(user){
-        navigate('competition');
+        navigate(`/workspace/${id}`);
     }else{
+        navigate(`/registration/`);
         setShowAuthFlow(true)
-    }
-},[user]);
+}},[user]);
+
 
  const TabCom: React.ElementType<TabContentProps> = tabItem[tabKey];
  return <TabCom onApply={onApply}/>

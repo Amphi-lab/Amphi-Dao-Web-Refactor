@@ -98,7 +98,7 @@ const GudingTab:React.FC<TabContentProps> = ({ onApply }) => (
         </section>
 
         <section>
-            <Title level={5}> Translation Difficulty Factor (20 points)</Title>
+            <Title level={5}> Translation Difficulty (20 points)</Title>
             <ul>
                 <li>Difficulty of types 20 points</li>
                 {/*  */}

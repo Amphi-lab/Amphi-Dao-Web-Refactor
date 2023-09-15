@@ -30,51 +30,6 @@ const items: TabsProps['items'] = [
     }
 ];
 
-// change to card style for each tab
-// const { Meta } = Card;
-
-// const items: TabsProps['items'] = [
-//     {
-//         key: 'prizeTab',
-//         label: 'Prize',
-//         children: (
-//             <Card
-//                 hoverable
-//                 style={{ width: 240 }}
-//                 cover={<img alt="example" src="url_to_your_image" />}
-//             >
-//                 <Meta title="Prize" description="Prize details go here" />
-//             </Card>
-//         ),
-//     },
-//     {
-//         key: 'compDetaisTab',
-//         label: 'Competition Details',
-//         children: (
-//             <Card
-//                 hoverable
-//                 style={{ width: 240 }}
-//                 cover={<img alt="example" src="url_to_your_image" />}
-//             >
-//                 <Meta title="Competition Details" description="Competition details go here" />
-//             </Card>
-//         ),
-//     },
-//     {
-//         key: 'gudingTab',
-//         label: 'Judging Criteria',
-//         children: (
-//             <Card
-//                 hoverable
-//                 style={{ width: 240 }}
-//                 cover={<img alt="example" src="url_to_your_image" />}
-//             >
-//                 <Meta title="Judging Criteria" description="Judging criteria go here" />
-//             </Card>
-//         ),
-//     }
-// ];
-
 const CompetitionHome: React.FC = () => {
     // const [translationList, setTranslationList] = useState([]);
     const { setShowAuthFlow ,user } = useDynamicContext();
@@ -108,12 +63,7 @@ const CompetitionHome: React.FC = () => {
         
        },[user]);
 
-    // interface RegistrationStatusResponse {
-    //     data: {
-    //         isRegistered: false;
-    //     };
-    // }
-    //
+
     // const onApply = useCallback((id: string) => {
     //     api.getRegistrationStatus(id).then((response: RegistrationStatusResponse) => {
     //         const isRegistered = response?.data?.isRegistered || false;

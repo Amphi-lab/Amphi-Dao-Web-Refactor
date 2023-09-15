@@ -1,8 +1,8 @@
 import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
-import discordIocn from '@/assets/svg/discordQrcode.svg';
-import telegramIcon from '@/assets/svg/telegramQrcode.svg';
+import discordIocn from '@/assets/svg/icon-discord.svg';
+import telegramIcon from '@/assets/svg/telegram.svg';
 // import { useMediaQuery } from 'react-responsive';
 
 // const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;
@@ -280,12 +280,12 @@ const Join: React.FC = () => {
                 <br />WeChat: kimdcai
                 <br/>Email:amphiassistance@gmail.com
                 <br/>💬 Community Q&A:
-                <br/>Discord community click or scan there:
+                <br/><a href="https://discord.gg/vgG22sb6Tb" target="_blank" rel="noreferrer">Discord community click there:</a>
                 <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
                   <img src={discordIocn} alt="Discord Icon" />
                 </div>
 
-                <br/>Telegram group click or scan there:
+                <br/><a href="https://t.me/+-7mw_Qqv47w4YzFl" target="_blank" rel="noreferrer">Telegram group click there:</a>
                 <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
                   <img src={telegramIcon} alt="Telegram Icon" /> {/* Telegram Icon */}
                 </div>
@@ -297,5 +297,3 @@ const Join: React.FC = () => {
 };
 
 export default Join;
-
-

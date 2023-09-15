@@ -1,6 +1,8 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from 'react';
 import type { TabsProps } from 'antd';
-import { Tabs, Row, Col, Card, Typography, Button, Grid } from 'antd';
+
+import { Tabs, Row, Col, Card, Typography, Button, message, Grid } from 'antd';
+
 import { useDynamicContext } from '@dynamic-labs/sdk-react';
 import { useNavigate } from 'react-router';
 import api from '@/api';
@@ -33,19 +35,34 @@ const items: TabsProps['items'] = [
 
 const CompetitionHome: React.FC = () => {
     const [translationList, setTranslationList] = useState([]);
-    const { setShowAuthFlow, user } = useDynamicContext();
+    const { setShowAuthFlow ,user } = useDynamicContext();
     const navigate  = useNavigate();
-    const screens = useBreakpoint();
+
+    const [messageApi,contextHolder ] = message.useMessage();
+
+    console.log(user,'user');
 
     const onApply = useCallback((id: string)=>{ // id may not be one string
-        if(user){
-           navigate(`/workspace/${id}`);
-        //    window.location.href = `/workspace/${id}`;
-        }else{
-            navigate(`/registration/`);
-            setShowAuthFlow(true)
-        }
-       },[user]);
+        if(!user) {
+            console.log('login judge');
+            messageApi.open({
+                type: 'warning',
+                content: 'Please Login'
+              });
+        }else if(user){
+            navigate(`/workspace/${id}`);
+
+    const screens = useBreakpoint();
+
+//     const onApply = useCallback((id: string)=>{ // id may not be one string
+//         if(user){
+//            navigate(`/workspace/${id}`);
+//         //    window.location.href = `/workspace/${id}`;
+//         }else{
+//             navigate(`/registration`);
+//             setShowAuthFlow(true)
+//         } 
+//        },[user]);
 
     const getTranslationList = useCallback((queryParams?: any) => {
         return api.getTranslationList(queryParams).then((res: any) => {
@@ -108,6 +125,8 @@ const CompetitionHome: React.FC = () => {
     }, [translationList]);
 
     return (
+        <>
+        {contextHolder}
         <div className={styles['competition-wrapper']}>
             <div className={styles['competition-banner']} />
             <div className={styles['competition-tabs-wrap']}>
@@ -120,6 +139,8 @@ const CompetitionHome: React.FC = () => {
                 {renderMaterials}
             </div>
         </div>
+        </>
+        
     );
 };
 

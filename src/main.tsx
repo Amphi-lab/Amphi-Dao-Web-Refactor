@@ -35,7 +35,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             */}
             <DynamicContextProvider
                 settings={{
-                    environmentId: '5fb8d1c1-b293-4fb7-a9a7-27790dcf5499'  // old: ec2d73e9-1c8a-4d0a-a2c5-abb3be77f6aa
+                    environmentId: '5fb8d1c1-b293-4fb7-a9a7-27790dcf5499',  // old: ec2d73e9-1c8a-4d0a-a2c5-abb3be77f6aa
+                    walletsFilter: (wallets) =>  {
+                        return wallets.filter((wallet) => {
+                          return ['metamask'].includes(wallet.key)
+                        });
+                      }
                 }}
             >
                 {/*

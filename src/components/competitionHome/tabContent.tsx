@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, message } from 'antd';
 import { useDynamicContext } from '@dynamic-labs/sdk-react';
 import { useNavigate } from 'react-router';
 import styles from './index.module.scss';
@@ -119,6 +119,7 @@ const GudingTab:React.FC<TabContentProps> = ({ onApply }) => (
                 <li>Overall coherence and readability of the work 10 points</li><Button onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
             </ul>
         </section>
+        
     </Typography>
 );
 
@@ -129,6 +130,7 @@ interface GenerateTabProps {
 const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
  const { setShowAuthFlow, user } = useDynamicContext();
  const navigate = useNavigate();
+ const [messageApi,contextHolder ] = message.useMessage();
 
  const tabItem:{
     prizeTab:React.FC<TabContentProps>,
@@ -149,16 +151,26 @@ const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
 // },[user]);
 
 const onApply = useCallback((id: any)=>{ // id may not be one string
-    if(user){
+    if(!user) {
+        console.log('login judge');
+        messageApi.open({
+            type: 'warning',
+            content: 'Please Login',
+            duration: 15
+          });
+    }else if(user){
         navigate(`/workspace/${id}`);
     }else{
-        navigate(`/registration/`);
+        navigate(`/registration`);
         setShowAuthFlow(true)
-}},[user]);
+    }},[user]);
 
 
  const TabCom: React.ElementType<TabContentProps> = tabItem[tabKey];
- return <TabCom onApply={onApply}/>
+ return (<>
+ {contextHolder}
+ <TabCom onApply={onApply}/>
+ </>)
 }
 
 export default GenerateTab;

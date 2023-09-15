@@ -23,8 +23,8 @@ import telegramIcon from '@/assets/svg/telegram.svg';
 import styles from './index.module.scss';
 
 
-const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user');
-const {address} = verifiedCredentials[0]
+const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user') && storage.getLocalStorage('dynamic_authenticated_user');
+const {address} =verifiedCredentials &&  verifiedCredentials[0]
 
 type IUserInfoProps =
     | IUserInfo
@@ -34,9 +34,9 @@ type IUserInfoProps =
       });
 const initialValue: IUserInfoProps = {
     address: '',
-    wallet:address,
+    wallet: address || '',
     name: '',
-    email,
+    email: email || '',
     profile: '',
     backgroundUrl: '',
     industryBackground: [],
@@ -54,8 +54,8 @@ export default () => {
     const [userId, setUseId] = useState<number | undefined>(undefined);
     
     // console.log(address, 'address');
-    console.log(verifiedCredentials,'userInfo');
-    console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
+    // console.log(verifiedCredentials,'userInfo');
+    // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
     // const { verifyEmail } = useEmailVerificationRequest();
     // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
     // const [defaultEmail, setDefaultEmai] = useState(email);

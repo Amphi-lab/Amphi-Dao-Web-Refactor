@@ -71,7 +71,7 @@ export default ({ form, userId }: { form: FormInstance; userId: number }) => {
                     // eslint-disable-next-line react/no-array-index-key
                     <Space key={`${language}-${index}`}>
                         <Space.Compact block className='language-select-box'>
-                            <p className='label language-label'>Languages：</p>
+                            {/* <p className='label language-label'>Languages：</p> */}
                             <Select
                                 value={language}
                                 showSearch
@@ -111,7 +111,7 @@ export default ({ form, userId }: { form: FormInstance; userId: number }) => {
                             </Select>
                         </Space.Compact>
                         <Space.Compact block className='language-select-box'>
-                            <p className='label level-label'>Level：</p>
+                            {/* <p className='label level-label'>Level：</p> */}
                             <Select
                                 value={certification}
                                 allowClear

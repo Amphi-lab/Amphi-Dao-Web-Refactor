@@ -18,7 +18,10 @@ import api from '@/api';
 
 import storage from '@/utils/storage';
 // import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
+import discordIocn from '@/assets/svg/icon-discord.svg';
+import telegramIcon from '@/assets/svg/telegram.svg';
 import styles from './index.module.scss';
+
 
 const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user');
 const {address} = verifiedCredentials[0]
@@ -42,6 +45,10 @@ const initialValue: IUserInfoProps = {
 };
 
 export default () => {
+    const handleDiscordClick = () => { window.open('https://discord.gg/bWwUutdGCC', '_blank'); };
+  
+    const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); }; // Replace with your Telegram URL
+
     const [form] = Form.useForm();
     // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
@@ -166,6 +173,7 @@ export default () => {
                             <Form.Item name='languages' label='Languages'>
                                 <LanguageSelect form={form} userId={userId} />
                             </Form.Item>
+
                             <Form.Item
                                 name='email'
                                 label='Email Address'
@@ -223,11 +231,19 @@ export default () => {
                             </Form.Item>
                             <Form.Item name='telegram' label='Telegram'>
                                 <Input />
+                                <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
+                                <img src={telegramIcon} alt="Telegram Icon" />
+                                </div>
                             </Form.Item>
+                            
 
                             <Form.Item name='discord' label='Discord'>
                                 <Input />
+                                <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
+                                <img src={discordIocn} alt="Discord Icon" />
+                                </div>
                             </Form.Item>
+
                             <Form.Item>
                                 <Button type='primary' htmlType='submit'>
                                     Submit

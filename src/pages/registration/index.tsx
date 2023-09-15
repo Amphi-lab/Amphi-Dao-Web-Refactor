@@ -111,6 +111,7 @@ export default () => {
     //         }
     //     });
     // };
+    
     const onFinish = (values: any) => {
             console.log(values);
             api.competRegistration({
@@ -235,7 +236,6 @@ export default () => {
                                 <img src={telegramIcon} alt="Telegram Icon" />
                                 </div>
                             </Form.Item>
-                            
 
                             <Form.Item name='discord' label='Discord'>
                                 <Input />

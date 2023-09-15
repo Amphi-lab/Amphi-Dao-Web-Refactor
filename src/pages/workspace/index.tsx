@@ -47,7 +47,7 @@ export default () => {
     }, []);
 
     const fetchProjectList = useCallback((queryParams: any) => {
-        return api.getProjectList(queryParams).then((res: any) => {
+        return api.getAppliedTaskList(queryParams).then((res: any) => {
             if (res.code === 200) {
                 const { rows, total } = res;
                 return { rows, total };
@@ -84,7 +84,7 @@ export default () => {
         return [
             {
                 key: '1',
-                label: `All Orders`,
+                label: `Submit the order`,
                 children: (
                     <TabsItems
                         tabName='orders'
@@ -112,7 +112,7 @@ export default () => {
             // },
             {
                 key: '3',
-                label: `In service`,
+                label: `In progress`,
                 children: (
                     <TabsItems
                         tabName='translating'
@@ -127,7 +127,7 @@ export default () => {
             },
             {
                 key: '4',
-                label: `Review`,
+                label: `Pending Review`,
                 children: (
                     <TabsItems
                         tabName='tobeModified'
@@ -142,7 +142,7 @@ export default () => {
             },
             {
                 key: '5',
-                label: `Completed`,
+                label: `Review completed`,
                 children: (
                     <TabsItems
                         tabName='completed'

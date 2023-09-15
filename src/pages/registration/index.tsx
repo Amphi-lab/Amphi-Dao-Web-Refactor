@@ -3,7 +3,9 @@ import { Button, Form, Input, Select, message, Row, Col, Radio } from 'antd';
 // import { useAccount } from 'wagmi';
 import {
     industry as IndustryOptions,
-    jobFunctions as JobFunctionsOptions
+    jobFunctions as JobFunctionsOptions,
+    competitionlanguages as CompetitionLanguages,
+    certificationOptions as CertificationOptions
 } from '@/constants/selcet.json';
 // components
 import PageTitle from '@/components/PageTitle';
@@ -45,14 +47,14 @@ const initialValue: IUserInfoProps = {
 };
 
 export default () => {
-    const handleDiscordClick = () => { window.open('https://discord.gg/bWwUutdGCC', '_blank'); };
-  
+    const handleDiscordClick = () => { window.open('https://discord.gg/vgG22sb6Tb', '_blank'); };
+
     const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); }; // Replace with your Telegram URL
 
     const [form] = Form.useForm();
     // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
-    
+
     // console.log(address, 'address');
     // console.log(verifiedCredentials,'userInfo');
     // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
@@ -69,7 +71,7 @@ export default () => {
     //       // Handle errors, e.g., show an error message or prompt for the correct token
     //     }
     //   };
-    
+
     // useEffect( () => {
     //     setDefaultWalletAddress(address);
     //     setDefaultEmai(email)
@@ -87,7 +89,9 @@ export default () => {
                     const params = {
                         ...userInfo,
                         industry: optionsToArray(userInfo.industry, IndustryOptions),
-                        jobFunction: optionsToArray(userInfo.jobFunction, JobFunctionsOptions)
+                        jobFunction: optionsToArray(userInfo.jobFunction, JobFunctionsOptions),
+                        language: optionsToString(userInfo.competitionlanguages, CompetitionLanguages),
+                        level: optionsToString(userInfo.certificationOptions, CertificationOptions)
                     };
                     form.setFieldsValue(params);
                 }
@@ -111,7 +115,16 @@ export default () => {
     //         }
     //     });
     // };
-    
+
+    // languagesArray example
+    const languagesArray = [
+        { language: 'English', level: 'Advanced' },
+        { language: 'Spanish', level: 'Intermediate' }
+        // 其他语言和级别
+    ];
+
+    // const industryBackgroundAsString = values.industryBackground.join(',');
+
     const onFinish = (values: any) => {
             console.log(values);
             api.competRegistration({
@@ -119,7 +132,15 @@ export default () => {
                 address,
                 ...values,
                 industry: optionsToString(values.industry, IndustryOptions),
-                jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions)
+                jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions),
+
+                // language: optionsToString(values.competitionlanguages, CompetitionLanguages),
+                // level: optionsToString(values.certificationOptions, CertificationOptions),
+                // 将构建好的数组传递给后端
+                languages: languagesArray.map(() => ({
+                    language: optionsToString(values.language, CompetitionLanguages),
+                    level: optionsToString(values.level, CertificationOptions)
+                }))
             }).then((res: any) => {
                 if (res?.code === 200) {
                     message.success('success');
@@ -178,7 +199,7 @@ export default () => {
                             <Form.Item
                                 name='email'
                                 label='Email Address'
-                                
+
                                 rules={[
                                     { required: true, message: 'Please input email' },
                                     { type: 'email', message: 'Email Address is not valid email.' }
@@ -273,3 +294,4 @@ export default () => {
         </div>
     );
 };
+

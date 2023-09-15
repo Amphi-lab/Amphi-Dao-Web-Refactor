@@ -84,7 +84,7 @@ export default () => {
         return [
             {
                 key: '1',
-                label: `Submit the order`,
+                label: `All tasks`,
                 children: (
                     <TabsItems
                         tabName='orders'

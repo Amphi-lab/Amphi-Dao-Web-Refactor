@@ -82,7 +82,13 @@ const CompetitionHome: React.FC = () => {
     const [messageApi,contextHolder ] = message.useMessage();
     const [taskList, setTaskList] = useState([]);
 
-    console.log(user,'user');
+    // console.log(user,'user');
+
+    const applyTask = async(taskId: string) => {
+        api.applyTask(taskId).then( (res:any) => {
+            console.log(res);
+        })
+    }
 
     const onApply = useCallback((id: string)=>{ // id may not be one string
         if(!user) {
@@ -97,6 +103,8 @@ const CompetitionHome: React.FC = () => {
             navigate(`/registration`);
             setShowAuthFlow(true)
         }
+
+        applyTask(id)
         
        },[user]);
 
@@ -127,11 +135,7 @@ const CompetitionHome: React.FC = () => {
     //     });
     // }, []);
 
-    // const applyTask = async(taskId: string) => {
-    //     api.applyTask(taskId).then( (res:any) => {
-    //         console.log(res);
-    //     })
-    // }
+    
 
     const getTaskList = async() => {
         api.getTaskList().then( (res:any) => {
@@ -150,7 +154,7 @@ const CompetitionHome: React.FC = () => {
         return (
             <Row gutter={30}>
                 {taskList.map((item: any) => {
-                    const { novelName, deadline, workload, targetLanguage, sourceLanguage } = item;
+                    const { id,novelName, deadline, workload, targetLanguage, sourceLanguage } = item;
                     const language = `${languagesOptions.get(sourceLanguage) || '--'} 
                     to ${languagesOptions.get(targetLanguage) || '--'}`;
 
@@ -179,7 +183,7 @@ const CompetitionHome: React.FC = () => {
                                     </span>
                                     {deadline}
                                 </p>
-                                <Button onClick={onApply} className={styles['competition-button']}>Apply</Button>
+                                <Button onClick={ onApply(id)} className={styles['competition-button']}>Apply</Button>
                             </Card>
                         </Col>
                     );

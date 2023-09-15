@@ -76,10 +76,11 @@ const items: TabsProps['items'] = [
 // ];
 
 const CompetitionHome: React.FC = () => {
-    const [translationList, setTranslationList] = useState([]);
+    // const [translationList, setTranslationList] = useState([]);
     const { setShowAuthFlow ,user } = useDynamicContext();
     const navigate  = useNavigate();
     const [messageApi,contextHolder ] = message.useMessage();
+    const [taskList, setTaskList] = useState([]);
 
     console.log(user,'user');
 
@@ -116,33 +117,48 @@ const CompetitionHome: React.FC = () => {
     //     });
     // }, [navigate]);
     
-    const getTranslationList = useCallback((queryParams?: any) => {
-        return api.getTranslationList(queryParams).then((res: any) => {
-            if (res.code === 200) {
-                const { rows } = res;
-                console.log(rows);
-                setTranslationList(rows);
+    // const getTranslationList = useCallback((queryParams?: any) => {
+    //     return api.getTranslationList(queryParams).then((res: any) => {
+    //         if (res.code === 200) {
+    //             const { rows } = res;
+    //             console.log(rows);
+    //             setTranslationList(rows);
+    //         }
+    //     });
+    // }, []);
+
+    // const applyTask = async(taskId: string) => {
+    //     api.applyTask(taskId).then( (res:any) => {
+    //         console.log(res);
+    //     })
+    // }
+
+    const getTaskList = async() => {
+        api.getTaskList().then( (res:any) => {
+            if(res.code === 200){
+                setTaskList( res.data )
             }
-        });
-    }, []);
+            
+        })
+    }
 
     useEffect(() => {
-        getTranslationList();
-    }, [getTranslationList]);
+        getTaskList();
+    }, []);
 
     const renderMaterials = useMemo(() => {
         return (
             <Row gutter={30}>
-                {translationList.map((item: any) => {
-                    const { title, deadline, workload, sourceLang, targetLang } = item;
-                    const language = `${languagesOptions.get(sourceLang) || '--'} 
-                    to ${languagesOptions.get(targetLang) || '--'}`;
+                {taskList.map((item: any) => {
+                    const { novelName, deadline, workload, targetLanguage, sourceLanguage } = item;
+                    const language = `${languagesOptions.get(sourceLanguage) || '--'} 
+                    to ${languagesOptions.get(targetLanguage) || '--'}`;
 
                     return (
                         <Col key={item.id} span={6}>
                             <Card
                                 className={styles['competition-card']}
-                                title={title}
+                                title={novelName}
                                 bordered={false}
                             >
                                 <p>
@@ -155,7 +171,7 @@ const CompetitionHome: React.FC = () => {
                                     <span className={styles['competition-label']}>
                                         Workload:&nbsp;
                                     </span>
-                                    {workload}
+                                    {workload} words
                                 </p>
                                 <p>
                                     <span className={styles['competition-label']}>
@@ -170,7 +186,7 @@ const CompetitionHome: React.FC = () => {
                 })}
             </Row>
         );
-    }, [translationList]);
+    }, []);
 
     return (
         <>

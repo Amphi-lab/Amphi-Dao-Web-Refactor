@@ -87,7 +87,7 @@ const ConnectWallet = () => {
         navigate(e.key);
     };
 
-    console.log(user,'login user');
+    // console.log(user,'login user');
 
     const menuProps = {
         items,

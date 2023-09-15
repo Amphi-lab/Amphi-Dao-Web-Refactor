@@ -1,8 +1,6 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from 'react';
 import type { TabsProps } from 'antd';
-
-import { Tabs, Row, Col, Card, Typography, Button, message, Grid } from 'antd';
-
+import { Tabs, Row, Col, Card, Typography, Button, message } from 'antd';
 import { useDynamicContext } from '@dynamic-labs/sdk-react';
 import { useNavigate } from 'react-router';
 import api from '@/api';
@@ -13,7 +11,6 @@ import styles from './index.module.scss';
 
 const languagesOptions = optionsMap(languages);
 const { Title } = Typography;
-const { useBreakpoint } = Grid;
 
 const items: TabsProps['items'] = [
     {
@@ -37,7 +34,6 @@ const CompetitionHome: React.FC = () => {
     const [translationList, setTranslationList] = useState([]);
     const { setShowAuthFlow ,user } = useDynamicContext();
     const navigate  = useNavigate();
-
     const [messageApi,contextHolder ] = message.useMessage();
 
     console.log(user,'user');
@@ -51,19 +47,25 @@ const CompetitionHome: React.FC = () => {
               });
         }else if(user){
             navigate(`/workspace/${id}`);
+        }else{
+            navigate(`/registration`);
+            setShowAuthFlow(true)
+        }
+        
+       },[user]);
 
-    const screens = useBreakpoint();
 
-//     const onApply = useCallback((id: string)=>{ // id may not be one string
-//         if(user){
-//            navigate(`/workspace/${id}`);
-//         //    window.location.href = `/workspace/${id}`;
-//         }else{
-//             navigate(`/registration`);
-//             setShowAuthFlow(true)
-//         } 
-//        },[user]);
-
+    // const onApply = useCallback((id: string) => {
+    //     api.getRegistrationStatus(id).then((response: RegistrationStatusResponse) => {
+    //         const isRegistered = response?.data?.isRegistered || false;
+    //         if (isRegistered) {
+    //             navigate(`/workspace/${id}`);
+    //         } else {
+    //             navigate(`/registration/`);
+    //         }
+    //     });
+    // }, [navigate]);
+    
     const getTranslationList = useCallback((queryParams?: any) => {
         return api.getTranslationList(queryParams).then((res: any) => {
             if (res.code === 200) {
@@ -87,9 +89,7 @@ const CompetitionHome: React.FC = () => {
                     to ${languagesOptions.get(targetLang) || '--'}`;
 
                     return (
-                        // <Col key={item.id} span={6}
-                        // 响应式布局
-                        <Col key={item.id} span={screens.xs ? 24 : 6}>  
+                        <Col key={item.id} span={6}>
                             <Card
                                 className={styles['competition-card']}
                                 title={title}
@@ -113,9 +113,7 @@ const CompetitionHome: React.FC = () => {
                                     </span>
                                     {deadline}
                                 </p>
-                                {/* <Button onClick={onApply} className={styles['competition-button']}>Apply</Button> */}
-                                {/*  响应式调整 */}
-                                <Button onClick={() => onApply(item.id)} className={styles['competition-button']}>Apply</Button>
+                                <Button onClick={onApply} className={styles['competition-button']}>Apply</Button>
                             </Card>
                         </Col>
                     );
@@ -145,4 +143,3 @@ const CompetitionHome: React.FC = () => {
 };
 
 export default memo(CompetitionHome);
-

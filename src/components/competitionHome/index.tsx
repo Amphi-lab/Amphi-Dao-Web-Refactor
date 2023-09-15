@@ -44,7 +44,6 @@ const CompetitionHome: React.FC = () => {
         }else{
             navigate(`/registration/`);
             setShowAuthFlow(true)
-            
         }
        },[user]);
 

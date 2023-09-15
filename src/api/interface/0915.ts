@@ -9,4 +9,7 @@ export const getGroupInfo = (data:any) => get('/competition/getGroupInfo', data)
 // 加入团队
 export const addGroup = (id:any) => get(`/competition/doJoin/${id}`);
 
-//
+// 获取任务列表  /competition/getTaskList
+export const getTaskList = () => get(`/competition/getTaskList`);
+
+

@@ -2,7 +2,7 @@ import React, { useState }  from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio, Tabs, Typography, Divider, Table } from 'antd';
 import discordIocn from '@/assets/svg/discordQrcode.svg';
-import telegramIcon from '@/assets/svg/telegramQRcode.svg';
+import telegramIcon from '@/assets/svg/telegramQrcode.svg';
 // import { useMediaQuery } from 'react-responsive';
 
 // const DiscordComponent = () => <img src={IconDiscord} alt='discord' />;

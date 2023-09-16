@@ -85,8 +85,6 @@ const CompetitionHome: React.FC = () => {
     //     });
     // }, []);
 
-    
-
     const getTaskList = async() => {
         api.getTaskList().then( (res:any) => {
             if(res.code === 200){
@@ -101,46 +99,54 @@ const CompetitionHome: React.FC = () => {
     }, []);
 
     const renderMaterials = useMemo(() => {
+        console.log("taskList:", taskList); // 将 console.log 移到 useMemo 之外
         return (
             <Row gutter={30}>
-                {taskList.map((item: any) => {
-                    const { id,novelName, deadline, workload, targetLanguage, sourceLanguage } = item;
-                    const language = `${languagesOptions.get(sourceLanguage) || '--'} 
-                    to ${languagesOptions.get(targetLanguage) || '--'}`;
+                {
+                    taskList.map((item: any) => {
+                        const { id, novelName, deadline, workload, targetLanguage, sourceLanguage, score } = item;
+                        const language = `${languagesOptions.get(sourceLanguage) || '--'} to ${languagesOptions.get(targetLanguage) || '--'}`;
 
-                    return (
-                        <Col key={item.id} span={6}>
-                            <Card
-                                className={styles['competition-card']}
-                                title={novelName}
-                                bordered={false}
-                            >
-                                <p>
+                        return (
+                            <Col key={item.id} span={6}>
+                                <Card
+                                    className={styles['competition-card']}
+                                    title={novelName}
+                                    bordered={false}
+                                >
+                                    <p>
                                     <span className={styles['competition-label']}>
                                         Language:&nbsp;
                                     </span>
-                                    {language}
-                                </p>
-                                <p>
+                                        {language}
+                                    </p >
+                                    <p>
                                     <span className={styles['competition-label']}>
                                         Workload:&nbsp;
                                     </span>
-                                    {workload} words
-                                </p>
-                                <p>
+                                        {workload} words
+                                    </p >
+                                    <p>
                                     <span className={styles['competition-label']}>
                                         Deadline:&nbsp;
                                     </span>
-                                    {deadline}
-                                </p>
-                                <Button onClick={ onApply(id)} className={styles['competition-button']}>Apply</Button>
-                            </Card>
-                        </Col>
-                    );
-                })}
+                                        {deadline}
+                                    </p >
+                                    <p>
+                                    <span className={styles['competition-label']}>
+                                        Score:&nbsp;
+                                    </span>
+                                        {score}
+                                    </p >
+                                    <Button onClick={() => onApply(id)} className={styles['competition-button']}>Apply</Button> {/* 使用箭头函数包装 onApply，以便传递参数 */}
+                                </Card>
+                            </Col>
+                        );
+                    })
+                }
             </Row>
         );
-    }, []);
+    }, [taskList]);
 
     return (
         <>
@@ -158,7 +164,7 @@ const CompetitionHome: React.FC = () => {
             </div>
         </div>
         </>
-        
+
     );
 };
 

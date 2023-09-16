@@ -22,6 +22,7 @@ import storage from '@/utils/storage';
 // import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import discordIocn from '@/assets/svg/icon-discord.svg';
 import telegramIcon from '@/assets/svg/telegram.svg';
+import AddMember from '@/pageComponents/AddMember';
 import styles from './index.module.scss';
 
 
@@ -207,10 +208,13 @@ export default () => {
                                         <Radio value='pear'> Team Competitor</Radio>
                                     </Radio.Group>
                                 </Form.Item>
+                                <Form.Item >
+                                    <AddMember />
+                                </Form.Item>
                                 <Form.Item name='languages' label='Languages'>
                                     <LanguageSelect form={form} userId={userId} />
                                 </Form.Item>
-
+                                
                                 <Form.Item
                                     name='email'
                                     label='Email Address'

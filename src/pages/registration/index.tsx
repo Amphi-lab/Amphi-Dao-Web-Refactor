@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Select, message, Row, Col, Radio } from 'antd';
+import { Button, Form, Input, Select, message, Row, Col, Radio, Modal } from 'antd';
 // import { useAccount } from 'wagmi';
 import {
     industry as IndustryOptions,
@@ -25,15 +25,15 @@ import telegramIcon from '@/assets/svg/telegram.svg';
 import styles from './index.module.scss';
 
 
-const { verifiedCredentials,email } = storage.getLocalStorage('dynamic_authenticated_user') && storage.getLocalStorage('dynamic_authenticated_user');
-const {address} =verifiedCredentials &&  verifiedCredentials[0]
+const { verifiedCredentials, email } = storage.getLocalStorage('dynamic_authenticated_user') && storage.getLocalStorage('dynamic_authenticated_user');
+const { address } = verifiedCredentials && verifiedCredentials[0]
 
 type IUserInfoProps =
     | IUserInfo
     | (Omit<IUserInfo, 'id' | 'industry' | 'jobFunction'> & {
-           industryBackground: string[];
-          jobFunction: string[];
-      });
+        industryBackground: string[];
+        jobFunction: string[];
+    });
 const initialValue: IUserInfoProps = {
     address: '',
     wallet: address || '',
@@ -54,6 +54,20 @@ export default () => {
     const [form] = Form.useForm();
     // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     // console.log(address, 'address');
     // console.log(verifiedCredentials,'userInfo');
@@ -126,29 +140,29 @@ export default () => {
     // const industryBackgroundAsString = values.industryBackground.join(',');
 
     const onFinish = (values: any) => {
-            console.log(values);
-            api.competRegistration({
-                // id: userId,
-                address,
-                ...values,
-                industry: optionsToString(values.industry, IndustryOptions),
-                jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions),
+        console.log(values);
+        api.competRegistration({
+            // id: userId,
+            address,
+            ...values,
+            industry: optionsToString(values.industry, IndustryOptions),
+            jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions),
 
-                // language: optionsToString(values.competitionlanguages, CompetitionLanguages),
-                // level: optionsToString(values.certificationOptions, CertificationOptions),
-                // 将构建好的数组传递给后端
-                languages: languagesArray.map(() => ({
-                    language: optionsToString(values.language, CompetitionLanguages),
-                    level: optionsToString(values.level, CertificationOptions)
-                }))
-            }).then((res: any) => {
-                if (res?.code === 200) {
-                    message.success('success');
-                } else {
-                    message.error(res.message);
-                }
-            });
-        };
+            // language: optionsToString(values.competitionlanguages, CompetitionLanguages),
+            // level: optionsToString(values.certificationOptions, CertificationOptions),
+            // 将构建好的数组传递给后端
+            languages: languagesArray.map(() => ({
+                language: optionsToString(values.language, CompetitionLanguages),
+                level: optionsToString(values.level, CertificationOptions)
+            }))
+        }).then((res: any) => {
+            if (res?.code === 200) {
+                message.success('success');
+            } else {
+                message.error(res.message);
+            }
+        });
+    };
 
     // const emailChange = (value:any) => {
     //     console.log('djsklfjslfjsl')
@@ -156,142 +170,148 @@ export default () => {
     // }
 
     return (
-        <div className={styles['registration-container']}>
-            <div className={styles['registration-wrap']}>
-                <PageTitle
-                    title='Registration Form'
-                    align='center'
-                    subTitle='please fill out this form with the required information'
-                    style={{ background: 'unset' }}
-                />
-                <hr className={styles['registration-divider']} />
-                <Form
-                    form={form}
-                    name='preferences'
-                    layout='vertical'
-                    autoComplete='off'
-                    onFinish={onFinish}
-                    initialValues={initialValue}
-                >
-                    <Row gutter={100}>
-                        <Col span='12'>
-                            <Form.Item
-                                name='name'
-                                label='Name'
-                                rules={[{ required: true, message: 'Please input username' }]}
-                            >
-                                <Input placeholder='John Doe' />
-                            </Form.Item>
-                            <Form.Item
-                                label='Role'
-                                name='role'
-                                rules={[{ required: true, message: 'Please select a role' }]}
-                            >
-                                <Radio.Group>
-                                    <Radio value='apple'> Individual Coppetitor </Radio>
-                                    <Radio value='pear'> Team Competitor</Radio>
-                                </Radio.Group>
-                            </Form.Item>
-                            <Form.Item name='languages' label='Languages'>
-                                <LanguageSelect form={form} userId={userId} />
-                            </Form.Item>
+        <>
+            <div className={styles['registration-container']}>
+                <div className={styles['registration-wrap']}>
+                    <PageTitle
+                        title='Registration Form'
+                        align='center'
+                        subTitle='please fill out this form with the required information'
+                        style={{ background: 'unset' }}
+                    />
+                    <hr className={styles['registration-divider']} />
+                    <Form
+                        form={form}
+                        name='preferences'
+                        layout='vertical'
+                        autoComplete='off'
+                        onFinish={onFinish}
+                        initialValues={initialValue}
+                    >
+                        <Row gutter={100}>
+                            <Col span='12'>
+                                <Form.Item
+                                    name='name'
+                                    label='Name'
+                                    rules={[{ required: true, message: 'Please input username' }]}
+                                >
+                                    <Input placeholder='John Doe' />
+                                </Form.Item>
+                                <Form.Item
+                                    label='Role'
+                                    name='role'
+                                    rules={[{ required: true, message: 'Please select a role' }]}
+                                >
+                                    <Radio.Group>
+                                        <Radio value='apple'> Individual Coppetitor </Radio>
+                                        <Radio value='pear'> Team Competitor</Radio>
+                                    </Radio.Group>
+                                </Form.Item>
+                                <Form.Item name='languages' label='Languages'>
+                                    <LanguageSelect form={form} userId={userId} />
+                                </Form.Item>
 
-                            <Form.Item
-                                name='email'
-                                label='Email Address'
+                                <Form.Item
+                                    name='email'
+                                    label='Email Address'
 
-                                rules={[
-                                    { required: true, message: 'Please input email' },
-                                    { type: 'email', message: 'Email Address is not valid email.' }
-                                ]}
-                            >
-                                <Input placeholder='Enter email' defaultValue={email}/>
-                            </Form.Item>
-                            <Form.Item name='industryBackground' label='Relevant Work Experience'>
-                                <Select
-                                    mode='multiple'
-                                    allowClear
-                                    showSearch
-                                    filterOption={(inputValue, option) => {
-                                        if (option?.label) {
-                                            const label = option.label?.toLowerCase();
-                                            inputValue = inputValue.toLowerCase();
-                                            return label.includes(inputValue);
-                                        }
-                                        return false;
-                                    }}
-                                    style={{ width: '100%' }}
-                                    placeholder='Select industry background'
-                                    options={IndustryOptions}
-                                />
-                            </Form.Item>
-                            <Form.Item name='jobFunction'>
-                                <Select
-                                    mode='multiple'
-                                    allowClear
-                                    showSearch
-                                    filterOption={(inputValue, option) => {
-                                        if (option?.label) {
-                                            const label = option.label?.toLowerCase();
-                                            inputValue = inputValue.toLowerCase();
-                                            return label.includes(inputValue);
-                                        }
-                                        return false;
-                                    }}
-                                    style={{ width: '100%' }}
-                                    placeholder='Select job function'
-                                    options={JobFunctionsOptions}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                initialValue={address}
-                                name='wallet'
-                                label='Verify your wallet'
-                                rules={[{ required: true, message: 'Please input username' }]}
-                            >
-                                <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' value={address} />
-                            </Form.Item>
-                            <Form.Item name='telegram' label='Telegram'>
-                                <Input />
-                                <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
-                                <img src={telegramIcon} alt="Telegram Icon" />
-                                </div>
-                            </Form.Item>
+                                    rules={[
+                                        { required: true, message: 'Please input email' },
+                                        { type: 'email', message: 'Email Address is not valid email.' }
+                                    ]}
+                                >
+                                    <Input placeholder='Enter email' defaultValue={email} />
+                                </Form.Item>
+                                <Form.Item name='industryBackground' label='Relevant Work Experience'>
+                                    <Select
+                                        mode='multiple'
+                                        allowClear
+                                        showSearch
+                                        filterOption={(inputValue, option) => {
+                                            if (option?.label) {
+                                                const label = option.label?.toLowerCase();
+                                                inputValue = inputValue.toLowerCase();
+                                                return label.includes(inputValue);
+                                            }
+                                            return false;
+                                        }}
+                                        style={{ width: '100%' }}
+                                        placeholder='Select industry background'
+                                        options={IndustryOptions}
+                                    />
+                                </Form.Item>
+                                <Form.Item name='jobFunction'>
+                                    <Select
+                                        mode='multiple'
+                                        allowClear
+                                        showSearch
+                                        filterOption={(inputValue, option) => {
+                                            if (option?.label) {
+                                                const label = option.label?.toLowerCase();
+                                                inputValue = inputValue.toLowerCase();
+                                                return label.includes(inputValue);
+                                            }
+                                            return false;
+                                        }}
+                                        style={{ width: '100%' }}
+                                        placeholder='Select job function'
+                                        options={JobFunctionsOptions}
+                                    />
+                                </Form.Item>
+                                <Form.Item
+                                    initialValue={address}
+                                    name='wallet'
+                                    label='Verify your wallet'
+                                    rules={[{ required: true, message: 'Please input username' }]}
+                                >
+                                    <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' value={address} />
+                                </Form.Item>
+                                <Form.Item name='telegram' label='Telegram'>
+                                    <Input />
+                                    <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
+                                        <img src={telegramIcon} alt="Telegram Icon" />
+                                    </div>
+                                </Form.Item>
 
-                            <Form.Item name='discord' label='Discord'>
-                                <Input />
-                                <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
-                                <img src={discordIocn} alt="Discord Icon" />
-                                </div>
-                            </Form.Item>
+                                <Form.Item name='discord' label='Discord'>
+                                    <Input />
+                                    <div onClick={handleDiscordClick} style={{ cursor: 'pointer' }}>
+                                        <img src={discordIocn} alt="Discord Icon" />
+                                    </div>
+                                </Form.Item>
 
-                            <Form.Item>
-                                <Button type='primary' htmlType='submit'>
-                                    Submit
-                                </Button>
-                            </Form.Item>
-                        </Col>
+                                <Form.Item>
+                                    <Button type='primary' htmlType='submit' onClick={showModal}>
+                                        Submit
+                                    </Button>
+                                </Form.Item>
+                            </Col>
 
-                        <Col span='12'>
-                            {/* Avatar */}
-                            <Form.Item name='profile' label='Avatar'>
-                                <UploadImage form={form} formField='profile' />
-                            </Form.Item>
+                            <Col span='12'>
+                                {/* Avatar */}
+                                <Form.Item name='profile' label='Avatar'>
+                                    <UploadImage form={form} formField='profile' />
+                                </Form.Item>
 
-                            {/* Background Image */}
-                            <Form.Item name='backgroundUrl' label='Background Image'>
-                                <UploadImage
-                                    form={form}
-                                    formField='backgroundUrl'
-                                    shape='shape'
-                                    desc='Recommended 1440px x 300px Max Size: 50MB'
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Form>
+                                {/* Background Image */}
+                                <Form.Item name='backgroundUrl' label='Background Image'>
+                                    <UploadImage
+                                        form={form}
+                                        formField='backgroundUrl'
+                                        shape='shape'
+                                        desc='Recommended 1440px x 300px Max Size: 50MB'
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
             </div>
-        </div>
+            <Modal title="" cancelText="Cancel" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>Please verify that the information is accurate.
+                    The prize will be sent to you via email.</p>
+            </Modal>
+        </>
     );
 };
 

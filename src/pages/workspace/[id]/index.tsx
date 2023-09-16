@@ -81,8 +81,8 @@ const WorkspaceDetail = () => {
                         {detail?.createTime}
                     </Descriptions.Item>
                     <Descriptions.Item label='Deadline'>{detail?.deadline}</Descriptions.Item>
-                    <Descriptions.Item label='Instructions for Translator'>
-                        {detail?.instruction}
+                    <Descriptions.Item label='Score'>
+                        {detail?.score}
                     </Descriptions.Item>
                 </Descriptions>
             </AmCard>

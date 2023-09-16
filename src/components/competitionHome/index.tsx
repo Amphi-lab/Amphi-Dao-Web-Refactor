@@ -104,7 +104,7 @@ const CompetitionHome: React.FC = () => {
             <Row gutter={30}>
                 {
                     taskList.map((item: any) => {
-                        const { id, novelName, deadline, workload, targetLanguage, sourceLanguage } = item;
+                        const { id, novelName, deadline, workload, targetLanguage, sourceLanguage, score } = item;
                         const language = `${languagesOptions.get(sourceLanguage) || '--'} to ${languagesOptions.get(targetLanguage) || '--'}`;
 
                         return (
@@ -131,6 +131,12 @@ const CompetitionHome: React.FC = () => {
                                         Deadline:&nbsp;
                                     </span>
                                         {deadline}
+                                    </p >
+                                    <p>
+                                    <span className={styles['competition-label']}>
+                                        Score:&nbsp;
+                                    </span>
+                                        {score}
                                     </p >
                                     <Button onClick={() => onApply(id)} className={styles['competition-button']}>Apply</Button> {/* 使用箭头函数包装 onApply，以便传递参数 */}
                                 </Card>

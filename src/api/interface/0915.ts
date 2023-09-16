@@ -16,7 +16,7 @@ export const getTaskList = () => get(`/competition/getTaskList`);
 export const applyTask = (taskId:string) => get(`/competition/apply/${taskId}`);
 
 // 获取已经 apply的任务 /competition/getAppliedTaskList
-export const getAppliedTaskList = get(`/competition/getAppliedTaskList`);
+export const getAppliedTaskList = () => get(`/competition/getAppliedTaskList`);
 
 // 获取当前用户是否参加了比赛
-export const isJoinCompetition = get(`/competition/isJoinCompetition`);
+export const isJoinCompetition = () =>  get(`/competition/isJoinCompetition`);

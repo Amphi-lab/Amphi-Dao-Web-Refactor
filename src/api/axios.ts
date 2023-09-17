@@ -19,7 +19,7 @@ axios.interceptors.request.use(
         if (config.url === '/nonce' || config.url === '/file/createGetUrl') return config;
         config.data = JSON.stringify(config.data);
         config.headers.set('Content-Type', 'application/json');
-        config.headers.set('token', `${accessToken}`);
+        config.headers.set('Authorization', `Bearer ${accessToken}`);
         return config;
     },
     error => Promise.reject(error)

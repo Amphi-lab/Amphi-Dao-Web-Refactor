@@ -55,6 +55,7 @@ export default () => {
     const [form] = Form.useForm();
     // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
+    const [role, setRole] = useState<string | undefined>(undefined);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -186,14 +187,16 @@ export default () => {
                                     name='role'
                                     rules={[{ required: true, message: 'Please select a role' }]}
                                 >
-                                    <Radio.Group>
+                                    <Radio.Group onChange={e => setRole(e.target.value)}>
                                         <Radio value='apple'> Individual Coppetitor </Radio>
                                         <Radio value='pear'> Team Competitor</Radio>
                                     </Radio.Group>
                                 </Form.Item>
-                                <Form.Item >
-                                    <AddMember />
-                                </Form.Item>
+                                {role === 'pear' && (
+                                    <Form.Item >
+                                        <AddMember />
+                                    </Form.Item>
+                                )}
                                 <Form.Item name='languages' label='Languages'>
                                     <LanguageSelect form={form} userId={userId} />
                                 </Form.Item>
@@ -301,4 +304,3 @@ export default () => {
         </>
     );
 };
-

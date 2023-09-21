@@ -146,7 +146,7 @@ const OrderDes = () => {
                 />
             </Descriptions.Item>
             <Descriptions.Item label='Content to translate'>{fileEls}</Descriptions.Item>
-            <Descriptions.Item label='Instructions for Translator' span={2}>
+            <Descriptions.Item label='Score' span={2}>
                 {details?.instruction}
             </Descriptions.Item>
         </Descriptions>

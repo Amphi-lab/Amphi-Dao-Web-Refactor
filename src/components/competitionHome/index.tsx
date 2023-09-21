@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from 'react';
 import type { TabsProps } from 'antd';
-import { Tabs, Row, Col, Card, Typography, Button } from 'antd';
+import { Tabs, Row, Col, Card, Typography, Button, message } from 'antd';
 import { useDynamicContext } from '@dynamic-labs/sdk-react';
 import { useNavigate } from 'react-router';
 import api from '@/api';
@@ -30,71 +30,49 @@ const items: TabsProps['items'] = [
     }
 ];
 
-// change to card style for each tab
-// const { Meta } = Card;
-
-// const items: TabsProps['items'] = [
-//     {
-//         key: 'prizeTab',
-//         label: 'Prize',
-//         children: (
-//             <Card
-//                 hoverable
-//                 style={{ width: 240 }}
-//                 cover={<img alt="example" src="url_to_your_image" />}
-//             >
-//                 <Meta title="Prize" description="Prize details go here" />
-//             </Card>
-//         ),
-//     },
-//     {
-//         key: 'compDetaisTab',
-//         label: 'Competition Details',
-//         children: (
-//             <Card
-//                 hoverable
-//                 style={{ width: 240 }}
-//                 cover={<img alt="example" src="url_to_your_image" />}
-//             >
-//                 <Meta title="Competition Details" description="Competition details go here" />
-//             </Card>
-//         ),
-//     },
-//     {
-//         key: 'gudingTab',
-//         label: 'Judging Criteria',
-//         children: (
-//             <Card
-//                 hoverable
-//                 style={{ width: 240 }}
-//                 cover={<img alt="example" src="url_to_your_image" />}
-//             >
-//                 <Meta title="Judging Criteria" description="Judging criteria go here" />
-//             </Card>
-//         ),
-//     }
-// ];
-
 const CompetitionHome: React.FC = () => {
-    const [translationList, setTranslationList] = useState([]);
-    const { setShowAuthFlow, user } = useDynamicContext();
+    // const [translationList, setTranslationList] = useState([]);
+    const { setShowAuthFlow ,user } = useDynamicContext();
     const navigate  = useNavigate();
+    const [messageApi,contextHolder ] = message.useMessage();
+    const [taskList, setTaskList] = useState([]);
+
+    // console.log(user,'user');
+
+    const applyTask = async(taskId: string) => {
+        api.applyTask(taskId).then( (res:any) => {
+            console.log(res);
+        })
+    }
+
+    const isJoinCompetition = async () => {
+        api.isJoinCompetition.then( (res:any) => {
+            console.log(res);
+        })
+    }
 
     const onApply = useCallback((id: string)=>{ // id may not be one string
-        if(user){
-           navigate(`/workspace/${id}`);
+
+        isJoinCompetition();
+
+        if(!user) {
+            console.log('login judge');
+            messageApi.open({
+                type: 'warning',
+                content: 'Please Login'
+              });
+        }else if(user){
+            navigate(`/workspace/${id}`);
         }else{
-            navigate(`/registration/`);
+            navigate(`/registration`);
             setShowAuthFlow(true)
         }
+
+        applyTask(id)
+        
        },[user]);
 
-    // interface RegistrationStatusResponse {
-    //     data: {
-    //         isRegistered: false;
-    //     };
-    // }
-    //
+
     // const onApply = useCallback((id: string) => {
     //     api.getRegistrationStatus(id).then((response: RegistrationStatusResponse) => {
     //         const isRegistered = response?.data?.isRegistered || false;
@@ -106,63 +84,84 @@ const CompetitionHome: React.FC = () => {
     //     });
     // }, [navigate]);
     
-    const getTranslationList = useCallback((queryParams?: any) => {
-        return api.getTranslationList(queryParams).then((res: any) => {
-            if (res.code === 200) {
-                const { rows } = res;
-                console.log(rows);
-                setTranslationList(rows);
+    // const getTranslationList = useCallback((queryParams?: any) => {
+    //     return api.getTranslationList(queryParams).then((res: any) => {
+    //         if (res.code === 200) {
+    //             const { rows } = res;
+    //             console.log(rows);
+    //             setTranslationList(rows);
+    //         }
+    //     });
+    // }, []);
+
+    const getTaskList = async() => {
+        api.getTaskList().then( (res:any) => {
+            if(res.code === 200){
+                setTaskList( res.data )
             }
-        });
-    }, []);
+            
+        })
+    }
+
+    
 
     useEffect(() => {
-        getTranslationList();
-    }, [getTranslationList]);
+        getTaskList();
+    }, []);
 
     const renderMaterials = useMemo(() => {
+        console.log("taskList:", taskList); // 将 console.log 移到 useMemo 之外
         return (
             <Row gutter={30}>
-                {translationList.map((item: any) => {
-                    const { title, deadline, workload, sourceLang, targetLang } = item;
-                    const language = `${languagesOptions.get(sourceLang) || '--'} 
-                    to ${languagesOptions.get(targetLang) || '--'}`;
+                {
+                    taskList.map((item: any) => {
+                        const { id, novelName, deadline, workload, targetLanguage, sourceLanguage, score } = item;
+                        const language = `${languagesOptions.get(sourceLanguage) || '--'} to ${languagesOptions.get(targetLanguage) || '--'}`;
 
-                    return (
-                        <Col key={item.id} span={6}>
-                            <Card
-                                className={styles['competition-card']}
-                                title={title}
-                                bordered={false}
-                            >
-                                <p>
+                        return (
+                            <Col key={item.id} span={6}>
+                                <Card
+                                    className={styles['competition-card']}
+                                    title={novelName}
+                                    bordered={false}
+                                >
+                                    <p>
                                     <span className={styles['competition-label']}>
                                         Language:&nbsp;
                                     </span>
-                                    {language}
-                                </p>
-                                <p>
+                                        {language}
+                                    </p >
+                                    <p>
                                     <span className={styles['competition-label']}>
                                         Workload:&nbsp;
                                     </span>
-                                    {workload}
-                                </p>
-                                <p>
+                                        {workload} words
+                                    </p >
+                                    <p>
                                     <span className={styles['competition-label']}>
                                         Deadline:&nbsp;
                                     </span>
-                                    {deadline}
-                                </p>
-                                <Button onClick={onApply} className={styles['competition-button']}>Apply</Button>
-                            </Card>
-                        </Col>
-                    );
-                })}
+                                        {deadline}
+                                    </p >
+                                    <p>
+                                    <span className={styles['competition-label']}>
+                                        Score:&nbsp;
+                                    </span>
+                                        {score}
+                                    </p >
+                                    <Button onClick={() => onApply(id)} className={styles['competition-button']}>Apply</Button> {/* 使用箭头函数包装 onApply，以便传递参数 */}
+                                </Card>
+                            </Col>
+                        );
+                    })
+                }
             </Row>
         );
-    }, [translationList]);
+    }, [taskList]);
 
     return (
+        <>
+        {contextHolder}
         <div className={styles['competition-wrapper']}>
             <div className={styles['competition-banner']} />
             <div className={styles['competition-tabs-wrap']}>
@@ -175,6 +174,8 @@ const CompetitionHome: React.FC = () => {
                 {renderMaterials}
             </div>
         </div>
+        </>
+
     );
 };
 

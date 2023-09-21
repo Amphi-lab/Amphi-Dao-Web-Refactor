@@ -1,7 +1,8 @@
 import React, {useCallback} from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, message } from 'antd';
 import { useDynamicContext } from '@dynamic-labs/sdk-react';
 import { useNavigate } from 'react-router';
+import api from '@/api';
 import styles from './index.module.scss';
 
 const { Title } = Typography;
@@ -119,6 +120,7 @@ const GudingTab:React.FC<TabContentProps> = ({ onApply }) => (
                 <li>Overall coherence and readability of the work 10 points</li><Button onClick={onApply} className={styles['competition-button-tab']}>Apply</Button>
             </ul>
         </section>
+        
     </Typography>
 );
 
@@ -129,6 +131,7 @@ interface GenerateTabProps {
 const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
  const { setShowAuthFlow, user } = useDynamicContext();
  const navigate = useNavigate();
+ const [messageApi,contextHolder ] = message.useMessage();
 
  const tabItem:{
     prizeTab:React.FC<TabContentProps>,
@@ -147,18 +150,35 @@ const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
 //         setShowAuthFlow(true)
 //     }
 // },[user]);
+const isJoinCompetition = async () => {
+    api.isJoinCompetition().then( (res:any) => {
+        console.log(res);
+    })
+}
 
 const onApply = useCallback((id: any)=>{ // id may not be one string
-    if(user){
+    
+    if(!user) {
+        console.log('login judge');
+        messageApi.open({
+            type: 'warning',
+            content: 'Please Login',
+            duration: 15
+          });
+    }else if(user){
+        isJoinCompetition();
         navigate(`/workspace/${id}`);
     }else{
-        navigate(`/registration/`);
+        navigate(`/registration`);
         setShowAuthFlow(true)
-}},[user]);
+    }},[user]);
 
 
  const TabCom: React.ElementType<TabContentProps> = tabItem[tabKey];
- return <TabCom onApply={onApply}/>
+ return (<>
+ {contextHolder}
+ <TabCom onApply={onApply}/>
+ </>)
 }
 
 export default GenerateTab;

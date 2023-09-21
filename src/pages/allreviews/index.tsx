@@ -43,7 +43,7 @@ const Allreviews: React.FC = () => {
         return (
             <Row gutter={30}>
                 {translationList.map((item: any) => {
-                    const { title, Role, sourceLang, targetLang } = item;
+                    const { title, Role, sourceLang, targetLang, orderId, score } = item;
                     const language = `${languagesOptions.get(sourceLang) || '--'} 
                     -> ${languagesOptions.get(targetLang) || '--'}`;
 
@@ -56,15 +56,21 @@ const Allreviews: React.FC = () => {
                             >
                                 <p>
                                     <span className={styles['competition-label']}>
+                                        OrderId:&nbsp;
+                                    </span>
+                                    {orderId}
+                                </p>
+                                <p>
+                                    <span className={styles['competition-label']}>
                                         Language:&nbsp;
                                     </span>
                                     {language}
                                 </p>
                                 <p>
                                     <span className={styles['competition-label']}>
-                                        Role: {Role}&nbsp;
+                                        Role: &nbsp;
                                     </span>
-                                    {language}
+                                    {Role}
                                 </p>
                                 <p>
                                     <span className={styles['competition-label']}>
@@ -75,6 +81,12 @@ const Allreviews: React.FC = () => {
                                     <span className={styles['competition-label']}>
                                         Status: Pending review&nbsp;
                                     </span>
+                                </p>
+                                <p>
+                                    <span className={styles['competition-label']}>
+                                        Score:&nbsp;
+                                    </span>
+                                    {score}
                                 </p>
                                 <Button onClick={onApply} className={styles['competition-button']}>Review</Button>
                             </Card>

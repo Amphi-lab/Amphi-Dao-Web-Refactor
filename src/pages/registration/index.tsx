@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Select, message, Row, Col, Radio, Modal } from 'antd';
-// import { useAccount } from 'wagmi';
 import {
     industry as IndustryOptions,
     jobFunctions as JobFunctionsOptions,
     competitionlanguages as CompetitionLanguages,
     certificationOptions as CertificationOptions
 } from '@/constants/selcet.json';
-// components
 import PageTitle from '@/components/PageTitle';
 import UploadImage from '@/components/UploadImage';
 import LanguageSelect from '@/components/LanguageSelect';
-// types
 import type IUserInfo from '@/types/IUserInfo';
-// utils
 import { optionsToArray, optionsToString } from '@/utils/userInfo';
-// api
 import api from '@/api';
-
 import storage from '@/utils/storage';
-// import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import discordIocn from '@/assets/svg/icon-discord.svg';
 import telegramIcon from '@/assets/svg/telegram.svg';
 import AddMember from '@/pageComponents/AddMember';
 import styles from './index.module.scss';
 
-
-const { verifiedCredentials, email } = storage.getLocalStorage('dynamic_authenticated_user') && storage.getLocalStorage('dynamic_authenticated_user');
-const { address } = verifiedCredentials && verifiedCredentials[0]
+const { verifiedCredentials, email } = storage.getLocalStorage('dynamic_authenticated_user') || {};
+const { address } = verifiedCredentials ? verifiedCredentials[0] : {};
 
 type IUserInfoProps =
     | IUserInfo
@@ -49,14 +41,10 @@ const initialValue: IUserInfoProps = {
 
 export default () => {
     const handleDiscordClick = () => { window.open('https://discord.gg/vgG22sb6Tb', '_blank'); };
-
-    const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); }; // Replace with your Telegram URL
-
+    const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); };
     const [form] = Form.useForm();
-    // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
     const [role, setRole] = useState<string | undefined>(undefined);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -71,7 +59,7 @@ export default () => {
         setIsModalOpen(false);
     };
 
-    // console.log(address, 'address');
+        // console.log(address, 'address');
     // console.log(verifiedCredentials,'userInfo');
     // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
     // const { verifyEmail } = useEmailVerificationRequest();
@@ -88,15 +76,7 @@ export default () => {
     //     }
     //   };
 
-    // useEffect( () => {
-    //     setDefaultWalletAddress(address);
-    //     setDefaultEmai(email)
-    // })
-
     useEffect(() => {
-        /** TODO:
-         * fetch useinfo 待测试
-         */
         if (address) {
             api.getUserInfo({ address }).then((res: any) => {
                 if (res?.code === 200) {
@@ -115,27 +95,17 @@ export default () => {
         }
     }, [address, form]);
 
-    // languagesArray example
     const languagesArray = [
         { language: 'English', level: 'Advanced' },
         { language: 'Spanish', level: 'Intermediate' }
-        // 其他语言和级别
     ];
 
-    // const industryBackgroundAsString = values.industryBackground.join(',');
-
     const onFinish = (values: any) => {
-        console.log(values);
         api.competRegistration({
-            // id: userId,
             address,
             ...values,
             industry: optionsToString(values.industry, IndustryOptions),
             jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions),
-
-            // language: optionsToString(values.competitionlanguages, CompetitionLanguages),
-            // level: optionsToString(values.certificationOptions, CertificationOptions),
-            // 将构建好的数组传递给后端
             languages: languagesArray.map(() => ({
                 language: optionsToString(values.language, CompetitionLanguages),
                 level: optionsToString(values.level, CertificationOptions)
@@ -148,11 +118,6 @@ export default () => {
             }
         });
     };
-
-    // const emailChange = (value:any) => {
-    //     console.log('djsklfjslfjsl')
-    //     console.log(value);
-    // }
 
     return (
         <>
@@ -278,12 +243,10 @@ export default () => {
                             </Col>
 
                             <Col span='12'>
-                                {/* Avatar */}
                                 <Form.Item name='profile' label='Avatar'>
                                     <UploadImage form={form} formField='profile' />
                                 </Form.Item>
 
-                                {/* Background Image */}
                                 <Form.Item name='backgroundUrl' label='Background Image'>
                                     <UploadImage
                                         form={form}

@@ -115,7 +115,7 @@ const BaseTranContent = ({
                 })}
                 <Upload {...uploadProps}>
                     <Button type='primary' className={styles.accept}>
-                        Upload
+                        Upload11111
                     </Button>
                 </Upload>
             </>
@@ -194,15 +194,15 @@ const BaseTranContent = ({
         if (humanFiles.length === 0) {
             return (
                 <div className={styles['workspace-sub-card-content']}>
-                    <p className={styles['sub-card-human-content']}>Show after upload</p>
+                    <p className={styles['sub-card-human-content']}>Show after upload 2222</p>
                     <IconButton
                         icon={downloadIcon}
-                        text='Download'
+                        text='Download 1111'
                         onClick={(e: any) => handleDownlodaFile(e, item.filePath)}
                     />
                     <Upload {...uploadProps}>
                         <Button type='primary' className={styles.accept}>
-                            Upload
+                            Upload 1111
                         </Button>
                     </Upload>
                 </div>

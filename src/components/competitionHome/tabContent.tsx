@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import { Typography, Button, message } from 'antd';
 import { useDynamicContext } from '@dynamic-labs/sdk-react';
 import { useNavigate } from 'react-router';
+import api from '@/api';
 import styles from './index.module.scss';
 
 const { Title } = Typography;
@@ -149,8 +150,14 @@ const GenerateTab: React.FC<GenerateTabProps> = ({tabKey})=>{
 //         setShowAuthFlow(true)
 //     }
 // },[user]);
+const isJoinCompetition = async () => {
+    api.isJoinCompetition().then( (res:any) => {
+        console.log(res);
+    })
+}
 
 const onApply = useCallback((id: any)=>{ // id may not be one string
+    
     if(!user) {
         console.log('login judge');
         messageApi.open({
@@ -159,6 +166,7 @@ const onApply = useCallback((id: any)=>{ // id may not be one string
             duration: 15
           });
     }else if(user){
+        isJoinCompetition();
         navigate(`/workspace/${id}`);
     }else{
         navigate(`/registration`);

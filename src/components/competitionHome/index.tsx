@@ -45,7 +45,16 @@ const CompetitionHome: React.FC = () => {
         })
     }
 
+    const isJoinCompetition = async () => {
+        api.isJoinCompetition.then( (res:any) => {
+            console.log(res);
+        })
+    }
+
     const onApply = useCallback((id: string)=>{ // id may not be one string
+
+        isJoinCompetition();
+
         if(!user) {
             console.log('login judge');
             messageApi.open({
@@ -93,6 +102,8 @@ const CompetitionHome: React.FC = () => {
             
         })
     }
+
+    
 
     useEffect(() => {
         getTaskList();

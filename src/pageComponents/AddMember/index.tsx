@@ -51,9 +51,8 @@ const AddMember = () => {
             </Form>
 
             <ul className={styles['memeber-list']}>
-                <li><span className={styles['list-name']}>username</span><span className={styles['list-email']}>emial</span><span className={styles['list-address']}>jsdlfjslfjdkkksjldfjslfjsljflsdjfsl</span><Button className={styles['list-btn']} icon={<DeleteOutlined />} type="link" block  >Delete</Button></li>
-                <li><span className={styles['list-name']}>username</span><span className={styles['list-address']}>jsdlfjslfjdkkksjldfjslfjsljflsdjfsl</span><Button className={styles['list-btn']} icon={<DeleteOutlined />} type="link" block  >Delete</Button></li>
-
+                <li><span className={styles['list-name']}>username</span><span className={styles['list-email']}>email</span><span className={styles['list-address']}>address</span><Button className={styles['list-btn']} icon={<DeleteOutlined />} type="link" block  >Delete</Button></li>
+                {/* <li><span className={styles['list-name']}>username</span><span className={styles['list-address']}>address</span><Button className={styles['list-btn']} icon={<DeleteOutlined />} type="link" block  >Delete</Button></li> */}
             </ul>
         </>
     )

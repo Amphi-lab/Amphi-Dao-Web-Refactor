@@ -114,23 +114,6 @@ export default () => {
         }
     }, [address, form]);
 
-    // const onFinish = (values: any) => {
-    //     console.log(values);
-    //     api.updateUserInfo({
-    //         id: userId,
-    //         address,
-    //         ...values,
-    //         industry: optionsToString(values.industry, IndustryOptions),
-    //         jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions)
-    //     }).then((res: any) => {
-    //         if (res?.code === 200) {
-    //             message.success('success');
-    //         } else {
-    //             message.error(res.message);
-    //         }
-    //     });
-    // };
-
     // languagesArray example
     const languagesArray = [
         { language: 'English', level: 'Advanced' },

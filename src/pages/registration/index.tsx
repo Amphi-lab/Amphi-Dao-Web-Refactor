@@ -1,45 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Select, message, Row, Col, Radio, Modal } from 'antd';
-// import { useAccount } from 'wagmi';
 import {
     industry as IndustryOptions,
     jobFunctions as JobFunctionsOptions,
     competitionlanguages as CompetitionLanguages,
     certificationOptions as CertificationOptions
 } from '@/constants/selcet.json';
-// components
 import PageTitle from '@/components/PageTitle';
 import UploadImage from '@/components/UploadImage';
 import LanguageSelect from '@/components/LanguageSelect';
-// types
 import type IUserInfo from '@/types/IUserInfo';
-// utils
 import { optionsToArray, optionsToString } from '@/utils/userInfo';
-// api
 import api from '@/api';
-
 import storage from '@/utils/storage';
-// import { useEmailVerificationRequest } from '@dynamic-labs/sdk-react';
 import discordIocn from '@/assets/svg/icon-discord.svg';
 import telegramIcon from '@/assets/svg/telegram.svg';
 import AddMember from '@/pageComponents/AddMember';
 import styles from './index.module.scss';
 
-
-const { verifiedCredentials, email } = storage.getLocalStorage('dynamic_authenticated_user') && storage.getLocalStorage('dynamic_authenticated_user');
-const { address } = verifiedCredentials && verifiedCredentials[0]
+const { verifiedCredentials, storedEmail } = storage.getLocalStorage('dynamic_authenticated_user') || {};
+const { address } = verifiedCredentials ? verifiedCredentials[0] : {};
 
 type IUserInfoProps =
     | IUserInfo
     | (Omit<IUserInfo, 'id' | 'industry' | 'jobFunction'> & {
-        industryBackground: string[];
-        jobFunction: string[];
-    });
+    industryBackground: string[];
+    jobFunction: string[];
+});
 const initialValue: IUserInfoProps = {
     address: '',
     wallet: address || '',
     name: '',
-    email: email || '',
+    email: storedEmail || '',
     profile: '',
     backgroundUrl: '',
     industryBackground: [],
@@ -49,14 +41,10 @@ const initialValue: IUserInfoProps = {
 
 export default () => {
     const handleDiscordClick = () => { window.open('https://discord.gg/vgG22sb6Tb', '_blank'); };
-
-    const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); }; // Replace with your Telegram URL
-
+    const handleTelegramClick = () => { window.open('https://t.me/+-7mw_Qqv47w4YzFl', '_blank'); };
     const [form] = Form.useForm();
-    // const { address } = useAccount();
     const [userId, setUseId] = useState<number | undefined>(undefined);
     const [role, setRole] = useState<string | undefined>(undefined);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -71,32 +59,33 @@ export default () => {
         setIsModalOpen(false);
     };
 
-    // console.log(address, 'address');
-    // console.log(verifiedCredentials,'userInfo');
-    // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
-    // const { verifyEmail } = useEmailVerificationRequest();
-    // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
-    // const [defaultEmail, setDefaultEmai] = useState(email);
+    const validateEmail = (email: string) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    };
 
-    // const handleVerify = async (verificationToken: string) => {
-    //     try {
-    //       const verifyEmailResponse = await verifyEmail(verificationToken);
-    //       console.log(verifyEmailResponse);
-    //       // Handle successful email verification, e.g., show a success message or redirect
-    //     } catch (error) {
-    //       // Handle errors, e.g., show an error message or prompt for the correct token
-    //     }
-    //   };
+    const validateWallet = (wallet: string) => {
+        const re = /^0x[a-fA-F0-9]{40}$/;
+        return re.test(String(wallet).toLowerCase());
+    };
 
-    // useEffect( () => {
-    //     setDefaultWalletAddress(address);
-    //     setDefaultEmai(email)
-    // })
+    const handleEmailVerification = () => {
+        if (validateEmail(form.getFieldValue('email'))) {
+            message.success('Email is valid');
+        } else {
+            message.error('Email is not valid');
+        }
+    };
+
+    const handleWalletVerification = () => {
+        if (validateWallet(form.getFieldValue('wallet'))) {
+            message.success('Wallet is valid');
+        } else {
+            message.error('Wallet is not valid');
+        }
+    };
 
     useEffect(() => {
-        /** TODO:
-         * fetch useinfo 待测试
-         */
         if (address) {
             api.getUserInfo({ address }).then((res: any) => {
                 if (res?.code === 200) {
@@ -115,27 +104,17 @@ export default () => {
         }
     }, [address, form]);
 
-    // languagesArray example
     const languagesArray = [
         { language: 'English', level: 'Advanced' },
         { language: 'Spanish', level: 'Intermediate' }
-        // 其他语言和级别
     ];
 
-    // const industryBackgroundAsString = values.industryBackground.join(',');
-
     const onFinish = (values: any) => {
-        console.log(values);
         api.competRegistration({
-            // id: userId,
             address,
             ...values,
             industry: optionsToString(values.industry, IndustryOptions),
             jobFunction: optionsToString(values.jobFunction, JobFunctionsOptions),
-
-            // language: optionsToString(values.competitionlanguages, CompetitionLanguages),
-            // level: optionsToString(values.certificationOptions, CertificationOptions),
-            // 将构建好的数组传递给后端
             languages: languagesArray.map(() => ({
                 language: optionsToString(values.language, CompetitionLanguages),
                 level: optionsToString(values.level, CertificationOptions)
@@ -148,11 +127,6 @@ export default () => {
             }
         });
     };
-
-    // const emailChange = (value:any) => {
-    //     console.log('djsklfjslfjsl')
-    //     console.log(value);
-    // }
 
     return (
         <>
@@ -200,7 +174,7 @@ export default () => {
                                 <Form.Item name='languages' label='Languages'>
                                     <LanguageSelect form={form} userId={userId} />
                                 </Form.Item>
-                                
+
                                 <Form.Item
                                     name='email'
                                     label='Email Address'
@@ -210,7 +184,12 @@ export default () => {
                                         { type: 'email', message: 'Email Address is not valid email.' }
                                     ]}
                                 >
-                                    <Input placeholder='Enter email' defaultValue={email} />
+                                    <Input placeholder='Enter email' defaultValue={storedEmail} />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type='primary' onClick={handleEmailVerification}>
+                                        Verify Email
+                                    </Button>
                                 </Form.Item>
                                 <Form.Item name='industryBackground' label='Relevant Work Experience'>
                                     <Select
@@ -256,6 +235,11 @@ export default () => {
                                 >
                                     <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' value={address} />
                                 </Form.Item>
+                                <Form.Item>
+                                    <Button type='primary' onClick={handleWalletVerification}>
+                                        Verify Wallet
+                                    </Button>
+                                </Form.Item>
                                 <Form.Item name='telegram' label='Telegram'>
                                     <Input />
                                     <div onClick={handleTelegramClick} style={{ cursor: 'pointer' }}>
@@ -278,12 +262,10 @@ export default () => {
                             </Col>
 
                             <Col span='12'>
-                                {/* Avatar */}
                                 <Form.Item name='profile' label='Avatar'>
                                     <UploadImage form={form} formField='profile' />
                                 </Form.Item>
 
-                                {/* Background Image */}
                                 <Form.Item name='backgroundUrl' label='Background Image'>
                                     <UploadImage
                                         form={form}
@@ -304,3 +286,4 @@ export default () => {
         </>
     );
 };
+

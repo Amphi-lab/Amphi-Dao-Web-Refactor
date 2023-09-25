@@ -18,20 +18,20 @@ import telegramIcon from '@/assets/svg/telegram.svg';
 import AddMember from '@/pageComponents/AddMember';
 import styles from './index.module.scss';
 
-const { verifiedCredentials, email } = storage.getLocalStorage('dynamic_authenticated_user') || {};
+const { verifiedCredentials, storedEmail } = storage.getLocalStorage('dynamic_authenticated_user') || {};
 const { address } = verifiedCredentials ? verifiedCredentials[0] : {};
 
 type IUserInfoProps =
     | IUserInfo
     | (Omit<IUserInfo, 'id' | 'industry' | 'jobFunction'> & {
-        industryBackground: string[];
-        jobFunction: string[];
-    });
+    industryBackground: string[];
+    jobFunction: string[];
+});
 const initialValue: IUserInfoProps = {
     address: '',
     wallet: address || '',
     name: '',
-    email: email || '',
+    email: storedEmail || '',
     profile: '',
     backgroundUrl: '',
     industryBackground: [],
@@ -59,22 +59,31 @@ export default () => {
         setIsModalOpen(false);
     };
 
-        // console.log(address, 'address');
-    // console.log(verifiedCredentials,'userInfo');
-    // console.log(storage.getLocalStorage('dynamic_authenticated_user'),'')
-    // const { verifyEmail } = useEmailVerificationRequest();
-    // const [defaultWalletAddress, setDefaultWalletAddress] = useState(address);
-    // const [defaultEmail, setDefaultEmai] = useState(email);
+    const validateEmail = (email: string) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    };
 
-    // const handleVerify = async (verificationToken: string) => {
-    //     try {
-    //       const verifyEmailResponse = await verifyEmail(verificationToken);
-    //       console.log(verifyEmailResponse);
-    //       // Handle successful email verification, e.g., show a success message or redirect
-    //     } catch (error) {
-    //       // Handle errors, e.g., show an error message or prompt for the correct token
-    //     }
-    //   };
+    const validateWallet = (wallet: string) => {
+        const re = /^0x[a-fA-F0-9]{40}$/;
+        return re.test(String(wallet).toLowerCase());
+    };
+
+    const handleEmailVerification = () => {
+        if (validateEmail(form.getFieldValue('email'))) {
+            message.success('Email is valid');
+        } else {
+            message.error('Email is not valid');
+        }
+    };
+
+    const handleWalletVerification = () => {
+        if (validateWallet(form.getFieldValue('wallet'))) {
+            message.success('Wallet is valid');
+        } else {
+            message.error('Wallet is not valid');
+        }
+    };
 
     useEffect(() => {
         if (address) {
@@ -165,7 +174,7 @@ export default () => {
                                 <Form.Item name='languages' label='Languages'>
                                     <LanguageSelect form={form} userId={userId} />
                                 </Form.Item>
-                                
+
                                 <Form.Item
                                     name='email'
                                     label='Email Address'
@@ -175,7 +184,12 @@ export default () => {
                                         { type: 'email', message: 'Email Address is not valid email.' }
                                     ]}
                                 >
-                                    <Input placeholder='Enter email' defaultValue={email} />
+                                    <Input placeholder='Enter email' defaultValue={storedEmail} />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type='primary' onClick={handleEmailVerification}>
+                                        Verify Email
+                                    </Button>
                                 </Form.Item>
                                 <Form.Item name='industryBackground' label='Relevant Work Experience'>
                                     <Select
@@ -220,6 +234,11 @@ export default () => {
                                     rules={[{ required: true, message: 'Please input username' }]}
                                 >
                                     <Input placeholder='like 0x324fds083jduf84nhfs93l3jmfsujcd883jdnns6f' value={address} />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type='primary' onClick={handleWalletVerification}>
+                                        Verify Wallet
+                                    </Button>
                                 </Form.Item>
                                 <Form.Item name='telegram' label='Telegram'>
                                     <Input />
@@ -267,3 +286,4 @@ export default () => {
         </>
     );
 };
+
